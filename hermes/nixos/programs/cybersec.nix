@@ -6,7 +6,8 @@
     environment.systemPackages = with pkgs; [
       ascii file binwalk
       gnat15 gdb gef ghidra-bin
-      dig wireshark-qt postman
+      dig wireshark-qt
+      postman burpsuite
     ];
 
     # Wireshark
