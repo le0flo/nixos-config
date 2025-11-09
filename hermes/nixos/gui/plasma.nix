@@ -18,9 +18,7 @@
 
     # Packages
     environment.systemPackages = with pkgs.kdePackages; [
-      kate
-      filelight
-      discover
+      kate filelight
 
       flatpak-kcm
     ];
@@ -28,7 +26,7 @@
     # Excluded packages
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       plasma-browser-integration
-      elisa
+      elisa okular discover
     ];
   };
 }

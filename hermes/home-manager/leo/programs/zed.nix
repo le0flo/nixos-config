@@ -23,6 +23,14 @@
           dark = "One Dark Pro";
         };
 
+        terminal = {
+          shell = {
+            program = "zsh";
+          };
+
+          cursor_shape = "bar";
+        };
+
         telemetry = {
           metrics = false;
         };

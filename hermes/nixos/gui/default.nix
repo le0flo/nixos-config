@@ -20,6 +20,8 @@
     x11Support = false;
 
     settings = {
+      animation = "gameoflife";
+      bigclock = "en";
       session_log = ".ly-session.log";
     };
   };
