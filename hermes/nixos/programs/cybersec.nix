@@ -4,7 +4,7 @@
   config = lib.mkIf config.cybersec.enable {
     # Packages
     environment.systemPackages = with pkgs; [
-      ascii file binwalk
+      ascii file binwalk codeql
       gnat15 gdb gef
       ghidra-bin cutter
       dig wireshark-qt
