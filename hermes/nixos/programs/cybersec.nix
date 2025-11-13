@@ -5,7 +5,8 @@
     # Packages
     environment.systemPackages = with pkgs; [
       ascii file binwalk
-      gnat15 gdb gef ghidra-bin
+      gnat15 gdb gef
+      ghidra-bin cutter
       dig wireshark-qt
       postman burpsuite
     ];
