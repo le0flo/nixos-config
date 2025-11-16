@@ -22,7 +22,7 @@
         ll = "ls -a";
         ssh = "TERM=xterm-256color ssh";
 
-        configure-nix = "zeditor ~/Desktop/leoflo/hermes";
+        configure-nix = "zeditor ~/nixos";
         update-system = "sudo nixos-rebuild switch --flake ~/nixos#hermes";
         update-home = "home-manager switch --flake ~/nixos#hermes";
       };
