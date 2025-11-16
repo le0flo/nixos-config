@@ -3,7 +3,6 @@
     ./fonts.nix
     ./cybersec.nix
     ./games.nix
-    ./obs.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -15,7 +14,7 @@
     zed-editor alacritty
     nil nixd
     openssh rsync wireguard-tools
-    veracrypt exfat
+    exfat veracrypt
     tmux vim
     fastfetch btop
 
@@ -62,5 +61,4 @@
   fonts.enable = true;
   cybersec.enable = true;
   games.enable = true;
-  obs.enable = true;
 }

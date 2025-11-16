@@ -19,5 +19,15 @@
         gamescopeSession.enable = false; # SteamOS interface
       };
     };
+
+    # OBS
+    programs.obs-studio = {
+      enable = true;
+      enableVirtualCamera = true;
+
+      #plugins = with pkgs.obs-studio-plugins; [
+      #  droidcam-obs
+      #];
+    };
   };
 }

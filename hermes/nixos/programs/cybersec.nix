@@ -10,7 +10,7 @@
     environment.systemPackages = with pkgs; [
       ascii file binwalk codeql pwntools
       gnat15 python313 gdb gef rizin
-      ghidra-bin cutter
+      ghidra-bin cutter binaryninja-free
       dig wireshark-qt
       postman burpsuite
     ];
