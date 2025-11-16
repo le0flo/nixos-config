@@ -4,7 +4,8 @@
   # Packages
   environment.systemPackages = with pkgs; [
     rsync wireguard-tools
-    vim btop
+    tmux vim
+    btop fastfetch
 
     # Home manager
     inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
