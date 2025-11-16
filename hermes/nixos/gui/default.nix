@@ -26,6 +26,15 @@
     };
   };
 
+  # XDG
+  xdg = {
+    icons.enable = true;
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+    };
+  };
+
   # X11
   services.xserver = {
     enable = false;
@@ -33,12 +42,6 @@
         layout = "it";
         variant = "";
     };
-  };
-
-  # Portals
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
   };
 
   # Custom
