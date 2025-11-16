@@ -6,7 +6,7 @@
     environment.systemPackages = with pkgs; [
       ascii file binwalk codeql pwntools
       gnat15 gnumake cmake python313
-      gdb gef ghidra-bin cutter
+      gdb gef ghidra-bin rizin cutter
       dig wireshark-qt
       postman burpsuite
     ];
