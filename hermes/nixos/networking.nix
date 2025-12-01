@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   networking = {
     hostName = "hermes";
 
@@ -22,4 +22,9 @@
       ];
     };
   };
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    openfortivpn openfortivpn-webview
+  ];
 }
