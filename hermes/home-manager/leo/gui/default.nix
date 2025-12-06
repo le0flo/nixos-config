@@ -1,7 +1,7 @@
 {...}: {
   imports = [
-    ./niri.nix
+    ./sway.nix
   ];
 
-  niri.enable = false;
+  sway.enable = true;
 }

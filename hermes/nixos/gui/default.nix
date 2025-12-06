@@ -1,9 +1,7 @@
 {pkgs, ...}: {
   imports = [
-    ./gnome.nix
     ./plasma.nix
-    ./cosmic.nix
-    ./niri.nix
+    ./sway.nix
   ];
 
   # Drivers
@@ -29,9 +27,17 @@
   # XDG
   xdg = {
     icons.enable = true;
+
     portal = {
       enable = true;
       xdgOpenUsePortal = true;
+
+      config.common.default = [ "kde" "gtk" ];
+
+      extraPortals = with pkgs; [
+        kdePackages.xdg-desktop-portal-kde
+        xdg-desktop-portal-gtk
+      ];
     };
   };
 
@@ -46,7 +52,5 @@
 
   # Custom
   plasma.enable = true;
-  gnome.enable = false;
-  cosmic.enable = false;
-  niri.enable = false;
+  sway.enable = true;
 }

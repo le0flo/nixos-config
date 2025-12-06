@@ -4,18 +4,6 @@
   config = lib.mkIf config.plasma.enable {
     services.desktopManager.plasma6.enable = true;
 
-    # Portals
-    xdg.portal = {
-      config.kde = {
-        default = [ "kde" "gtk" ];
-      };
-
-      extraPortals = with pkgs; [
-        kdePackages.xdg-desktop-portal-kde
-        xdg-desktop-portal-gtk
-      ];
-    };
-
     # Packages
     environment.systemPackages = with pkgs.kdePackages; [
       kate filelight

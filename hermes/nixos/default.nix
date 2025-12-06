@@ -22,7 +22,7 @@
     description = "Leonardo";
     shell = pkgs.zsh;
 
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "networkmanager" "video" "wheel" ];
   };
 
   # Version
