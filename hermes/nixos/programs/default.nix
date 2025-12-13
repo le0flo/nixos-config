@@ -25,6 +25,12 @@
   # Dynamic linking
   programs.nix-ld.enable = true;
 
+  # AppImages
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   # Zsh
   programs.zsh.enable = true;
 
