@@ -9,7 +9,8 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    firefox thunderbird keepassxc kdePackages.kleopatra feather
+    firefox thunderbird keepassxc kdePackages.kleopatra
+    electrum feather
     vlc ffmpeg yt-dlp
     zed-editor alacritty
     nil nixd
