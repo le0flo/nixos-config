@@ -15,7 +15,7 @@
   # Ly
   services.displayManager.ly = {
     enable = true;
-    x11Support = false;
+    x11Support = true;
 
     settings = {
       animation = "gameoflife";
@@ -43,7 +43,6 @@
 
   # X11
   services.xserver = {
-    enable = false;
     xkb = {
         layout = "it";
         variant = "";
