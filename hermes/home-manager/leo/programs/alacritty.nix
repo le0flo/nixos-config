@@ -14,7 +14,9 @@
         };
 
         font = {
-          size = 12.00;
+          normal = { family = "IosevkaTerm NF"; style = "regular"; };
+          bold = { family = "IosevkaTerm NF"; style = "bold"; };
+          size = 14.00;
         };
 
         colors = {
