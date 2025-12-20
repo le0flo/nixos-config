@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./plasma.nix
+    ./xfce.nix
     ./sway.nix
   ];
 
@@ -31,13 +32,6 @@
     portal = {
       enable = true;
       xdgOpenUsePortal = true;
-
-      config.common.default = [ "kde" "gtk" ];
-
-      extraPortals = with pkgs; [
-        kdePackages.xdg-desktop-portal-kde
-        xdg-desktop-portal-gtk
-      ];
     };
   };
 
@@ -50,6 +44,9 @@
   };
 
   # Custom
-  plasma.enable = true;
+  #
+  # NOTE: kde and xfce cannot be enabled due to conflicting pinetry package
+  plasma.enable = false;
+  xfce.enable = true;
   sway.enable = true;
 }
