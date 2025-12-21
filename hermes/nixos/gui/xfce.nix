@@ -8,6 +8,9 @@
       desktopManager.xfce.enable = true;
     };
 
+    # XDG
+    xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+
     # Packages
     environment.systemPackages = with pkgs; [
       bluez blueman

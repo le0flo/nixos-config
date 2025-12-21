@@ -48,5 +48,5 @@
   # NOTE: kde and xfce cannot be enabled due to conflicting pinetry package
   plasma.enable = false;
   xfce.enable = true;
-  sway.enable = true;
+  sway.enable = false;
 }

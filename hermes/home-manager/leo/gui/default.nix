@@ -3,5 +3,5 @@
     ./sway.nix
   ];
 
-  sway.enable = true;
+  sway.enable = false;
 }
