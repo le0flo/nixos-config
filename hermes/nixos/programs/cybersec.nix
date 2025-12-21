@@ -4,14 +4,10 @@
   config = lib.mkIf config.cybersec.enable {
     # Packages
     environment.systemPackages = with pkgs; [
-      ascii file binwalk pwntools
-      gnat15 python313 gdb gef gf
-      dig wireshark-qt
+      ascii file binwalk
+      python313 pwntools
+      gnat15 gdb gef gf
+      dig
     ];
-
-    # Wireshark
-    programs.wireshark.enable = true;
-    programs.wireshark.dumpcap.enable = true;
-    users.extraGroups."wireshark".members = [ "leo" ];
   };
 }

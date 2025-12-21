@@ -12,11 +12,10 @@
     firefox thunderbird keepassxc kdePackages.kleopatra
     electrum feather
     vlc ffmpeg yt-dlp
-    zed-editor alacritty
+    alacritty zed-editor tmux vim
     nil nixd
     openssh rsync wireguard-tools
     exfat veracrypt
-    tmux vim
     fastfetch btop
 
     # Home manager
