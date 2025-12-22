@@ -9,13 +9,13 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    firefox thunderbird keepassxc kdePackages.kleopatra
+    firefox thunderbird keepassxc kdePackages.kleopatra veracrypt
     electrum feather
     vlc ffmpeg yt-dlp
     alacritty zed-editor tmux vim
     nil nixd
     openssh rsync wireguard-tools
-    exfat veracrypt
+    exfat ntfs3g
     fastfetch btop
 
     # Home manager
