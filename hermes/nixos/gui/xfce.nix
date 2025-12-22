@@ -16,6 +16,7 @@
       bluez blueman
       pasystray
       xfce.xfce4-docklike-plugin xfce.xfce4-whiskermenu-plugin
+      xfce.thunar-archive-plugin xfce.thunar-media-tags-plugin xfce.thunar-vcs-plugin xfce.thunar-volman
       xarchiver
     ];
   };
