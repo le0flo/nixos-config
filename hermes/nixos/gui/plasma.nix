@@ -11,7 +11,7 @@
       flatpak-kcm
     ];
 
-    # Excluded packages
+    # Excluded
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       plasma-browser-integration
       elisa okular discover

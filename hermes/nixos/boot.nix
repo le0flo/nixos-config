@@ -21,6 +21,8 @@
       efi.canTouchEfiVariables = true;
     };
 
+    supportedFilesystems = [ "exfat" "ntfs" ];
+
     plymouth = {
       enable = true;
       theme = "bgrt";
