@@ -9,7 +9,7 @@
         window = {
           dimensions = { columns = 110; lines = 30; };
           padding = { x = 0; y = 0; };
-          opacity = 1.0;
+          opacity = 0.80;
           blur = false;
         };
 
