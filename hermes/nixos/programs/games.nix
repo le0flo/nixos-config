@@ -7,6 +7,8 @@
     # Packages
     environment.systemPackages = with pkgs; [
       prismlauncher heroic
+
+      gpu-screen-recorder gpu-screen-recorder-gtk
     ];
 
     #Steam
