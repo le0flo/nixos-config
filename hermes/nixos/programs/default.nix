@@ -1,7 +1,6 @@
 {inputs, pkgs, ...}: {
   imports = [
     ./fonts.nix
-    ./cybersec.nix
     ./games.nix
   ];
 
@@ -11,13 +10,13 @@
   environment.systemPackages = with pkgs; [
     librewolf thunderbird
     keepassxc kdePackages.kleopatra veracrypt
-    electrum feather
     vlc ffmpeg yt-dlp
     alacritty zed-editor tmux vim
-    nil nixd
-    openssh rsync wireguard-tools
+    nil nixd distrobox
+    openssh rsync wireguard-tools dig
+    ascii file fastfetch btop
     exfat ntfs3g
-    fastfetch btop
+    electrum feather
 
     # Home manager
     inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
@@ -66,6 +65,5 @@
 
   # Custom
   fonts.enable = true;
-  cybersec.enable = true;
   games.enable = true;
 }
