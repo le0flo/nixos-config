@@ -12,11 +12,12 @@
     keepassxc kdePackages.kleopatra veracrypt
     vlc ffmpeg yt-dlp
     alacritty zed-editor tmux vim
-    nil nixd distrobox
+    nil nixd
     openssh rsync wireguard-tools dig
     ascii file fastfetch btop
     exfat ntfs3g
     electrum feather
+    wine64 distrobox
 
     # Home manager
     inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager

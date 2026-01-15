@@ -15,14 +15,15 @@
     environment.systemPackages = with pkgs; [
       bluez blueman
       pasystray
-      xfce.xfce4-docklike-plugin xfce.xfce4-whiskermenu-plugin
-      xfce.thunar-archive-plugin xfce.thunar-media-tags-plugin xfce.thunar-vcs-plugin xfce.thunar-volman
       xarchiver
+
+      xfce4-docklike-plugin xfce4-whiskermenu-plugin
+      thunar-archive-plugin thunar-media-tags-plugin thunar-vcs-plugin thunar-volman
     ];
 
     # Excluded
     environment.xfce.excludePackages = with pkgs; [
-      xfce.parole
+      parole
     ];
   };
 }
