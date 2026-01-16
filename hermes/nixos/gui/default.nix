@@ -1,8 +1,7 @@
 {pkgs, ...}: {
   imports = [
-    ./plasma.nix
     ./xfce.nix
-    ./sway.nix
+    ./plasma.nix
   ];
 
   # Drivers
@@ -46,7 +45,6 @@
   # Custom
   #
   # NOTE: kde and xfce cannot be enabled due to conflicting pinetry package
-  plasma.enable = false;
   xfce.enable = true;
-  sway.enable = false;
+  plasma.enable = false;
 }

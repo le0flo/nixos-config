@@ -9,14 +9,16 @@
   # Packages
   environment.systemPackages = with pkgs; [
     librewolf thunderbird
-    keepassxc kdePackages.kleopatra veracrypt
+    keepassxc veracrypt kdePackages.kleopatra
+    electrum feather
     vlc ffmpeg yt-dlp
+
+    openssh rsync wireguard-tools dig
     alacritty zed-editor tmux vim
     nil nixd
-    openssh rsync wireguard-tools dig
+
     ascii file fastfetch btop
     exfat ntfs3g
-    electrum feather
     wine64 distrobox
 
     # Home manager
