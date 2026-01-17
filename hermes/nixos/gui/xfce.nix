@@ -8,6 +8,18 @@
       desktopManager.xfce.enable = true;
     };
 
+    # File manager
+    programs.thunar = {
+      enable = true;
+
+      plugins = with pkgs; [
+        thunar-archive-plugin
+        thunar-media-tags-plugin
+        thunar-vcs-plugin
+        thunar-volman
+      ];
+    };
+
     # XDG
     xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 
@@ -18,12 +30,9 @@
       xarchiver
 
       xfce4-docklike-plugin xfce4-whiskermenu-plugin
-      thunar-archive-plugin thunar-media-tags-plugin thunar-vcs-plugin thunar-volman
     ];
 
     # Excluded
-    environment.xfce.excludePackages = with pkgs; [
-      parole
-    ];
+    environment.xfce.excludePackages = with pkgs; [ parole ];
   };
 }
