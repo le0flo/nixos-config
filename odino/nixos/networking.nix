@@ -1,8 +1,9 @@
 {...}: {
   networking = {
     hostName = "odino";
-    
+
     nameservers = [ "208.67.222.222" "208.67.220.220" ];
+
     networkmanager.enable = true;
 
     firewall = {
@@ -12,10 +13,9 @@
       allowedUDPPorts = [ 51820 ];
     };
 
-    wireguard.interfaces."tunnel" = {
-      ips = [ "10.69.0.2/24" ];
-
+    wg-quick.interfaces."tunnel" = {
       privateKeyFile = "/home/leo/.wireguard/private.key";
+      address = [ "10.69.0.2/24" ];
 
       peers = [
         {

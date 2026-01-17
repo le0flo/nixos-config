@@ -3,14 +3,14 @@
     hostName = "hermes";
 
     nameservers = [ "208.67.222.222" "208.67.220.220" ];
-    networkmanager.enable = true;
 
+    networkmanager.enable = true;
     firewall.enable = false;
 
-    wireguard.interfaces."home" = {
-      ips = [ "10.69.0.3/24" ];
-
+    wg-quick.interfaces."home" = {
       privateKeyFile = "/home/leo/.wireguard/private.key";
+      address = [ "10.69.0.3/24" ];
+      dns = [ "38.242.201.177" ];
 
       peers = [
         {
