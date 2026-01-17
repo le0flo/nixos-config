@@ -22,6 +22,7 @@
         ll = "ls -a";
         ssh = "TERM=xterm-256color ssh";
 
+        update-boot = "sudo nixos-rebuild boot --flake ~/nixos#odino";
         update-system = "sudo nixos-rebuild switch --flake ~/nixos#odino";
         update-home = "home-manager switch --flake ~/nixos#odino";
       };
