@@ -17,7 +17,7 @@
     alacritty zed-editor tmux vim
     nil nixd
 
-    ascii file fastfetch btop
+    ascii file fastfetch btop dysk
     exfat ntfs3g
     wine64 distrobox
 
