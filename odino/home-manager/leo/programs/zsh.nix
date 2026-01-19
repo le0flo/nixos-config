@@ -38,6 +38,10 @@
           # Theme
           autoload -U colors
           colors
+
+	  # Profile
+          source ~/.profile.cloud
+          source ~/.profile.games
       '';
     };
   };
