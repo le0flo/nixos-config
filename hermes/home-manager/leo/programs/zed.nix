@@ -18,12 +18,6 @@
         hard_tabs = false;
         tab_size = 2;
 
-        languages = {
-          "Python" = {
-            tab_size = 2;
-          };
-        };
-
         theme = {
           mode = "system";
           light = "Gruvbox Dark Soft";
