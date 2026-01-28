@@ -6,8 +6,23 @@
       enable = true;
 
       userSettings = {
+        telemetry = {
+          metrics = false;
+        };
+
         ui_font_size = 18;
         buffer_font_size = 18;
+        vim_mode = false;
+
+        format_on_save = "off";
+        hard_tabs = false;
+        tab_size = 2;
+
+        languages = {
+          "Python" = {
+            tab_size = 2;
+          };
+        };
 
         theme = {
           mode = "system";
@@ -15,19 +30,12 @@
           dark = "Gruvbox Dark Soft";
         };
 
-        format_on_save = "off";
-        vim_mode = false;
-
         terminal = {
           shell = {
             program = "zsh";
           };
 
           cursor_shape = "bar";
-        };
-
-        telemetry = {
-          metrics = false;
         };
       };
     };

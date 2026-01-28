@@ -20,6 +20,7 @@
     ascii file fastfetch btop dysk
     exfat ntfs3g
     wine64 distrobox
+    claude-code
 
     # Home manager
     inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
