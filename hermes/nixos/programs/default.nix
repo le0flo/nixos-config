@@ -20,6 +20,8 @@
     ascii file fastfetch btop dysk
     exfat ntfs3g
     wine64 distrobox
+    android-tools
+
     claude-code
 
     # Home manager
