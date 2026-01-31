@@ -18,9 +18,7 @@
     nil nixd
 
     ascii file fastfetch btop dysk
-    exfat ntfs3g
-    wine64 distrobox
-    android-tools
+    exfat ntfs3g android-tools
 
     claude-code
 
