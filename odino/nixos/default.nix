@@ -17,7 +17,6 @@
   # Users
   users.users.leo = {
     isNormalUser = true;
-    description = "Leonardo";
     shell = pkgs.zsh;
 
     extraGroups = [ "wheel" "networkmanager" ];
