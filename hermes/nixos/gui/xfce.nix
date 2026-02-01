@@ -1,4 +1,4 @@
-{lib, config, pkgs, ...}: {
+{inputs, lib, config, pkgs, ...}: {
   options.xfce.enable = lib.mkEnableOption "xfce de";
 
   config = lib.mkIf config.xfce.enable {
@@ -26,10 +26,11 @@
     # Packages
     environment.systemPackages = with pkgs; [
       bluez blueman
-      pasystray
       xarchiver
 
-      xfce4-docklike-plugin xfce4-whiskermenu-plugin
+      xfce4-whiskermenu-plugin
+      xfce4-docklike-plugin
+      inputs.xfce4-hiddenapps-plugin.packages.x86_64-linux.default
     ];
 
     # Excluded
