@@ -68,11 +68,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769967962,
-        "narHash": "sha256-PcGumg++GizYJO3w6eBGg2LOmdmpGEulfi1brK+Mgdk=",
+        "lastModified": 1770062068,
+        "narHash": "sha256-hxf+exkJv3gcDVq3IDN2ZyX/IjIhUGBGmGFCYs30AEo=",
         "ref": "master",
-        "rev": "932413e35bb43d299e25ecbe94462a175cc7f3e0",
-        "revCount": 607,
+        "rev": "aa752a186d7c2f863b4ad5ca8efa6a26dc7aebb9",
+        "revCount": 620,
         "type": "git",
         "url": "https://codeberg.org/leoflo/xfce4-hiddenapps-plugin"
       },
