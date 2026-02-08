@@ -6,7 +6,7 @@
     home-manager.url = "github:nix-community/home-manager?ref=master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    xfce4-hiddenapps-plugin.url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=master";
+    xfce4-hiddenapps-plugin.url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=refs/tags/v0.0.1";
     xfce4-hiddenapps-plugin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
