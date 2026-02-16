@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771254407,
-        "narHash": "sha256-2Y02V3/0ioxJMcHzBE63L4ds1n/c6y7nhfYTc/KOg9g=",
+        "lastModified": 1771260914,
+        "narHash": "sha256-asEnF2nBSjbjJcohlqZcVKfKJiPRdkotPovdt5w3io4=",
         "ref": "refs/tags/v11.0.2",
-        "rev": "7fda78c18e981d5c5f52da2eeb96c366ab815838",
-        "revCount": 3,
+        "rev": "eeae96e3221203cd4d954f6a99634834d9b49ae0",
+        "revCount": 4,
         "type": "git",
         "url": "https://codeberg.org/leoflo/dbmain-nix"
       },
