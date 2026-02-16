@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "dbmain-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771254407,
+        "narHash": "sha256-2Y02V3/0ioxJMcHzBE63L4ds1n/c6y7nhfYTc/KOg9g=",
+        "ref": "refs/tags/v11.0.2",
+        "rev": "7fda78c18e981d5c5f52da2eeb96c366ab815838",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/dbmain-nix"
+      },
+      "original": {
+        "ref": "refs/tags/v11.0.2",
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/dbmain-nix"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -55,6 +76,7 @@
     },
     "root": {
       "inputs": {
+        "dbmain-nix": "dbmain-nix",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

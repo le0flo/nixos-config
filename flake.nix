@@ -8,6 +8,9 @@
 
     xfce4-hiddenapps-plugin.url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=refs/tags/v0.0.1";
     xfce4-hiddenapps-plugin.inputs.nixpkgs.follows = "nixpkgs";
+
+    dbmain-nix.url = "git+https://codeberg.org/leoflo/dbmain-nix?ref=refs/tags/v11.0.2";
+    dbmain-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {nixpkgs, home-manager, ...} @ inputs:

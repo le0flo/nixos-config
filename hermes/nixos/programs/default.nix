@@ -24,6 +24,9 @@
 
     # Home manager
     inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
+
+    # DBmain
+    inputs.dbmain-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Dynamic linking
