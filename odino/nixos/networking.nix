@@ -1,6 +1,7 @@
-{...}: {
+{lib, ...}: {
   networking = {
     hostName = "odino";
+    useDHCP = lib.mkDefault true;
 
     nameservers = [ "208.67.222.222" "208.67.220.220" ];
 
