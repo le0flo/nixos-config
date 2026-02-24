@@ -1,14 +1,12 @@
-{ inputs, pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware.nix
     ./boot.nix
     ./networking.nix
     ./locales.nix
 
     ./services
     ./programs
-
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   # Experimental features

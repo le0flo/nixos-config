@@ -1,6 +1,6 @@
-{inputs, pkgs, ...}: {
+{pkgs, ...}: {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware.nix
     ./boot.nix
     ./networking.nix
     ./locales.nix
@@ -8,9 +8,6 @@
     ./gui
     ./services
     ./programs
-
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   # Experimental features

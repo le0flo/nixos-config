@@ -1,4 +1,8 @@
 {inputs, pkgs, ...}: {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   # Packages

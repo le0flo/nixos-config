@@ -1,7 +1,13 @@
 {pkgs, ...}: {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelModules = [ "kvm-intel" ];
     kernelParams = [ "boot.shell_on_fail" ];
+
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
+      kernelModules = [ ];
+    };
 
     loader = {
       timeout = 3;
@@ -10,5 +16,6 @@
     };
 
     supportedFilesystems = [ "exfat" "ntfs" ];
+    extraModulePackages = [ ];
   };
 }
