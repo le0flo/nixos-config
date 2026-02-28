@@ -18,26 +18,28 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
+    # NixOS
     nixosConfigurations."hermes" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs system; };
-      modules = [ ./hermes/nixos ];
+      modules = [ ./systems/hermes/nixos ];
     };
 
     nixosConfigurations."odino" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs system; };
-      modules = [ ./odino/nixos ];
+      modules = [ ./systems/odino/nixos ];
     };
 
+    # Home manager
     homeConfigurations."hermes" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./hermes/home-manager ];
+      modules = [ ./systems/hermes/home-manager ];
     };
 
     homeConfigurations."odino" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./odino/home-manager ];
+      modules = [ ./systems/odino/home-manager ];
     };
   };
 }
