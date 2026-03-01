@@ -8,6 +8,7 @@
     libinput.enable = true;
     power-profiles-daemon.enable = true;
     printing.enable = true;
+    blueman.enable = true;
 
     # Flatpaks
     flatpak.enable = true;

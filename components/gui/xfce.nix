@@ -33,7 +33,6 @@ in {
 
     # Packages
     environment.systemPackages = with pkgs; [
-      bluez blueman
       xarchiver
 
       xfce4-whiskermenu-plugin
