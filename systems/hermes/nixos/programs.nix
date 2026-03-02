@@ -17,9 +17,11 @@
     nil nixd
     exfat ntfs3g android-tools
 
-    # Graphical
-    librewolf thunderbird keepassxc
-    veracrypt feather
+    # Internet
+    librewolf thunderbird feather
+
+    # Secret management
+    keepassxc libsecret veracrypt
 
     # Media
     vlc ffmpeg yt-dlp
