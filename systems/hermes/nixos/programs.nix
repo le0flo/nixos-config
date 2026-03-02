@@ -25,12 +25,12 @@
     vlc ffmpeg yt-dlp
     gpu-screen-recorder gpu-screen-recorder-gtk
 
-    # Unibo stuff
-    digital
-    inputs.dbmain-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
-
     # Home manager
-    inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
+    inputs.home-manager.packages.${stdenv.hostPlatform.system}.home-manager
+
+    # Custom packages
+    inputs.dbmain-nix.packages.${stdenv.hostPlatform.system}.default
+    inputs.obdautodoctor-nix.packages.${stdenv.hostPlatform.system}.default
   ];
 
   # Dynamic linking

@@ -11,6 +11,9 @@
 
     dbmain-nix.url = "git+https://codeberg.org/leoflo/dbmain-nix?ref=refs/tags/v11.0.2";
     dbmain-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    obdautodoctor-nix.url = "git+https://codeberg.org/leoflo/obdautodoctor-nix?ref=refs/tags/v5.1.8";
+    obdautodoctor-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {nixpkgs, home-manager, ...} @ inputs:

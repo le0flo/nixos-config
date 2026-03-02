@@ -74,12 +74,34 @@
         "type": "github"
       }
     },
+    "obdautodoctor-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772482403,
+        "narHash": "sha256-GUK8y9K+bWvgC7l9setVmeL+zOtBLHllpqOlnAJo9CA=",
+        "ref": "refs/tags/v5.1.8",
+        "rev": "367f1cf1dd2eb20101f680e3d5ca129d028a6f39",
+        "revCount": 1,
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/obdautodoctor-nix"
+      },
+      "original": {
+        "ref": "refs/tags/v5.1.8",
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/obdautodoctor-nix"
+      }
+    },
     "root": {
       "inputs": {
         "dbmain-nix": "dbmain-nix",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "obdautodoctor-nix": "obdautodoctor-nix",
         "xfce4-hiddenapps-plugin": "xfce4-hiddenapps-plugin"
       }
     },
