@@ -30,6 +30,8 @@
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#hermes";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#hermes";
     update-home = "home-manager switch --flake ~/nixos#hermes";
+
+    ssh = "TERM=xterm-256color ssh";
   };
 
   # Version
