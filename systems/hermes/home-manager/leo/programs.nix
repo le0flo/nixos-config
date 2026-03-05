@@ -9,7 +9,7 @@
     ../../../../components/programs/fastfetch.nix
   ];
 
-  keepassxc.enable = true;
+  keepassxc.enable = false;
   alacritty.enable = true;
   zed.enable = true;
 
