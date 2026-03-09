@@ -28,6 +28,9 @@
     };
   };
 
+  # Disables the wg-quick-home service from starting up
+  systemd.services."wg-quick-home".wantedBy = lib.mkForce [];
+
   # Bluetooth
   hardware.bluetooth.enable = true;
 
