@@ -5,14 +5,14 @@
 
     nameservers = [ "208.67.222.222" "208.67.220.220" ];
 
-    networkmanager.enable = true;
-
     firewall = {
       enable = true;
 
       allowedTCPPorts = [ 22 ];
       allowedUDPPorts = [ 51820 ];
     };
+
+    networkmanager.enable = true;
 
     wg-quick.interfaces."tunnel" = {
       privateKeyFile = "/home/leo/.wireguard/private.key";

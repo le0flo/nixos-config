@@ -5,8 +5,12 @@
 
     nameservers = [ "208.67.222.222" "208.67.220.220" ];
 
-    networkmanager.enable = true;
     firewall.enable = false;
+
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [ networkmanager-fortisslvpn ];
+    };
 
     wg-quick.interfaces."home" = {
       privateKeyFile = "/home/leo/.wireguard/private.key";
