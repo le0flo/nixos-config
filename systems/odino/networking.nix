@@ -14,7 +14,7 @@
 
     networkmanager.enable = true;
 
-    wg-quick.interfaces."tunnel" = {
+    wg-quick.interfaces."home" = {
       privateKeyFile = "/home/leo/.wireguard/private.key";
       address = [ "10.69.0.2/24" ];
 
