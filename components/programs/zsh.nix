@@ -18,6 +18,14 @@
         plugins = [ "git" "ssh" ];
       };
 
+      shellAliases = {
+        ls = "eza";
+        l = "ls -lh";
+        ll = "ls -lah";
+
+        ssh = "TERM=xterm-256color ssh";
+      };
+
       initContent = ''
           # Ctrl + arrow keys
           bindkey '^[Oc' forward-word

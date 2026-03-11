@@ -21,18 +21,13 @@
     extraGroups = [ "wheel" "networkmanager" "video" ];
   };
 
+  # Shell
   programs.zsh.enable = true;
 
   environment.shellAliases = {
-    ls = "eza";
-    l = "ls -lh";
-    ll = "ls -lah";
-
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#hermes";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#hermes";
     update-home = "home-manager switch --flake ~/nixos#hermes";
-
-    ssh = "TERM=xterm-256color ssh";
   };
 
   # Version

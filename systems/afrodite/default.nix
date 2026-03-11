@@ -20,13 +20,10 @@
     extraGroups = [ "wheel" "networkmanager" ];
   };
 
+  # Shell
   programs.zsh.enable = true;
 
   environment.shellAliases = {
-    ls = "eza";
-    l = "ls -lh";
-    ll = "ls -lah";
-
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#afrodite";
     update-home = "home-manager switch --flake ~/nixos#afrodite";
