@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ../../../components/services/i2pd.nix
+    ../../components/services/i2pd.nix
   ];
 
   services = {

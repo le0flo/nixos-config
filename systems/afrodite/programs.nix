@@ -1,6 +1,6 @@
 {inputs, pkgs, ...}: {
   imports = [
-    ../../../components/programs/git.nix
+    ../../components/programs/git.nix
 
     inputs.home-manager.nixosModules.home-manager
   ];

@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   imports = [
-    ../../../components/gui/xfce.nix
+    ../../components/gui/xfce.nix
   ];
 
   # Graphics

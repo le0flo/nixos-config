@@ -1,0 +1,37 @@
+{pkgs, ...}: {
+  imports = [
+    ./hardware.nix
+    ./boot.nix
+    ./networking.nix
+    ./locales.nix
+
+    ./services.nix
+    ./programs.nix
+  ];
+
+  # Experimental features
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Users
+  users.users.leo = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
+
+  programs.zsh.enable = true;
+
+  environment.shellAliases = {
+    ls = "eza";
+    l = "ls -lh";
+    ll = "ls -lah";
+
+    update-boot = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
+    update-system = "sudo nixos-rebuild switch --flake ~/nixos#afrodite";
+    update-home = "home-manager switch --flake ~/nixos#afrodite";
+  };
+
+  # Version
+  system.stateVersion = "25.05";
+}

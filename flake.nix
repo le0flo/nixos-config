@@ -24,25 +24,36 @@
     # NixOS
     nixosConfigurations."hermes" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs system; };
-      modules = [ ./systems/hermes/nixos ];
+      modules = [ ./systems/hermes ];
+    };
+
+    nixosConfigurations."afrodite" = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs system; };
+      modules = [ ./systems/afrodite ];
     };
 
     nixosConfigurations."odino" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs system; };
-      modules = [ ./systems/odino/nixos ];
+      modules = [ ./systems/odino ];
     };
 
     # Home manager
     homeConfigurations."hermes" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./systems/hermes/home-manager ];
+      modules = [ ./homes/desktop ];
+    };
+
+    homeConfigurations."afrodite" = home-manager.lib.homeManagerConfiguration {
+      extraSpecialArgs = { inherit inputs; };
+      pkgs = pkgs;
+      modules = [ ./homes/server ];
     };
 
     homeConfigurations."odino" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./systems/odino/home-manager ];
+      modules = [ ./homes/server ];
     };
   };
 }

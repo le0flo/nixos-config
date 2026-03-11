@@ -1,8 +1,8 @@
 {inputs, pkgs, ...}: {
   imports = [
-    ../../../components/programs/git.nix
-    ../../../components/programs/fonts.nix
-    ../../../components/programs/games.nix
+    ../../components/programs/git.nix
+    ../../components/programs/fonts.nix
+    ../../components/programs/games.nix
 
     inputs.home-manager.nixosModules.home-manager
   ];

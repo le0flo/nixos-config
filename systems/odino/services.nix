@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ../../../components/services/openssh.nix
+    ../../components/services/openssh.nix
   ];
 
   # Custom modules
