@@ -23,6 +23,6 @@
     };
   };
 
-  # Custom
+  # Custom modules
   i2pd.enable = true;
 }

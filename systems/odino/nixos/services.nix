@@ -3,6 +3,6 @@
     ../../../components/services/openssh.nix
   ];
 
-  # Custom
+  # Custom modules
   openssh.enable = true;
 }

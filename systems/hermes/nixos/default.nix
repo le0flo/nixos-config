@@ -24,8 +24,9 @@
   programs.zsh.enable = true;
 
   environment.shellAliases = {
-    l = "eza -lh";
-    ll = "eza -lah";
+    ls = "eza";
+    l = "ls -lh";
+    ll = "ls -lah";
 
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#hermes";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#hermes";

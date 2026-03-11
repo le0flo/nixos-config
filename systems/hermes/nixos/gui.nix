@@ -47,5 +47,6 @@
     polkit.enable = true;
   };
 
+  # Custom modules
   xfce.enable = true;
 }

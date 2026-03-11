@@ -21,7 +21,7 @@
     librewolf thunderbird feather
 
     # Secret management
-    keepassxc libsecret veracrypt
+    keepassxc veracrypt
 
     # Media
     vlc ffmpeg yt-dlp
@@ -35,7 +35,7 @@
     inputs.obdautodoctor-nix.packages.${stdenv.hostPlatform.system}.default
   ];
 
-  # Dynamic linking
+  # Nix linker
   programs.nix-ld.enable = true;
 
   # AppImages
@@ -44,19 +44,21 @@
     binfmt = true;
   };
 
-  # Docker
-  virtualisation.docker.enable = true;
-  users.extraGroups."docker".members = [ "leo" ];
-
-  # Virt manager
+  # Virtualisation
   virtualisation = {
+    docker.enable = true;
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
   };
-  users.groups."libvirtd".members = [ "leo" ];
+
+  users.extraGroups = {
+    "docker".members = [ "leo" ];
+    "libvirtd".members = [ "leo" ];
+  };
+
   programs.virt-manager.enable = true;
 
-  # Custom
+  # Custom modules
   git.enable = true;
   fonts.enable = true;
   games.enable = true;
