@@ -39,9 +39,6 @@
 
     # Custom packages
     inputs.obdautodoctor-nix.packages.${stdenv.hostPlatform.system}.default
-
-    # Work
-    azure-cli kubelogin
   ];
 
   # Nix linker
