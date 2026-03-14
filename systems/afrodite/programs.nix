@@ -9,9 +9,15 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    ascii file fastfetch eza btop dysk
-    openssh rsync wireguard-tools dig
+    # CLI tools
+    wget dig ascii file fastfetch eza btop dysk
+
+    # Remote tools
+    openssh rsync wireguard-tools
+
+    # Coding
     tmux vim
+    nil nixd
 
     # Home manager
     inputs.home-manager.packages.${stdenv.hostPlatform.system}.home-manager

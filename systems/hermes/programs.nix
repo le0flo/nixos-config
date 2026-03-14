@@ -11,10 +11,17 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    ascii file fastfetch eza btop dysk
-    openssh rsync wireguard-tools dig
-    alacritty zed-editor tmux vim claude-code
+    # CLI tools
+    wget dig ascii file fastfetch eza btop dysk
+
+    # Remote tools
+    openssh rsync wireguard-tools kubectl
+
+    # Coding
+    tmux vim alacritty zed-editor claude-code
     nil nixd
+
+    # External devices
     exfat ntfs3g android-tools
 
     # Internet
@@ -31,8 +38,10 @@
     inputs.home-manager.packages.${stdenv.hostPlatform.system}.home-manager
 
     # Custom packages
-    inputs.dbmain-nix.packages.${stdenv.hostPlatform.system}.default
     inputs.obdautodoctor-nix.packages.${stdenv.hostPlatform.system}.default
+
+    # Work
+    azure-cli kubelogin
   ];
 
   # Nix linker
