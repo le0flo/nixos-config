@@ -3,20 +3,34 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware?ref=master";
 
-    home-manager.url = "github:nix-community/home-manager?ref=master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    xfce4-hiddenapps-plugin.url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=refs/tags/v0.0.1";
-    xfce4-hiddenapps-plugin.inputs.nixpkgs.follows = "nixpkgs";
+    xfce4-hiddenapps-plugin = {
+      url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=refs/tags/v0.0.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    dbmain-nix.url = "git+https://codeberg.org/leoflo/dbmain-nix?ref=refs/tags/v11.0.2";
-    dbmain-nix.inputs.nixpkgs.follows = "nixpkgs";
+    dbmain-nix = {
+      url = "git+https://codeberg.org/leoflo/dbmain-nix?ref=refs/tags/v11.0.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    obdautodoctor-nix.url = "git+https://codeberg.org/leoflo/obdautodoctor-nix?ref=refs/tags/v5.1.8";
-    obdautodoctor-nix.inputs.nixpkgs.follows = "nixpkgs";
+    obdautodoctor-nix = {
+      url = "git+https://codeberg.org/leoflo/obdautodoctor-nix?ref=refs/tags/v5.1.8";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
   };
 
-  outputs = {nixpkgs, home-manager, ...} @ inputs:
+  outputs = {nixpkgs, home-manager, disko, nixos-facter-modules, ...} @ inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -54,6 +68,12 @@
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
       modules = [ ./homes/server ];
+    };
+
+    # NixOS anywhere
+    nixosConfigurations."nixos-anywhere" = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit system; };
+      modules = [ ./systems/nixos-anywhere/configuration.nix disko.nixosModules.disko ];
     };
   };
 }
