@@ -29,7 +29,7 @@
     };
   };
 
-  outputs = {nixpkgs, home-manager, ...} @ inputs:
+  outputs = {nixpkgs, home-manager, disko, ...} @ inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -42,7 +42,7 @@
 
     nixosConfigurations."afrodite" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs system; };
-      modules = [ ./systems/afrodite ];
+      modules = [ disko.nixosModules.disko ./systems/afrodite ];
     };
 
     nixosConfigurations."odino" = nixpkgs.lib.nixosSystem {
