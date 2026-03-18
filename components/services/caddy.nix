@@ -5,16 +5,23 @@
     services.caddy = {
       enable = true;
 
-      virtualHosts."leoflo.me".extraConfig = ''
-        root /srv/leoflo.me/src
-        templates
-        file_server
-      '';
+      virtualHosts = {
+        "leoflo.me".extraConfig = ''
+          root /srv/leoflo.me/src
+          templates
+          file_server
+        '';
 
-      virtualHosts."files.leoflo.me".extraConfig = ''
-        root /srv/files.leoflo.me
-        file_server browse
-      '';
+        "files.leoflo.me".extraConfig = ''
+          root /srv/files.leoflo.me
+          file_server browse
+        '';
+
+        "home.arpa".extraConfig = ''
+          respond "Benvenuto nella rete privata di leo :D"
+          tls internal
+        '';
+      };
     };
   };
 }

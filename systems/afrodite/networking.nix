@@ -9,7 +9,7 @@
       enable = true;
 
       allowedTCPPorts = [ 22 80 443 ];
-      allowedUDPPorts = [ 51820 ];
+      allowedUDPPorts = [ 53 51820 ];
     };
 
     networkmanager.enable = true;
