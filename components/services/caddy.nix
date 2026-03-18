@@ -13,7 +13,7 @@
 
       virtualHosts."files.leoflo.me".extraConfig = ''
         root /srv/files.leoflo.me
-        file_server
+        file_server browse
       '';
     };
   };
