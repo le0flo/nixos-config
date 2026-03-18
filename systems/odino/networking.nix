@@ -15,12 +15,12 @@
     networkmanager.enable = true;
 
     wg-quick.interfaces."home" = {
-      privateKeyFile = "/home/leo/.wireguard/private.key";
+      privateKeyFile = "/home/leo/.wireguard/home";
       address = [ "10.69.0.2/24" ];
 
       peers = [
         {
-          publicKey = "rwUMCdhjQbQt9uGjljfdABj4DSJFgL62bzT13sg8LmU=";
+          publicKey = "629xLQgbpcfGJotfD79p3dNbpiwmp2FQtkUMd/S+M2M=";
           allowedIPs = [ "10.69.0.0/24" ];
           endpoint = "leoflo.me:51820";
           persistentKeepalive = 25;
