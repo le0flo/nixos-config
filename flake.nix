@@ -22,12 +22,6 @@
       url = "git+https://codeberg.org/leoflo/obdautodoctor-nix?ref=refs/tags/v5.1.8";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
   };
 
   outputs = {nixpkgs, home-manager, disko, nixos-facter-modules, ...} @ inputs:
@@ -68,12 +62,6 @@
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
       modules = [ ./homes/server ];
-    };
-
-    # NixOS anywhere
-    nixosConfigurations."nixos-anywhere" = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit system; };
-      modules = [ ./systems/nixos-anywhere/configuration.nix disko.nixosModules.disko ];
     };
   };
 }
