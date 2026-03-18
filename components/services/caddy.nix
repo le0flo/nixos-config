@@ -6,7 +6,14 @@
       enable = true;
 
       virtualHosts."leoflo.me".extraConfig = ''
-        respond "Hello, world!"
+        root /srv/leoflo.me/src
+        templates
+        file_server
+      '';
+
+      virtualHosts."files.leoflo.me".extraConfig = ''
+        root /srv/files.leoflo.me
+        file_server
       '';
     };
   };
