@@ -8,6 +8,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     xfce4-hiddenapps-plugin = {
       url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=refs/tags/v0.0.1";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -5,5 +5,4 @@
 
   # Custom modules
   openssh.enable = true;
-  caddy.enable = true;
 }
