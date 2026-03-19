@@ -18,7 +18,7 @@
     openssh rsync wireguard-tools kubectl
 
     # Coding
-    tmux vim alacritty zed-editor claude-code
+    tmux vim alacritty emacs zed-editor claude-code
     nil nixd
 
     # External devices
