@@ -10,7 +10,7 @@
       zones = {
         "home.arpa" = {
           master = true;
-          allowQuery = [ "127.0.0.0/24" "10.0.69.0/24" ];
+          allowQuery = [ "127.0.0.0/24" "10.69.0.0/24" ];
           file = pkgs.writeText "home.arpa" ''
             $TTL 86400
             @ IN SOA ns1.home.arpa. admin.home.arpa. (
