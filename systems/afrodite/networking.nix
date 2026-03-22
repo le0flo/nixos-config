@@ -21,11 +21,11 @@
       listenPort = 51820;
 
       peers = [
-        #{
-        #  publicKey = "";
-        #  allowedIPs = [ "10.69.0.2/32" ];
-        #  persistentKeepalive = 25;
-        #}
+        {
+          publicKey = "GX/1ks+T1OcBsW7XiMIN1k2/azaCWH69eGh9dltfJhU=";
+          allowedIPs = [ "10.69.0.2/32" ];
+          persistentKeepalive = 25;
+        }
         {
           publicKey = "99XBoIZ55yradB45bDZ94fc1IQGkNp9argWaT2otRBU=";
           allowedIPs = [ "10.69.0.3/32" ];
