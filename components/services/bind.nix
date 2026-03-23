@@ -5,7 +5,10 @@
     services.bind = {
       enable = true;
 
-      forwarders = [ "208.67.222.222" "208.67.220.220" ];
+      forwarders = [ "1.1.1.1" "8.8.8.8" ];
+      forward = "only";
+
+      cacheNetworks = [ "127.0.0.0/8" "10.69.0.0/24" ];
 
       zones = {
         "home.arpa" = {
@@ -34,12 +37,6 @@
           '';
         };
       };
-
-      extraOptions = ''
-        recursion yes;
-        allow-recursion { 127.0.0.0/8; 10.69.0.0/24; };
-        forward only;
-      '';
     };
   };
 }
