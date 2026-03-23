@@ -13,11 +13,29 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Users
-  users.users.leo = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
+  users = {
+    users = {
+      "leo" = {
+        isNormalUser = true;
+        shell = pkgs.zsh;
 
-    extraGroups = [ "wheel" "networkmanager" ];
+        extraGroups = [ "wheel" "networkmanager" ];
+      };
+      "git" = {
+        isSystemUser = true;
+        shell = "${pkgs.git}/bin/git-shell";
+        group = "git";
+
+        home = "/var/lib/git";
+        createHome = true;
+
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/jRKQiRkGmtDRp/LniFVtl3M9r8VOaSWcyDT4Bl1R9 leo@hermes"
+        ];
+      };
+    };
+
+    groups."git" = {};
   };
 
   # Shell
