@@ -7,9 +7,11 @@
 
       virtualHosts = {
         "leoflo.me".extraConfig = ''
-          root /srv/leoflo.me/src
-          templates
-          file_server
+          reverse_proxy 127.0.0.1:8001
+        '';
+
+        "code.leoflo.me".extraConfig = ''
+          reverse_proxy 127.0.0.1:8002
         '';
 
         "files.leoflo.me".extraConfig = ''
