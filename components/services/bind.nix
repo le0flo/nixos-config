@@ -10,7 +10,7 @@
       zones = {
         "home.arpa" = {
           master = true;
-          allowQuery = [ "127.0.0.0/24" "10.69.0.0/24" ];
+          allowQuery = [ "127.0.0.0/8" "10.69.0.0/24" ];
           file = pkgs.writeText "home.arpa" ''
             $TTL 86400
 
@@ -34,6 +34,12 @@
           '';
         };
       };
+
+      extraOptions = ''
+        recursion yes;
+        allow-recursion { 127.0.0.0/8; 10.69.0.0/24; };
+        forward only;
+      '';
     };
   };
 }
