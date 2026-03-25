@@ -68,7 +68,6 @@ binds {
 
   Mod+Shift+Return { spawn "alacritty"; }
   Mod+P            { spawn "fuzzel"; }
-  Mod+E            { spawn "nautilus"; }
 
   XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
   XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }

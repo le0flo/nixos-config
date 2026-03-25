@@ -4,7 +4,7 @@
   config = lib.mkIf config.niri.enable {
     programs.niri = {
       enable = true;
-      useNautilus = true;
+      useNautilus = false;
     };
 
     # XDG
@@ -18,7 +18,6 @@
       fuzzel
       wbg
       eww
-      nautilus
       xwayland-satellite
       playerctl
       brightnessctl
