@@ -7,6 +7,7 @@
     ../../../components/programs/zsh.nix
     ../../../components/programs/tmux.nix
     ../../../components/programs/fastfetch.nix
+    ../../../components/programs/fuzzel.nix
   ];
 
   # Custom modules
@@ -17,4 +18,5 @@
   zsh.enable = true;
   tmux.enable = true;
   fastfetch.enable = true;
+  fuzzel.enable = true;
 }
