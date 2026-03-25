@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ../../components/gui/xfce.nix
+    ../../components/gui/niri
   ];
 
   # Graphics
@@ -49,4 +50,5 @@
 
   # Custom modules
   xfce.enable = true;
+  niri.enable = true;
 }

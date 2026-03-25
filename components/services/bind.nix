@@ -1,5 +1,5 @@
 {lib, config, pkgs, ...}: {
-  options.bind.enable = lib.mkEnableOption "Bind dns server";
+  options.bind.enable = lib.mkEnableOption "Bind DNS server";
 
   config = lib.mkIf config.bind.enable {
     services.bind = {

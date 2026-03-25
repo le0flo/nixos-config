@@ -9,12 +9,16 @@
 
     # Packages
     environment.systemPackages = with pkgs.kdePackages; [
-      kate filelight
-
+      kate
+      filelight
       flatpak-kcm
     ];
 
     # Excluded
-    environment.plasma6.excludePackages = with pkgs.kdePackages; [ plasma-browser-integration elisa discover ];
+    environment.plasma6.excludePackages = with pkgs.kdePackages; [
+      plasma-browser-integration
+      elisa
+      discover
+    ];
   };
 }

@@ -1,5 +1,5 @@
 {lib, config, ...}: {
-  options.keepassxc.enable = lib.mkEnableOption "KeepassXC's config";
+  options.keepassxc.enable = lib.mkEnableOption "KeepassXC";
 
   config = lib.mkIf config.keepassxc.enable {
     xdg.autostart.enable = true;

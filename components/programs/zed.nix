@@ -1,5 +1,5 @@
 {lib, config, ...}: {
-  options.zed.enable = lib.mkEnableOption "Zed editor's config";
+  options.zed.enable = lib.mkEnableOption "Zed editor";
 
   config = lib.mkIf config.zed.enable {
     programs.zed-editor = {

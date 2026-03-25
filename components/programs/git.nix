@@ -1,5 +1,5 @@
 {lib, config, ...}: {
-  options.git.enable = lib.mkEnableOption "Git CMS";
+  options.git.enable = lib.mkEnableOption "Git SCM";
 
   config = lib.mkIf config.git.enable {
     programs.git = {

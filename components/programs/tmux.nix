@@ -1,5 +1,5 @@
 {lib, config, ...}: {
-  options.tmux.enable = lib.mkEnableOption "Tmux's config";
+  options.tmux.enable = lib.mkEnableOption "Tmux";
 
   config = lib.mkIf config.tmux.enable {
     programs.tmux = {

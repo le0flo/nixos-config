@@ -1,5 +1,5 @@
 {lib, config, ...}: {
-  options.fastfetch.enable = lib.mkEnableOption "Fastfetch's config";
+  options.fastfetch.enable = lib.mkEnableOption "Fastfetch";
 
   config = lib.mkIf config.fastfetch.enable {
     programs.fastfetch = {

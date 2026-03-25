@@ -7,7 +7,7 @@ let
     '';
   });
 in {
-  options.xfce.enable = lib.mkEnableOption "Xfce Desktop Environment";
+  options.xfce.enable = lib.mkEnableOption "Xfce DE";
 
   config = lib.mkIf config.xfce.enable {
     services.xserver = {
@@ -34,7 +34,6 @@ in {
     # Packages
     environment.systemPackages = with pkgs; [
       xarchiver
-
       xfce4-whiskermenu-plugin
       xfce4-docklike-plugin
       inputs.xfce4-hiddenapps-plugin.packages.x86_64-linux.default
