@@ -64,10 +64,11 @@ window-rule {
 }
 
 binds {
-  Mod+Shift+Slash { show-hotkey-overlay; }
+  Mod+Ctrl+Return  { show-hotkey-overlay; }
 
-  Mod+Shift+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-  Mod+P            hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+  Mod+Shift+Return { spawn "alacritty"; }
+  Mod+P            { spawn "fuzzel"; }
+  Mod+E            { spawn "nautilus"; }
 
   XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
   XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
@@ -82,8 +83,8 @@ binds {
   XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
   XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-  Mod+O repeat=false { toggle-overview; }
-  Mod+Q repeat=false { close-window; }
+  Mod+O       repeat=false { toggle-overview; }
+  Mod+Shift+Q repeat=false { close-window; }
 
   Mod+R       { reset-window-height; }
   Mod+Ctrl+R  { switch-preset-column-width; }

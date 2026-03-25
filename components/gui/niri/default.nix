@@ -20,6 +20,8 @@
       eww
       nautilus
       xwayland-satellite
+      playerctl
+      brightnessctl
     ];
   };
 }
