@@ -17,7 +17,6 @@
     environment.systemPackages = with pkgs; [
       fuzzel
       wbg
-      eww
       xwayland-satellite
       playerctl
       brightnessctl
