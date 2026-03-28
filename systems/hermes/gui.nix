@@ -10,6 +10,22 @@
     extraPackages = with pkgs; [ intel-media-driver ];
   };
 
+  # Security
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+  };
+
+  # X11
+  services.xserver = {
+    enable = false;
+
+    xkb = {
+      layout = "it";
+      variant = "";
+    };
+  };
+
   # Ly
   services.displayManager.ly = {
     enable = true;
@@ -31,22 +47,6 @@
       enable = true;
       xdgOpenUsePortal = true;
     };
-  };
-
-  # X11
-  services.xserver = {
-    enable = false;
-
-    xkb = {
-      layout = "it";
-      variant = "";
-    };
-  };
-
-  # Security
-  security = {
-    rtkit.enable = true;
-    polkit.enable = true;
   };
 
   # Custom modules
