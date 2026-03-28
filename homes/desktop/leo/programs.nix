@@ -8,6 +8,7 @@
     ../../../components/programs/tmux.nix
     ../../../components/programs/fastfetch.nix
     ../../../components/programs/fuzzel.nix
+    ../../../components/programs/swaylock.nix
   ];
 
   # Custom modules
@@ -19,4 +20,5 @@
   tmux.enable = true;
   fastfetch.enable = true;
   fuzzel.enable = true;
+  swaylock.enable = true;
 }

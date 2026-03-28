@@ -19,8 +19,10 @@
       fuzzel
       swaybg
       swaylock
+      swayidle
       playerctl
       brightnessctl
+      themechanger
     ];
   };
 }

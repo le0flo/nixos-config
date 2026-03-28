@@ -48,6 +48,7 @@ layout {
 }
 
 spawn-sh-at-startup "swaybg -m stretch -i ~/Pictures/Backgrounds/plane.jpg"
+spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f'"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
@@ -64,8 +65,9 @@ window-rule {
 }
 
 binds {
-  Mod+Ctrl+Return  { show-hotkey-overlay; }
+  Mod+Ctrl+Return { show-hotkey-overlay; }
 
+  Mod+Ctrl+L { spawn "swaylock"; }
   Mod+Return { spawn "alacritty"; }
   Mod+P      { spawn "fuzzel"; }
 
