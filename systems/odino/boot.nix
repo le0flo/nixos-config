@@ -15,9 +15,10 @@
       ];
     };
 
-    loader.grub = {
-      efiSupport = true;
-      efiInstallAsRemovable = true;
+    loader = {
+      timeout = 3;
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
   };
 }
