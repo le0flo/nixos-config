@@ -47,12 +47,26 @@ layout {
   }
 }
 
+environment {
+  QT_QPA_PLATFORM "wayland"
+}
+
+hotkey-overlay {
+  skip-at-startup
+  hide-not-bound
+}
+
 spawn-sh-at-startup "swaybg -m stretch -i ~/Pictures/Backgrounds/plane.jpg"
 spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f'"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 prefer-no-csd
+
+cursor {
+  xcursor-theme "Bibata-Modern-Classic"
+  xcursor-size 20
+}
 
 window-rule {
   geometry-corner-radius 0

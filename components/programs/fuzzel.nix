@@ -10,7 +10,7 @@
           prompt = "search: ";
           icons-enabled = false;
 
-          terminal = "${pkgs.alacritty}/bin/alacritty";
+          terminal = "${pkgs.alacritty}/bin/alacritty -e";
           font = "IosevkaTerm NF:style=regular:size=12";
           layer = "overlay";
         };
