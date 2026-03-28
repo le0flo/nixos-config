@@ -13,8 +13,20 @@
       xdg-desktop-portal-gtk
     ];
 
+    # File manager
+    programs.thunar = {
+      enable = true;
+
+      plugins = with pkgs; [
+        thunar-media-tags-plugin
+        thunar-vcs-plugin
+        thunar-volman
+      ];
+    };
+
     # Packages
     environment.systemPackages = with pkgs; [
+      xarchiver
       xwayland-satellite
       fuzzel
       swaybg
@@ -23,6 +35,7 @@
       playerctl
       brightnessctl
       themechanger
+      ristretto
     ];
   };
 }

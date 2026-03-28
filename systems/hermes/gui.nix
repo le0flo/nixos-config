@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ../../components/gui/xfce.nix
     ../../components/gui/niri
   ];
 
@@ -14,7 +13,7 @@
   # Ly
   services.displayManager.ly = {
     enable = true;
-    x11Support = true;
+    x11Support = false;
 
     settings = {
       animation = "gameoflife";
@@ -36,9 +35,11 @@
 
   # X11
   services.xserver = {
+    enable = false;
+
     xkb = {
-        layout = "it";
-        variant = "";
+      layout = "it";
+      variant = "";
     };
   };
 
@@ -49,6 +50,5 @@
   };
 
   # Custom modules
-  xfce.enable = true;
   niri.enable = true;
 }
