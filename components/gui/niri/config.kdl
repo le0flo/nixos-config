@@ -47,7 +47,7 @@ layout {
   }
 }
 
-spawn-sh-at-startup "wbg -s ~/Pictures/Backgrounds/plane.jpg"
+spawn-sh-at-startup "swaybg -m stretch -i ~/Pictures/Backgrounds/plane.jpg"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 

@@ -4,6 +4,7 @@
   config = lib.mkIf config.i2pd.enable {
     services.i2pd = {
       enable = true;
+
       address = "127.0.0.1";
       port = 4444;
 

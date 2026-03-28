@@ -5,15 +5,26 @@
     services.bind = {
       enable = true;
 
-      forwarders = [ "1.1.1.1" "8.8.8.8" ];
       forward = "only";
+      forwarders = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
 
-      cacheNetworks = [ "127.0.0.0/8" "10.69.0.0/24" ];
+      cacheNetworks = [
+        "127.0.0.0/8"
+        "10.69.0.0/24"
+      ];
 
       zones = {
         "home.arpa" = {
           master = true;
-          allowQuery = [ "127.0.0.0/8" "10.69.0.0/24" ];
+
+          allowQuery = [
+            "127.0.0.0/8"
+            "10.69.0.0/24"
+          ];
+
           file = pkgs.writeText "home.arpa" ''
             $TTL 86400
 

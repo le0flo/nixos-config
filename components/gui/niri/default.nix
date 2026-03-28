@@ -15,9 +15,10 @@
 
     # Packages
     environment.systemPackages = with pkgs; [
-      fuzzel
-      wbg
       xwayland-satellite
+      fuzzel
+      swaybg
+      swaylock
       playerctl
       brightnessctl
     ];

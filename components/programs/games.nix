@@ -11,6 +11,9 @@
     };
 
     # Packages
-    environment.systemPackages = with pkgs; [ prismlauncher heroic ];
+    environment.systemPackages = with pkgs; [
+      prismlauncher
+      heroic
+    ];
   };
 }

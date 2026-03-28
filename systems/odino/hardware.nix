@@ -3,6 +3,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/31eed536-5936-4814-bb60-73fcc4fabdc5";
     fsType = "ext4";
@@ -23,6 +25,5 @@
     { device = "/dev/disk/by-uuid/8478cb29-8a67-4842-b9ed-16a226506cb7"; }
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

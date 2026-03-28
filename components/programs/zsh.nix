@@ -15,7 +15,10 @@
         enable = true;
         theme = "robbyrussell";
 
-        plugins = [ "git" "ssh" ];
+        plugins = [
+          "git"
+          "ssh"
+        ];
       };
 
       shellAliases = {

@@ -4,6 +4,8 @@
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
   disko.devices = {
     disk.disk1 = {
       device = lib.mkDefault "/dev/sda";
@@ -22,6 +24,7 @@
             name = "ESP";
             size = "500M";
             type = "EF00";
+
             content = {
               type = "filesystem";
               format = "vfat";
@@ -32,6 +35,7 @@
           root = {
             name = "root";
             size = "100%";
+
             content = {
               type = "lvm_pv";
               vg = "pool";
@@ -47,6 +51,7 @@
         lvs = {
           root = {
             size = "100%FREE";
+
             content = {
               type = "filesystem";
               format = "ext4";
@@ -58,6 +63,4 @@
       };
     };
   };
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

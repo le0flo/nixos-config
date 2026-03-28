@@ -36,6 +36,7 @@ in {
       xarchiver
       xfce4-whiskermenu-plugin
       xfce4-docklike-plugin
+
       inputs.xfce4-hiddenapps-plugin.packages.x86_64-linux.default
     ];
 

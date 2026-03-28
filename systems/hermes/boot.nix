@@ -5,8 +5,13 @@
     kernelParams = [ "boot.shell_on_fail" ];
 
     initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
-      kernelModules = [ ];
+      availableKernelModules = [
+        "xhci_pci"
+        "nvme"
+        "usb_storage"
+        "sd_mod"
+        "sdhci_pci"
+      ];
     };
 
     loader = {
@@ -15,7 +20,9 @@
       efi.canTouchEfiVariables = true;
     };
 
-    supportedFilesystems = [ "exfat" "ntfs" ];
-    extraModulePackages = [ ];
+    supportedFilesystems = [
+      "exfat"
+      "ntfs"
+    ];
   };
 }

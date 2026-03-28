@@ -10,7 +10,10 @@
   ];
 
   # Experimental features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Users
   users = {
@@ -19,8 +22,12 @@
         isNormalUser = true;
         shell = pkgs.zsh;
 
-        extraGroups = [ "wheel" "networkmanager" ];
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+        ];
       };
+
       "git" = {
         isSystemUser = true;
         shell = "${pkgs.git}/bin/git-shell";

@@ -12,27 +12,53 @@
   # Packages
   environment.systemPackages = with pkgs; [
     # CLI tools
-    wget dig ascii file fastfetch eza btop dysk
+    wget
+    dig
+    ascii
+    file
+    fastfetch
+    eza
+    btop
+    dysk
 
     # Remote tools
-    openssh rsync wireguard-tools kubectl
+    openssh
+    rsync
+    wireguard-tools
+    kubectl
 
     # Coding
-    tmux vim alacritty emacs zed-editor claude-code opencode
-    nil nixd
+    tmux
+    vim
+    nil
+    nixd
+    alacritty
+    zed-editor
+    claude-code
+    opencode
 
     # External devices
-    exfat ntfs3g android-tools
+    exfat
+    ntfs3g
+    android-tools
 
     # Internet
-    librewolf thunderbird feather
+    librewolf
+    thunderbird
+    feather
 
     # Secret management
-    keepassxc veracrypt
+    keepassxc
+    veracrypt
 
     # Media
-    vlc ffmpeg yt-dlp
-    gpu-screen-recorder gpu-screen-recorder-gtk
+    vlc
+    ffmpeg
+    yt-dlp
+
+    # Recording
+    gpu-screen-recorder
+    gpu-screen-recorder-gtk
 
     # Home manager
     inputs.home-manager.packages.${stdenv.hostPlatform.system}.home-manager
