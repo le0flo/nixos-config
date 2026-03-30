@@ -12,25 +12,9 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    xfce4-hiddenapps-plugin = {
-      url = "git+https://codeberg.org/leoflo/xfce4-hiddenapps-plugin?ref=refs/tags/v0.0.1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    dbmain-nix = {
-      url = "git+https://codeberg.org/leoflo/dbmain-nix?ref=refs/tags/v11.0.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    obdautodoctor-nix = {
-      url = "git+https://codeberg.org/leoflo/obdautodoctor-nix?ref=refs/tags/v5.1.8";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = {nixpkgs, home-manager, disko, ...} @ inputs:
-  let
+  outputs = inputs @ {nixpkgs, home-manager, disko, ...}: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -42,7 +26,10 @@
 
     nixosConfigurations."afrodite" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs system; };
-      modules = [ disko.nixosModules.disko ./systems/afrodite ];
+      modules = [
+        ./systems/afrodite
+        disko.nixosModules.disko
+      ];
     };
 
     nixosConfigurations."odino" = nixpkgs.lib.nixosSystem {
@@ -54,19 +41,19 @@
     homeConfigurations."hermes" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./homes/desktop ];
+      modules = [ ./systems/hermes/home.nix ];
     };
 
     homeConfigurations."afrodite" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./homes/server ];
+      modules = [ ./systems/afrodite/home.nix ];
     };
 
     homeConfigurations."odino" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./homes/server ];
+      modules = [ ./systems/odino/home.nix ];
     };
   };
 }

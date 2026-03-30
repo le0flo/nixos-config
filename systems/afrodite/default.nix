@@ -1,11 +1,11 @@
 {pkgs, ...}: {
   imports = [
-    ./hardware.nix
     ./boot.nix
+    ./hardware.nix
     ./networking.nix
     ./locales.nix
 
-    ./services.nix
+    ./services
     ./programs.nix
   ];
 
@@ -52,8 +52,6 @@
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#afrodite";
     update-home = "home-manager switch --flake ~/nixos#afrodite";
-
-    update-srv-ownership = "sudo chown -R leo:caddy /srv";
   };
 
   # Version

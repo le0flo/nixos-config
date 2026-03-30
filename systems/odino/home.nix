@@ -1,0 +1,16 @@
+{...}: {
+  imports = [
+    ../../components/programs/configs/fastfetch.nix
+    ../../components/programs/configs/git.nix
+    ../../components/programs/configs/tmux.nix
+    ../../components/programs/configs/zsh.nix
+  ];
+
+  home = {
+    username = "leo";
+    homeDirectory = "/home/leo";
+  };
+
+  # Version
+  home.stateVersion = "25.05";
+}

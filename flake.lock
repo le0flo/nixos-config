@@ -1,26 +1,5 @@
 {
   "nodes": {
-    "dbmain-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772532853,
-        "narHash": "sha256-lUtOfxyCz+qCk4aQXzJPFEc/n3L6iCl6D++s37iKDuQ=",
-        "ref": "refs/tags/v11.0.2",
-        "rev": "00f042ec8c6032070d5b2d6f40e9698c16082671",
-        "revCount": 6,
-        "type": "git",
-        "url": "https://codeberg.org/leoflo/dbmain-nix"
-      },
-      "original": {
-        "ref": "refs/tags/v11.0.2",
-        "type": "git",
-        "url": "https://codeberg.org/leoflo/dbmain-nix"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -94,57 +73,12 @@
         "type": "github"
       }
     },
-    "obdautodoctor-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772533223,
-        "narHash": "sha256-t9+hD+tQPK5PYtqtHufGuJEG2VGm5LFp+j0L8BzM8kE=",
-        "ref": "refs/tags/v5.1.8",
-        "rev": "531cc1e9bf28f1a046cad9cc21d95b5565c2604c",
-        "revCount": 2,
-        "type": "git",
-        "url": "https://codeberg.org/leoflo/obdautodoctor-nix"
-      },
-      "original": {
-        "ref": "refs/tags/v5.1.8",
-        "type": "git",
-        "url": "https://codeberg.org/leoflo/obdautodoctor-nix"
-      }
-    },
     "root": {
       "inputs": {
-        "dbmain-nix": "dbmain-nix",
         "disko": "disko",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
-        "obdautodoctor-nix": "obdautodoctor-nix",
-        "xfce4-hiddenapps-plugin": "xfce4-hiddenapps-plugin"
-      }
-    },
-    "xfce4-hiddenapps-plugin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1770587778,
-        "narHash": "sha256-KYa+UOP1Q3OE/X8MHl7l48KIPdCSspd/o2OshQ2NLOk=",
-        "ref": "refs/tags/v0.0.1",
-        "rev": "15605b8101f7f6f7e643e6a799808f4c3c671572",
-        "revCount": 628,
-        "type": "git",
-        "url": "https://codeberg.org/leoflo/xfce4-hiddenapps-plugin"
-      },
-      "original": {
-        "ref": "refs/tags/v0.0.1",
-        "type": "git",
-        "url": "https://codeberg.org/leoflo/xfce4-hiddenapps-plugin"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

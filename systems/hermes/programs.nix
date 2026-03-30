@@ -1,76 +1,25 @@
-{inputs, pkgs, ...}: {
+{pkgs, ...}: {
   imports = [
-    ../../components/programs/git.nix
-    ../../components/programs/fonts.nix
-    ../../components/programs/games.nix
-
-    inputs.home-manager.nixosModules.home-manager
+    ../../components/programs/bundles/cli.nix
+    ../../components/programs/bundles/internet.nix
+    ../../components/programs/bundles/base.nix
+    ../../components/programs/bundles/devices.nix
+    ../../components/programs/bundles/fonts.nix
+    ../../components/programs/bundles/games.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   # Packages
   environment.systemPackages = with pkgs; [
-    # CLI tools
-    wget
-    dig
-    ascii
-    file
-    fastfetch
-    eza
-    btop
-    dysk
-
-    # Remote tools
-    openssh
-    rsync
-    wireguard-tools
-    kubectl
-
-    # Coding
-    tmux
-    vim
-    nil
-    nixd
-    alacritty
-    zed-editor
     claude-code
     opencode
-
-    # External devices
-    exfat
-    ntfs3g
-    android-tools
-
-    # Internet
-    librewolf
-    thunderbird
-    feather
-
-    # Secret management
-    keepassxc
-    veracrypt
-
-    # Media
-    vlc
-    ffmpeg
-    yt-dlp
-
-    # Recording
-    gpu-screen-recorder
-    gpu-screen-recorder-gtk
-
-    # Home manager
-    inputs.home-manager.packages.${stdenv.hostPlatform.system}.home-manager
-
-    # Custom packages
-    inputs.obdautodoctor-nix.packages.${stdenv.hostPlatform.system}.default
   ];
 
-  # Nix linker
+  # Nix dynamic linker
   programs.nix-ld.enable = true;
 
-  # AppImages
+  # AppImage support
   programs.appimage = {
     enable = true;
     binfmt = true;
@@ -89,9 +38,4 @@
   };
 
   programs.virt-manager.enable = true;
-
-  # Custom modules
-  git.enable = true;
-  fonts.enable = true;
-  games.enable = true;
 }

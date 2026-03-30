@@ -1,37 +1,32 @@
-{inputs, lib, config, pkgs, ...}: {
-  options.xfce.enable = lib.mkEnableOption "Xfce DE";
+{pkgs, ...}: {
+  # Xfce
+  services.xserver = {
+    enable = true;
 
-  config = lib.mkIf config.xfce.enable {
-    services.xserver = {
-      enable = true;
-
-      desktopManager.xfce.enable = true;
-    };
-
-    # File manager
-    programs.thunar = {
-      enable = true;
-
-      plugins = with pkgs; [
-        thunar-media-tags-plugin
-        thunar-vcs-plugin
-        thunar-volman
-      ];
-    };
-
-    # XDG
-    xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-
-    # Packages
-    environment.systemPackages = with pkgs; [
-      xarchiver
-      xfce4-whiskermenu-plugin
-      xfce4-docklike-plugin
-
-      inputs.xfce4-hiddenapps-plugin.packages.x86_64-linux.default
-    ];
-
-    # Excluded
-    environment.xfce.excludePackages = with pkgs; [ parole ];
+    desktopManager.xfce.enable = true;
   };
+
+  # XDG
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+
+  # File manager
+  programs.thunar = {
+    enable = true;
+
+    plugins = with pkgs; [
+      thunar-media-tags-plugin
+      thunar-vcs-plugin
+      thunar-volman
+    ];
+  };
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    xarchiver
+    xfce4-whiskermenu-plugin
+    xfce4-docklike-plugin
+  ];
+
+  # Excluded
+  environment.xfce.excludePackages = with pkgs; [ parole ];
 }

@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
-    ./hardware.nix
     ./boot.nix
+    ./hardware.nix
     ./networking.nix
     ./locales.nix
 

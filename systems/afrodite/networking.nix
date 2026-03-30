@@ -1,4 +1,4 @@
-{lib, ...}: {
+{ lib, ... }: {
   networking = {
     hostName = "afrodite";
     useDHCP = lib.mkDefault true;
@@ -12,8 +12,15 @@
     firewall = {
       enable = true;
 
-      allowedTCPPorts = [ 22 80 443 ];
-      allowedUDPPorts = [ 53 51820 ];
+      allowedTCPPorts = [
+        22
+        80
+        443
+      ];
+      allowedUDPPorts = [
+        53
+        51820
+      ];
     };
 
     networkmanager = {

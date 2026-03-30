@@ -48,7 +48,4 @@
       xdgOpenUsePortal = true;
     };
   };
-
-  # Custom modules
-  niri.enable = true;
 }
