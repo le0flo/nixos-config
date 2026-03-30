@@ -13,9 +13,15 @@
       ];
     };
 
-    loader.grub = {
-      efiSupport = true;
-      efiInstallAsRemovable = true;
+    loader = {
+      timeout = 3;
+
+      grub = {
+        enable = true;
+
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
     };
   };
 }

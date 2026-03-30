@@ -17,8 +17,14 @@
 
     loader = {
       timeout = 3;
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
     };
   };
 }
