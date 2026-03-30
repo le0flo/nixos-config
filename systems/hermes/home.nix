@@ -5,6 +5,7 @@
     ../../components/programs/configs/alacritty.nix
     ../../components/programs/configs/fastfetch.nix
     ../../components/programs/configs/fuzzel.nix
+    ../../components/programs/configs/git.nix
     ../../components/programs/configs/gtk.nix
     ../../components/programs/configs/qt.nix
     ../../components/programs/configs/swaylock.nix
