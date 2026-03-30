@@ -36,6 +36,7 @@
       brightnessctl
       themechanger
       ristretto
+      pwvucontrol
     ];
   };
 }
