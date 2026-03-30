@@ -24,7 +24,6 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    xarchiver
     xwayland-satellite
     fuzzel
     swaybg
@@ -32,8 +31,8 @@
     swayidle
     playerctl
     brightnessctl
-    themechanger
     ristretto
-    pwvucontrol
+    xarchiver
+    wiremix
   ];
 }
