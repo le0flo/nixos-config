@@ -6,7 +6,9 @@
   ];
 
   services = {
+    gvfs.enable = true;
     dbus.enable = true;
+
     libinput.enable = true;
     printing.enable = true;
     blueman.enable = true;
