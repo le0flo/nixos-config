@@ -1,8 +1,11 @@
 {...}: let
   masterName = "home.arpa";
   masterPort = 6443;
-  masterUrl = "http://${masterName}:${builtins.toString masterPort}";
+  masterIp = "10.69.0.1";
+  masterUrl = "https://${masterName}:${builtins.toString masterPort}";
 in {
+  networking.extraHosts = "${masterIp} ${masterName}";
+
   services.kubernetes = {
     roles = ["node"];
     easyCerts = true;
