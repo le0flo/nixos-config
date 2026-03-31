@@ -1,10 +1,8 @@
 {...}: let
-  masterName = "home.arpa";
   masterIp = "10.69.0.1";
   masterPort = 6443;
+  masterName = "home.arpa";
 in {
-  networking.extraHosts = "${masterIp} ${masterName}";
-
   services.kubernetes = {
     roles = ["master" "node"];
     easyCerts = true;
