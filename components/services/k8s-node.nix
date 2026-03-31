@@ -1,12 +1,13 @@
 {...}: let
-  masterIp = "10.69.0.1";
+  masterName = "home.arpa";
   masterPort = 6443;
-  masterUrl = "http://${kubernetesIp}:${tostring kubernetesPort}";
+  masterUrl = "http://${masterName}:${tostring masterPort}";
 in {
   services.kubernetes = {
     roles = ["node"];
+    easyCerts = true;
 
-    masterAddress = masterIp;
+    masterAddress = masterName;
     apiserverAddress = masterUrl;
 
     kubelet = {
