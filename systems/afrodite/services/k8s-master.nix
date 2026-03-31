@@ -8,7 +8,7 @@ in {
     easyCerts = true;
 
     masterAddress = masterName;
-    apiserverAddress = "http://${masterName}:${builtins.toString masterPort}";
+    apiserverAddress = "https://${masterName}:${builtins.toString masterPort}";
 
     apiserver = {
       advertiseAddress = masterIp;
