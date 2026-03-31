@@ -16,5 +16,7 @@ in {
     };
 
     kubelet.extraOpts = "--fail-swap-on=false";
+
+    pki.cfsslAPIExtraSANs = [ masterName masterIp "localhost" "127.0.0.1" ];
   };
 }
