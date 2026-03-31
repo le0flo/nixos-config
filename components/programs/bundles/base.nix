@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     alacritty
+    zed-editor
 
     librewolf
     thunderbird
@@ -8,8 +9,6 @@
 
     keepassxc
     veracrypt
-
-    zed-editor
 
     vlc
   ];

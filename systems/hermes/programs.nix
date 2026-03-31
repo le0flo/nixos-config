@@ -14,6 +14,8 @@
   environment.systemPackages = with pkgs; [
     claude-code
     opencode
+    minikube
+    kompose
   ];
 
   # Nix dynamic linker
