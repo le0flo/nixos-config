@@ -8,11 +8,30 @@
       "208.67.220.220"
     ];
 
-    firewall.enable = false;
+    firewall = {
+      enable = true;
+
+      trustedInterfaces = [ "home" ];
+    };
 
     networkmanager = {
       enable = true;
       plugins = with pkgs; [ networkmanager-fortisslvpn ];
+    };
+
+    wg-quick.interfaces."home" = {
+      privateKeyFile = "/home/leo/.wireguard/home";
+      address = [ "10.69.0.3/24" ];
+      dns = [ "10.69.0.1" ];
+
+      peers = [
+        {
+          publicKey = "629xLQgbpcfGJotfD79p3dNbpiwmp2FQtkUMd/S+M2M=";
+          allowedIPs = [ "10.69.0.0/24" ];
+          endpoint = "leoflo.me:51820";
+          persistentKeepalive = 25;
+        }
+      ];
     };
   };
 }

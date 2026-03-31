@@ -22,6 +22,7 @@
     wg-quick.interfaces."home" = {
       privateKeyFile = "/home/leo/.wireguard/home";
       address = [ "10.69.0.2/24" ];
+      dns = [ "10.69.0.1" ];
 
       peers = [
         {
