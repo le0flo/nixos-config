@@ -1,8 +1,7 @@
 {...}: let
   masterName = "home.arpa";
-  masterPort = 6443;
   masterIp = "10.69.0.1";
-  masterUrl = "https://${masterName}:${builtins.toString masterPort}";
+  masterUrl = "https://${masterName}:6443";
 in {
   networking.extraHosts = "${masterIp} ${masterName}";
 

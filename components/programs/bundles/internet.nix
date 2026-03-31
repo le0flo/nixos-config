@@ -9,5 +9,6 @@
     openssh
     rsync
     kubectl
+    kubernetes-helm
   ];
 }
