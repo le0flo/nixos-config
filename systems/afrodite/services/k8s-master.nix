@@ -6,7 +6,7 @@ in {
     roles = ["master" "node"];
 
     masterAddress = masterIp;
-    apiserverAddress = "http://${masterIp}:${tostring masterPort}";
+    apiserverAddress = "http://${masterIp}:${builtins.toString masterPort}";
 
     apiserver = {
       advertiseAddress = masterIp;
