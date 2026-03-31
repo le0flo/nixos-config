@@ -1,7 +1,7 @@
 {...}: let
   masterName = "home.arpa";
   masterPort = 6443;
-  masterUrl = "http://${masterName}:${tostring masterPort}";
+  masterUrl = "http://${masterName}:${builtins.toString masterPort}";
 in {
   services.kubernetes = {
     roles = ["node"];
