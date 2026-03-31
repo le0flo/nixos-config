@@ -2,7 +2,8 @@
   imports = [
     ../../../components/services/openssh.nix
 
-    ./caddy.nix
     ./bind.nix
+    ./caddy.nix
+    ./k8s-master.nix
   ];
 }
