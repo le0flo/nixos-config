@@ -6,6 +6,7 @@
 
     ascii
     file
+    dysk
     ffmpeg
     home-manager
   ];
