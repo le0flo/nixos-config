@@ -12,11 +12,8 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    xournalpp
-
     claude-code
     opencode
-
     minikube
     kompose
   ];
