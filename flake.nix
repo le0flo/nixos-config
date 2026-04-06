@@ -12,9 +12,14 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ {nixpkgs, home-manager, disko, ...}: let
+  outputs = inputs @ {nixpkgs, home-manager, disko, stylix, ...}: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -41,7 +46,10 @@
     homeConfigurations."hermes" = home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
       pkgs = pkgs;
-      modules = [ ./systems/hermes/home.nix ];
+      modules = [
+        ./systems/hermes/home.nix
+        stylix.homeModules.stylix
+      ];
     };
 
     homeConfigurations."afrodite" = home-manager.lib.homeManagerConfiguration {

@@ -12,7 +12,6 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    claude-code
     opencode
     minikube
     kompose

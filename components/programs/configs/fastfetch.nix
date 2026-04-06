@@ -3,6 +3,12 @@
     enable = true;
 
     settings = {
+      logo = {
+        source = "linux";
+        padding = {
+          right = 1;
+        };
+      };
       display = {
         size = {
           maxPrefix = "MB";
