@@ -1,27 +1,17 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  wallpaper = ../../../assets/bg-sheeps.jpg;
+in {
+  home.file.".config/stylix/wallpaper".source = wallpaper;
+
   stylix = {
     enable = true;
+    autoEnable = true;
 
-    base16Scheme = {
-      base00 = "#0b0e14";
-      base01 = "#131721";
-      base02 = "#202229";
-      base03 = "#3e4b59";
-      base04 = "#bfbdb6";
-      base05 = "#e6e1cf";
-      base06 = "#ece8db";
-      base07 = "#f2f0e7";
-      base08 = "#f07178";
-      base09 = "#ff8f40";
-      base0A = "#ffb454";
-      base0B = "#aad94c";
-      base0C = "#95e6cb";
-      base0D = "#59c2ff";
-      base0E = "#d2a6ff";
-      base0F = "#e6b450";
-    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
 
     polarity = "dark";
+
+    image = wallpaper;
 
     icons = {
       enable = true;

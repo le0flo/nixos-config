@@ -56,7 +56,7 @@ hotkey-overlay {
   hide-not-bound
 }
 
-spawn-sh-at-startup "swaybg -m stretch -i ~/Pictures/Backgrounds/plane.jpg"
+spawn-sh-at-startup "swaybg -m fill -i ~/.config/stylix/wallpaper"
 spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f'"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
