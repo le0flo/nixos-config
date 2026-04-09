@@ -1,8 +1,12 @@
 {pkgs, ...}: {
   # Niri
-  programs.niri = {
-    enable = true;
-    useNautilus = false;
+  programs = {
+    niri = {
+      enable = true;
+      useNautilus = false;
+    };
+
+    dconf.enable = true;
   };
 
   # XDG
@@ -34,5 +38,12 @@
     ristretto
     xarchiver
     wiremix
+    gsettings-desktop-schemas
+  ];
+
+  # Theming fixes
+  environment.pathsToLink = [
+    "/share/gsettings-schemas"
+    "/share/glib-2.0"
   ];
 }
