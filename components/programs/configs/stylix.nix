@@ -57,5 +57,21 @@ in {
         name = "Noto Color Emoji";
       };
     };
+
+    targets.qt.enable = false;
+  };
+
+  qt = {
+    enable = true;
+
+    platformTheme = {
+      package = pkgs.kdePackages.breeze;
+      name = "kde";
+    };
+
+    style = {
+      package = pkgs.kdePackages.breeze;
+      name = "breeze";
+    };
   };
 }
