@@ -1,9 +1,5 @@
-{pkgs, ...}: let
-  wallpaper = ../../../assets/bg-sheeps.jpg;
-in {
-  dconf.enable = true;
-
-  home.file.".config/stylix/wallpaper".source = wallpaper;
+{pkgs, ...}: {
+  imports = [ ./kde.nix ];
 
   xdg.dataFile = {
     "icons/Papirus-Dark".source = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark";
@@ -13,15 +9,6 @@ in {
   };
 
   stylix = {
-    enable = true;
-    autoEnable = true;
-
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
-
-    polarity = "dark";
-
-    image = wallpaper;
-
     icons = {
       enable = true;
 
@@ -34,28 +21,6 @@ in {
       package = pkgs.bibata-cursors;
       name = "Bibata-Original-Classic";
       size = 20;
-    };
-
-    fonts = {
-      serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
-      };
-
-      sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
-      };
-
-      monospace = {
-        package = pkgs.nerd-fonts.iosevka-term;
-        name = "IosevkaTerm NF";
-      };
-
-      emoji = {
-        package = pkgs.noto-fonts-color-emoji;
-        name = "Noto Color Emoji";
-      };
     };
 
     targets.qt.enable = false;
