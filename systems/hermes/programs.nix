@@ -1,11 +1,17 @@
 {pkgs, ...}: {
   imports = [
-    ../../components/programs/bundles/cli.nix
-    ../../components/programs/bundles/internet.nix
-    ../../components/programs/bundles/base.nix
-    ../../components/programs/bundles/devices.nix
-    ../../components/programs/bundles/fonts.nix
-    ../../components/programs/bundles/games.nix
+    ../../components/programs/base.nix
+    ../../components/programs/internet.nix
+    ../../components/programs/external.nix
+
+    ../../components/programs/graphical/base.nix
+    ../../components/programs/graphical/dev.nix
+    ../../components/programs/graphical/fonts.nix
+    ../../components/programs/graphical/media.nix
+    ../../components/programs/graphical/office.nix
+    ../../components/programs/graphical/games.nix
+    ../../components/programs/graphical/file-sharing.nix
+    ../../components/programs/graphical/social.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -14,7 +20,6 @@
   environment.systemPackages = with pkgs; [
     opencode
     minikube
-    kompose
   ];
 
   # Nix dynamic linker

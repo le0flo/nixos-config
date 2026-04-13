@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
-    ../../components/gui/niri/config.nix
     ../../components/gui/style
+    ../../components/gui/niri/config.nix
 
     ../../components/programs/configs/alacritty.nix
     ../../components/programs/configs/fastfetch.nix
@@ -16,8 +16,7 @@
   home = {
     username = "leo";
     homeDirectory = "/home/leo";
-  };
 
-  # Version
-  home.stateVersion = "26.05";
+    stateVersion = "26.05";
+  };
 }

@@ -1,4 +1,4 @@
-{inputs, config, lib, modulesPath, ...}: {
+{inputs, config, lib, modulesPath, pkgs, ...}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
@@ -25,5 +25,11 @@
     bluetooth.enable = true;
 
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+    graphics = {
+      enable = true;
+
+      extraPackages = with pkgs; [ intel-media-driver intel-ocl intel-vaapi-driver ];
+    };
   };
 }

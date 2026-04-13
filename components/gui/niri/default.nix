@@ -7,35 +7,23 @@
     };
 
     dconf.enable = true;
+
+    thunar = {
+      enable = true;
+
+      plugins = with pkgs; [
+        thunar-media-tags-plugin
+        thunar-vcs-plugin
+        thunar-volman
+      ];
+    };
   };
 
   # XDG
-  xdg.portal = {
-    config.common = {
-      default = [
-        "gnome"
-        "gtk"
-      ];
-
-      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-    };
-
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gnome
-      xdg-desktop-portal-gtk
-    ];
-  };
-
-  # File manager
-  programs.thunar = {
-    enable = true;
-
-    plugins = with pkgs; [
-      thunar-media-tags-plugin
-      thunar-vcs-plugin
-      thunar-volman
-    ];
-  };
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gnome
+    xdg-desktop-portal-gtk
+  ];
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -49,12 +37,5 @@
     ristretto
     xarchiver
     wiremix
-    gsettings-desktop-schemas
-  ];
-
-  # Theming fixes
-  environment.pathsToLink = [
-    "/share/gsettings-schemas"
-    "/share/glib-2.0"
   ];
 }

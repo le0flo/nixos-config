@@ -24,6 +24,11 @@
       "wheel"
       "networkmanager"
     ];
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAokSVn78uTLEMp73AkLVA2q6+U+IPtqaeTc/HKGIFsV leo@hermes"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJj3bxerE8ZA75d01rVRS8KOkxftjaPD8vpxwItmxVbM leo@afrodite"
+    ];
   };
 
   # Shell

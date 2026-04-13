@@ -20,7 +20,7 @@
     };
 
     wg-quick.interfaces."home" = {
-      privateKeyFile = "/home/leo/.wireguard/home";
+      privateKeyFile = "/etc/wireguard/home";
       address = [ "10.69.0.3/24" ];
       dns = [ "10.69.0.1" ];
 

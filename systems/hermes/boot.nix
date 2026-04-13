@@ -4,15 +4,18 @@
     kernelModules = [ "kvm-intel" ];
     kernelParams = [ "boot.shell_on_fail" ];
 
-    initrd = {
-      availableKernelModules = [
-        "xhci_pci"
-        "nvme"
-        "usb_storage"
-        "sd_mod"
-        "sdhci_pci"
-      ];
-    };
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "nvme"
+      "usb_storage"
+      "sd_mod"
+      "sdhci_pci"
+    ];
+
+    supportedFilesystems = [
+      "exfat"
+      "ntfs"
+    ];
 
     loader = {
       timeout = 3;
@@ -25,10 +28,5 @@
         efiInstallAsRemovable = true;
       };
     };
-
-    supportedFilesystems = [
-      "exfat"
-      "ntfs"
-    ];
   };
 }

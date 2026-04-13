@@ -9,8 +9,7 @@
   home = {
     username = "leo";
     homeDirectory = "/home/leo";
-  };
 
-  # Version
-  home.stateVersion = "26.05";
+    stateVersion = "26.05";
+  };
 }

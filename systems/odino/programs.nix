@@ -1,7 +1,7 @@
 {...}: {
   imports = [
-    ../../components/programs/bundles/cli.nix
-    ../../components/programs/bundles/internet.nix
+    ../../components/programs/base.nix
+    ../../components/programs/internet.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

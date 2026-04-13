@@ -1,6 +1,5 @@
 {...}: {
   time.timeZone = "Europe/Rome";
-  console.keyMap = "it";
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -17,4 +16,6 @@
       LC_TIME = "it_IT.UTF-8";
     };
   };
+
+  console.keyMap = "it";
 }

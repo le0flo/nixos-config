@@ -26,11 +26,15 @@
     targets.qt.enable = false;
   };
 
+  gtk.gtk3.extraConfig = {
+    gtk-application-prefer-dark-theme = 1;
+  };
+
   qt = {
     enable = true;
 
     platformTheme = {
-      package = pkgs.kdePackages.breeze;
+      package = with pkgs.kdePackages; [ plasma-integration breeze ];
       name = "kde";
     };
 

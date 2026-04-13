@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{lib, ...}: {
   networking = {
     hostName = "afrodite";
     useDHCP = lib.mkDefault true;
@@ -31,7 +31,7 @@
     };
 
     wg-quick.interfaces."home" = {
-      privateKeyFile = "/home/leo/.wireguard/home";
+      privateKeyFile = "/etc/wireguard/home";
       address = [ "10.69.0.1/24" ];
 
       listenPort = 51820;
