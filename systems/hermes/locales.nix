@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   time.timeZone = "Europe/Rome";
 
   i18n = {
@@ -17,7 +17,11 @@
     };
   };
 
-  console.keyMap = "it";
+  console = {
+    keyMap = "it";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-232b.psf.gz";
+  };
+
   services.xserver.xkb = {
     layout = "it";
     variant = "";
