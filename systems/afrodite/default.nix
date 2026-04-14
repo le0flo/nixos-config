@@ -17,33 +17,18 @@
 
   # Users
   users = {
-    users = {
-      "leo" = {
-        isNormalUser = true;
-        shell = pkgs.zsh;
+    users."leo" = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
 
-        extraGroups = [
-          "wheel"
-          "networkmanager"
-        ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+      ];
 
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
-        ];
-      };
-
-      "git" = {
-        isSystemUser = true;
-        shell = "${pkgs.git}/bin/git-shell";
-        group = "git";
-
-        home = "/var/lib/git";
-        createHome = true;
-
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/jRKQiRkGmtDRp/LniFVtl3M9r8VOaSWcyDT4Bl1R9 leo@hermes"
-        ];
-      };
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
+      ];
     };
 
     groups."git" = {};

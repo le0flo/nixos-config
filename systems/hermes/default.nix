@@ -17,7 +17,7 @@
   ];
 
   # Users
-  users.users.leo = {
+  users.users."leo" = {
     isNormalUser = true;
     shell = pkgs.zsh;
 
