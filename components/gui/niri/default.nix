@@ -37,5 +37,6 @@
     ristretto
     xarchiver
     pwvucontrol
+    overskride
   ];
 }
