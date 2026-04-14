@@ -36,6 +36,6 @@
     brightnessctl
     ristretto
     xarchiver
-    wiremix
+    pwvucontrol
   ];
 }
