@@ -8,7 +8,6 @@
       };
 
       window_decorations = "server";
-
       vim_mode = false;
       format_on_save = "off";
       hard_tabs = false;
@@ -19,6 +18,8 @@
 
         cursor_shape = "bar";
       };
+
+      git.inline_blame.enabled = false;
     };
   };
 }
