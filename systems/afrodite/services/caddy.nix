@@ -4,11 +4,7 @@
 
     virtualHosts = {
       "leoflo.me".extraConfig = ''
-        reverse_proxy 127.0.0.1:8001
-      '';
-
-      "code.leoflo.me".extraConfig = ''
-        reverse_proxy 127.0.0.1:8002
+        reverse_proxy 10.69.0.2:9000
       '';
 
       "files.leoflo.me".extraConfig = ''
