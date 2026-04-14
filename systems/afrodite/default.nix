@@ -16,22 +16,18 @@
   ];
 
   # Users
-  users = {
-    users."leo" = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
+  users.users."leo" = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
 
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
 
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
-      ];
-    };
-
-    groups."git" = {};
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
+    ];
   };
 
   # Shell
