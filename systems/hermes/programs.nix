@@ -20,6 +20,7 @@
   environment.systemPackages = with pkgs; [
     opencode
     minikube
+    obdautodoctor
   ];
 
   # Nix dynamic linker
