@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   imports = [
+    ../../components/programs/bash.nix
+
     ../../components/programs/base.nix
     ../../components/programs/internet.nix
     ../../components/programs/external.nix
@@ -19,7 +21,6 @@
   # Packages
   environment.systemPackages = with pkgs; [
     opencode
-    minikube
     obdautodoctor
   ];
 
