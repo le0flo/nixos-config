@@ -18,7 +18,7 @@
   # Users
   users.users."leo" = {
     isNormalUser = true;
-    shell = pkgs.zsh;
+    shell = pkgs.bash;
 
     extraGroups = [
       "wheel"
@@ -32,12 +32,24 @@
   };
 
   # Shell
-  programs.zsh.enable = true;
+  programs.bash = {
+    enable = true;
+    vteIntegration = true;
 
-  environment.shellAliases = {
-    update-boot = "sudo nixos-rebuild boot --flake ~/nixos#odino";
-    update-system = "sudo nixos-rebuild switch --flake ~/nixos#odino";
-    update-home = "home-manager switch --flake ~/nixos#odino";
+    promptInit = ''
+      export PS1='\e[1m\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 6)\]\h \[$(tput setaf 5)\]\w\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\$ '
+    '';
+
+    shellAliases = {
+      l = "ls -lh";
+      ll = "ls -lah";
+
+      ssh = "TERM=xterm-256color ssh";
+
+      update-boot = "sudo nixos-rebuild boot --flake ~/nixos#odino";
+      update-system = "sudo nixos-rebuild switch --flake ~/nixos#odino";
+      update-home = "home-manager switch --flake ~/nixos#odino";
+    };
   };
 
   # Version

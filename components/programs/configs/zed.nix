@@ -14,9 +14,8 @@
       tab_size = 2;
 
       terminal = {
-        shell.program = "zsh";
-
         cursor_shape = "bar";
+        shell.program = "bash";
       };
 
       git.inline_blame.enabled = false;

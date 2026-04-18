@@ -10,7 +10,6 @@
     ../../components/programs/configs/swaylock.nix
     ../../components/programs/configs/tmux.nix
     ../../components/programs/configs/zed.nix
-    ../../components/programs/configs/zsh.nix
   ];
 
   home = {

@@ -63,11 +63,6 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 prefer-no-csd
 
-cursor {
-  xcursor-theme "Bibata-Modern-Classic"
-  xcursor-size 20
-}
-
 window-rule {
   geometry-corner-radius 0
   clip-to-geometry true
