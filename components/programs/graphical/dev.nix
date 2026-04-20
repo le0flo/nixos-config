@@ -6,5 +6,6 @@
     dbeaver-bin
 
     freecad
+    kicad
   ];
 }
