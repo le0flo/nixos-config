@@ -7,5 +7,6 @@
 
     freecad
     kicad
+    logisim-evolution
   ];
 }
