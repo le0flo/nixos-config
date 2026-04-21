@@ -10,7 +10,7 @@
   environment.systemPackages = with pkgs; [
     prismlauncher
     heroic
-    runelite
+    bolt-launcher
 
     gpu-screen-recorder
     gpu-screen-recorder-gtk
