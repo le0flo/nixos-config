@@ -19,6 +19,15 @@
       };
 
       git.inline_blame.enabled = false;
+
+      languages = {
+        "Nix" = {
+          enable_language_server = false;
+        };
+        "Nginx" = {
+          enable_language_server = false;
+        };
+      };
     };
   };
 }
