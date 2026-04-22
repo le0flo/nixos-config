@@ -46,4 +46,7 @@
   };
 
   programs.virt-manager.enable = true;
+
+  # XP-pen
+  programs.xppen.enable = true;
 }
