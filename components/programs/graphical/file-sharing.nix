@@ -3,7 +3,6 @@
     localsend
     qbittorrent
     nicotine-plus
-
     metadata-cleaner
   ];
 }

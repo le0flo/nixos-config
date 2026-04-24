@@ -16,7 +16,7 @@
     gpu-screen-recorder-gtk
   ];
 
-  # Runelite res fix
+  # Runelite fix
   environment.sessionVariables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
   };
