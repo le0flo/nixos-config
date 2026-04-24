@@ -8,7 +8,6 @@
 
     ../../components/programs/graphical/base.nix
     ../../components/programs/graphical/dev.nix
-    ../../components/programs/graphical/fonts.nix
     ../../components/programs/graphical/media.nix
     ../../components/programs/graphical/office.nix
     ../../components/programs/graphical/games.nix

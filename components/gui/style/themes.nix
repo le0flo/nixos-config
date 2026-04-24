@@ -18,6 +18,7 @@
     };
 
     targets.qt.enable = false;
+    targets.zed.enable = false;
   };
 
   gtk.gtk3.extraConfig = {
