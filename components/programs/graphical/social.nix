@@ -3,5 +3,6 @@
     zapzap
     telegram-desktop
     vesktop
+    weechat
   ];
 }

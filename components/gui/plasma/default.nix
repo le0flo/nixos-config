@@ -9,7 +9,6 @@
   environment.systemPackages = with pkgs.kdePackages; [
     kate
     filelight
-    flatpak-kcm
   ];
 
   # Excluded

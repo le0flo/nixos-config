@@ -3,7 +3,7 @@
     ffmpeg
     yt-dlp
 
-    vlc
+    mpv
     strawberry
     kid3
   ];

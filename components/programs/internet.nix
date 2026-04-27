@@ -8,7 +8,5 @@
     wireguard-tools
     openssh
     rsync
-    kubectl
-    kubernetes-helm
   ];
 }

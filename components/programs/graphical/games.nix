@@ -1,10 +1,7 @@
 {pkgs, ...}: {
   # Steam
   hardware.steam-hardware.enable = true;
-  programs = {
-    gamemode.enable = true;
-    steam.enable = true;
-  };
+  programs.steam.enable = true;
 
   # Launchers
   environment.systemPackages = with pkgs; [

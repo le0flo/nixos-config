@@ -43,11 +43,7 @@ layout {
   }
 
   border {
-    width 2
-
-    active-color "#96a6c8"
-    inactive-color "#484848"
-    urgent-color "#f43841"
+    off
   }
 }
 
