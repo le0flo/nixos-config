@@ -20,10 +20,16 @@
   };
 
   # XDG
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gnome
-    xdg-desktop-portal-gtk
-  ];
+  xdg.portal = {
+    config."niri" = {
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+    };
+
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+    ];
+  };
 
   # Packages
   environment.systemPackages = with pkgs; [
