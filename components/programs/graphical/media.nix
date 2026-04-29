@@ -1,9 +1,7 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     ffmpeg
-    yt-dlp
-
-    mpv
+    vlc
     strawberry
     kid3
   ];
