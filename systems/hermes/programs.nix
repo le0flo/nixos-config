@@ -20,7 +20,6 @@
   # Packages
   environment.systemPackages = with pkgs; [
     opencode
-    opencode-desktop
     obdautodoctor
   ];
 
