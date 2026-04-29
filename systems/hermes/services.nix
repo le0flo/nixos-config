@@ -19,5 +19,6 @@
     gvfs.enable = true;
     libinput.enable = true;
     printing.enable = true;
+    tumbler.enable = true;
   };
 }
