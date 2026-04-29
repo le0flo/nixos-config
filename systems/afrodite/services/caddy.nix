@@ -49,10 +49,6 @@
         reverse_proxy 10.69.0.2:9005
         tls internal
       '';
-
-      "numericollection.it".extraConfig = ''
-        reverse_proxy :10001
-      '';
     };
   };
 }
