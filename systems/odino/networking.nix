@@ -13,7 +13,6 @@
 
       trustedInterfaces = [ "home" ];
 
-      allowedTCPPorts = [ 22 ];
       allowedUDPPorts = [ 51820 ];
     };
 

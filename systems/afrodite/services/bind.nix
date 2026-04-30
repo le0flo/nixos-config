@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  networking.firewall.allowedUDPPorts = [ 53 ];
+
   services.bind = {
     enable = true;
 
