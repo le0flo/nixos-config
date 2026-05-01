@@ -22,6 +22,7 @@
     shell = pkgs.bash;
 
     extraGroups = [
+      "dialout"
       "wheel"
       "networkmanager"
       "video"
