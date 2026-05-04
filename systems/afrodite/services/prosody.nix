@@ -50,10 +50,16 @@ in {
 
       extraModules = [ "turn_external" ];
       modules = {
-        announce = true;
-        private = false;
-        proxy65 = false;
-        register = false;
+        roster = true;
+        saslauth = true;
+        tls = true;
+        dialback = true;
+        disco = true;
+        carbons = true;
+        pep = true;
+        mam = true;
+        ping = true;
+        admin_adhoc = true;
       };
 
       ssl = {
