@@ -32,6 +32,7 @@
 
   # Shell
   environment.shellAliases = {
+    update-build = "sudo nixos-rebuild build --flake ~/nixos#afrodite";
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#afrodite";
     update-home = "home-manager switch --flake ~/nixos#afrodite";

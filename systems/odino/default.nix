@@ -33,6 +33,7 @@
 
   # Shell
   environment.shellAliases = {
+    update-build = "sudo nixos-rebuild build --flake ~/nixos#odino";
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#odino";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#odino";
     update-home = "home-manager switch --flake ~/nixos#odino";

@@ -31,6 +31,7 @@
 
   # Shell
   environment.shellAliases = {
+    update-build = "sudo nixos-rebuild build --flake ~/nixos#hermes";
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#hermes";
     update-system = "sudo nixos-rebuild switch --flake ~/nixos#hermes";
     update-home = "home-manager switch --flake ~/nixos#hermes";
