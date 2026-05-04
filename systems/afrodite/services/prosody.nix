@@ -52,7 +52,7 @@ in {
         }
       '';
 
-      extraModules = [ "turn_external" "sasl2" "sasl_ssdp" ];
+      extraModules = [ "turn_external" ];
       modules = {
         announce = true;
         private = false;
