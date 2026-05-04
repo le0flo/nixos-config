@@ -6,20 +6,16 @@ in {
     allowedTCPPorts = [
       # Prosody
       5222
-      5223
+      5269
 
       # Coturn
       3478
-      3479
       5349
-      5350
     ];
     allowedUDPPorts = [
       # Coturn
       3478
-      3479
       5349
-      5350
     ];
     allowedUDPPortRanges = [
       # Coturn
@@ -108,6 +104,7 @@ in {
       enable = true;
 
       listening-port = 3478;
+      tls-listening-port = 5349;
       realm = "turn.xmpp.${domainName}";
 
       pkey = "${sslCertDir}/key.pem";
