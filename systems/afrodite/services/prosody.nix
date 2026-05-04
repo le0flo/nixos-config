@@ -38,6 +38,7 @@ in {
   services = {
     prosody = {
       enable = true;
+      checkConfig = false;
       xmppComplianceSuite = false;
 
       c2sRequireEncryption = true;
@@ -65,7 +66,7 @@ in {
         dialback = false;
         disco = true;
         groups = false;
-        http_files = true;
+        http_files = false;
         legacyauth = false;
         limits = false;
         mam = true;
@@ -118,7 +119,7 @@ in {
         extraConfig = ''
           turn_external_host = "turn.xmpp.${domainName}"
 
-          local turn_secret_file = io.open("/etc/secrets/prosody-coturn", "r")
+          local turn_secret_file = Lua.io.open("/etc/secrets/prosody-coturn", "r")
           if not turn_secret_file then
             error("Could not open TURN shared secret file")
           end

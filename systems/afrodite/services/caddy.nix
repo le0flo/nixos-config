@@ -39,34 +39,41 @@ in {
         '';
       };
 
-      "music.home.${domainName}" = {
-        useACMEHost = domainName;
-        extraConfig = ''
-          handle /.well-known/acme-challenge/* {
-            root * /var/lib/acme/acme-challenge
-            file_server
-          }
+      # XMPP
+      "xmpp.${domainName}".extraConfig = ''
+        handle /.well-known/acme-challenge/* {
+          root * /var/lib/acme/acme-challenge
+          file_server
+        }
 
-          handle {
-            reverse_proxy 10.69.0.2:9001
-          }
-        '';
-      };
+        handle {
+          respond "Il server XMPP è soltanto mio :P"
+        }
+      '';
 
-      "cinema.home.${domainName}" = {
-        useACMEHost = domainName;
-        extraConfig = ''
-          handle /.well-known/acme-challenge/* {
-            root * /var/lib/acme/acme-challenge
-            file_server
-          }
+      "muc.xmpp.${domainName}".extraConfig = ''
+        handle /.well-known/acme-challenge/* {
+          root * /var/lib/acme/acme-challenge
+          file_server
+        }
 
-          handle {
-            reverse_proxy 10.69.0.2:9004
-          }
-        '';
-      };
+        handle {
+          respond "Il server XMPP è soltanto mio :P"
+        }
+      '';
 
+      "turn.xmpp.${domainName}".extraConfig = ''
+        handle /.well-known/acme-challenge/* {
+          root * /var/lib/acme/acme-challenge
+          file_server
+        }
+
+        handle {
+          respond "Il server XMPP è soltanto mio :P"
+        }
+      '';
+
+      # Internal network
       "home.arpa".extraConfig = ''
         respond "Benvenuto nella rete privata di leo :D"
         tls internal
@@ -96,6 +103,34 @@ in {
         reverse_proxy 10.69.0.2:9005
         tls internal
       '';
+
+      "music.home.${domainName}" = {
+        useACMEHost = domainName;
+        extraConfig = ''
+          handle /.well-known/acme-challenge/* {
+            root * /var/lib/acme/acme-challenge
+            file_server
+          }
+
+          handle {
+            reverse_proxy 10.69.0.2:9001
+          }
+        '';
+      };
+
+      "cinema.home.${domainName}" = {
+        useACMEHost = domainName;
+        extraConfig = ''
+          handle /.well-known/acme-challenge/* {
+            root * /var/lib/acme/acme-challenge
+            file_server
+          }
+
+          handle {
+            reverse_proxy 10.69.0.2:9004
+          }
+        '';
+      };
     };
   };
 }

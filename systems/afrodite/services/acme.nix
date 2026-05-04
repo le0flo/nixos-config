@@ -10,6 +10,7 @@ in {
   users.groups.${acmeGroup}.members = [
     config.services.caddy.user
     config.services.prosody.user
+    "turnserver"
   ];
 
   security.acme = {
@@ -23,9 +24,11 @@ in {
 
         extraDomainNames = [
           "files.${domainName}"
+          "xmpp.${domainName}"
+          "muc.xmpp.${domainName}"
+          "turn.xmpp.${domainName}"
           "music.home.${domainName}"
           "cinema.home.${domainName}"
-          "xmpp.${domainName}"
         ];
       };
     };
