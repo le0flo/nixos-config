@@ -1,4 +1,6 @@
-{...}: {
+{...}: let
+  domainName = "leoflo.me";
+in {
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -8,22 +10,34 @@
     enable = true;
 
     virtualHosts = {
-      "leoflo.me".extraConfig = ''
-        reverse_proxy 10.69.0.2:9000
-      '';
+      "${domainName}" = {
+        useACMEHost = domainName;
+        extraConfig = ''
+          reverse_proxy 10.69.0.2:9000
+        '';
+      };
 
-      "files.leoflo.me".extraConfig = ''
-        root /srv/files.leoflo.me
-        file_server browse
-      '';
+      "files.${domainName}" = {
+        useACMEHost = domainName;
+        extraConfig = ''
+          root /srv/files.leoflo.me
+          file_server browse
+        '';
+      };
 
-      "music.home.leoflo.me".extraConfig = ''
-        reverse_proxy 10.69.0.2:9001
-      '';
+      "music.home.${domainName}" = {
+        useACMEHost = domainName;
+        extraConfig = ''
+          reverse_proxy 10.69.0.2:9001
+        '';
+      };
 
-      "cinema.home.leoflo.me".extraConfig = ''
-        reverse_proxy 10.69.0.2:9004
-      '';
+      "cinema.home.${domainName}" = {
+        useACMEHost = domainName;
+        extraConfig = ''
+          reverse_proxy 10.69.0.2:9004
+        '';
+      };
 
       "home.arpa".extraConfig = ''
         respond "Benvenuto nella rete privata di leo :D"
