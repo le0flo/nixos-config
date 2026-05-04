@@ -1,4 +1,4 @@
-{...}: let
+{config, ...}: let
   domainName = "leoflo.me";
   acmeGroup = "acme-cert";
 in {
