@@ -113,7 +113,14 @@ in {
 
         extraConfig = ''
           turn_external_host = "turn.xmpp.${domainName}"
-          turn_external_secret = "${builtins.readFile /etc/secrets/prosody-coturn}"
+
+          local turn_secret_file = io.open("/etc/secrets/prosody-coturn", "r")
+          if not turn_secret_file then
+            error("Could not open TURN shared secret file")
+          end
+
+          turn_external_secret = turn_secret_file:read("*a"):gsub("%s+$", "")
+          turn_secret_file:close()
         '';
       };
 
@@ -134,7 +141,7 @@ in {
       pkey = "${sslCertDir}/key.pem";
       cert = "${sslCertDir}/fullchain.pem";
 
-      static-auth-secret-file = /etc/secrets/prosody-coturn;
+      static-auth-secret-file = "/etc/secrets/prosody-coturn";
       use-auth-secret = true;
     };
   };

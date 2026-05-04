@@ -2,6 +2,11 @@
   domainName = "leoflo.me";
   acmeGroup = "acme-cert";
 in {
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
   users.groups.${acmeGroup}.members = [
     config.services.caddy.user
     config.services.prosody.user

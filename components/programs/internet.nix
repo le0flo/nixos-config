@@ -6,6 +6,7 @@
     dig
 
     wireguard-tools
+    openssl
     openssh
     rsync
   ];
