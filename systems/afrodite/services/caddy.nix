@@ -13,29 +13,57 @@ in {
       "${domainName}" = {
         useACMEHost = domainName;
         extraConfig = ''
-          reverse_proxy 10.69.0.2:9000
+          handle /.well-known/acme-challenge/* {
+            root * /var/lib/acme/acme-challenge
+            file_server
+          }
+
+          handle {
+            reverse_proxy 10.69.0.2:9000
+          }
         '';
       };
 
       "files.${domainName}" = {
         useACMEHost = domainName;
         extraConfig = ''
-          root /srv/files.leoflo.me
-          file_server browse
+          handle /.well-known/acme-challenge/* {
+            root * /var/lib/acme/acme-challenge
+            file_server
+          }
+
+          handle {
+            root /srv/files.leoflo.me
+            file_server browse
+          }
         '';
       };
 
       "music.home.${domainName}" = {
         useACMEHost = domainName;
         extraConfig = ''
-          reverse_proxy 10.69.0.2:9001
+          handle /.well-known/acme-challenge/* {
+            root * /var/lib/acme/acme-challenge
+            file_server
+          }
+
+          handle {
+            reverse_proxy 10.69.0.2:9001
+          }
         '';
       };
 
       "cinema.home.${domainName}" = {
         useACMEHost = domainName;
         extraConfig = ''
-          reverse_proxy 10.69.0.2:9004
+          handle /.well-known/acme-challenge/* {
+            root * /var/lib/acme/acme-challenge
+            file_server
+          }
+
+          handle {
+            reverse_proxy 10.69.0.2:9004
+          }
         '';
       };
 
