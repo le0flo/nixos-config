@@ -52,43 +52,12 @@ in {
         }
       '';
 
-      extraModules = [ "turn_external" ];
+      extraModules = [ "turn_external" "sasl2" "sasl_ssdp" ];
       modules = {
-        admin_adhoc = true;
-        admin_telnet = false;
         announce = true;
-        blocklist = true;
-        bookmarks = true;
-        bosh = false;
-        carbons = true;
-        cloud_notify = true;
-        csi = true;
-        dialback = false;
-        disco = true;
-        groups = false;
-        http_files = false;
-        legacyauth = false;
-        limits = false;
-        mam = true;
-        motd = false;
-        pep = true;
-        ping = true;
         private = false;
         proxy65 = false;
         register = false;
-        roster = true;
-        saslauth = true;
-        server_contact_info = false;
-        smacks = true;
-        time = true;
-        tls = true;
-        uptime = true;
-        vcard = true;
-        vcard_legacy = false;
-        version = true;
-        watchregistrations = false;
-        websocket = false;
-        welcome = false;
       };
 
       ssl = {
@@ -113,9 +82,7 @@ in {
 
       virtualHosts."main" = {
         enabled = true;
-
         domain = "${domainName}";
-
         extraConfig = ''
           turn_external_host = "turn.xmpp.${domainName}"
 
