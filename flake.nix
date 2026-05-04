@@ -17,14 +17,9 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs @ {nixpkgs, home-manager, disko, stylix, agenix, ...}: let
+  outputs = inputs @ {nixpkgs, home-manager, disko, stylix, ...}: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -39,7 +34,6 @@
       modules = [
         ./systems/afrodite
         disko.nixosModules.disko
-        agenix.nixosModules.default
       ];
     };
 

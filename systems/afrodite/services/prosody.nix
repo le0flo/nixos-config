@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}: let
+{config, ...}: let
   domainName = "leoflo.me";
   sslCertDir = config.security.acme.certs.${domainName}.directory;
 in {
@@ -29,17 +29,6 @@ in {
       }
     ];
   };
-
-  age.secrets.prosody-coturn = {
-    file = ./prosody-coturn.age;
-    mode = "644";
-  };
-
-  systemd.services.prosody.preStart = lib.mkBefore ''
-    secret="$(${pkgs.coreutils}/bin/cat ${config.age.secrets.prosody-coturn.path})"
-    printf 'turn_external_secret = "%s"\n' "$secret" > /run/prosody/turn-secret.cfg.lua
-    ${pkgs.coreutils}/bin/chmod 600 /run/prosody/turn-secret.cfg.lua
-  '';
 
   services = {
     prosody = {
@@ -124,7 +113,7 @@ in {
 
         extraConfig = ''
           turn_external_host = "turn.xmpp.${domainName}"
-          Include "/run/prosody/turn-secret.cfg.lua"
+          turn_external_secret = "${builtins.readFile /etc/secrets/prosody-coturn}"
         '';
       };
 
@@ -145,7 +134,7 @@ in {
       pkey = "${sslCertDir}/key.pem";
       cert = "${sslCertDir}/fullchain.pem";
 
-      static-auth-secret-file = config.age.secrets.prosody-coturn.path;
+      static-auth-secret-file = /etc/secrets/prosody-coturn;
       use-auth-secret = true;
     };
   };
