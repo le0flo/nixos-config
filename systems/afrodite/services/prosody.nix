@@ -30,10 +30,14 @@ in {
     ];
   };
 
+  users.groups."secrets".members = [
+    config.services.prosody.user
+    "turnserver"
+  ];
+
   services = {
     prosody = {
       enable = true;
-      checkConfig = true;
       xmppComplianceSuite = false;
 
       c2sRequireEncryption = true;
