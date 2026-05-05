@@ -3,6 +3,6 @@
     zapzap
     telegram-desktop
     discord
-    dino
+    gajim
   ];
 }
