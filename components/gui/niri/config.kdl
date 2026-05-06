@@ -74,6 +74,13 @@ window-rule {
 }
 
 window-rule {
+    match app-id=r#"^dev\.zed\.Zed$"#
+    match app-id=r#"^librewolf$"#
+
+    open-maximized true
+}
+
+window-rule {
   match app-id=r#"^org\.keepassxc\.KeePassXC$"#
   match app-id=r#"^org\.telegram\.desktop$"#
   match app-id=r#"^org\.gajim\.Gajim$"#
