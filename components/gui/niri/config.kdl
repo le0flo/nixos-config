@@ -81,6 +81,14 @@ window-rule {
 }
 
 window-rule {
+    match app-id="xdg-desktop-portal-gtk"
+    match is-floating=true
+
+    default-column-width { proportion 0.75; }
+    default-window-height { proportion 0.65; }
+}
+
+window-rule {
   match app-id=r#"^org\.keepassxc\.KeePassXC$"#
   match app-id=r#"^org\.telegram\.desktop$"#
   match app-id=r#"^org\.gajim\.Gajim$"#
