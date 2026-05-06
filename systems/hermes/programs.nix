@@ -18,10 +18,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Packages
-  environment.systemPackages = with pkgs; [
-    opencode
-    obdautodoctor
-  ];
+  environment.systemPackages = with pkgs; [ opencode ];
 
   # Nix dynamic linker
   programs.nix-ld.enable = true;
