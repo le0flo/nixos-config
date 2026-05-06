@@ -2,7 +2,7 @@
   imports = [
     ../../components/services/audio.nix
     ../../components/services/power.nix
-
+    ../../components/services/secrets.nix
     ../../components/services/tor.nix
     ../../components/services/i2pd.nix
   ];
