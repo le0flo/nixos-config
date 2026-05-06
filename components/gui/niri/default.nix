@@ -32,5 +32,6 @@
     brightnessctl
     ristretto
     pavucontrol
+    mako
   ];
 }

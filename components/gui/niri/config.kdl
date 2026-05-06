@@ -26,7 +26,7 @@ output "eDP-1" {
 }
 
 layout {
-  gaps 20
+  gaps 0
 
   center-focused-column "never"
 
@@ -50,6 +50,8 @@ layout {
   }
 }
 
+include optional=true "colors.kdl"
+
 environment {
   QT_QPA_PLATFORM "wayland"
 }
@@ -60,7 +62,7 @@ hotkey-overlay {
 }
 
 spawn-sh-at-startup "swaybg -m fill -i ~/.config/stylix/wallpaper"
-spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f'"
+spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
@@ -76,7 +78,13 @@ window-rule {
   match app-id=r#"^org\.telegram\.desktop$"#
   match app-id=r#"^com\.rtosta\.zapzap$"#
 
-  block-out-from "screen-capture"
+  block-out-from "screencast"
+}
+
+layer-rule {
+    match namespace="^notifications$"
+
+    block-out-from "screencast"
 }
 
 binds {

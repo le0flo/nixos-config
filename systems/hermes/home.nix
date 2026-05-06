@@ -7,6 +7,7 @@
     ../../components/programs/configs/fastfetch.nix
     ../../components/programs/configs/fuzzel.nix
     ../../components/programs/configs/git.nix
+    ../../components/programs/configs/mako.nix
     ../../components/programs/configs/swaylock.nix
     ../../components/programs/configs/tmux.nix
     ../../components/programs/configs/zed.nix

@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  imports = [ ./kde.nix ];
+  imports = [
+    ./niri.nix
+    ./kde.nix
+  ];
 
   xdg.dataFile = {
     "icons/Papirus-Dark".source = "${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark";
