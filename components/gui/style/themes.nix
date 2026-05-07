@@ -20,6 +20,12 @@
       light = "Papirus-Light";
     };
 
+    cursor = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 20;
+    };
+
     targets.qt.enable = false;
     targets.zed.enable = false;
   };
