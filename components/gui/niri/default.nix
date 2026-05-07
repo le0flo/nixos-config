@@ -26,7 +26,7 @@
     xwayland-satellite
     fuzzel
     swaybg
-    swaylock
+    swaylock-effects
     swayidle
     playerctl
     brightnessctl
