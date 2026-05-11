@@ -76,6 +76,7 @@ window-rule {
 window-rule {
     match app-id=r#"^dev\.zed\.Zed$"#
     match app-id=r#"^librewolf$"#
+    match app-id=r#"^thunderbird$"#
 
     open-maximized true
 }
