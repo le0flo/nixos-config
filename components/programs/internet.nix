@@ -4,6 +4,7 @@
     wget
     git
     dig
+    iw
 
     wireguard-tools
     openssl
