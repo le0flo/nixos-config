@@ -15,20 +15,14 @@ in {
       "${domainName}" = {
         useACMEHost = domainName;
 
-        locations = {
-          "/".proxyPass = "http://10.69.0.2:9000";
-          "/.well-known/acme-challenge/".alias = "/var/lib/acme/acme-challenge/";
-        };
+        locations."/".proxyPass = "http://10.69.0.2:9000";
       };
 
       "files.${domainName}" = {
         root = "/srv/files.leoflo.me";
         useACMEHost = domainName;
 
-        locations = {
-          "/".extraConfig = ''autoindex on;'';
-          "/.well-known/acme-challenge/".alias = "/var/lib/acme/acme-challenge/";
-        };
+        locations."/".extraConfig = ''autoindex on;'';
       };
 
       # Internal (homenet only)
@@ -61,20 +55,14 @@ in {
         useACMEHost = domainName;
         forceSSL = true;
 
-        locations = {
-          "/".proxyPass = "http://10.69.0.2:9001";
-          "/.well-known/acme-challenge/".alias = "/var/lib/acme/acme-challenge/";
-        };
+        locations."/".proxyPass = "http://10.69.0.2:9001";
       };
 
       "cinema.home.${domainName}" = {
         useACMEHost = domainName;
         forceSSL = true;
 
-        locations = {
-          "/".proxyPass = "http://10.69.0.2:9004";
-          "/.well-known/acme-challenge/".alias = "/var/lib/acme/acme-challenge/";
-        };
+        locations."/".proxyPass = "http://10.69.0.2:9004";
       };
     };
   };
