@@ -10,9 +10,7 @@
 
     firewall = {
       enable = true;
-
       trustedInterfaces = [ "home" ];
-
       allowedUDPPorts = [ 51820 ];
     };
 

@@ -10,7 +10,6 @@
 
     firewall = {
       enable = true;
-
       trustedInterfaces = [ "home" ];
     };
 

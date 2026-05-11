@@ -4,7 +4,6 @@
 
     ./acme.nix
     ./bind.nix
-    ./caddy.nix
-    ./prosody.nix
+    ./nginx.nix
   ];
 }

@@ -7,11 +7,7 @@ in {
     443
   ];
 
-  users.groups.${acmeGroup}.members = [
-    config.services.caddy.user
-    config.services.prosody.user
-    "turnserver"
-  ];
+  users.groups.${acmeGroup}.members = [ config.services.nginx.user ];
 
   security.acme = {
     acceptTerms = true;
@@ -24,9 +20,6 @@ in {
 
         extraDomainNames = [
           "files.${domainName}"
-          "xmpp.${domainName}"
-          "muc.xmpp.${domainName}"
-          "turn.xmpp.${domainName}"
           "music.home.${domainName}"
           "cinema.home.${domainName}"
         ];

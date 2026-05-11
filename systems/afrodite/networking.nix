@@ -11,9 +11,7 @@
 
     firewall = {
       enable = true;
-
       trustedInterfaces = [ "home" ];
-
       allowedUDPPorts = [ 51820 ];
     };
 
@@ -25,7 +23,6 @@
     wg-quick.interfaces."home" = {
       privateKeyFile = "/etc/wireguard/home";
       address = [ "10.69.0.1/24" ];
-
       listenPort = 51820;
 
       peers = [
