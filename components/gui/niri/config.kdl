@@ -56,6 +56,8 @@ environment {
   QT_QPA_PLATFORM "wayland"
 }
 
+include optional=true "cursor.kdl"
+
 hotkey-overlay {
   skip-at-startup
   hide-not-bound
