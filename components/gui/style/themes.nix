@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{config, pkgs, ...}: {
   imports = [
     ./niri.nix
     ./kde.nix
@@ -14,7 +14,7 @@
   stylix = {
     polarity = "dark";
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/monokai.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
 
     icons = {
       enable = true;
@@ -28,6 +28,10 @@
       package = pkgs.adwaita-icon-theme;
       name = "Adwaita";
       size = 20;
+    };
+
+    targets.fuzzel.colors.override = with config.lib.stylix.colors; {
+      border = "${base0B-hex}ff";
     };
 
     targets.qt.enable = false;
