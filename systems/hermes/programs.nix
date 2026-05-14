@@ -18,15 +18,19 @@
   nixpkgs.config.allowUnfree = true;
 
   # Packages
-  environment.systemPackages = with pkgs; [ opencode ];
+  environment.systemPackages = with pkgs; [
+    openfortivpn
+    opencode
+  ];
 
-  # Nix dynamic linker
-  programs.nix-ld.enable = true;
+  # AppImage & Dynamic linking
+  programs = {
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
 
-  # AppImage support
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
+    nix-ld.enable = true;
   };
 
   # Virtualisation
@@ -42,7 +46,4 @@
   };
 
   programs.virt-manager.enable = true;
-
-  # XP-pen
-  programs.xppen.enable = true;
 }

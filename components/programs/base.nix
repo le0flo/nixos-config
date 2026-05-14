@@ -1,8 +1,8 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
+    (vim.override { guiSupport = null; })
     tmux
     htop
-    vim
     ascii
     file
     psmisc
