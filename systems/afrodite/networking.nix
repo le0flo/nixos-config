@@ -15,11 +15,6 @@
       allowedUDPPorts = [ 51820 ];
     };
 
-    networkmanager = {
-      enable = true;
-      dns = "none";
-    };
-
     wg-quick.interfaces."home" = {
       privateKeyFile = "/etc/wireguard/home";
       address = [ "10.69.0.1/24" ];
