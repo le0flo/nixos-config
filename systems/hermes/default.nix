@@ -24,7 +24,6 @@
     extraGroups = [
       "dialout"
       "wheel"
-      "networkmanager"
       "video"
     ];
   };

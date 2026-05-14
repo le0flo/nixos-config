@@ -13,10 +13,7 @@
       trustedInterfaces = [ "home" ];
     };
 
-    networkmanager = {
-      enable = true;
-      plugins = with pkgs; [ networkmanager-fortisslvpn ];
-    };
+    wireless.iwd.enable = true;
 
     wg-quick.interfaces."home" = {
       privateKeyFile = "/etc/wireguard/home";
