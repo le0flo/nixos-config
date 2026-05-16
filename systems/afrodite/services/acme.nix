@@ -15,11 +15,7 @@
         group = "acme";
         webroot = "/var/lib/acme/acme-challenge";
 
-        extraDomainNames = [
-          "files.leoflo.me"
-          "music.home.leoflo.me"
-          "cinema.home.leoflo.me"
-        ];
+        extraDomainNames = [ "files.leoflo.me" ];
       };
     };
   };
