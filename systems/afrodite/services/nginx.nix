@@ -27,7 +27,7 @@
         locations."/".extraConfig = ''autoindex on;'';
       };
 
-      # Homelab (internal)
+      # Homelab
       "music.home.arpa" = {
         locations."/".proxyPass = "http://10.67.0.2:9001";
       };
