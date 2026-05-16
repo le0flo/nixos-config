@@ -44,6 +44,12 @@
             allowedIPs = [ "10.69.0.4/32" ];
             persistentKeepalive = 25;
           }
+          {
+            # TV firetv
+            publicKey = "W5wOpF5Xfhn4ZvKZsGiantUI/i5r9shZlg6qQNYwZBg=";
+            allowedIPs = [ "10.69.0.5/32" ];
+            persistentKeepalive = 25;
+          }
         ];
       };
 

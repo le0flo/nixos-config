@@ -27,21 +27,6 @@
         locations."/".extraConfig = ''autoindex on;'';
       };
 
-      # Homelab (public)
-      "music.home.leoflo.me" = {
-        useACMEHost = "leoflo.me";
-        forceSSL = true;
-
-        locations."/".proxyPass = "http://10.67.0.2:9001";
-      };
-
-      "cinema.home.leoflo.me" = {
-        useACMEHost = "leoflo.me";
-        forceSSL = true;
-
-        locations."/".proxyPass = "http://10.67.0.2:9004";
-      };
-
       # Homelab (internal)
       "music.home.arpa" = {
         locations."/".proxyPass = "http://10.67.0.2:9001";
