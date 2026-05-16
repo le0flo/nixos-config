@@ -1,6 +1,4 @@
-{...}: let
-  domainName = "leoflo.me";
-in {
+{...}: {
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -8,18 +6,19 @@ in {
 
   services.nginx = {
     enable = true;
+
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
     virtualHosts = {
-      "${domainName}" = {
+      "leoflo.me" = {
         useACMEHost = domainName;
         addSSL = true;
 
-        locations."/".proxyPass = "http://10.69.0.2:9000";
+        locations."/".proxyPass = "http://10.67.0.2:9000";
       };
 
-      "files.${domainName}" = {
+      "files.leoflo.me" = {
         root = "/srv/files.leoflo.me";
 
         useACMEHost = domainName;
@@ -28,19 +27,40 @@ in {
         locations."/".extraConfig = ''autoindex on;'';
       };
 
-      # Homelab (public facing)
-      "music.home.${domainName}" = {
+      # Homelab (public)
+      "music.home.leoflo.me" = {
         useACMEHost = domainName;
         forceSSL = true;
 
-        locations."/".proxyPass = "http://10.69.0.2:9001";
+        locations."/".proxyPass = "http://10.67.0.2:9001";
       };
 
-      "cinema.home.${domainName}" = {
+      "cinema.home.leoflo.me" = {
         useACMEHost = domainName;
         forceSSL = true;
 
-        locations."/".proxyPass = "http://10.69.0.2:9004";
+        locations."/".proxyPass = "http://10.67.0.2:9004";
+      };
+
+      # Homelab (internal)
+      "music.home.arpa" = {
+        locations."/".proxyPass = "http://10.67.0.2:9001";
+      };
+
+      "images.home.arpa" = {
+        locations."/".proxyPass = "http://10.67.0.2:9002";
+      };
+
+      "papers.home.arpa" = {
+        locations."/".proxyPass = "http://10.67.0.2:9003";
+      };
+
+      "cinema.home.arpa" = {
+        locations."/".proxyPass = "http://10.67.0.2:9004";
+      };
+
+      "torrent.home.arpa" = {
+        locations."/".proxyPass = "http://10.67.0.2:9005";
       };
     };
   };

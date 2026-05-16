@@ -1,27 +1,24 @@
-{config, ...}: let
-  domainName = "leoflo.me";
-  acmeGroup = "acme-cert";
-in {
+{config, ...}: {
   networking.firewall.allowedTCPPorts = [
     80
     443
   ];
 
-  users.groups.${acmeGroup}.members = [ config.services.nginx.user ];
+  users.groups."acme".members = [ config.services.nginx.user ];
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "admin@${domainName}";
+    defaults.email = "admin@leoflo.me";
 
     certs = {
-      "${domainName}" = {
-        group = acmeGroup;
+      "leoflo.me" = {
+        group = "acme";
         webroot = "/var/lib/acme/acme-challenge";
 
         extraDomainNames = [
-          "files.${domainName}"
-          "music.home.${domainName}"
-          "cinema.home.${domainName}"
+          "files.leoflo.me"
+          "music.home.leoflo.me"
+          "cinema.home.leoflo.me"
         ];
       };
     };

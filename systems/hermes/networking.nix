@@ -15,9 +15,10 @@
 
     wireless.iwd.enable = true;
 
-    wg-quick.interfaces."home" = {
-      privateKeyFile = "/etc/wireguard/home";
-      address = [ "10.69.0.3/24" ];
+    wg-quick.interfaces."devices" = {
+      privateKeyFile = "/etc/wireguard/devices";
+
+      address = [ "10.69.0.2/24" ];
       dns = [ "10.69.0.1" ];
 
       peers = [

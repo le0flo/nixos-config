@@ -11,19 +11,19 @@
     firewall = {
       enable = true;
       trustedInterfaces = [ "home" ];
-      allowedUDPPorts = [ 51820 ];
     };
 
-    wg-quick.interfaces."home" = {
-      privateKeyFile = "/etc/wireguard/home";
-      address = [ "10.69.0.2/24" ];
-      dns = [ "10.69.0.1" ];
+    wg-quick.interfaces."homelab" = {
+      privateKeyFile = "/etc/wireguard/homelab";
+
+      address = [ "10.67.0.2/24" ];
+      dns = [ "10.67.0.1" ];
 
       peers = [
         {
           publicKey = "629xLQgbpcfGJotfD79p3dNbpiwmp2FQtkUMd/S+M2M=";
-          allowedIPs = [ "10.69.0.0/24" ];
-          endpoint = "leoflo.me:51820";
+          allowedIPs = [ "10.67.0.0/24" ];
+          endpoint = "leoflo.me:51821";
           persistentKeepalive = 25;
         }
       ];
