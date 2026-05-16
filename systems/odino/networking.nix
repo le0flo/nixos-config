@@ -8,10 +8,7 @@
       "208.67.220.220"
     ];
 
-    firewall = {
-      enable = true;
-      trustedInterfaces = [ "home" ];
-    };
+    firewall.enable = true;
 
     wg-quick.interfaces."homelab" = {
       privateKeyFile = "/etc/wireguard/homelab";
@@ -23,7 +20,7 @@
         {
           publicKey = "2UAg2sFcQSt5bgfVFCOVNH6fmWjOwBI4ba1vDS4I3yE=";
           allowedIPs = [ "10.67.0.0/24" ];
-          endpoint = "leoflo.me:51821";
+          endpoint = "leoflo.me:51820";
           persistentKeepalive = 25;
         }
       ];

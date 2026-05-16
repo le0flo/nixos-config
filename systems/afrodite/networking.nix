@@ -11,19 +11,35 @@
 
     firewall = {
       enable = true;
-      trustedInterfaces = [ "home" ];
       allowedUDPPorts = [
         51820
         51821
+        51822
       ];
     };
 
     wg-quick.interfaces = {
+      "homelab" = {
+        privateKeyFile = "/etc/wireguard/homelab";
+
+        address = [ "10.67.0.1/24" ];
+        listenPort = 51820;
+
+        peers = [
+          {
+            # odino
+            publicKey = "GX/1ks+T1OcBsW7XiMIN1k2/azaCWH69eGh9dltfJhU=";
+            allowedIPs = [ "10.67.0.2/32" ];
+            persistentKeepalive = 25;
+          }
+        ];
+      };
+
       "devices" = {
         privateKeyFile = "/etc/wireguard/devices";
 
         address = [ "10.69.0.1/24" ];
-        listenPort = 51820;
+        listenPort = 51821;
 
         peers = [
           {
@@ -44,26 +60,20 @@
             allowedIPs = [ "10.69.0.4/32" ];
             persistentKeepalive = 25;
           }
-          {
-            # TV firetv
-            publicKey = "W5wOpF5Xfhn4ZvKZsGiantUI/i5r9shZlg6qQNYwZBg=";
-            allowedIPs = [ "10.69.0.5/32" ];
-            persistentKeepalive = 25;
-          }
         ];
       };
 
-      "homelab" = {
-        privateKeyFile = "/etc/wireguard/homelab";
+      "external" = {
+        privateKeyFile = "/etc/wireguard/external";
 
-        address = [ "10.67.0.1/24" ];
-        listenPort = 51821;
+        address = [ "10.96.0.1/24" ];
+        listenPort = 51822;
 
         peers = [
           {
-            # odino
-            publicKey = "GX/1ks+T1OcBsW7XiMIN1k2/azaCWH69eGh9dltfJhU=";
-            allowedIPs = [ "10.67.0.2/32" ];
+            # firetv
+            publicKey = "W5wOpF5Xfhn4ZvKZsGiantUI/i5r9shZlg6qQNYwZBg=";
+            allowedIPs = [ "10.96.0.2/32" ];
             persistentKeepalive = 25;
           }
         ];

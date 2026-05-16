@@ -8,10 +8,7 @@
       "208.67.220.220"
     ];
 
-    firewall = {
-      enable = true;
-      trustedInterfaces = [ "home" ];
-    };
+    firewall.enable = true;
 
     wireless.iwd.enable = true;
 
@@ -25,7 +22,7 @@
         {
           publicKey = "629xLQgbpcfGJotfD79p3dNbpiwmp2FQtkUMd/S+M2M=";
           allowedIPs = [ "10.69.0.0/24" ];
-          endpoint = "leoflo.me:51820";
+          endpoint = "leoflo.me:51821";
           persistentKeepalive = 25;
         }
       ];
