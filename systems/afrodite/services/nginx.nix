@@ -12,7 +12,7 @@
 
     virtualHosts = {
       "leoflo.me" = {
-        useACMEHost = domainName;
+        useACMEHost = "leoflo.me";
         addSSL = true;
 
         locations."/".proxyPass = "http://10.67.0.2:9000";
@@ -21,7 +21,7 @@
       "files.leoflo.me" = {
         root = "/srv/files.leoflo.me";
 
-        useACMEHost = domainName;
+        useACMEHost = "leoflo.me";
         addSSL = true;
 
         locations."/".extraConfig = ''autoindex on;'';
@@ -29,14 +29,14 @@
 
       # Homelab (public)
       "music.home.leoflo.me" = {
-        useACMEHost = domainName;
+        useACMEHost = "leoflo.me";
         forceSSL = true;
 
         locations."/".proxyPass = "http://10.67.0.2:9001";
       };
 
       "cinema.home.leoflo.me" = {
-        useACMEHost = domainName;
+        useACMEHost = "leoflo.me";
         forceSSL = true;
 
         locations."/".proxyPass = "http://10.67.0.2:9004";
