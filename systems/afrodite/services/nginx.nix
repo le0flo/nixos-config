@@ -33,10 +33,20 @@
       };
 
       "images.home.arpa" = {
+        extraConfig = ''
+          deny all;
+          allow 10.69.0.0/24;
+        '';
+
         locations."/".proxyPass = "http://10.67.0.2:9002";
       };
 
       "papers.home.arpa" = {
+        extraConfig = ''
+          deny all;
+          allow 10.69.0.0/24;
+        '';
+
         locations."/".proxyPass = "http://10.67.0.2:9003";
       };
 
@@ -45,6 +55,11 @@
       };
 
       "torrent.home.arpa" = {
+        extraConfig = ''
+          deny all;
+          allow 10.69.0.0/24;
+        '';
+
         locations."/".proxyPass = "http://10.67.0.2:9005";
       };
     };

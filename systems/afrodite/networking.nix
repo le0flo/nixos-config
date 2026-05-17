@@ -76,6 +76,12 @@
             allowedIPs = [ "10.96.0.2/32" ];
             persistentKeepalive = 25;
           }
+          {
+            # mybaby
+            publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0=";
+            allowedIPs = [ "10.96.0.3/32" ];
+            persistentKeepalive = 25;
+          }
         ];
       };
     };
