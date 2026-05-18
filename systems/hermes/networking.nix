@@ -7,10 +7,22 @@
       "208.67.222.222"
       "208.67.220.220"
     ];
+    resolvconf.enable = true;
 
     firewall.enable = true;
 
-    wireless.iwd.enable = true;
+    wireless.iwd = {
+      enable = true;
+      settings = {
+        General = {
+          EnableNetworkConfiguration = true;
+          AddressRandomization = "network";
+        };
+        Network = {
+          NameResolvingService = "resolvconf";
+        };
+      };
+    };
 
     wg-quick.interfaces."devices" = {
       privateKeyFile = "/etc/wireguard/devices";
