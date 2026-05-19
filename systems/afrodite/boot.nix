@@ -6,11 +6,10 @@
       grub = {
         enable = true;
         device = "nodev";
-
         efiSupport = true;
-        efiInstallAsRemovable = true;
       };
 
+      efi.canTouchEfiVariables = true;
       timeout = 3;
     };
 
