@@ -32,10 +32,10 @@
   };
 
   environment.shellAliases = {
-    update-build = "sudo nixos-rebuild build --flake ~/nixos#odino";
-    update-boot = "sudo nixos-rebuild boot --flake ~/nixos#odino";
-    update-system = "sudo nixos-rebuild switch --flake ~/nixos#odino";
-    update-home = "home-manager switch --flake ~/nixos#odino";
+    "system-build" = "sudo nixos-rebuild build --flake ~/nixos#odino";
+    "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#odino";
+    "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#odino";
+    "home-update" = "home-manager switch --flake ~/nixos#odino";
   };
 
   system.stateVersion = "26.05";

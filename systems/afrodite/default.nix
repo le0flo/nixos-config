@@ -31,10 +31,10 @@
   };
 
   environment.shellAliases = {
-    update-build = "sudo nixos-rebuild build --flake ~/nixos#afrodite";
-    update-boot = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
-    update-system = "sudo nixos-rebuild switch --flake ~/nixos#afrodite";
-    update-home = "home-manager switch --flake ~/nixos#afrodite";
+    "system-build" = "sudo nixos-rebuild build --flake ~/nixos#afrodite";
+    "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
+    "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#afrodite";
+    "home-update" = "home-manager switch --flake ~/nixos#afrodite";
   };
 
   system.stateVersion = "26.05";
