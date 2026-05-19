@@ -5,6 +5,7 @@
     ../../components/programs/base.nix
     ../../components/programs/internet.nix
     ../../components/programs/external.nix
+    ../../components/programs/appimage.nix
 
     ../../components/programs/graphical/base.nix
     ../../components/programs/graphical/dev.nix
@@ -22,17 +23,9 @@
     iwgtk
     openfortivpn
     opencode
+    kubectl
+    azure-cli
   ];
-
-  # AppImage & Dynamic linking
-  programs = {
-    appimage = {
-      enable = true;
-      binfmt = true;
-    };
-
-    nix-ld.enable = true;
-  };
 
   # Virtualisation
   virtualisation = {
