@@ -24,6 +24,7 @@
     openfortivpn
     opencode
     kubectl
+    kubelogin
     azure-cli
   ];
 
