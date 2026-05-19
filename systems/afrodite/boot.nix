@@ -1,5 +1,19 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   boot = {
+    loader = {
+      grub = {
+        enable = true;
+        device = "nodev";
+
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
+
+      timeout = 3;
+    };
+
     kernelPackages = pkgs.linuxPackages_7_0;
 
     initrd.availableKernelModules = [
@@ -10,15 +24,5 @@
       "sd_mod"
       "sr_mod"
     ];
-
-    loader = {
-      timeout = 3;
-
-      grub = {
-        enable = true;
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-      };
-    };
   };
 }

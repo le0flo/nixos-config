@@ -1,5 +1,6 @@
-{pkgs, ...}: {
-  # Niri
+{pkgs, ...}:
+
+{
   programs = {
     niri = {
       enable = true;
@@ -10,18 +11,15 @@
 
     thunar = {
       enable = true;
-
       plugins = with pkgs; [ thunar-volman ];
     };
   };
 
-  # XDG
   xdg.portal.extraPortals = with pkgs; [
     xdg-desktop-portal-gnome
     xdg-desktop-portal-gtk
   ];
 
-  # Packages
   environment.systemPackages = with pkgs; [
     xwayland-satellite
     fuzzel

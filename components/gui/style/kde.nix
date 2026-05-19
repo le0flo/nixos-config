@@ -1,4 +1,6 @@
-{config, lib, ...}: let
+{config, lib, ...}:
+
+let
   hexToRgb = hex: let
     hexChars = {
       "0" = 0; "1" = 1; "2" = 2; "3" = 3; "4" = 4;
@@ -36,7 +38,8 @@
     ForegroundNeutral=${orange}
     ForegroundNormal=${fg0}
     ForegroundPositive=${green}
-    ForegroundVisited=${fg1}'';
+    ForegroundVisited=${fg1}
+  '';
 in {
   xdg.configFile."kdeglobals".text = ''
     [ColorEffects:Disabled]

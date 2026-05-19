@@ -1,4 +1,6 @@
-{lib, ...}: {
+{lib, ...}:
+
+{
   networking = {
     hostName = "afrodite";
     useDHCP = lib.mkDefault true;

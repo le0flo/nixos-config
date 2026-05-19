@@ -1,4 +1,6 @@
 {
+  description = "My personal NixOS fleet";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware?ref=master";
@@ -24,44 +26,48 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     # NixOS
-    nixosConfigurations."hermes" = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs system; };
-      modules = [ ./systems/hermes ];
-    };
+    nixosConfigurations = {
+      "hermes" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs system; };
+        modules = [ ./systems/hermes ];
+      };
 
-    nixosConfigurations."afrodite" = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs system; };
-      modules = [
-        ./systems/afrodite
-        disko.nixosModules.disko
-      ];
-    };
+      "afrodite" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs system; };
+        modules = [
+          ./systems/afrodite
+          disko.nixosModules.disko
+        ];
+      };
 
-    nixosConfigurations."odino" = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs system; };
-      modules = [ ./systems/odino ];
+      "odino" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs system; };
+        modules = [ ./systems/odino ];
+      };
     };
 
     # Home manager
-    homeConfigurations."hermes" = home-manager.lib.homeManagerConfiguration {
-      extraSpecialArgs = { inherit inputs; };
-      pkgs = pkgs;
-      modules = [
-        ./systems/hermes/home.nix
-        stylix.homeModules.stylix
-      ];
-    };
+    homeConfigurations = {
+      "hermes" = home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = { inherit inputs; };
+        pkgs = pkgs;
+        modules = [
+          ./systems/hermes/home.nix
+          stylix.homeModules.stylix
+        ];
+      };
 
-    homeConfigurations."afrodite" = home-manager.lib.homeManagerConfiguration {
-      extraSpecialArgs = { inherit inputs; };
-      pkgs = pkgs;
-      modules = [ ./systems/afrodite/home.nix ];
-    };
+      "afrodite" = home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = { inherit inputs; };
+        pkgs = pkgs;
+        modules = [ ./systems/afrodite/home.nix ];
+      };
 
-    homeConfigurations."odino" = home-manager.lib.homeManagerConfiguration {
-      extraSpecialArgs = { inherit inputs; };
-      pkgs = pkgs;
-      modules = [ ./systems/odino/home.nix ];
+      "odino" = home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = { inherit inputs; };
+        pkgs = pkgs;
+        modules = [ ./systems/odino/home.nix ];
+      };
     };
   };
 }

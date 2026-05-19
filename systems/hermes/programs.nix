@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   imports = [
     ../../components/programs/bash.nix
 
@@ -18,7 +20,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # Packages
   environment.systemPackages = with pkgs; [
     iwgtk
     openfortivpn
@@ -28,16 +29,10 @@
     azure-cli
   ];
 
-  # Virtualisation
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
-  };
-
-  users.extraGroups = {
-    "docker".members = [ "leo" ];
-    "libvirtd".members = [ "leo" ];
   };
 
   programs.virt-manager.enable = true;

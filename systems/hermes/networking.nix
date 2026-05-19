@@ -1,26 +1,28 @@
-{lib, pkgs, ...}: {
+{lib, ...}:
+
+{
   networking = {
     hostName = "hermes";
     useDHCP = lib.mkDefault true;
 
+    resolvconf.enable = true;
     nameservers = [
       "208.67.222.222"
       "208.67.220.220"
     ];
-    resolvconf.enable = true;
 
     firewall.enable = true;
 
     wireless.iwd = {
       enable = true;
+
       settings = {
         General = {
           EnableNetworkConfiguration = true;
           AddressRandomization = "network";
         };
-        Network = {
-          NameResolvingService = "resolvconf";
-        };
+
+        Network.NameResolvingService = "resolvconf";
       };
     };
 

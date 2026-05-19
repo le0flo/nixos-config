@@ -1,4 +1,6 @@
-{config, ...}: {
+{config, ...}:
+
+{
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -10,13 +12,11 @@
     acceptTerms = true;
     defaults.email = "admin@leoflo.me";
 
-    certs = {
-      "leoflo.me" = {
-        group = "acme";
-        webroot = "/var/lib/acme/acme-challenge";
+    certs."leoflo.me" = {
+      group = "acme";
+      webroot = "/var/lib/acme/acme-challenge";
 
-        extraDomainNames = [ "files.leoflo.me" ];
-      };
+      extraDomainNames = [ "files.leoflo.me" ];
     };
   };
 }

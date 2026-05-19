@@ -1,4 +1,6 @@
-{config, pkgs, ...}: {
+{config, pkgs, ...}:
+
+{
   imports = [
     ./niri.nix
     ./kde.nix
@@ -30,13 +32,13 @@
       size = 20;
     };
 
-    targets.qt.enable = false;
-    targets.zed.enable = false;
+    targets = {
+      qt.enable = false;
+      zed.enable = false;
+    };
   };
 
-  gtk.gtk3.extraConfig = {
-    gtk-application-prefer-dark-theme = 1;
-  };
+  gtk.gtk3.extraConfig."gtk-application-prefer-dark-theme" = 1;
 
   qt = {
     enable = true;

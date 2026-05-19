@@ -1,4 +1,6 @@
-{...}: {
+{...}:
+
+{
   imports = [
     ../../components/programs/configs/fastfetch.nix
     ../../components/programs/configs/git.nix

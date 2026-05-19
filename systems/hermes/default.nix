@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   imports = [
     ./boot.nix
     ./hardware.nix
@@ -10,25 +12,24 @@
     ./programs.nix
   ];
 
-  # Experimental features
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  # Users
   users.users."leo" = {
     isNormalUser = true;
-    shell = pkgs.bash;
-
     extraGroups = [
       "dialout"
-      "wheel"
+      "docker"
+      "libvirtd"
       "video"
+      "wheel"
     ];
+
+    shell = pkgs.bash;
   };
 
-  # Shell
   environment.shellAliases = {
     update-build = "sudo nixos-rebuild build --flake ~/nixos#hermes";
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#hermes";
@@ -36,6 +37,5 @@
     update-home = "home-manager switch --flake ~/nixos#hermes";
   };
 
-  # Version
   system.stateVersion = "26.05";
 }

@@ -1,4 +1,6 @@
-{...}: {
+{...}:
+
+{
   programs.bash = {
     enable = true;
     vteIntegration = true;
@@ -8,10 +10,10 @@
     '';
 
     shellAliases = {
-      l = "ls -lh";
-      ll = "ls -lah";
+      "l" = "ls -lh";
+      "ll" = "ls -lah";
 
-      ssh = "TERM=xterm-256color ssh";
+      "ssh" = "TERM=xterm-256color ssh";
     };
   };
 }

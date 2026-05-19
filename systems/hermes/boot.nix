@@ -1,5 +1,19 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   boot = {
+    loader = {
+      grub = {
+        enable = true;
+        device = "nodev";
+
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
+
+      timeout = 3;
+    };
+
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "kvm-intel" ];
     kernelParams = [ "boot.shell_on_fail" ];
@@ -11,22 +25,5 @@
       "sd_mod"
       "sdhci_pci"
     ];
-
-    supportedFilesystems = [
-      "exfat"
-      "ntfs"
-    ];
-
-    loader = {
-      timeout = 3;
-
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-      };
-    };
   };
 }

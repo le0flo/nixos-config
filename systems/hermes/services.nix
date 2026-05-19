@@ -1,4 +1,6 @@
-{...}: {
+{...}:
+
+{
   imports = [
     ../../components/services/audio.nix
     ../../components/services/power.nix

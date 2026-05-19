@@ -1,4 +1,6 @@
-{pkgs, ...}: let
+{pkgs, ...}:
+
+let
   homeArpaZone = entrypoint: pkgs.writeText "home.arpa-${entrypoint}" ''
     $TTL 86400
 

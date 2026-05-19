@@ -1,4 +1,6 @@
-{lib, ...}: {
+{lib, ...}:
+
+{
   networking = {
     hostName = "odino";
     useDHCP = lib.mkDefault true;

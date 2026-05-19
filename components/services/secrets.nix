@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   environment.systemPackages = with pkgs; [ oo7 ];
 
   services = {

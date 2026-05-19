@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   imports = [
     ../../components/gui/style
     ../../components/gui/niri/config.nix

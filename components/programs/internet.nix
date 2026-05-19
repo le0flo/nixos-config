@@ -1,10 +1,10 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   environment.systemPackages = with pkgs; [
-    curl
-    wget
-    git
     dig
-    iw
+    curl
+    git
 
     wireguard-tools
     openssl

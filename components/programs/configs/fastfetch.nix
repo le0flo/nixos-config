@@ -1,14 +1,15 @@
-{...}: {
+{...}:
+
+{
   programs.fastfetch = {
     enable = true;
 
     settings = {
       logo = {
         source = "linux";
-        padding = {
-          right = 1;
-        };
+        padding.right = 1;
       };
+
       display = {
         size = {
           maxPrefix = "MB";
@@ -20,6 +21,7 @@
           spaceBeforeUnit = "never";
         };
       };
+
       modules = [
         "title"
         "separator"

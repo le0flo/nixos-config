@@ -1,5 +1,19 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   boot = {
+    loader = {
+      grub = {
+        enable = true;
+        device = "nodev";
+
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
+
+      timeout = 3;
+    };
+
     kernelPackages = pkgs.linuxPackages_7_0;
     kernelModules = [ "kvm-intel" ];
     kernelParams = [ "boot.shell_on_fail" ];
@@ -12,17 +26,5 @@
       "usb_storage"
       "sd_mod"
     ];
-
-    loader = {
-      timeout = 3;
-
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-      };
-    };
   };
 }

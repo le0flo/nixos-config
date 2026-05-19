@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}:
+
+{
   imports = [
     ./boot.nix
     ./hardware.nix
@@ -9,25 +11,25 @@
     ./programs.nix
   ];
 
-  # Experimental features
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  # Users
   users.users."leo" = {
     isNormalUser = true;
-    shell = pkgs.bash;
+    extraGroups = [
+      "docker"
+      "wheel"
+    ];
 
-    extraGroups = [ "wheel" ];
+    shell = pkgs.bash;
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
     ];
   };
 
-  # Shell
   environment.shellAliases = {
     update-build = "sudo nixos-rebuild build --flake ~/nixos#afrodite";
     update-boot = "sudo nixos-rebuild boot --flake ~/nixos#afrodite";
@@ -35,6 +37,5 @@
     update-home = "home-manager switch --flake ~/nixos#afrodite";
   };
 
-  # Version
   system.stateVersion = "26.05";
 }
