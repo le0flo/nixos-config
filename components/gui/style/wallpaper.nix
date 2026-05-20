@@ -1,7 +1,7 @@
 {pkgs, ...}:
 
 let
-  wallpaper = ../../../assets/bg-forest.png;
+  wallpaper = ../../../assets/bg-sheeps.png;
 in {
   dconf.enable = true;
 
