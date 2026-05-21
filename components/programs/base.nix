@@ -7,6 +7,7 @@
     htop
     ascii
     file
+    tree
     psmisc
     dysk
     zip
