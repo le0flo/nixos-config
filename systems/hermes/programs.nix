@@ -13,7 +13,6 @@
     ../../components/programs/graphical/dev.nix
     ../../components/programs/graphical/media.nix
     ../../components/programs/graphical/office.nix
-    ../../components/programs/graphical/games.nix
     ../../components/programs/graphical/file-sharing.nix
     ../../components/programs/graphical/social.nix
   ];
