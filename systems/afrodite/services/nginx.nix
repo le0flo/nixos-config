@@ -17,16 +17,14 @@
         useACMEHost = "leoflo.me";
         addSSL = true;
 
-        locations."/".proxyPass = "http://10.67.0.2:9000";
+        locations."/".proxyPass = "http://10.67.0.2:8000";
       };
 
       "files.leoflo.me" = {
-        root = "/srv/files.leoflo.me";
-
         useACMEHost = "leoflo.me";
         addSSL = true;
 
-        locations."/".extraConfig = ''autoindex on;'';
+        locations."/".proxyPass = "http://10.67.0.2:8001";
       };
 
       # Homelab
