@@ -10,18 +10,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs @ {nixpkgs, home-manager, disko, stylix, ...}: let
+  outputs = inputs @ {nixpkgs, home-manager, stylix, ...}: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -34,10 +29,7 @@
 
       "afrodite" = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs system; };
-        modules = [
-          ./systems/afrodite
-          disko.nixosModules.disko
-        ];
+        modules = [ ./systems/afrodite ];
       };
 
       "odino" = nixpkgs.lib.nixosSystem {
