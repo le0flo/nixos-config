@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../components/gui/niri
+    ../../gui/niri.nix
   ];
 
   xdg = {

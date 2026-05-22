@@ -2,11 +2,10 @@
 
 {
   environment.systemPackages = with pkgs; [
-    libreoffice
-    calibre
+    zed-editor
+    dbeaver-bin
 
-    xournalpp
-    krita
-    inkscape
+    freecad
+    kicad
   ];
 }

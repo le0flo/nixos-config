@@ -2,10 +2,9 @@
 
 {
   imports = [
-    ../../components/programs/bash.nix
-
-    ../../components/programs/base.nix
-    ../../components/programs/internet.nix
+    ../../programs/cli/bash.nix
+    ../../programs/cli/base.nix
+    ../../programs/cli/internet.nix
   ];
 
   virtualisation.docker.enable = true;

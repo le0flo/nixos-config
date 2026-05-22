@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ../../components/services/audio.nix
-    ../../components/services/power.nix
-    ../../components/services/secrets.nix
-    ../../components/services/tor.nix
-    ../../components/services/i2pd.nix
+    ../../services/audio.nix
+    ../../services/power.nix
+    ../../services/secrets.nix
+    ../../services/tor.nix
+    ../../services/i2pd.nix
   ];
 
   security = {

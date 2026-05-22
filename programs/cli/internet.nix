@@ -5,7 +5,6 @@
     dig
     curl
     git
-
     wireguard-tools
     openssl
     openssh

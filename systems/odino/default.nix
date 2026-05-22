@@ -6,6 +6,7 @@
     ./hardware.nix
     ./networking.nix
     ./locales.nix
+    ./users.nix
 
     ./services.nix
     ./programs.nix
@@ -16,26 +17,10 @@
     "flakes"
   ];
 
-  users.users."leo" = {
-    isNormalUser = true;
-    extraGroups = [
-      "docker"
-      "wheel"
-    ];
-
-    shell = pkgs.bash;
-
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAokSVn78uTLEMp73AkLVA2q6+U+IPtqaeTc/HKGIFsV leo@hermes"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1yrqiGzvjr5jU3sc6CaCmZ4ZEP9E0Jvhxx86G8D58S leo@afrodite"
-    ];
-  };
-
   environment.shellAliases = {
     "system-build" = "sudo nixos-rebuild build --flake ~/nixos#odino";
     "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#odino";
     "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#odino";
-    "home-update" = "home-manager switch --flake ~/nixos#odino";
   };
 
   system.stateVersion = "26.05";

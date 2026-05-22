@@ -2,6 +2,6 @@
 
 {
   imports = [
-    ../../components/services/openssh.nix
+    ../../services/openssh.nix
   ];
 }

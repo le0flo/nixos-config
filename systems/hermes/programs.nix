@@ -2,19 +2,18 @@
 
 {
   imports = [
-    ../../components/programs/bash.nix
+    ../../programs/cli/bash.nix
+    ../../programs/cli/base.nix
+    ../../programs/cli/internet.nix
+    ../../programs/cli/external.nix
+    ../../programs/cli/appimage.nix
 
-    ../../components/programs/base.nix
-    ../../components/programs/internet.nix
-    ../../components/programs/external.nix
-    ../../components/programs/appimage.nix
-
-    ../../components/programs/graphical/base.nix
-    ../../components/programs/graphical/dev.nix
-    ../../components/programs/graphical/media.nix
-    ../../components/programs/graphical/office.nix
-    ../../components/programs/graphical/file-sharing.nix
-    ../../components/programs/graphical/social.nix
+    ../../programs/graphical/base.nix
+    ../../programs/graphical/dev.nix
+    ../../programs/graphical/media.nix
+    ../../programs/graphical/office.nix
+    ../../programs/graphical/file-sharing.nix
+    ../../programs/graphical/social.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

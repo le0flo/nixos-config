@@ -12,7 +12,5 @@
     dysk
     zip
     unzip
-
-    home-manager
   ];
 }

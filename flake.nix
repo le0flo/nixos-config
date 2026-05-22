@@ -1,65 +1,29 @@
 {
-  description = "My personal NixOS fleet";
+  description = "My NixOS fleet";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware?ref=master";
 
-    home-manager = {
-      url = "github:nix-community/home-manager?ref=master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    stylix = {
-      url = "github:nix-community/stylix";
+    hjem = {
+      url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs @ {nixpkgs, home-manager, stylix, ...}: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    # NixOS
-    nixosConfigurations = {
-      "hermes" = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs system; };
-        modules = [ ./systems/hermes ];
-      };
-
-      "afrodite" = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs system; };
-        modules = [ ./systems/afrodite ];
-      };
-
-      "odino" = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs system; };
-        modules = [ ./systems/odino ];
-      };
+  outputs = inputs: let
+    systemConfig = arch: dir: inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs arch; };
+      modules = [
+        dir
+        inputs.hjem.nixosModules.default
+      ];
     };
-
-    # Home manager
-    homeConfigurations = {
-      "hermes" = home-manager.lib.homeManagerConfiguration {
-        extraSpecialArgs = { inherit inputs; };
-        pkgs = pkgs;
-        modules = [
-          ./systems/hermes/home.nix
-          stylix.homeModules.stylix
-        ];
-      };
-
-      "afrodite" = home-manager.lib.homeManagerConfiguration {
-        extraSpecialArgs = { inherit inputs; };
-        pkgs = pkgs;
-        modules = [ ./systems/afrodite/home.nix ];
-      };
-
-      "odino" = home-manager.lib.homeManagerConfiguration {
-        extraSpecialArgs = { inherit inputs; };
-        pkgs = pkgs;
-        modules = [ ./systems/odino/home.nix ];
-      };
+  in {
+    nixosConfigurations = {
+      "afrodite" = systemConfig "x86_64-linux" ./systems/afrodite;
+      "hermes" = systemConfig "x86_64-linux" ./systems/hermes;
+      "odino" = systemConfig "x86_64-linux" ./systems/odino;
     };
   };
 }

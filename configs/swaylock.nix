@@ -1,11 +1,9 @@
 {pkgs, ...}:
 
-{
-  programs.swaylock = {
-    enable = true;
-    package = pkgs.swaylock-effects;
-
-    settings = {
+let
+  ini = pkgs.formats.iniWithGlobalSection {};
+  settings = {
+    globalSection = {
       ignore-empty-password = true;
       show-failed-attempts = true;
 
@@ -17,4 +15,6 @@
       datestr = "%d %B";
     };
   };
+in {
+  xdg.config.files."swaylock/config".source = ini.generate "config" settings;
 }

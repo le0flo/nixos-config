@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../../components/services/openssh.nix
+    ../../../services/openssh.nix
 
     ./acme.nix
     ./bind.nix
