@@ -19,13 +19,15 @@
     clobberFiles = true;
 
     imports = [
-      ../../configs/niri
-
       ../../configs/alacritty.nix
       ../../configs/fastfetch.nix
       ../../configs/fuzzel.nix
       ../../configs/git.nix
+      ../../configs/gtk.nix
+      ../../configs/keepassxc.nix
       ../../configs/mako.nix
+      ../../configs/niri.nix
+      ../../configs/qt.nix
       ../../configs/swaylock.nix
       ../../configs/tmux.nix
       ../../configs/wallpaper.nix

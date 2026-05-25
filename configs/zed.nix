@@ -1,12 +1,13 @@
 {pkgs, ...}:
 
 let
+  style = import ../gui/style.nix { inherit pkgs; };
   json = pkgs.formats.json {};
   settings = {
     telemetry.metrics = false;
 
     theme = {
-      mode = "dark";
+      mode = style.polarity;
       light = "Ayu Light";
       dark = "Ayu Dark";
     };
@@ -33,7 +34,16 @@ let
     git_panel.dock = "left";
     agent.dock = "right";
     outline_panel.button = false;
+
+    agent_servers = {
+      opencode.type = "registry";
+    };
   };
 in {
-  xdg.config.files."zed/settings.json".source = json.generate "settings.json" settings;
+  xdg.config.files."zed/settings.json" = {
+    type = "copy";
+    permissions = "644";
+
+    source = json.generate "settings.json" settings;
+  };
 }

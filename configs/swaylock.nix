@@ -1,20 +1,20 @@
-{pkgs, ...}:
+{config, pkgs, ...}:
 
 let
-  ini = pkgs.formats.iniWithGlobalSection {};
-  settings = {
-    globalSection = {
-      ignore-empty-password = true;
-      show-failed-attempts = true;
-
-      indicator-idle-visible = true;
-      indicator-radius = 100;
-
-      clock = true;
-      timestr = "%H:%M:%S";
-      datestr = "%d %B";
-    };
-  };
+  style = import ../gui/style.nix { inherit pkgs; };
 in {
-  xdg.config.files."swaylock/config".source = ini.generate "config" settings;
+  xdg.config.files."swaylock/config".text = ''
+    ignore-empty-password
+    show-failed-attempts
+
+    indicator-idle-visible
+    indicator-radius=100
+
+    clock
+    timestr=%H:%M:%S
+    datestr=%d %B
+
+    image=${config.xdg.config.directory}/background/wallpaper
+    color=${style.colors.background}
+  '';
 }

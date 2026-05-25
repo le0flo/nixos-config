@@ -1,16 +1,9 @@
 {pkgs, ...}:
 
 {
-  programs = {
-    niri = {
-      enable = true;
-      useNautilus = false;
-    };
-
-    thunar = {
-      enable = true;
-      plugins = with pkgs; [ thunar-volman ];
-    };
+  programs.niri = {
+    enable = true;
+    useNautilus = false;
   };
 
   xdg.portal.extraPortals = with pkgs; [
@@ -26,8 +19,10 @@
     swayidle
     playerctl
     brightnessctl
-    ristretto
     pavucontrol
     mako
+
+    kdePackages.dolphin
+    kdePackages.gwenview
   ];
 }

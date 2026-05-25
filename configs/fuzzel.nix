@@ -1,6 +1,7 @@
 {pkgs, ...}:
 
 let
+  style = import ../gui/style.nix { inherit pkgs; };
   ini = pkgs.formats.ini {};
   settings = {
     main = {
@@ -18,18 +19,18 @@ let
     };
 
     colors = {
-      background = "505050ff";
-      text = "fefae0ff";
-      border = "adc178ff";
+      border = "${style.colors.border}ff";
+      background = "${style.colors.background}ff";
+      text = "${style.colors.text}ff";
 
-      prompt = "adc178ff";
-      input = "dde5b6ff";
+      prompt = "${style.colors.primary}ff";
+      input = "${style.colors.secondary}ff";
 
-      selection = "fefae0ff";
-      selection-text = "505050ff";
+      selection = "${style.colors.text}ff";
+      selection-text = "${style.colors.background}ff";
 
-      match = "adc178ff";
-      selection-match = "adc178ff";
+      match = "${style.colors.primary}ff";
+      selection-match = "${style.colors.primary}ff";
     };
   };
 in {

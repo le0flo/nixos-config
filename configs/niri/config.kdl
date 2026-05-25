@@ -44,20 +44,14 @@ layout {
 
   border {
     width 2
-    active-color "#adc178"
+    active-color "#ffc87f"
     inactive-color "#505050"
-    urgent-color "#c52233"
+    urgent-color "#9b0000"
   }
 }
 
-environment {
-  QT_QPA_PLATFORM "wayland"
-}
-
-hotkey-overlay {
-  skip-at-startup
-  hide-not-bound
-}
+include "colors.kdl" optional=true
+include "cursor.kdl" optional=true
 
 spawn-sh-at-startup "swaybg -m fill -i ~/.config/background/wallpaper"
 spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f"
@@ -99,6 +93,11 @@ layer-rule {
     match namespace="^notifications$"
 
     block-out-from "screencast"
+}
+
+hotkey-overlay {
+  skip-at-startup
+  hide-not-bound
 }
 
 binds {
