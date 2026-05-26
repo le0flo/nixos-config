@@ -12,5 +12,6 @@
     dysk
     zip
     unzip
+    fastfetch
   ];
 }
