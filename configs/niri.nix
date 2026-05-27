@@ -26,7 +26,7 @@ in {
     };
 
     mime-apps.default-applications = {
-      "inode/directory" = "dolphin.desktop";
+      "inode/directory" = "nautilus.desktop";
     };
   };
 }

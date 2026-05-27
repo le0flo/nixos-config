@@ -21,8 +21,7 @@
     brightnessctl
     pavucontrol
     mako
-
-    kdePackages.dolphin
-    kdePackages.gwenview
+    nautilus
+    loupe
   ];
 }
