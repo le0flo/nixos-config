@@ -5,11 +5,8 @@ let
   ini = pkgs.formats.ini {};
   settings = {
     Browser.Enabled=true;
-
-    GUI = {
-      ApplicationTheme = style.polarity;
-      HideUsernames = true;
-    };
+    GUI.ApplicationTheme = style.polarity;
+    Security.Security_HideNotes=true;
 
     PasswordGenerator = {
       Length = 128;

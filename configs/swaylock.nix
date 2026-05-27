@@ -18,6 +18,7 @@ in {
     datestr=%d %B
 
     image=${config.xdg.config.directory}/background/wallpaper
+    effect-blur=6x7
     color=${parseColor style.colors.background}
 
     inside-color=${parseColor style.colors.background}
