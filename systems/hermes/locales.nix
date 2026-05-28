@@ -19,5 +19,8 @@
     };
   };
 
-  console.keyMap = "it";
+  console = {
+    font = "sun12x22";
+    keyMap = "it";
+  };
 }
