@@ -23,5 +23,6 @@
     zip
     unzip
     fastfetch
+    devenv
   ];
 }
