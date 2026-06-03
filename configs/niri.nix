@@ -24,9 +24,5 @@ in {
         }
       '';
     };
-
-    mime-apps.default-applications = {
-      "inode/directory" = "nautilus.desktop";
-    };
   };
 }

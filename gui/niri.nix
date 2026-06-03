@@ -17,10 +17,10 @@
     swaybg
     swaylock-effects
     swayidle
+    mako
     playerctl
     brightnessctl
-    pavucontrol
-    mako
+    pwvucontrol
     nautilus
     loupe
   ];

@@ -13,16 +13,16 @@ let
     };
 
     window_decorations = "server";
+    restore_on_startup = "empty_tab";
+    project_panel.dock = "left";
+    git_panel.dock = "left";
+    agent.dock = "right";
+    outline_panel.button = false;
+
     vim_mode = false;
     format_on_save = "off";
     hard_tabs = false;
     tab_size = 2;
-
-    terminal = {
-      cursor_shape = "bar";
-      shell.program = "bash";
-    };
-
     git.inline_blame.enabled = false;
 
     languages = {
@@ -30,10 +30,10 @@ let
       "Nginx".enable_language_server = false;
     };
 
-    project_panel.dock = "left";
-    git_panel.dock = "left";
-    agent.dock = "right";
-    outline_panel.button = false;
+    terminal = {
+      cursor_shape = "bar";
+      shell.program = "bash";
+    };
 
     agent_servers = {
       opencode.type = "registry";
