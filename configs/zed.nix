@@ -5,6 +5,7 @@ let
   json = pkgs.formats.json {};
   settings = {
     telemetry.metrics = false;
+    disable_ai = true;
 
     theme = {
       mode = style.polarity;
@@ -16,7 +17,6 @@ let
     restore_on_startup = "empty_tab";
     project_panel.dock = "left";
     git_panel.dock = "left";
-    agent.dock = "right";
     outline_panel.button = false;
 
     vim_mode = false;
@@ -33,10 +33,6 @@ let
     terminal = {
       cursor_shape = "bar";
       shell.program = "bash";
-    };
-
-    agent_servers = {
-      opencode.type = "registry";
     };
   };
 in {
