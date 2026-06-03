@@ -10,5 +10,7 @@
 
     keepassxc
     veracrypt
+
+    kdePackages.alligator
   ];
 }
