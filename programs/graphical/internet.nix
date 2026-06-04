@@ -9,7 +9,6 @@
     nicotine-plus
 
     newsflash
-    kdePackages.alligator
     telegram-desktop
     discord
   ];
