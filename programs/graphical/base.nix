@@ -3,14 +3,10 @@
 {
   environment.systemPackages = with pkgs; [
     alacritty
-    wl-clipboard
-
-    librewolf
-    thunderbird
-
+    localsend
     keepassxc
     veracrypt
 
-    kdePackages.alligator
+    wl-clipboard
   ];
 }

@@ -9,11 +9,10 @@
     ../../programs/cli/appimage.nix
 
     ../../programs/graphical/base.nix
+    ../../programs/graphical/internet.nix
     ../../programs/graphical/dev.nix
     ../../programs/graphical/media.nix
     ../../programs/graphical/office.nix
-    ../../programs/graphical/file-sharing.nix
-    ../../programs/graphical/social.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
