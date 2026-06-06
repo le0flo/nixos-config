@@ -11,7 +11,10 @@
       "208.67.220.220"
     ];
 
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      trustedInterfaces = [ "devices" ];
+    };
 
     wireless.iwd = {
       enable = true;
