@@ -80,7 +80,7 @@
         peers = [
           {
             # firetv
-            publicKey = "W5wOpF5Xfhn4ZvKZsGiantUI/i5r9shZlg6qQNYwZBg=";
+            publicKey = "18RMffhrj9OpzIIngUsajblMRUWwV8t7gOAszcoo8HM=";
             allowedIPs = [ "10.96.0.2/32" ];
             persistentKeepalive = 25;
           }
