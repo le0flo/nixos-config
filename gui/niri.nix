@@ -20,8 +20,9 @@
     mako
     playerctl
     brightnessctl
-    pwvucontrol
-    nautilus
-    loupe
+    pavucontrol
+    pcmanfm
+    eom
+    engrampa
   ];
 }

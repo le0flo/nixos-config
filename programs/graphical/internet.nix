@@ -4,11 +4,11 @@
   environment.systemPackages = with pkgs; [
     librewolf
     thunderbird
+    liferea
 
     qbittorrent
     nicotine-plus
 
-    newsflash
     telegram-desktop
     discord
   ];

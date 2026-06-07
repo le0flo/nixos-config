@@ -5,7 +5,7 @@
     libreoffice
     calibre
     xournalpp
-    krita
     inkscape
+    krita
   ];
 }

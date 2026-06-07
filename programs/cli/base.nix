@@ -22,7 +22,7 @@
     dysk
     zip
     unzip
+    gnutar
     fastfetch
-    devenv
   ];
 }
