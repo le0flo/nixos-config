@@ -10,6 +10,6 @@
     nicotine-plus
 
     telegram-desktop
-    discord
+    vesktop
   ];
 }
