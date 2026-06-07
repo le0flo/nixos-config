@@ -24,6 +24,7 @@
     kubectl
     kubelogin
     azure-cli
+    prismlauncher
   ];
 
   virtualisation = {
