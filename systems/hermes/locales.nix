@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{...}:
 
 {
   time.timeZone = "Europe/Rome";
@@ -19,8 +19,5 @@
     };
   };
 
-  console = {
-    font = "sun12x22";
-    keyMap = "it";
-  };
+  console.keyMap = "it";
 }

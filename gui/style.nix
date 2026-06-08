@@ -18,14 +18,6 @@ rec {
     size = 20;
   };
 
-  fonts = with pkgs; [
-    dejavu_fonts
-    liberation_ttf
-    noto-fonts
-    nerd-fonts.comic-shanns-mono
-    nerd-fonts.iosevka
-  ];
-
   gtk = {
     icons = "elementary-xfce";
     iconsPackages = with pkgs; [
@@ -52,13 +44,4 @@ rec {
       qqc2-breeze-style
     ];
   };
-
-  packages = fonts
-    ++ gtk.iconsPackages
-    ++ gtk.themePackages
-    ++ [
-      qt.stylePackage
-      qt.iconsPackage
-    ]
-    ++ qt.extraPackages;
 }

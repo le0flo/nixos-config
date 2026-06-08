@@ -20,7 +20,6 @@
 
     imports = [
       ../../configs/fastfetch.nix
-      ../../configs/fonts.nix
       ../../configs/foot.nix
       ../../configs/fuzzel.nix
       ../../configs/git.nix

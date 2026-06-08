@@ -8,6 +8,7 @@
     ../../programs/cli/external.nix
     ../../programs/cli/appimage.nix
 
+    ../../programs/graphical/style.nix
     ../../programs/graphical/terminal.nix
     ../../programs/graphical/privacy.nix
     ../../programs/graphical/internet.nix
