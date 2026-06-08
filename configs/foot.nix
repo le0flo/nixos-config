@@ -9,6 +9,7 @@
     value = {
       main = {
         font = "ComicShannsMono Nerd Font Mono:style=Regular:size=16";
+        pad = "8x8";
       };
     };
   };
