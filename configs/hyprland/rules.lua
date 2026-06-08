@@ -19,11 +19,31 @@ hl.window_rule({
     no_focus = true,
 })
 
--- hl.config({
---   ecosystem = {
---     enforce_permissions = true,
---   },
--- })
+hl.window_rule({
+    name = "open-maximized",
+    match = { initial_class = "^dev.zed.Zed|librewolf|thunderbird$" },
 
--- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
--- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
+    scrolling_width = 1,
+})
+
+hl.window_rule({
+    name = "portals",
+    match = { initial_class = "^xdg-desktop-portal-gtk" },
+
+    float = true,
+    center = true,
+})
+
+hl.window_rule({
+    name = "hidden-apps",
+    match = { initial_class = "^org.keepassxc.KeePassXC|org.telegram.desktop|thunderbird$" },
+
+    no_screen_share = true,
+})
+
+hl.layer_rule({
+    name = "hidden-layer",
+    match = { namespace = "notifications" },
+
+    no_screen_share = true,
+})

@@ -25,6 +25,15 @@ in {
 
       include "colors.kdl" optional=true
       include "cursor.kdl" optional=true
+
+      prefer-no-csd
+
+      hotkey-overlay {
+        skip-at-startup
+        hide-not-bound
+      }
+
+      screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
     '';
 
     "niri/colors.kdl" = copyText ''

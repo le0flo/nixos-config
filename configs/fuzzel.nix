@@ -10,11 +10,14 @@ in {
     generator = (pkgs.formats.ini {}).generate "fuzzel.ini";
     value = {
       main = {
+        width = 30;
+        lines = 15;
+
         prompt = "search: ";
         icons-enabled = false;
         inner-pad = 10;
 
-        terminal = "${pkgs.alacritty}/bin/alacritty -e";
+        terminal = "${pkgs.foot}/bin/foot -e";
         layer = "overlay";
       };
 

@@ -1,5 +1,3 @@
-prefer-no-csd
-
 window-rule {
   geometry-corner-radius 0
   clip-to-geometry true
@@ -40,10 +38,3 @@ layer-rule {
 
     block-out-from "screencast"
 }
-
-hotkey-overlay {
-  skip-at-startup
-  hide-not-bound
-}
-
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
