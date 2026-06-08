@@ -1,15 +1,10 @@
 {pkgs, ...}:
 
 {
-  programs.niri = {
+  programs.hyprland = {
     enable = true;
-    useNautilus = false;
+    xwayland.enable = true;
   };
-
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gnome
-    xdg-desktop-portal-gtk
-  ];
 
   programs.thunar = {
     enable = true;
@@ -23,7 +18,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    xwayland-satellite
     fuzzel
     swaybg
     swaylock-effects

@@ -3,6 +3,11 @@
 let
   style = import ../gui/style.nix { inherit pkgs; };
 
+  copyText = text: {
+    inherit text;
+    type = "copy";
+    permissions = "664";
+  };
   packageDataFiles = dataDir: packages:
     pkgs.lib.pipe packages [
       (builtins.concatMap (pkg:
@@ -16,13 +21,13 @@ let
 in {
   xdg = {
     config.files = {
-      "environment.d/qt.conf".text = ''
+      "environment.d/qt.conf" = copyText ''
         QT_QPA_PLATFORM=wayland
         QT_QPA_PLATFORMTHEME=kde
         QT_STYLE_OVERRIDE=${style.qt.style}
       '';
 
-      "kdeglobals".source = pkgs.writeText "kdeglobals" ''
+      "kdeglobals" = copyText ''
         ${builtins.readFile style.qt.colorSchemeFile}
 
         [Icons]

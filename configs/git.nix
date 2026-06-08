@@ -1,11 +1,14 @@
 {pkgs, ...}:
 
-let
-  ini = pkgs.formats.ini {};
-  settings = {
-    core.editor = "vim";
-    init.defaultBranch = "master";
+{
+  xdg.config.files."git/config" = {
+    type = "copy";
+    permissions = "664";
+
+    generator = (pkgs.formats.ini {}).generate "config";
+    value = {
+      core.editor = "vis";
+      init.defaultBranch = "master";
+    };
   };
-in {
-  xdg.config.files."git/config".source = ini.generate "config" settings;
 }

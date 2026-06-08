@@ -6,6 +6,7 @@
     thunderbird
     liferea
 
+    localsend
     qbittorrent
     nicotine-plus
 

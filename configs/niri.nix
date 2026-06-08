@@ -2,27 +2,53 @@
 
 let
   style = import ../gui/style.nix { inherit pkgs; };
+
+  copyText = text: {
+    inherit text;
+    type = "copy";
+    permissions = "664";
+  };
+  copySource = source: {
+    inherit source;
+    type = "copy";
+    permissions = "664";
+  };
 in {
-  xdg = {
-    config.files = {
-      "niri/config.kdl".text = builtins.readFile ./niri/config.kdl;
+  xdg.config.files = {
+    "niri/config.kdl" = copyText ''
+      include "autostart.kdl"
+      include "binds.kdl"
+      include "inputs.kdl"
+      include "looks.kdl"
+      include "monitors.kdl"
+      include "rules.kdl"
 
-      "niri/colors.kdl".text = ''
-        layout {
-          border {
-            active-color "${style.colors.border}"
-            inactive-color "${style.colors.background}"
-            urgent-color "${style.colors.text}"
-          }
-        }
-      '';
+      include "colors.kdl" optional=true
+      include "cursor.kdl" optional=true
+    '';
 
-      "niri/cursor.kdl".text = ''
-        cursor {
-          xcursor-theme "${style.cursor.name}"
-          xcursor-size ${builtins.toString style.cursor.size}
+    "niri/colors.kdl" = copyText ''
+      layout {
+        border {
+          active-color "${style.colors.border}"
+          inactive-color "${style.colors.background}"
+          urgent-color "${style.colors.text}"
         }
-      '';
-    };
+      }
+    '';
+
+    "niri/cursor.kdl" = copyText ''
+      cursor {
+        xcursor-theme "${style.cursor.name}"
+        xcursor-size ${builtins.toString style.cursor.size}
+      }
+    '';
+
+    "niri/autostart.kdl" = copySource ./niri/autostart.kdl;
+    "niri/binds.kdl" = copySource ./niri/binds.kdl;
+    "niri/inputs.kdl" = copySource ./niri/inputs.kdl;
+    "niri/looks.kdl" = copySource ./niri/looks.kdl;
+    "niri/monitors.kdl" = copySource ./niri/monitors.kdl;
+    "niri/rules.kdl" = copySource ./niri/rules.kdl;
   };
 }

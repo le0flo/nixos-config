@@ -1,0 +1,14 @@
+input {
+  keyboard {
+    xkb {
+      layout "it"
+    }
+
+    numlock
+  }
+
+  touchpad {
+    tap
+    natural-scroll
+  }
+}

@@ -2,8 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    atril
-    libreoffice
-    xournalpp
+    foot
+    wl-clipboard
   ];
 }

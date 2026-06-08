@@ -2,24 +2,13 @@
 
 let
   style = import ../gui/style.nix { inherit pkgs; };
-  ini = pkgs.formats.ini {};
-  settings = {
+
+  generateIni = name: value: {
+    inherit value;
     type = "copy";
     permissions = "644";
-
-    source = ini.generate "settings.ini" {
-      Settings = {
-        gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
-
-        gtk-cursor-theme-name = style.cursor.name;
-        gtk-cursor-theme-size = style.cursor.size;
-
-        gtk-theme-name = style.gtk.theme;
-        gtk-icon-theme-name = style.gtk.icons;
-      };
-    };
+    generator = (pkgs.formats.ini {}).generate name;
   };
-
   packageDataFiles = dataDir: packages:
     pkgs.lib.pipe packages [
       (builtins.concatMap (pkg:
@@ -33,8 +22,29 @@ let
 in {
   xdg = {
     config.files = {
-      "gtk-3.0/settings.ini" = settings;
-      "gtk-4.0/settings.ini" = settings;
+      "gtk-3.0/settings.ini" = generateIni "settings.ini" {
+        Settings = {
+          gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
+
+          gtk-cursor-theme-name = style.cursor.name;
+          gtk-cursor-theme-size = style.cursor.size;
+
+          gtk-theme-name = style.gtk.theme;
+          gtk-icon-theme-name = style.gtk.icons;
+        };
+      };
+
+      "gtk-4.0/settings.ini" = generateIni "settings.ini" {
+        Settings = {
+          gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
+
+          gtk-cursor-theme-name = style.cursor.name;
+          gtk-cursor-theme-size = style.cursor.size;
+
+          gtk-theme-name = style.gtk.theme;
+          gtk-icon-theme-name = style.gtk.icons;
+        };
+      };
     };
 
     data.files = {
@@ -43,7 +53,7 @@ in {
         permissions = "755";
       };
 
-      "icons/default/index.theme".source = ini.generate "index.theme" {
+      "icons/default/index.theme" = generateIni "index.theme" {
         "Icon Theme" = {
           Name = "Default";
           Comment = "Default icon theme";
@@ -56,7 +66,7 @@ in {
         permissions = "755";
       };
 
-      "themes/default/index.theme".source = ini.generate "index.theme" {
+      "themes/default/index.theme" = generateIni "index.theme" {
         "X-GNOME-Metatheme" = {
           Name = "Default";
           Comment = "Default GTK theme";

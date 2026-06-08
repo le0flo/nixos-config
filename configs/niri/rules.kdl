@@ -1,0 +1,49 @@
+prefer-no-csd
+
+window-rule {
+  geometry-corner-radius 0
+  clip-to-geometry true
+}
+
+window-rule {
+    match app-id=r#"^dev\.zed\.Zed$"#
+    match app-id=r#"^librewolf$"#
+    match app-id=r#"^thunderbird$"#
+
+    open-maximized true
+}
+
+window-rule {
+  match app-id=r#"^org\.xfce\.ristretto$"#
+
+  open-maximized false
+  open-maximized-to-edges false
+}
+
+window-rule {
+    match app-id="xdg-desktop-portal-gtk"
+    match is-floating=true
+
+    default-column-width { proportion 0.75; }
+    default-window-height { proportion 0.65; }
+}
+
+window-rule {
+  match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+  match app-id=r#"^org\.telegram\.desktop$"#
+
+  block-out-from "screencast"
+}
+
+layer-rule {
+    match namespace="^notifications$"
+
+    block-out-from "screencast"
+}
+
+hotkey-overlay {
+  skip-at-startup
+  hide-not-bound
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
