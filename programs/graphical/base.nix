@@ -2,7 +2,9 @@
 
 {
   environment.systemPackages = with pkgs; [
-    foot
     wl-clipboard
+
+    foot
+    qdirstat
   ];
 }

@@ -9,7 +9,7 @@
     ../../programs/cli/appimage.nix
 
     ../../programs/graphical/style.nix
-    ../../programs/graphical/terminal.nix
+    ../../programs/graphical/base.nix
     ../../programs/graphical/privacy.nix
     ../../programs/graphical/internet.nix
     ../../programs/graphical/dev.nix
