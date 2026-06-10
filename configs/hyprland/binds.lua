@@ -14,6 +14,12 @@ hl.bind(modifier .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(modifier .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(modifier .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(modifier .. " + down", hl.dsp.focus({ direction = "down" }))
+
+hl.bind(modifier .. " + CTRL + left", hl.dsp.window.move({ direction = "left" }))
+hl.bind(modifier .. " + CTRL + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(modifier .. " + CTRL + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind(modifier .. " + CTRL + down", hl.dsp.window.move({ direction = "down" }))
+
 hl.bind(modifier .. " + page_up", hl.dsp.focus({ workspace = "-1" }))
 hl.bind(modifier .. " + page_down", hl.dsp.focus({ workspace = "+1" }))
 
