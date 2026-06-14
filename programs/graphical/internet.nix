@@ -11,6 +11,5 @@
     nicotine-plus
 
     telegram-desktop
-    vesktop
   ];
 }
