@@ -34,6 +34,11 @@ in {
       }
 
       screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+      environment {
+        QT_QPA_PLATFORM "wayland"
+        QT_QPA_PLATFORMTHEME "kde"
+      }
     '';
 
     "niri/colors.kdl" = copyText ''

@@ -3,6 +3,7 @@
 {
   imports = [
     ./boot.nix
+    ./disk.nix
     ./hardware.nix
     ./networking.nix
     ./locales.nix

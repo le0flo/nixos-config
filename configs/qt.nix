@@ -20,23 +20,15 @@ let
     ];
 in {
   xdg = {
-    config.files = {
-      "environment.d/qt.conf" = copyText ''
-        QT_QPA_PLATFORM=wayland
-        QT_QPA_PLATFORMTHEME=kde
-        QT_STYLE_OVERRIDE=${style.qt.style}
-      '';
+    config.files."kdeglobals" = copyText ''
+      ${builtins.readFile style.qt.colorSchemeFile}
 
-      "kdeglobals" = copyText ''
-        ${builtins.readFile style.qt.colorSchemeFile}
+      [Icons]
+      Theme=${style.qt.icons}
 
-        [Icons]
-        Theme=${style.qt.icons}
-
-        [KDE]
-        widgetStyle=${style.qt.style}
-      '';
-    };
+      [KDE]
+      widgetStyle=${style.qt.style}
+    '';
 
     data.files = {
       "color-schemes" = {

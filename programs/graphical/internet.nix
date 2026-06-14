@@ -9,7 +9,5 @@
     localsend
     qbittorrent
     nicotine-plus
-
-    telegram-desktop
   ];
 }

@@ -4,8 +4,6 @@
   environment.systemPackages = with pkgs; [
     zed-editor
     dbeaver-bin
-    emacs
-
     freecad
     kicad
   ];

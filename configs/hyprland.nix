@@ -32,6 +32,9 @@ in {
               focus_on_activate = true,
           },
       })
+
+      hl.env("QT_QPA_PLATFORM", "wayland")
+      hl.env("QT_QPA_PLATFORMTHEME", "kde")
     '';
 
     "hypr/colors.lua" = copyText ''
