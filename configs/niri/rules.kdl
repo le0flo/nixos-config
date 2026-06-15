@@ -29,6 +29,8 @@ window-rule {
 window-rule {
   match app-id=r#"^org\.keepassxc\.KeePassXC$"#
   match app-id=r#"^thunderbird$"#
+  match app-id=r#"^librewolf$"# title=r#"^WhatsApp"#
+  match app-id=r#"^librewolf$"# title=r#"^Telegram Web"#
 
   block-out-from "screencast"
 }
