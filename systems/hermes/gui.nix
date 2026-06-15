@@ -3,7 +3,7 @@
 {
   imports = [
     ../../gui/fonts.nix
-    ../../gui/hyprland.nix
+    ../../gui/niri.nix
   ];
 
   xdg = {

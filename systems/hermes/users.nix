@@ -24,7 +24,6 @@
       ../../configs/fuzzel.nix
       ../../configs/git.nix
       ../../configs/gtk.nix
-      ../../configs/hyprland.nix
       ../../configs/keepassxc.nix
       ../../configs/mako.nix
       ../../configs/niri.nix

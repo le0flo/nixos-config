@@ -11,7 +11,7 @@ in {
     value = {
       main = {
         width = 30;
-        lines = 15;
+        lines = 10;
 
         prompt = "search: ";
         icons-enabled = false;

@@ -1,5 +1,0 @@
-hl.on("hyprland.start", function()
-    hl.exec_cmd("swaybg -m fill -i ~/.config/background/wallpaper")
-    hl.exec_cmd("swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f")
-    hl.exec_cmd("mako")
-end)
