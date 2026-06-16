@@ -42,7 +42,7 @@ in {
 
     extraConfig = ''
       view "home-69" {
-        match-clients { 10.69.0.0/24; };
+        match-clients { 127.0.0.0/8; 10.69.0.0/24; };
 
         zone "home.arpa" {
           type master;
