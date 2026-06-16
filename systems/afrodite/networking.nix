@@ -29,13 +29,13 @@
           {
             # odino
             publicKey = "GX/1ks+T1OcBsW7XiMIN1k2/azaCWH69eGh9dltfJhU=";
-            allowedIPs = [ "10.67.0.2/32" ];
+            allowedIPs = [ "10.69.0.2/32" ];
             persistentKeepalive = 25;
           }
           {
             # nettuno
             publicKey = "O0qmhfzHIvEQjnr8sttLfur7uZ7+u72BNoWEyo2pmX0=";
-            allowedIPs = [ "10.67.0.3/32" ];
+            allowedIPs = [ "10.69.0.3/32" ];
             persistentKeepalive = 25;
           }
           {
