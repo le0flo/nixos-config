@@ -19,7 +19,7 @@
 
       peers = [
         {
-          publicKey = "8sP+w/FRjTU7IC8JSMKrkSAPfi5v4Vs0D1LTdlhnbn4=";
+          publicKey = "9EsDl0sK6V+Y/MKMlHFZ1qO6VZBWNkQUQKJZujT3bRg=";
           allowedIPs = [ "10.69.0.0/24" ];
           endpoint = "leoflo.me:51820";
           persistentKeepalive = 25;
