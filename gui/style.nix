@@ -3,7 +3,7 @@
 rec {
   polarity = "dark";
 
-  wallpaper = ../assets/bg-valley.png;
+  wallpaper = ../assets/bg-oldfarm.png;
 
   colors = {
     border = "#adc178";
