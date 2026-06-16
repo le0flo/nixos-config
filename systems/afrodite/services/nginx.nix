@@ -17,19 +17,19 @@
         useACMEHost = "leoflo.me";
         addSSL = true;
 
-        locations."/".proxyPass = "http://10.67.0.2:8000";
+        locations."/".proxyPass = "http://10.69.0.2:8000";
       };
 
       "files.leoflo.me" = {
         useACMEHost = "leoflo.me";
         addSSL = true;
 
-        locations."/".proxyPass = "http://10.67.0.2:8001";
+        locations."/".proxyPass = "http://10.69.0.2:8001";
       };
 
       # Homelab
       "music.home.arpa" = {
-        locations."/".proxyPass = "http://10.67.0.2:9001";
+        locations."/".proxyPass = "http://10.69.0.2:9001";
       };
 
       "images.home.arpa" = {
@@ -38,7 +38,7 @@
           deny all;
         '';
 
-        locations."/".proxyPass = "http://10.67.0.2:9002";
+        locations."/".proxyPass = "http://10.69.0.2:9002";
       };
 
       "papers.home.arpa" = {
@@ -47,11 +47,11 @@
           deny all;
         '';
 
-        locations."/".proxyPass = "http://10.67.0.2:9003";
+        locations."/".proxyPass = "http://10.69.0.2:9003";
       };
 
       "cinema.home.arpa" = {
-        locations."/".proxyPass = "http://10.67.0.2:9004";
+        locations."/".proxyPass = "http://10.69.0.2:9004";
       };
 
       "torrent.home.arpa" = {
@@ -60,7 +60,7 @@
           deny all;
         '';
 
-        locations."/".proxyPass = "http://10.67.0.2:9005";
+        locations."/".proxyPass = "http://10.69.0.2:9005";
       };
     };
   };

@@ -36,23 +36,11 @@ in {
 
     cacheNetworks = [
       "127.0.0.0/8"
-      "10.67.0.0/24"
       "10.69.0.0/24"
       "10.96.0.0/24"
     ];
 
     extraConfig = ''
-      view "home-67" {
-        match-clients { 127.0.0.0/8; 10.67.0.0/24; };
-
-        zone "home.arpa" {
-          type master;
-          file "${homeArpaZone "10.67.0.1"}";
-          allow-query { 127.0.0.0/8; 10.67.0.0/24; };
-          allow-transfer { none; };
-        };
-      };
-
       view "home-69" {
         match-clients { 10.69.0.0/24; };
 

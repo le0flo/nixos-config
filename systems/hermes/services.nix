@@ -7,8 +7,6 @@
     ../../services/secrets.nix
     ../../services/docker.nix
     ../../services/virt-manager.nix
-    ../../services/tor.nix
-    ../../services/i2pd.nix
   ];
 
   services = {
