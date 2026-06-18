@@ -8,13 +8,13 @@
     ../../programs/cli/external.nix
     ../../programs/cli/appimage.nix
 
-    ../../programs/graphical/style.nix
-    ../../programs/graphical/base.nix
-    ../../programs/graphical/privacy.nix
-    ../../programs/graphical/internet.nix
-    ../../programs/graphical/dev.nix
-    ../../programs/graphical/office.nix
-    ../../programs/graphical/media.nix
+    ../../programs/gui/style.nix
+    ../../programs/gui/base.nix
+    ../../programs/gui/privacy.nix
+    ../../programs/gui/internet.nix
+    ../../programs/gui/dev.nix
+    ../../programs/gui/office.nix
+    ../../programs/gui/media.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

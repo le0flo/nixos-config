@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    librewolf
+    chromium
     thunderbird
     liferea
 
