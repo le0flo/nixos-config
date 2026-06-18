@@ -5,7 +5,7 @@ window-rule {
 
 window-rule {
     match app-id=r#"^dev\.zed\.Zed$"#
-    match app-id=r#"^librewolf$"#
+    match app-id=r#"^firefox$"#
     match app-id=r#"^thunderbird$"#
 
     open-maximized true
@@ -29,8 +29,8 @@ window-rule {
 window-rule {
   match app-id=r#"^org\.keepassxc\.KeePassXC$"#
   match app-id=r#"^thunderbird$"#
-  match app-id=r#"^librewolf$"# title=r#"^WhatsApp"#
-  match app-id=r#"^librewolf$"# title=r#"^Telegram Web"#
+  match app-id=r#"^firefox$"# title=r#"^WhatsApp"#
+  match app-id=r#"^firefox$"# title=r#"work"#
 
   block-out-from "screencast"
 }
