@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    chromium
+    firefox
     thunderbird
     liferea
 
