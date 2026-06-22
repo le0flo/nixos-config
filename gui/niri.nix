@@ -34,5 +34,6 @@
     pavucontrol
     ristretto
     xarchiver
+    mousepad
   ];
 }
