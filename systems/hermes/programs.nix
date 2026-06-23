@@ -26,5 +26,6 @@
     kubectl
     kubelogin
     azure-cli
+    kubernetes-helm
   ];
 }
