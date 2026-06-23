@@ -3,7 +3,7 @@
 rec {
   polarity = "dark";
 
-  wallpaper = ../assets/bg-oldfarm.png;
+  wallpaper = ../assets/bg-stalker.png;
 
   colors = {
     border = "#adc178";

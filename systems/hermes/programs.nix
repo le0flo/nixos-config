@@ -22,7 +22,7 @@
   environment.systemPackages = with pkgs; [
     iwgtk
     openfortivpn
-    opencode
+    codex
     kubectl
     kubelogin
     azure-cli

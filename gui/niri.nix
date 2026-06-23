@@ -6,10 +6,7 @@
     useNautilus = false;
   };
 
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-gnome
-    xdg-desktop-portal-gtk
-  ];
+  xdg.portal.configPackages = with pkgs; [ niri ];
 
   programs.thunar = {
     enable = true;
