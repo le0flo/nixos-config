@@ -52,7 +52,7 @@
           }
           {
             # ares
-            publicKey = "bMgACe4Pp2VQ0lpMb0Q2RVw/n5KIIg20xT90eesxcEw=";
+            publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU=";
             allowedIPs = [ "10.69.0.103/32" ];
             persistentKeepalive = 25;
           }
@@ -67,7 +67,7 @@
         peers = [
           {
             # firetv
-            publicKey = "18RMffhrj9OpzIIngUsajblMRUWwV8t7gOAszcoo8HM=";
+            publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4=";
             allowedIPs = [ "10.96.0.2/32" ];
             persistentKeepalive = 25;
           }
