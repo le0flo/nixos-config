@@ -3,7 +3,7 @@
 rec {
   polarity = "dark";
 
-  wallpaper = ../assets/bg-stalker.png;
+  wallpaper = ../assets/bg-fallout.png;
 
   colors = {
     border = "#adc178";
