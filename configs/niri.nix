@@ -1,27 +1,36 @@
-{pkgs, ...}:
+{lib, pkgs, ...}:
 
 let
   style = import ../gui/style.nix { inherit pkgs; };
+
+  configFiles = builtins.filter
+    (x: lib.hasSuffix ".kdl" x)
+    (builtins.attrNames (builtins.readDir ./niri));
+
+  includeConfigs = lib.join
+    "\n"
+    (builtins.map
+      (x: "include \"${x}\"")
+      configFiles);
+
+  packageConfigs = lib.genAttrs
+    configFiles
+    (file: {
+      source = ./niri/${file};
+      target = "niri/${file}";
+      type = "copy";
+      permissions = "644";
+    });
 
   copyText = text: {
     inherit text;
     type = "copy";
     permissions = "664";
   };
-  copySource = source: {
-    inherit source;
-    type = "copy";
-    permissions = "664";
-  };
 in {
   xdg.config.files = {
     "niri/config.kdl" = copyText ''
-      include "autostart.kdl"
-      include "binds.kdl"
-      include "inputs.kdl"
-      include "looks.kdl"
-      include "monitors.kdl"
-      include "rules.kdl"
+      ${includeConfigs}
 
       include "colors.kdl" optional=true
       include "cursor.kdl" optional=true
@@ -58,11 +67,11 @@ in {
       }
     '';
 
-    "niri/autostart.kdl" = copySource ./niri/autostart.kdl;
-    "niri/binds.kdl" = copySource ./niri/binds.kdl;
-    "niri/inputs.kdl" = copySource ./niri/inputs.kdl;
-    "niri/looks.kdl" = copySource ./niri/looks.kdl;
-    "niri/monitors.kdl" = copySource ./niri/monitors.kdl;
-    "niri/rules.kdl" = copySource ./niri/rules.kdl;
-  };
+    "niri/bg-picker.sh" = {
+      source = ./niri/bg-picker.sh;
+      type = "copy";
+      permissions = "755";
+    };
+  }
+  // packageConfigs;
 }

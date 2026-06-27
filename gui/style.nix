@@ -3,7 +3,7 @@
 rec {
   polarity = "dark";
 
-  wallpaper = ../assets/bg-fallout.png;
+  wallpaper = "countryside.png";
 
   colors = {
     border = "#adc178";
