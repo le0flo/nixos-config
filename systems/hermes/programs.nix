@@ -23,7 +23,7 @@
     iwgtk
     intel-gpu-tools
     openfortivpn
-    codex
+    opencode
     kubectl
     kubelogin
     azure-cli
