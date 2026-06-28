@@ -21,6 +21,7 @@
 
   environment.systemPackages = with pkgs; [
     iwgtk
+    intel-gpu-tools
     openfortivpn
     codex
     kubectl
