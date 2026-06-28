@@ -3,7 +3,7 @@
 rec {
   polarity = "dark";
 
-  wallpaper = "countryside.png";
+  wallpaper = "road.png";
 
   colors = {
     border = "#adc178";
