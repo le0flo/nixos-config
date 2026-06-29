@@ -6,6 +6,7 @@
     shell = pkgs.bash;
 
     extraGroups = [
+      "audio"
       "dialout"
       "docker"
       "libvirtd"
@@ -19,6 +20,7 @@
     clobberFiles = true;
 
     imports = [
+      ../../configs/emacs.nix
       ../../configs/fastfetch.nix
       ../../configs/foot.nix
       ../../configs/fuzzel.nix
@@ -31,7 +33,6 @@
       ../../configs/swaylock.nix
       ../../configs/tmux.nix
       ../../configs/wallpaper.nix
-      ../../configs/zed.nix
     ];
   };
 }

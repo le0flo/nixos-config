@@ -2,7 +2,9 @@
 
 {
   environment.systemPackages = with pkgs; [
-    wl-clipboard
-    foot
+    zip
+    unzip
+    p7zip
+    gnutar
   ];
 }

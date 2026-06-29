@@ -2,7 +2,9 @@
 
 {
   environment.systemPackages = with pkgs; [
-    wl-clipboard
-    foot
+    git
+    postgresql
+    sqlite
+    freetds
   ];
 }

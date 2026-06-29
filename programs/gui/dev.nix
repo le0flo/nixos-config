@@ -2,9 +2,32 @@
 
 {
   environment.systemPackages = with pkgs; [
-    zed-editor
-    dbeaver-bin
+    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+      epkgs: with epkgs; [
+        colorful-mode
+        csv-mode
+        dart-mode
+        dockerfile-mode
+        emacsql
+        git-modes
+        json-mode
+        lua-mode
+        magit
+        markdown-mode
+        nginx-mode
+        nix-mode
+        rfc-mode
+        rust-mode
+        sass-mode
+        typescript-mode
+        web-mode
+        yaml-mode
+        zig-mode
+      ]
+    ))
+
     freecad
     kicad
   ];
 }
+

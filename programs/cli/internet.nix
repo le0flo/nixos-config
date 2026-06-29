@@ -2,12 +2,11 @@
 
 {
   environment.systemPackages = with pkgs; [
-    dig
     curl
-    git
-    wireguard-tools
-    openssl
+    wget
+    dig
     openssh
     rsync
+    wireguard-tools
   ];
 }
