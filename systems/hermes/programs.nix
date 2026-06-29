@@ -17,8 +17,6 @@
     ../../programs/gui/media.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   environment.systemPackages = with pkgs; [
     iwgtk
     intel-gpu-tools
@@ -29,4 +27,6 @@
     azure-cli
     kubernetes-helm
   ];
+
+  nixpkgs.config.allowUnfree = true;
 }

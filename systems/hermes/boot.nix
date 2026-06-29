@@ -7,6 +7,8 @@
         enable = true;
         device = "nodev";
         efiSupport = true;
+
+        splashImage = ../../assets/grub/gnulove.jpg;
       };
 
       efi.canTouchEfiVariables = true;

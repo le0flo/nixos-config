@@ -5,5 +5,6 @@
     atril
     libreoffice
     xournalpp
+    gnucash
   ];
 }
