@@ -1,4 +1,4 @@
 ;; Global variables
-(setq inhibit-startup-message t)
-(setq make-backup-files nil)
-(setq-default tab-width 4)
+(setq-default inhibit-startup-message t
+              make-backup-files nil
+              tab-width 2)

@@ -11,6 +11,7 @@
         emacsql
         git-modes
         json-mode
+        kirigami
         lua-mode
         magit
         markdown-mode

@@ -3,6 +3,7 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (global-display-line-numbers-mode 1)
+(ido-mode 1)
 
 ;; Theme
 (load-theme 'wombat t)
