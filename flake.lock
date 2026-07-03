@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "gnustep-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783350334,
+        "narHash": "sha256-6RFSpdMcNnRrzmukekP2LCJP5kszD9JZ9g6kTnD5kNs=",
+        "ref": "refs/heads/master",
+        "rev": "80a36aa8ef006596062201eb980a6ef56618bb97",
+        "revCount": 5,
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/gnustep-nix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/gnustep-nix"
+      }
+    },
     "hjem": {
       "inputs": {
         "nix-darwin": "nix-darwin",
@@ -91,6 +111,7 @@
     },
     "root": {
       "inputs": {
+        "gnustep-nix": "gnustep-nix",
         "hjem": "hjem",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2"

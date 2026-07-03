@@ -4,6 +4,7 @@
   imports = [
     ../../gui/fonts.nix
     ../../gui/niri.nix
+    ../../gui/windowmaker.nix
   ];
 
   xdg = {

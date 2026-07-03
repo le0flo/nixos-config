@@ -1,3 +1,4 @@
+
 {
   description = "My NixOS fleet";
 
@@ -7,6 +8,11 @@
 
     hjem = {
       url = "github:feel-co/hjem";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    gnustep-nix = {
+      url = "git+https://codeberg.org/leoflo/gnustep-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

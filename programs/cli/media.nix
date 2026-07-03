@@ -2,9 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    atril
-    collabora-desktop
-    xournalpp
-    gnucash
+    imagemagick
+    ffmpeg
   ];
 }

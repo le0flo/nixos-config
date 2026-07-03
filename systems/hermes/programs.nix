@@ -9,7 +9,8 @@
     ../../programs/cli/dev.nix
     ../../programs/cli/external.nix
     ../../programs/cli/internet.nix
-
+    ../../programs/cli/media.nix
+    
     ../../programs/gui/base.nix
     ../../programs/gui/dev.nix
     ../../programs/gui/internet.nix
@@ -22,6 +23,8 @@
   environment.systemPackages = with pkgs; [
     iwgtk
     intel-gpu-tools
+    discord
+
     openfortivpn
     opencode
     kubectl
