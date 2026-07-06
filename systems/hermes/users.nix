@@ -33,6 +33,7 @@
       ../../configs/swaylock.nix
       ../../configs/tmux.nix
       ../../configs/wallpaper.nix
+      ../../configs/windowmaker.nix
       ../../configs/xresources.nix
     ];
   };

@@ -22,6 +22,7 @@
   environment.systemPackages = with pkgs; [
     xwayland-satellite
     fuzzel
+    foot
     swaybg
     swaylock-effects
     swayidle
