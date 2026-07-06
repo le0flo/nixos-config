@@ -27,6 +27,7 @@
   
   environment.systemPackages = with pkgs; [
     rxvt-unicode
+    xclip
     addresses
     gnumail
 

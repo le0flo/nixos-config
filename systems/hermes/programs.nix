@@ -11,7 +11,6 @@
     ../../programs/cli/internet.nix
     ../../programs/cli/media.nix
     
-    ../../programs/gui/base.nix
     ../../programs/gui/dev.nix
     ../../programs/gui/internet.nix
     ../../programs/gui/media.nix

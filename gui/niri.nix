@@ -23,6 +23,7 @@
     xwayland-satellite
     fuzzel
     foot
+    wl-clipboard
     swaybg
     swaylock-effects
     swayidle
