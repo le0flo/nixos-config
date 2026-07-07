@@ -21,7 +21,6 @@
 
   environment.systemPackages = with pkgs; [
     iwgtk
-    intel-gpu-tools
     discord
 
     openfortivpn

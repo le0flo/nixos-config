@@ -7,6 +7,15 @@
     ../../gui/windowmaker.nix
   ];
 
+  services.xserver = {
+    videoDrivers = [ "modesetting" ];
+
+    deviceSection = ''
+      Option "TearFree" "true"
+      Option "DRI" "3"
+    '';
+  };
+
   xdg = {
     icons.enable = true;
     autostart.enable = true;

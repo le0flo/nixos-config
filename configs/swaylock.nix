@@ -22,7 +22,7 @@ in {
       timestr=%H:%M:%S
       datestr=%d %B
 
-      image=${config.xdg.config.directory}/background/wallpaper
+      image=${config.xdg.data.directory}/backgrounds/default
       effect-blur=6x7
       color=${parseColor style.colors.background}
 
