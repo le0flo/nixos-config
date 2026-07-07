@@ -32,7 +32,5 @@
     brightnessctl
     pavucontrol
     ristretto
-    xarchiver
-    mousepad
   ];
 }

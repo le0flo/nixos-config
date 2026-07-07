@@ -6,5 +6,12 @@
     collabora-desktop
     xournalpp
     gnucash
+
+    (pkgs.texlive.combine {
+      inherit (pkgs.texlive) scheme-basic
+        amsfonts amsmath amstex
+        tikz-ext tikz-3dplot
+        xcolor hyperref;
+    })
   ];
 }
