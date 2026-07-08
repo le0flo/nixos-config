@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: with epkgs; [
+        auctex
         colorful-mode
         csv-mode
         dart-mode
