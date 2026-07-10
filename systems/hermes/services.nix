@@ -12,6 +12,7 @@
     blueman.enable = true;
     dbus.enable = true;
     flatpak.enable = true;
+    fwupd.enable = true;
     gvfs.enable = true;
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
