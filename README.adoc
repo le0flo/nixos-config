@@ -1,0 +1,3 @@
+= My NixOS fleet
+
+System configuration for every computer running NixOS that I own.

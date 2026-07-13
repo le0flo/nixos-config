@@ -1,6 +1,0 @@
-{
-  "diagnostics.globals": ["hl"],
-  "workspace.library": [
-    "${env:HOME}/.config/hypr/hl.meta.lua"
-  ]
-}

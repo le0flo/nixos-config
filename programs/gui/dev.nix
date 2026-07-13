@@ -10,6 +10,7 @@
         dart-mode
         dockerfile-mode
         emacsql
+        erc
         git-modes
         json-mode
         kirigami
@@ -27,9 +28,6 @@
         zig-mode
       ]
     ))
-
-    freecad
-    kicad
   ];
 }
 
