@@ -29,6 +29,7 @@
     kubelogin
     azure-cli
     kubernetes-helm
+    gh
   ];
 
   nixpkgs.config.allowUnfree = true;
