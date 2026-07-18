@@ -1,22 +1,22 @@
 {
   description = "My NixOS fleet";
 
-  outputs = inputs: let
-    systemConfig = dir: inputs.nixpkgs.lib.nixosSystem {
+  outputs = {self, nixpkgs, disko, hjem, microvm, ...}@inputs: let
+    systemConfig = dir: nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [
         dir
-        inputs.hjem.nixosModules.default
-        inputs.microvm.nixosModules.host
-        inputs.disko.nixosModules.default
+        disko.nixosModules.default
+        hjem.nixosModules.default
+        microvm.nixosModules.host
       ];
     };
 
-    microvmConfig = dir: inputs.nixpkgs.lib.nixosSystem {
+    microvmConfig = dir: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         dir
-        inputs.microvm.nixosModules.microvm
+        microvm.nixosModules.microvm
       ];
     };
   in {

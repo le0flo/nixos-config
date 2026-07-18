@@ -1,0 +1,71 @@
+:root {
+  --background: #333333;
+  --text: #f7ede2;
+  --accent: #99d98c;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+
+  margin: 20px auto;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  background-color: var(--background);
+  color: var(--text);
+}
+
+@media (min-width: 800px) {
+  body {
+    max-width: 85%;
+  }
+}
+
+h1 {
+  color: var(--accent);
+}
+
+ul {
+  list-style-type: disc;
+
+  font-size: 20px;
+}
+
+li::marker {
+  color: var(--accent);
+}
+
+a {
+  color: var(--accent);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#badges {
+  width: 100%;
+
+  margin: 50px 0px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}

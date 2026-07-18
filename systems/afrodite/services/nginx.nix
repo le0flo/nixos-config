@@ -1,6 +1,8 @@
-{...}:
+{pkgs, ...}:
 
-{
+let
+  website = pkgs.callPackage ../../../website {};
+in {
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -17,14 +19,14 @@
         useACMEHost = "leoflo.me";
         addSSL = true;
 
-        locations."/".proxyPass = "http://10.69.0.2:8000";
+        root = website;
       };
 
       "files.leoflo.me" = {
         useACMEHost = "leoflo.me";
         addSSL = true;
 
-        locations."/".proxyPass = "http://10.69.0.2:8001";
+        root = "/srv/files";
       };
 
       # Homelab
