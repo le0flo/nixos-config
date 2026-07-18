@@ -27,6 +27,9 @@ in {
         addSSL = true;
 
         root = "/srv/files";
+        extraConfig = ''
+          autoindex on;
+        '';
       };
 
       # Homelab
