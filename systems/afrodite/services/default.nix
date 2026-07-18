@@ -8,5 +8,6 @@
     ./acme.nix
     ./bind.nix
     ./nginx.nix
+    ./kubernetes.nix
   ];
 }
