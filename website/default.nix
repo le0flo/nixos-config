@@ -1,9 +1,12 @@
-{stdenv}:
+{
+  stdenvNoCC,
+}:
 
-stdenv.mkDerivation (finalAttrs: {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "website";
   version = "1.0.0";
-  src = ./website;
+  
+  src = ./.;
 
   installPhase = ''
     mkdir -p $out
