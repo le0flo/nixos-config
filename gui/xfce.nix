@@ -1,0 +1,33 @@
+{config, inputs, pkgs, ...}:
+
+{
+  services.xserver = {
+    enable = true;
+    
+    desktopManager.xfce = {
+      enable = true;
+      enableWaylandSession = true;
+      waylandSessionCompositor = "xfwl4";
+    };
+  };
+
+  xdg.portal = {
+    config."xfce".default = [
+      "gtk"
+      "xapp"
+    ];
+    
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-xapp
+    ];
+  };
+  
+  nixpkgs.overlays = [
+    inputs.xfce-nix.overlays.${config.nixpkgs.hostPlatform.system}
+  ];
+
+  environment.xfce.excludePackages = with pkgs; [ xterm ];
+
+  environment.systemPackages = with pkgs; [ xfwl4 ];
+}

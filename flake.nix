@@ -57,5 +57,10 @@
       url = "git+https://codeberg.org/leoflo/gnustep-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    xfce-nix = {
+      url = "git+https://codeberg.org/leoflo/xfce-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

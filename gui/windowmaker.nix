@@ -5,14 +5,7 @@
     enable = true;
     
     windowManager.windowmaker.enable = true;
-    desktopManager.xterm.enable = false;
-    
-    displayManager = {
-      lightdm.enable = false;
-      startx.enable = true;
-    };
-
-    xkb.layout = "it";
+    displayManager.startx.enable = true;
   };
 
   xdg.portal = {

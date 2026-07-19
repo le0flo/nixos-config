@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783350334,
-        "narHash": "sha256-6RFSpdMcNnRrzmukekP2LCJP5kszD9JZ9g6kTnD5kNs=",
+        "lastModified": 1784474075,
+        "narHash": "sha256-ufFiA99Ap1Udw74qobZjEMg+57oALSsM9S95EQH6iJ8=",
         "ref": "refs/heads/master",
-        "rev": "80a36aa8ef006596062201eb980a6ef56618bb97",
-        "revCount": 5,
+        "rev": "c5bde82fd4e198268d8d1133cf8304980fe61018",
+        "revCount": 6,
         "type": "git",
         "url": "https://codeberg.org/leoflo/gnustep-nix"
       },
@@ -136,7 +136,8 @@
         "hjem": "hjem",
         "microvm": "microvm",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "xfce-nix": "xfce-nix"
       }
     },
     "spectrum": {
@@ -152,6 +153,26 @@
       "original": {
         "type": "git",
         "url": "https://spectrum-os.org/git/spectrum"
+      }
+    },
+    "xfce-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784475599,
+        "narHash": "sha256-nlzD9LqU1XrRYFagMVMjvqhAFA+V/MHPI1mJdEQSwKE=",
+        "ref": "refs/heads/master",
+        "rev": "573c4e010c0b73a945951b0d6aed04fb119c4124",
+        "revCount": 16,
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/xfce-nix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/xfce-nix"
       }
     }
   },

@@ -4,6 +4,7 @@
   imports = [
     ../../gui/fonts.nix
     ../../gui/niri.nix
+    ../../gui/xfce.nix
     ../../gui/windowmaker.nix
   ];
 
@@ -14,6 +15,9 @@
       Option "TearFree" "true"
       Option "DRI" "3"
     '';
+    
+    desktopManager.xterm.enable = false;
+    displayManager.lightdm.enable = false;
   };
 
   xdg = {

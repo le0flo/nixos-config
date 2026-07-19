@@ -14,7 +14,7 @@
       thunar-archive-plugin
       thunar-media-tags-plugin
       thunar-shares-plugin
-      thunar-vcs-plugin
+      #thunar-vcs-plugin
       thunar-volman
     ];
   };
