@@ -15,6 +15,9 @@
         xcolor
         hyperref
         enumitem
+        standalone
+        filehook
+        svn-prov
         amsfonts
         amsmath
         amstex
