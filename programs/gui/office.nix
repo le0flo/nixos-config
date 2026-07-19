@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     atril
-    collabora-desktop
+    libreoffice
     xournalpp
     gnucash
 

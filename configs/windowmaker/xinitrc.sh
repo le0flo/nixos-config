@@ -19,12 +19,12 @@ dbus-update-activation-environment --systemd --all
 
 systemctl --user start nixos-fake-graphical-session.target
 
-cputnik &
-wmacpi &
-wmclockmon &
-wmnd -I home &
-wmpulsemixer -w &
-wmsystemtray &
+cputnik & disown
+wmacpi & disown
+wmclockmon & disown
+wmnd -I home & disown
+wmpulsemixer -w & disown
+wmsystemtray & disown
 
 wmaker
 wmaker_status="$?"

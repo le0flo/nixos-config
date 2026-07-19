@@ -24,7 +24,7 @@
     ),
     (
       "Office",
-      ("Collabora Office", EXEC, "coda-qt"),
+      ("LibreOffice", EXEC, "libreoffice"),
       ("GnuCash", EXEC, "gnucash")
     ),
     (

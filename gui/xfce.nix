@@ -27,7 +27,10 @@
     inputs.xfce-nix.overlays.${config.nixpkgs.hostPlatform.system}
   ];
 
-  environment.xfce.excludePackages = with pkgs; [ xterm ];
+  environment.xfce.excludePackages = with pkgs; [
+    xterm
+    parole
+  ];
 
   environment.systemPackages = with pkgs; [ xfwl4 ];
 }
