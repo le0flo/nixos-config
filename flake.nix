@@ -1,37 +1,43 @@
 {
-  description = "My NixOS fleet";
+  description = "NixOS config";
 
-  outputs = {self, nixpkgs, disko, hjem, microvm, ...}@inputs: let
-    systemConfig = dir: nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [
-        dir
-        disko.nixosModules.default
-        hjem.nixosModules.default
-        microvm.nixosModules.host
-      ];
-    };
+  outputs = {self, nixpkgs, disko, agenix, hjem, microvm, ...}@inputs: let
+    lib = nixpkgs.lib;
 
-    microvmConfig = dir: nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        dir
-        microvm.nixosModules.microvm
-      ];
-    };
+    configs = folder: builtins.attrNames (lib.filterAttrs (x: y: y == "directory") (builtins.readDir folder));
+    systems = [
+      "x86_64-linux"
+      "i686-linux"
+      "aarch64-linux"
+    ];
+
+    nameToModule = name: sep: lib.elemAt (lib.flatten (lib.split sep name)) 1;
+    nameToSystem = name: sep: lib.concatStringsSep sep (lib.drop 2 (lib.flatten (lib.split sep name)));
+    
+    hostConfigs = lib.genAttrs
+      (builtins.map (x: "host-${x}") (configs ./hosts))
+      (name: lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/${nameToModule name "-"}
+          disko.nixosModules.default
+          agenix.nixosModules.default
+          hjem.nixosModules.default
+          microvm.nixosModules.host
+        ];
+      });
+
+    microvmConfigs = lib.genAttrs
+      (lib.flatten (builtins.map (x: builtins.map (y: "microvm-${x}-${y}") systems) (configs ./microvms)))
+      (name: lib.nixosSystem {
+        system = nameToSystem name "-";
+        modules = [
+          ./microvms/${nameToModule name "-"}
+          microvm.nixosModules.microvm
+        ];
+      });
   in {
-    nixosConfigurations = {
-      "afrodite" = systemConfig ./systems/afrodite;
-      "hermes" = systemConfig ./systems/hermes;
-      "odino" = systemConfig ./systems/odino;
-      "thor" = systemConfig ./systems/thor;
-
-      "navidrome" = microvmConfig ./microvms/navidrome;
-      "immich" = microvmConfig ./microvms/immich;
-      "paperless" = microvmConfig ./microvms/paperless;
-      "jellyfin" = microvmConfig ./microvms/jellyfin;
-      "sharing" = microvmConfig ./microvms/sharing;
-    };
+    nixosConfigurations = hostConfigs // microvmConfigs;
   };
 
   inputs = {
@@ -40,6 +46,11 @@
 
     disko = {
       url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     

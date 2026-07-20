@@ -4,7 +4,6 @@
   imports = [
     ../../gui/fonts.nix
     ../../gui/niri.nix
-    ../../gui/xfce.nix
     ../../gui/windowmaker.nix
   ];
 
@@ -29,4 +28,9 @@
       xdgOpenUsePortal = true;
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    wl-clipboard
+    xclip
+  ];
 }

@@ -12,15 +12,9 @@
   };
 
   xdg.portal = {
-    config."xfce".default = [
-      "gtk"
-      "xapp"
-    ];
+    config."xfce".default = [ "gtk" ];
     
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-xapp
-    ];
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
   
   nixpkgs.overlays = [

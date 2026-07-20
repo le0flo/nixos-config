@@ -10,5 +10,6 @@
     exfat
     ntfs3g
     android-tools
+    scrcpy
   ];
 }

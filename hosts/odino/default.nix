@@ -9,7 +9,6 @@
     ./locales.nix
     ./users.nix
 
-    ./gui.nix
     ./services.nix
     ./programs.nix
   ];
@@ -20,9 +19,9 @@
   ];
 
   environment.shellAliases = {
-    "system-build" = "sudo nixos-rebuild build --flake ~/nixos#hermes";
-    "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#hermes";
-    "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#hermes";
+    "system-build" = "sudo nixos-rebuild build --flake ~/nixos#host-odino";
+    "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#host-odino";
+    "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#host-odino";
   };
 
   system.stateVersion = "26.05";

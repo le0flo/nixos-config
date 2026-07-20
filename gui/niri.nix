@@ -11,10 +11,7 @@
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
-      thunar-archive-plugin
-      thunar-media-tags-plugin
       thunar-shares-plugin
-      #thunar-vcs-plugin
       thunar-volman
     ];
   };
@@ -23,7 +20,6 @@
     xwayland-satellite
     fuzzel
     foot
-    wl-clipboard
     swaybg
     swaylock-effects
     swayidle
