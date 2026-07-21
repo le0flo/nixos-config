@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
+    ((emacsPackagesFor emacs).emacsWithPackages (
       epkgs: with epkgs; [
         auctex
         colorful-mode
