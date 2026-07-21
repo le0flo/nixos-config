@@ -6,6 +6,5 @@
     gnumake
     postgresql
     sqlite
-    freetds
   ];
 }

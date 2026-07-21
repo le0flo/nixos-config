@@ -4,10 +4,10 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"^dev\.zed\.Zed$"#
-    match app-id=r#"^emacs$"#
     match app-id=r#"^firefox$"#
     match app-id=r#"^thunderbird$"#
+
+    match app-id=r#"^Emacs$"#
 
     open-maximized true
 }
@@ -29,10 +29,8 @@ window-rule {
 
 window-rule {
   match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+  match app-id=r#"^firefox$"# title=r#"— work — Mozilla Firefox"#
   match app-id=r#"^thunderbird$"#
-  match app-id=r#"^firefox$"# title=r#"WhatsApp"#
-  match app-id=r#"^firefox$"# title=r#"Discord"#
-  match app-id=r#"^firefox$"# title=r#"work"#
 
   block-out-from "screencast"
 }

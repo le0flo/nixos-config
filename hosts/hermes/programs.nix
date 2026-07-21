@@ -30,6 +30,7 @@
     azure-cli
     kubernetes-helm
     gh
+    freetds
   ];
 
   nixpkgs.config.allowUnfree = true;
