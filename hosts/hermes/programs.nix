@@ -25,12 +25,12 @@
 
     openfortivpn
     opencode
+    freetds
     kubectl
     kubelogin
     azure-cli
     kubernetes-helm
     gh
-    freetds
   ];
 
   nixpkgs.config.allowUnfree = true;
