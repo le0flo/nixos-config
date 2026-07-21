@@ -19,7 +19,7 @@
       ("Inkscape", EXEC, "inkscape"),
       ("Krita", EXEC, "krita"),
       ("VLC", EXEC, "vlc"),
-      ("Strawberry", EXEC, "strawberry",)
+      ("Strawberry", EXEC, "strawberry"),
       ("Kid3", EXEC, "kid3")
     ),
     (
