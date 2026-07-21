@@ -2,12 +2,13 @@
 
 {
   environment.systemPackages = with pkgs; [
-    vis
+    nano
     tmux
     htop
     file
     tree
     psmisc
     fastfetch
+    agenix-cli
   ];
 }

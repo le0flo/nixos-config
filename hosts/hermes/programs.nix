@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../programs/cli/appimage.nix
     ../../programs/cli/archive.nix
     ../../programs/cli/base.nix
     ../../programs/cli/bash.nix
@@ -10,6 +9,7 @@
     ../../programs/cli/external.nix
     ../../programs/cli/internet.nix
     ../../programs/cli/media.nix
+    ../../programs/cli/office.nix
     
     ../../programs/gui/dev.nix
     ../../programs/gui/internet.nix

@@ -12,25 +12,28 @@
     (
       "Editors",
       ("Emacs", EXEC, "emacs"),
-      ("Nano", EXEC, "urxvt -e nano"),
-      ("Vis", EXEC, "urxvt -e vis")
+      ("Nano", EXEC, "urxvt -e nano")
     ),
     (
       "Media",
       ("Inkscape", EXEC, "inkscape"),
       ("Krita", EXEC, "krita"),
       ("VLC", EXEC, "vlc"),
-      ("Strawberry", EXEC, "strawberry")
+      ("Strawberry", EXEC, "strawberry",)
+      ("Kid3", EXEC, "kid3")
     ),
     (
       "Office",
+      ("Atril", EXEC, "atril"),
       ("LibreOffice", EXEC, "libreoffice"),
+      ("Xournal++", EXEC, "xournalpp"),
       ("GnuCash", EXEC, "gnucash")
     ),
     (
       "System",
       ("Thunar", EXEC, "thunar"),
       ("KeepassXC", EXEC, "keepassxc"),
+      ("VeraCrypt", EXEC, "veracrypt"),
       ("htop", EXEC, "urxvt -e htop")
     )
   ),
