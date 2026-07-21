@@ -46,7 +46,7 @@ in {
 
       environment {
         QT_QPA_PLATFORM "wayland"
-        QT_QPA_PLATFORMTHEME "kde"
+        QT_QPA_PLATFORMTHEME "qt6ct"
       }
     '';
 

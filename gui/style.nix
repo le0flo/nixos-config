@@ -19,7 +19,7 @@ rec {
   };
 
   gtk = {
-    icons = "elementary-xfce";
+    icons = "elementary-xfce-dark";
     iconsPackages = with pkgs; [
       adwaita-icon-theme
       elementary-xfce-icon-theme
@@ -30,18 +30,9 @@ rec {
   };
 
   qt = {
-    colorScheme = if polarity == "dark" then "BreezeDark" else "BreezeLight";
-    colorSchemeFile = "${qt.stylePackage}/share/color-schemes/${qt.colorScheme}.colors";
-
-    stylePackage = pkgs.kdePackages.breeze;
-    style = "Breeze";
-
-    iconsPackage = pkgs.kdePackages.breeze-icons;
-    icons = "breeze-dark";
-
-    extraPackages = with pkgs.kdePackages; [
-      plasma-integration
-      qqc2-breeze-style
-    ];
+    style = "Fusion";
+    icons = "elementary-xfce-dark";
+    colorScheme = "darker";
+    dialogs = "default";
   };
 }

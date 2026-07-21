@@ -2,40 +2,20 @@
 
 let
   style = import ../gui/style.nix { inherit pkgs; };
-
-  copyText = text: {
-    inherit text;
+in {
+  xdg.config.files."qt6ct/qt6ct.conf" = {
     type = "copy";
     permissions = "664";
-  };
-  packageDataFiles = dataDir: packages:
-    pkgs.lib.pipe packages [
-      (builtins.concatMap (pkg:
-        pkgs.lib.mapAttrsToList (name: _: {
-          name = "${dataDir}/${name}";
-          value.source = "${pkg}/share/${dataDir}/${name}";
-        })
-        (builtins.readDir "${pkg}/share/${dataDir}")))
-      builtins.listToAttrs
-    ];
-in {
-  xdg = {
-    config.files."kdeglobals" = copyText ''
-      ${builtins.readFile style.qt.colorSchemeFile}
 
-      [Icons]
-      Theme=${style.qt.icons}
-
-      [KDE]
-      widgetStyle=${style.qt.style}
-    '';
-
-    data.files = {
-      "color-schemes" = {
-        type = "directory";
-        permissions = "755";
+    generator = (pkgs.formats.ini {}).generate "qt6ct.conf";
+    value = {
+      Appearance = {
+        style = style.qt.style;
+        icon_theme = style.qt.icons;
+        color_scheme_path = "${pkgs.qt6Packages.qt6ct}/share/qt6ct/colors/${style.qt.colorScheme}.conf";
+        custom_palette = true;
+        standard_dialogs = style.qt.dialogs;
       };
-    }
-    // packageDataFiles "color-schemes" [ style.qt.stylePackage ];
+    };
   };
 }
