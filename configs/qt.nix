@@ -16,6 +16,11 @@ in {
         custom_palette = true;
         standard_dialogs = style.qt.dialogs;
       };
+
+      Fonts = {
+        general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+        fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+      };
     };
   };
 }
