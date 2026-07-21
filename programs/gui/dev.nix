@@ -9,8 +9,6 @@
         csv-mode
         dart-mode
         dockerfile-mode
-        emacsql
-        erc
         git-modes
         json-mode
         kirigami
