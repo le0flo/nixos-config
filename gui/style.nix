@@ -33,6 +33,6 @@ rec {
     style = "Fusion";
     icons = "elementary-xfce-dark";
     colorScheme = "darker";
-    dialogs = "default";
+    dialogs = "xdgdesktopportal";
   };
 }
