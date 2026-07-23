@@ -21,7 +21,7 @@
 
   environment.systemPackages = with pkgs; [
     iwgtk
-    discord
+    vesktop
 
     openfortivpn
     opencode

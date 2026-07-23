@@ -1,6 +1,6 @@
 (
   "Window Maker",
-  ("Terminal", EXEC, "urxvt"),
+  ("Terminal", EXEC, "xterm"),
   (
     "Applications",
     (
@@ -12,7 +12,7 @@
     (
       "Editors",
       ("Emacs", EXEC, "emacs"),
-      ("Nano", EXEC, "urxvt -e nano")
+      ("Nano", EXEC, "xterm -e nano")
     ),
     (
       "Media",
@@ -24,7 +24,6 @@
     ),
     (
       "Office",
-      ("Atril", EXEC, "atril"),
       ("LibreOffice", EXEC, "libreoffice"),
       ("Xournal++", EXEC, "xournalpp"),
       ("GnuCash", EXEC, "gnucash")
@@ -32,9 +31,11 @@
     (
       "System",
       ("Thunar", EXEC, "thunar"),
+      ("GWorkspace", EXEC, "GWorkspace"),
+      ("LocalSend", EXEC, "localsend_app"),
       ("KeepassXC", EXEC, "keepassxc"),
       ("VeraCrypt", EXEC, "veracrypt"),
-      ("htop", EXEC, "urxvt -e htop")
+      ("htop", EXEC, "xterm -e htop")
     )
   ),
   (

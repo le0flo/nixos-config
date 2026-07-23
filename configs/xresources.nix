@@ -54,7 +54,7 @@ in {
       !
       ! XTerm
       !
-      urxvt*font: xft:Iosevka Nerd Font Mono:size=18:style=Regular
+      xterm*font: xft:Iosevka Nerd Font Mono:size=18:style=Regular
     '';
   };
 }
