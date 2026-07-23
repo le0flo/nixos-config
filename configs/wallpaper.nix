@@ -17,6 +17,7 @@ in {
       type = "directory";
       permissions = "755";
     };
+
     "backgrounds/default" = {
       source = ../assets/backgrounds/${style.wallpaper};
       type = "symlink";

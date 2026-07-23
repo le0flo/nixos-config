@@ -5,7 +5,7 @@ let
 in {
   xdg.config.files."qt6ct/qt6ct.conf" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     generator = (pkgs.formats.ini {}).generate "qt6ct.conf";
     value = {

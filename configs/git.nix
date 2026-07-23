@@ -3,11 +3,11 @@
 {
   xdg.config.files."git/config" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     generator = (pkgs.formats.ini {}).generate "config";
     value = {
-      core.editor = "vis";
+      core.editor = "nano";
       init.defaultBranch = "master";
     };
   };

@@ -5,7 +5,7 @@ let
 in {
   xdg.config.files."fuzzel/fuzzel.ini" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     generator = (pkgs.formats.ini {}).generate "fuzzel.ini";
     value = {
@@ -18,11 +18,11 @@ in {
         inner-pad = 10;
 
         terminal = "${pkgs.foot}/bin/foot -e";
-        layer = "overlay";
+        font = "DejaVu Sans Mono:size=10";
       };
 
       border = {
-        width = 2;
+        width = 4;
         radius = 0;
       };
 

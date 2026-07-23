@@ -1,19 +1,29 @@
+output "eDP-1" {
+  mode "1920x1080@60"
+  position x=0 y=0
+  scale 1.0
+  transform "normal"
+
+  hot-corners {
+    off
+  }
+}
+
 window-rule {
   geometry-corner-radius 0
   clip-to-geometry true
 }
 
 window-rule {
-    match app-id=r#"^firefox$"#
-    match app-id=r#"^thunderbird$"#
-
-    match app-id=r#"^Emacs$"#
+    match app-id="firefox"
+    match app-id="thunderbird"
+    match app-id="Emacs"
 
     open-maximized true
 }
 
 window-rule {
-  match app-id=r#"^org\.xfce\.ristretto$"#
+  match app-id="org.xfce.ristretto"
 
   open-maximized false
   open-maximized-to-edges false
@@ -28,15 +38,15 @@ window-rule {
 }
 
 window-rule {
-  match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-  match app-id=r#"^firefox$"# title=r#"— work — Mozilla Firefox"#
-  match app-id=r#"^thunderbird$"#
+  match app-id="org.keepassxc.KeePassXC"
+  match app-id="firefox" title=r#"work — Mozilla Firefox$"#
+  match app-id="thunderbird"
 
   block-out-from "screencast"
 }
 
 layer-rule {
-    match namespace="^notifications$"
+    match namespace="notifications"
 
     block-out-from "screencast"
 }

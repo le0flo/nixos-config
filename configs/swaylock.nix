@@ -7,7 +7,7 @@ let
 in {
   xdg.config.files."swaylock/config" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     text =  ''
       ignore-empty-password

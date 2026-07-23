@@ -3,7 +3,7 @@
 {
   xdg.config.files."fastfetch/config.jsonc" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     generator = (pkgs.formats.json {}).generate "config.jsonc";
     value = {

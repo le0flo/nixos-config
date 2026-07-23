@@ -1,21 +1,20 @@
 binds {
-  Mod+O repeat=false { toggle-overview; }
+  Mod+M { quit; }
   Mod+Q repeat=false { close-window; }
-  Mod+Shift+E { quit; }
 
   Mod+Ctrl+L { spawn "swaylock"; }
   Mod+Return { spawn "foot"; }
   Mod+P { spawn "fuzzel"; }
-  Mod+B { spawn "~/.config/niri/bg-picker.sh"; }
+  Mod+B { spawn "~/.config/scripts/bg-picker.sh"; }
 
+  Mod+O repeat=false { toggle-overview; }
   Mod+V { toggle-window-floating; }
   Mod+F { maximize-column; }
   Mod+Shift+F { fullscreen-window; }
-  Mod+C { center-column; }
 
   Mod+R { reset-window-height; }
-  Mod+Ctrl+R { switch-preset-column-width; }
-  Mod+Shift+R { switch-preset-window-height; }
+  Mod+Shift+R { switch-preset-column-width; }
+  Mod+Ctrl+R { switch-preset-window-height; }
 
   Print { screenshot; }
   Ctrl+Print { screenshot-screen; }

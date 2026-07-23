@@ -1,7 +1,7 @@
 {
   description = "NixOS config";
 
-  outputs = {self, nixpkgs, disko, agenix, hjem, microvm, ...}@inputs: let
+  outputs = {self, nixpkgs, disko, agenix, hjem, microvm, mangowm, ...}@inputs: let
     lib = nixpkgs.lib;
 
     configs = folder: builtins.attrNames (lib.filterAttrs (x: y: y == "directory") (builtins.readDir folder));
@@ -24,6 +24,7 @@
           agenix.nixosModules.default
           hjem.nixosModules.default
           microvm.nixosModules.host
+          mangowm.nixosModules.mango
         ];
       });
 
@@ -61,6 +62,11 @@
 
     microvm = {
       url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mangowm = {
+      url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

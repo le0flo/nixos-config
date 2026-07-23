@@ -4,6 +4,7 @@
   imports = [
     ../../gui/fonts.nix
     ../../gui/niri.nix
+    ../../gui/mango.nix
     ../../gui/windowmaker.nix
   ];
 

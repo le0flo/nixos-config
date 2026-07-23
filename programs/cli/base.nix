@@ -11,4 +11,6 @@
     fastfetch
     agenix-cli
   ];
+
+  programs.nix-ld.enable = true;
 }

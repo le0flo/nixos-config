@@ -3,7 +3,7 @@
 {
   xdg.config.files."foot/foot.ini" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     generator = (pkgs.formats.ini {}).generate "foot.ini";
     value = {

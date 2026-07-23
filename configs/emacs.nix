@@ -14,16 +14,18 @@ let
   packageConfigs = lib.genAttrs
     configFiles
     (file: {
-      source = ./emacs/${file};
-      target = "emacs/${file}";
       type = "copy";
       permissions = "644";
+
+      source = ./emacs/${file};
+      target = "emacs/${file}";
     });
 
   copyText = text: {
     inherit text;
+
     type = "copy";
-    permissions = "664";
+    permissions = "644";
   };
 in {
   xdg.config.files = {

@@ -3,7 +3,7 @@
 {
   xdg.config.files."tmux/tmux.conf" = {
     type = "copy";
-    permissions = "664";
+    permissions = "644";
 
     text = ''
       set -g base-index 1

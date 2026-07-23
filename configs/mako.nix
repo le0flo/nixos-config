@@ -16,6 +16,9 @@ in {
         background-color = style.colors.background;
         text-color = style.colors.text;
         border-color = style.colors.border;
+        
+        outer-margin = 0;
+        margin = 5;
       };
     };
   };

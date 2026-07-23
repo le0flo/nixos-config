@@ -9,6 +9,7 @@ let
     permissions = "644";
     generator = (pkgs.formats.ini {}).generate name;
   };
+  
   packageDataFiles = dataDir: packages:
     pkgs.lib.pipe packages [
       (builtins.concatMap (pkg:

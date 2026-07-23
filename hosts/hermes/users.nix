@@ -28,8 +28,10 @@
       ../../configs/gtk.nix
       ../../configs/keepassxc.nix
       ../../configs/mako.nix
+      ../../configs/mango.nix
       ../../configs/niri.nix
       ../../configs/qt.nix
+      ../../configs/scripts.nix
       ../../configs/swaylock.nix
       ../../configs/tmux.nix
       ../../configs/wallpaper.nix
