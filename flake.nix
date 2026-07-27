@@ -1,7 +1,7 @@
 {
   description = "NixOS config";
 
-  outputs = {self, nixpkgs, disko, agenix, hjem, microvm, mangowm, ...}@inputs: let
+  outputs = {self, nixpkgs, disko, agenix, hjem, microvm, hyprland, ...}@inputs: let
     lib = nixpkgs.lib;
 
     configs = folder: builtins.attrNames (lib.filterAttrs (x: y: y == "directory") (builtins.readDir folder));
@@ -24,7 +24,7 @@
           agenix.nixosModules.default
           hjem.nixosModules.default
           microvm.nixosModules.host
-          mangowm.nixosModules.mango
+          hyprland.nixosModules.default
         ];
       });
 
@@ -65,18 +65,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mangowm = {
-      url = "github:mangowm/mango";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    gnustep-nix = {
+    hyprland.url = "github:hyprwm/Hyprland/v0.56.1";
+    
+    gnustep = {
       url = "git+https://codeberg.org/leoflo/gnustep-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    xfce-nix = {
-      url = "git+https://codeberg.org/leoflo/xfce-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

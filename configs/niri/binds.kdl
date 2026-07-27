@@ -3,8 +3,8 @@ binds {
   Mod+Q repeat=false { close-window; }
 
   Mod+Ctrl+L { spawn "swaylock"; }
-  Mod+Return { spawn "foot"; }
-  Mod+P { spawn "fuzzel"; }
+  Mod+Return { spawn "alacritty"; }
+  Mod+P { spawn "rofi" "-show" "drun"; }
   Mod+B { spawn "~/.config/scripts/bg-picker.sh"; }
 
   Mod+O repeat=false { toggle-overview; }

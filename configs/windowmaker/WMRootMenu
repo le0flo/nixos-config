@@ -1,13 +1,12 @@
 (
   "Window Maker",
-  ("Terminal", EXEC, "xterm"),
+  ("Terminal", EXEC, "alacritty"),
   (
     "Applications",
     (
       "Internet",
       ("Firefox", EXEC, "firefox"),
-      ("Thunderbird", EXEC, "thunderbird"),
-      ("GNUMail", EXEC, "GNUMail")
+      ("Thunderbird", EXEC, "thunderbird")
     ),
     (
       "Editors",
@@ -31,7 +30,6 @@
     (
       "System",
       ("Thunar", EXEC, "thunar"),
-      ("GWorkspace", EXEC, "GWorkspace"),
       ("LocalSend", EXEC, "localsend_app"),
       ("KeepassXC", EXEC, "keepassxc"),
       ("VeraCrypt", EXEC, "veracrypt"),

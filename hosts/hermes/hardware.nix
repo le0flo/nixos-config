@@ -1,16 +1,12 @@
-{config, lib, inputs, modulesPath, pkgs, ...}:
+{lib, inputs, ...}:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
-  ];
+  imports = [ inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel ];
 
   hardware = {
     bluetooth.enable = true;
-
-    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
+    enableRedistributableFirmware = lib.mkDefault true;
+    cpu.intel.updateMicrocode = lib.mkDefault true;
     intel-gpu-tools.enable = true;
   };
 

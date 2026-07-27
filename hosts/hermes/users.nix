@@ -20,15 +20,14 @@
     clobberFiles = true;
 
     imports = [
+      ../../configs/alacritty.nix
       ../../configs/emacs.nix
       ../../configs/fastfetch.nix
-      ../../configs/foot.nix
-      ../../configs/fuzzel.nix
       ../../configs/git.nix
       ../../configs/gtk.nix
+      ../../configs/hyprland.nix
       ../../configs/keepassxc.nix
       ../../configs/mako.nix
-      ../../configs/mango.nix
       ../../configs/niri.nix
       ../../configs/qt.nix
       ../../configs/scripts.nix
@@ -36,7 +35,6 @@
       ../../configs/tmux.nix
       ../../configs/wallpaper.nix
       ../../configs/windowmaker.nix
-      ../../configs/xresources.nix
     ];
   };
 }
