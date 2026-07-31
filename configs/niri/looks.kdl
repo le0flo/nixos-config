@@ -1,18 +1,14 @@
 layout {
   gaps 10
 
-  center-focused-column "never"
+  center-focused-column "always"
+
+  default-column-width { proportion 0.5; }
 
   preset-column-widths {
     proportion 0.5
     proportion 0.8
     proportion 1.0
-  }
-
-  default-column-width { proportion 0.8; }
-
-  focus-ring {
-    off
   }
 
   border {
@@ -22,4 +18,13 @@ layout {
     inactive-color "#505050"
     urgent-color "#9b0000"
   }
+
+  focus-ring { off; }
+}
+
+prefer-no-csd
+
+hotkey-overlay {
+  skip-at-startup
+  hide-not-bound
 }

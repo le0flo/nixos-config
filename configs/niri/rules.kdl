@@ -1,36 +1,14 @@
-output "eDP-1" {
-  mode "1920x1080@60"
-  position x=0 y=0
-  scale 1.0
-  transform "normal"
-
-  hot-corners {
-    off
-  }
-}
-
-output "DP-5" {
-  mode "1920x1080@60"
-  position x=-1920 y=0
-  scale 1.0
-  transform "normal"
-
-  hot-corners {
-    off
-  }
-}
-
 window-rule {
   geometry-corner-radius 0
   clip-to-geometry true
 }
 
 window-rule {
-    match app-id="firefox"
-    match app-id="thunderbird"
-    match app-id="Emacs"
+  match app-id="firefox"
+  match app-id="thunderbird"
+  match app-id="Emacs"
 
-    open-maximized true
+  open-maximized true
 }
 
 window-rule {
@@ -41,11 +19,11 @@ window-rule {
 }
 
 window-rule {
-    match app-id="xdg-desktop-portal-gtk"
-    match is-floating=true
+  match app-id="xdg-desktop-portal-gtk"
+  match is-floating=true
 
-    default-column-width { proportion 0.75; }
-    default-window-height { proportion 0.65; }
+  default-column-width { proportion 0.75; }
+  default-window-height { proportion 0.65; }
 }
 
 window-rule {
@@ -57,7 +35,7 @@ window-rule {
 }
 
 layer-rule {
-    match namespace="notifications"
+  match namespace="notifications"
 
-    block-out-from "screencast"
+  block-out-from "screencast"
 }

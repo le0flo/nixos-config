@@ -31,15 +31,6 @@ in {
       text = ''
         ${includeConfigs}
 
-        prefer-no-csd
-
-        hotkey-overlay {
-          skip-at-startup
-          hide-not-bound
-        }
-
-        screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
         layout {
           border {
             active-color "${style.colors.border}"

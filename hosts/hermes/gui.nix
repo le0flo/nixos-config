@@ -4,7 +4,6 @@
   imports = [
     ../../gui/fonts.nix
     ../../gui/niri.nix
-    ../../gui/hyprland.nix
     ../../gui/windowmaker.nix
   ];
 
