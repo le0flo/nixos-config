@@ -18,4 +18,9 @@
     enable = true;
     binfmt = true;
   };
+
+  system.activationScripts.ldd.text = ''
+    mkdir -p /usr/bin
+    ln -sf ${pkgs.glibc.bin}/bin/ldd /usr/bin/ldd
+  '';
 }
