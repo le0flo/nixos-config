@@ -11,6 +11,7 @@
       timeout = 3;
     };
 
+    kernel.sysctl."net.ipv4.ip_forward" = true;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ ];
     extraModulePackages = [ ];
