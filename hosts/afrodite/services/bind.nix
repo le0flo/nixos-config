@@ -57,10 +57,10 @@ in {
       "127.0.0.0/8"
     ] ++ map
       (x: "${networks."${x}".prefix}.0/24")
-      lib.attrNames networks;
+      (lib.attrNames networks);
 
     extraConfig = lib.concatStringsSep "\n" (
-      map (x: makeView x) lib.attrNames networks;
+      map (x: makeView x) (lib.attrNames networks);
     )
   };
 }
