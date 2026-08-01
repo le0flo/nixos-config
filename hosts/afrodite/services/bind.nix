@@ -1,9 +1,11 @@
-{lib, pkgs, ...}:
+{config, inputs, lib, pkgs, ...}:
 
 let
-  domain = (import ../../../vpn/values.nix {}).privateDomain;
-  networks = (import ../../../vpn/values.nix {}).networks;
-  
+  values = import ../../../vpn/values.nix { inherit config inputs lib; };
+
+  domain = values.privateDomain;
+  networks = values.networks;
+
   makeZone = entrypoint: pkgs.writeText "${domain}-${entrypoint}" ''
     $TTL 86400
 

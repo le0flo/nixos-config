@@ -1,6 +1,10 @@
-{...}:
+{config, inputs, lib, ...}:
 
-{
+let
+  secretsPath = toString inputs.nixos-secrets;
+
+  readKey = path: lib.trim (builtins.readFile path);
+in {
   publicDomain = "leoflo.me";
   privateDomain = "home.arpa";
 
@@ -9,15 +13,15 @@
       primary = true;
       prefix = "10.69.0";
       port = 51820;
-      privateKey = "/etc/wireguard/home";
-      publicKey = "9EsDl0sK6V+Y/MKMlHFZ1qO6VZBWNkQUQKJZujT3bRg=";
+      privateKeyFile = "${config.age.secretsDir}/wireguard/home";
+      publicKey = readKey "${secretsPath}/wireguard/afrodite-home.pub";
     };
 
     "external" = {
       prefix = "10.96.0";
       port = 51821;
-      privateKey = "/etc/wireguard/external";
-      publicKey = "wI7HVkYMaGN4mZkrrV1OaNgnCL6k5tRfiyzkK0822iQ=";
+      privateKeyFile = "${config.age.secretsDir}/wireguard/external";
+      publicKey = readKey "${secretsPath}/wireguard/afrodite-external.pub";
     };
   };
 }

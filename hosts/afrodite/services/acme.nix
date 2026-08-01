@@ -1,7 +1,7 @@
-{config, ...}:
+{config, inputs, lib, ...}:
 
 let
-  publicDomain = (import ../../../vpn/values.nix {}).publicDomain;
+  publicDomain = (import ../../../vpn/values.nix { inherit config inputs lib; }).publicDomain;
 in {
   networking.firewall.allowedTCPPorts = [
     80

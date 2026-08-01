@@ -1,12 +1,15 @@
-{lib, ...}:
+{config, inputs, lib, ...}:
 
 let
-  makeNetwork = import ../../vpn/server.nix {};
+  secretsPath = toString inputs.nixos-secrets;
+
+  readKey = path: lib.trim (builtins.readFile path);
+  makeNetwork = import ../../vpn/server.nix { inherit config inputs lib; };
 
   homeNetwork = makeNetwork "home" [
-    { publicKey = "GX/1ks+T1OcBsW7XiMIN1k2/azaCWH69eGh9dltfJhU="; id = 2; } # odino
-    { publicKey = "O0qmhfzHIvEQjnr8sttLfur7uZ7+u72BNoWEyo2pmX0="; id = 3; } # thor
-    { publicKey = "99XBoIZ55yradB45bDZ94fc1IQGkNp9argWaT2otRBU="; id = 101; } # hermes
+    { publicKey = readKey "${secretsPath}/wireguard/odino.pub"; id = 2; } # odino
+    { publicKey = readKey "${secretsPath}/wireguard/thor.pub"; id = 3; } # thor
+    { publicKey = readKey "${secretsPath}/wireguard/hermes.pub"; id = 101; } # hermes
     { publicKey = "cR1TRWLX8DqZtOEOR7djqlX0ewy648h8oHaZkW9JUjU="; id = 102; } # zeus
     { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = 103; } # ares
   ];

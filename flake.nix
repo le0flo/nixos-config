@@ -42,6 +42,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     disko = {
@@ -53,7 +54,12 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
+    nixos-secrets = {
+      url = "git+https://codeberg.org/leoflo/nixos-secrets";
+      flake = false;
+    };
+
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";

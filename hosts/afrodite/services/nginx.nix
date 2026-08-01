@@ -1,8 +1,8 @@
-{lib, pkgs, ...}:
+{config, inputs, lib, pkgs, ...}:
 
 let
-  values = import ../../../vpn/values.nix {};
-  website = pkgs.callPackage ../../../website {};
+  values = import ../../../vpn/values.nix { inherit config inputs lib; };
+  website = pkgs.callPackage ../../../website { inherit config inputs lib; };
 
   publicDomain = values.publicDomain;
   privateDomain = values.privateDomain;

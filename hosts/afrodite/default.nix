@@ -5,6 +5,7 @@
     ./boot.nix
     ./disk.nix
     ./hardware.nix
+    ./secrets.nix
     ./networking.nix
     ./locales.nix
     ./users.nix

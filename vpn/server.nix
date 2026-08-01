@@ -1,7 +1,7 @@
-{...}:
+{config, inputs, lib, ...}:
 
 let
-  networks = (import ./values.nix {}).networks;
+  networks = (import ./values.nix { inherit config inputs lib; }).networks;
 
   makePeer = name: publicKey: id: let
     vpn = networks."${name}";
@@ -17,7 +17,7 @@ in {
   firewall.allowedUDPPorts = [ vpn.port ];
 
   wg-quick.interfaces."${name}" = {
-    privateKeyFile = vpn.privateKey;
+    privateKeyFile = vpn.privateKeyFile;
     address = [ "${vpn.prefix}.1/24" ];
     listenPort = vpn.port;
 

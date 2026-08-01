@@ -1,9 +1,12 @@
 {
+  config,
+  inputs,
+  lib,
   stdenvNoCC,
 }:
 
 let
-  domain = (import ../vpn/values.nix {}).publicDomain;
+  domain = (import ../vpn/values.nix { inherit config inputs lib; }).publicDomain;
 in stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "website";
   version = "1.0.0";

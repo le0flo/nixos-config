@@ -1,13 +1,15 @@
-{...}:
+{config, inputs, lib, ...}:
 
 let
-  domain = (import ./values.nix {}).publicDomain;
-  networks = (import ./values.nix {}).networks;
+  values = import ./values.nix { inherit config inputs lib; };
+
+  domain = values.publicDomain;
+  networks = values.networks;
 in name: id: let
   vpn = networks."${name}";
 in {
   wg-quick.interfaces."${name}" = {
-    privateKeyFile = vpn.privateKey;
+    privateKeyFile = vpn.privateKeyFile;
     address = [ "${vpn.prefix}.${toString id}/24" ];
 
     peers = [

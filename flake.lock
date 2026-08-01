@@ -166,6 +166,22 @@
         "type": "github"
       }
     },
+    "nixos-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785606220,
+        "narHash": "sha256-yCch1zfWMYM0odfby+BFMKGYtRg7n8Z9XlCLGT0d/FU=",
+        "ref": "refs/heads/master",
+        "rev": "1bdf232ca52f1c164c94f467b8577b478cf526a3",
+        "revCount": 2,
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/nixos-secrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/leoflo/nixos-secrets"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1767892417,
@@ -203,6 +219,7 @@
         "hjem": "hjem",
         "microvm": "microvm",
         "nixos-hardware": "nixos-hardware",
+        "nixos-secrets": "nixos-secrets",
         "nixpkgs": "nixpkgs_2"
       }
     },

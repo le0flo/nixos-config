@@ -1,10 +1,10 @@
-{lib, ...}:
+{config, inputs, lib, ...}:
 
 let
   network = "home";
-  vpn = (import ../../vpn/values.nix {}).networks."${network}";
+  vpn = (import ../../vpn/values.nix { inherit config inputs lib; }).networks."${network}";
 
-  makeClient = import ../../vpn/client.nix {};
+  makeClient = import ../../vpn/client.nix { inherit config inputs lib; };
   client = makeClient network 101;
 in {
   networking = lib.mkMerge [
