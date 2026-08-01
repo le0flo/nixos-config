@@ -16,7 +16,7 @@ in name: peers: let
 in {
   firewall.allowedUDPPorts = [ vpn.port ];
 
-  wg-quick.interfaces = {
+  wg-quick.interfaces."${name}" = {
     privateKeyFile = vpn.privateKey;
     address = [ "${vpn.prefix}.1/24" ];
     listenPort = vpn.port;
