@@ -6,9 +6,9 @@ let
 
   publicDomain = values.publicDomain;
   privateDomain = values.privateDomain;
-  vpn = lib.head (lib.filter
+  vpn = lib.head (builtins.filter
     ({ primary ? false, ... }: primary)
-    lib.attrValues values.networks);
+    (lib.attrValues values.networks));
 
   makePublicHost = root: withAutoindex: {
     inherit root;
