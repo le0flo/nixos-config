@@ -59,8 +59,10 @@ in {
       (x: "${networks."${x}".prefix}.0/24")
       (lib.attrNames networks);
 
-    extraConfig = lib.concatStringsSep "\n" (
-      map (x: makeView x) (lib.attrNames networks);
-    )
+    extraConfig = lib.concatStringsSep
+      "\n"
+      (map
+        (x: makeView x)
+        (lib.attrNames networks));
   };
 }
