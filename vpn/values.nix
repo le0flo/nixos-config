@@ -17,7 +17,7 @@
       prefix = "10.96.0";
       port = 51821;
       privateKey = "/etc/wireguard/external";
-      publicKey = "";
+      publicKey = "wI7HVkYMaGN4mZkrrV1OaNgnCL6k5tRfiyzkK0822iQ=";
     };
   };
 }

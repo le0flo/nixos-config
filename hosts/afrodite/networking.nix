@@ -16,18 +16,20 @@ let
     { publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0="; id = 3; } # mybaby
   ];
 in {
-  networking = {
-    hostName = "afrodite";
-    useDHCP = lib.mkDefault true;
+  networking = lib.mkMerge [
+    homeNetwork
+    externalNetwork
+    {
+      hostName = "afrodite";
+      useDHCP = lib.mkDefault true;
 
-    nameservers = [
-      "127.0.0.1"
-      "208.67.222.222"
-      "208.67.220.220"
-    ];
+      nameservers = [
+        "127.0.0.1"
+        "208.67.222.222"
+        "208.67.220.220"
+      ];
 
-    firewall.enable = true;
-  }
-  // homeNetwork
-  // externalNetwork;
+      firewall.enable = true;
+    }
+  ];
 }
