@@ -9,7 +9,8 @@
     tree
     psmisc
     fastfetch
-    agenix-cli
+    rage
+    ragenix
   ];
 
   programs.nix-ld.enable = true;
