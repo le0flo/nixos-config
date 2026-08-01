@@ -1,6 +1,8 @@
 {config, ...}:
 
-{
+let
+  publicDomain = (import ../../../vpn/values.nix {}).publicDomain;
+in {
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -10,13 +12,13 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "admin@leoflo.me";
+    defaults.email = "amministrazione@${publicDomain}";
 
-    certs."leoflo.me" = {
+    certs."${publicDomain}" = {
       group = "acme";
       webroot = "/var/lib/acme/acme-challenge";
 
-      extraDomainNames = [ "files.leoflo.me" ];
+      extraDomainNames = [ "files.${publicDomain}" ];
     };
   };
 }

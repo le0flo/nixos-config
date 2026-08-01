@@ -1,19 +1,21 @@
-{pkgs, ...}:
+{lib, pkgs, ...}:
 
 let
   style = import ../gui/style.nix { inherit pkgs; };
 
   generateIni = name: value: {
     inherit value;
+
     type = "copy";
     permissions = "644";
+
     generator = (pkgs.formats.ini {}).generate name;
   };
   
   packageDataFiles = dataDir: packages:
-    pkgs.lib.pipe packages [
+    lib.pipe packages [
       (builtins.concatMap (pkg:
-        pkgs.lib.mapAttrsToList (name: _: {
+        lib.mapAttrsToList (name: _: {
           name = "${dataDir}/${name}";
           value.source = "${pkg}/share/${dataDir}/${name}";
         })

@@ -3,6 +3,7 @@
 let
   copyText = text: {
     inherit text;
+
     type = "copy";
     permissions = "644";
   };

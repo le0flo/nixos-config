@@ -7,7 +7,7 @@ let
 
   includeConfigs = lib.join
     "\n"
-    (builtins.map
+    (map
       (x: "(load-file \"~/.config/emacs/${x}\")")
       configFiles);
 

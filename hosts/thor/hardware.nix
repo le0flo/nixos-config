@@ -1,10 +1,9 @@
-{lib, ...}:
+{lib, modulesPath, ...}:
 
 {
-  hardware = {
-    enableRedistributableFirmware = lib.mkDefault true;
-    cpu.intel.updateMicrocode = lib.mkDefault true;
-  };
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

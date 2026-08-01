@@ -9,7 +9,7 @@ let
 
   includeConfigs = lib.join
     "\n"
-    (builtins.map
+    (map
       (x: "include \"${x}\"")
       configFiles);
 
@@ -37,6 +37,13 @@ in {
             inactive-color "${style.colors.background}"
             urgent-color "${style.colors.text}"
           }
+        }
+
+        cursor {
+          xcursor-theme "${style.cursor.name}"
+          xcursor-size ${toString style.cursor.size}
+
+          hide-when-typing
         }
       '';
     };
