@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
 read -s -p "Root password: " ROOT_PASSWORD
