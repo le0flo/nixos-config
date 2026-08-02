@@ -1,11 +1,11 @@
-{pkgs, ...}:
+{lib, pkgs, ...}:
 
 {
   boot = {
     loader = {
       grub = {
         enable = true;
-        device = "/dev/sda";
+        devices = lib.mkForce [ "/dev/sda" ];
       };
 
       timeout = 3;

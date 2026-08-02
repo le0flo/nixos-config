@@ -13,12 +13,13 @@
 
     nameToModule = name: sep: lib.elemAt (lib.flatten (lib.split sep name)) 1;
     nameToSystem = name: sep: lib.concatStringsSep sep (lib.drop 2 (lib.flatten (lib.split sep name)));
-    
+
     hostConfigs = lib.genAttrs
       (builtins.map (x: "host-${x}") (configs ./hosts))
       (name: lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
+          ./hosts/initialPassword.nix
           ./hosts/${nameToModule name "-"}
           disko.nixosModules.default
           agenix.nixosModules.default
