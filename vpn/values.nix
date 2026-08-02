@@ -5,7 +5,7 @@ let
 
   readKey = path: lib.trim (builtins.readFile path);
 in {
-  publicDomain = "leoflo.me";
+  publicDomain = "leoflo.net";
   privateDomain = "home.arpa";
 
   networks = {
