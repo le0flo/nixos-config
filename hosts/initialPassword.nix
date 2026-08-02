@@ -1,3 +1,3 @@
 {
-  users.users."root".initialHashedPassword = lib.mkDefault null;
+  users.users."root".initialHashedPassword = null;
 }
