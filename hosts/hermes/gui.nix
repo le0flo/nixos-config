@@ -8,16 +8,24 @@
   ];
 
   services.xserver = {
-    videoDrivers = [ "modesetting" ];
+    enable = true;
+    
+    desktopManager.xterm.enable = false;
+
+    displayManager = {
+      lightdm.enable = false;
+      startx.enable = true;
+    };
 
     deviceSection = ''
       Option "TearFree" "true"
       Option "DRI" "3"
     '';
     
-    desktopManager.xterm.enable = false;
-    displayManager.lightdm.enable = false;
+    videoDrivers = [ "modesetting" ];
   };
+
+  programs.uwsm.enable = true;
 
   xdg = {
     icons.enable = true;
@@ -28,8 +36,6 @@
       xdgOpenUsePortal = true;
     };
   };
-
-  programs.uwsm.enable = true;
 
   environment.systemPackages = with pkgs; [
     wl-clipboard

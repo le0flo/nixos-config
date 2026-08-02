@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 export XDG_CURRENT_DESKTOP="windowmaker"
 export XDG_SESSION_DESKTOP="windowmaker"

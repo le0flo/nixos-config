@@ -3,12 +3,7 @@
 {
   imports = [ ./base.nix ];
 
-  services.xserver = {
-    enable = true;
-
-    windowManager.windowmaker.enable = true;
-    displayManager.startx.enable = true;
-  };
+  services.xserver.windowManager.windowmaker.enable = true;
 
   xdg.portal = {
     config."windowmaker".default = [ "gtk" ];
@@ -20,12 +15,16 @@
     inputs.gnustep.overlays.${config.nixpkgs.hostPlatform.system}
   ];
 
-  environment.systemPackages = with pkgs; [
-    dockapps.cputnik
-    dockapps.wmacpi
-    dockapps.wmclockmon
-    dockapps.wmnd
-    dockapps.wmpulsemixer
-    dockapps.wmsystemtray
-  ];
+  environment = {
+    shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/WMStart.sh";
+
+    systemPackages = with pkgs; [
+      dockapps.cputnik
+      dockapps.wmacpi
+      dockapps.wmclockmon
+      dockapps.wmnd
+      dockapps.wmpulsemixer
+      dockapps.wmsystemtray
+    ];
+  };
 }

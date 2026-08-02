@@ -1,0 +1,75 @@
+{
+  AdvanceToNewWorkspace = YES; 
+  AntialiasedText = YES;
+  AutoArrangeIcons = YES;
+  CloseRootMenuByLeftOrRightMouseClick = YES;
+  DbClickFullScreen = NO;
+  EnableWorkspacePager = YES;
+  EnforceIconMargin = YES;
+  HotCorners = NO;
+  KbdModeLock = NO;
+  OpenTransientOnOwnerWorkspace = YES;
+  StickyIcons = YES;
+  ShowClipTitle = NO;
+
+  CenterKey = "Mod4+C";
+  CloseKey = "Mod4+Q";
+  HotCornerActions = (None, None, None, None);
+  HotCornerDelay = 250;
+  HotCornerEdge = 2;
+  IconPosition = trh;
+  ModifierKey = Mod4;
+  MoveTo12to6Head = None;
+  MoveTo6to12Head = None;
+  RunKey = "Mod4+P";
+  TitleJustify = left;
+  ToggleKbdModeKey = None;
+  WindowPlacement = center;
+  WorkspaceBack = (tpixmap, "~/.local/share/backgrounds/default", gray20);
+
+  ClipTitleFont = "Trebuchet MS,sans serif:bold:pixelsize=10";
+  IconTitleFont = "Trebuchet MS,sans serif:pixelsize=9";
+  LargeDisplayFont = "Trebuchet MS,sans serif:pixelsize=24";
+  MenuTextFont = "Trebuchet MS,sans serif:pixelsize=12";
+  MenuTitleFont = "Trebuchet MS,sans serif:bold:pixelsize=12";
+  WindowTitleFont = "Trebuchet MS,sans serif:weight=200:pixelsize=12";
+
+  IconPath = (
+    "~/GNUstep/Library/Icons",
+    "~/GNUstep/Library/WindowMaker/Pixmaps",
+    "~/GNUstep/Library/WindowMaker/CachedPixmaps",
+    "*windowmaker*/share/WindowMaker/Icons",
+    "*windowmaker*/share/WindowMaker/Pixmaps"
+  );
+
+  PixmapPath = (
+    "~/GNUstep/Library/WindowMaker/Pixmaps",
+    "~/GNUstep/Library/WindowMaker/Backgrounds",
+    "~/GNUstep/Library/WindowMaker/CachedPixmaps",
+    "*windowmaker*/share/WindowMaker/Pixmaps",
+    "*windowmaker*/share/WindowMaker/Backgrounds"
+  );
+
+  CClipTitleColor = "#4d4d4d";
+  ClipTitleColor = "#000000";
+  FrameBorderColor = "#000000";
+  FrameFocusedBorderColor = "#000000";
+  FrameSelectedBorderColor = "#ffffff";
+  FTitleColor = "#ffffff";
+  HighlightColor = "#ffffff";
+  HighlightTextColor = "#000000";
+  IconTitleColor = "#ffffff";
+  IconTitleBack = "#ffffff";
+  MenuDisabledColor = "#666666";
+  MenuTextColor = "#000000";
+  MenuTitleColor = "#ffffff";
+  PTitleColor = "#ffffff";
+  UTitleColor = "#333333";
+
+  FTitleBack = (dgradient, "rgb:21/00/05", "rgb:90/00/30");
+  MenuTextBack = (dgradient, "rgb:b0/b0/b0", "rgb:60/60/60");
+  MenuTitleBack = (dgradient, "rgb:90/00/30", "rgb:21/00/05");
+  PTitleBack = (dgradient, "rgb:51/50/55", "rgb:80/80/80");
+  ResizebarBack = (dgradient, "rgb:90/90/90", "rgb:c0/c0/c0");
+  UTitleBack = (dgradient, "rgb:90/90/90", "rgb:c0/c0/c0");
+}

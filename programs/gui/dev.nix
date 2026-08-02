@@ -6,6 +6,7 @@
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: with epkgs; [
         auctex
+        bnf-mode
         colorful-mode
         csv-mode
         dart-mode

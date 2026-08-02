@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 bg_dir=$HOME/.local/share/backgrounds
 
 files=`find $bg_dir -type f`

@@ -1,6 +1,8 @@
 {pkgs, ...}:
 
 let
+  gnustepDir = "GNUstep/Defaults";
+  
   copyText = text: {
     inherit text;
 
@@ -9,12 +11,18 @@ let
   };
 in {
   files = {
-    ".xinitrc" = copyText (builtins.readFile ./windowmaker/xinitrc.sh);
+    "${gnustepDir}/WMStart.sh" = copyText (builtins.readFile ./windowmaker/WMStart.sh);
 
-    "GNUstep/Defaults/WMRootMenu" = copyText
+    "${gnustepDir}/WMRootMenu" = copyText
       (builtins.replaceStrings
         [ "*windowmaker*" ]
         [ "${pkgs.windowmaker}" ]
         (builtins.readFile ./windowmaker/WMRootMenu));
+
+    "${gnustepDir}/WindowMaker" = copyText
+      (builtins.replaceStrings
+        [ "*windowmaker*" ]
+        [ "${pkgs.windowmaker}" ]
+        (builtins.readFile ./windowmaker/WindowMaker));
   };
 }
