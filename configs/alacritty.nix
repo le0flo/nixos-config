@@ -17,6 +17,8 @@
         blur = false;
       };
 
+      env.TERM = "xterm-256color";
+
       font = {
         size = 18.00;
 

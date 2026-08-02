@@ -2,7 +2,8 @@
 
 {
   environment.systemPackages = with pkgs; [
-    ((emacsPackagesFor emacs).emacsWithPackages (
+    tree-sitter
+    ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       epkgs: with epkgs; [
         auctex
         colorful-mode
@@ -11,6 +12,7 @@
         dockerfile-mode
         git-modes
         json-mode
+        kdl-mode
         kirigami
         lua-mode
         magit

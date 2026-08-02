@@ -6,7 +6,7 @@ window-rule {
 window-rule {
   match app-id="firefox"
   match app-id="thunderbird"
-  match app-id="Emacs"
+  match app-id="emacs"
 
   open-maximized true
 }
