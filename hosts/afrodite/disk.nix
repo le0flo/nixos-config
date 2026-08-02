@@ -1,20 +1,52 @@
-{...}:
+{disko, ...}:
 
 {
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
-    };
+  disko.devices.disk."main" = {
+    device = "/dev/sda";
+    type = "disk";
+    
+    content = {
+      type = "gpt";
 
-    "/boot" = {
-      device = "/dev/disk/by-label/boot";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+      partitions = {
+        MBR = {
+          type = "EF02";
+          size = "1M";
+          priority = 1;
+        };
+        
+        ESP = {
+          type = "EF00";
+          size = 1G;
+
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/boot";
+            mountOptions = [ "umask=0077" ];
+          };
+        };
+
+        swap = {
+          size = "4G";
+
+          content = {
+            type = "swap";
+            discardPolicy = "both";
+            resumeDevice = true;
+          };
+        };
+        
+        root = {
+          size = "100%";
+
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/";
+          };
+        };
+      };
     };
   };
-
-  swapDevices = [
-    { device = "/dev/disk/by-label/swap"; }
-  ];
 }
