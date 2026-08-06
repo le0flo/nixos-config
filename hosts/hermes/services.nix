@@ -5,7 +5,7 @@
     ../../services/audio.nix
     ../../services/docker.nix
     ../../services/power.nix
-    ../../services/virt-manager.nix
+    ../../services/smartcard.nix
   ];
 
   services = {
