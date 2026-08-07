@@ -20,6 +20,7 @@ in {
     extraFlags = [
       "--write-kubeconfig-mode=644"
       "--disable=traefik"
+      "--disable=servicelb"
     ];
   };
 }
