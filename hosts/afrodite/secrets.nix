@@ -5,7 +5,7 @@ let
 in {
   age = {
     identityPaths = [
-      "/mnt/trasferimenti/masterkey"
+      "/mnt/trasferimenti/master"
       "/etc/ssh/ssh_host_ed25519_key"
     ];
 
