@@ -47,5 +47,10 @@
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-label/storage";
     fsType = "ext4";
+
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=1s"
+    ];
   };
 }
