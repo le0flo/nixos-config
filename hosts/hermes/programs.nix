@@ -23,13 +23,11 @@
     iwgtk
     vesktop
 
-    openfortivpn
     opencode
+    openfortivpn
     freetds
-    kubectl
     kubelogin
     azure-cli
-    kubernetes-helm
     gh
   ];
 

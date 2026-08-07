@@ -6,5 +6,7 @@
     gnumake
     postgresql
     sqlite
+    kubectl
+    kubernetes-helm
   ];
 }

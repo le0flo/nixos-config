@@ -14,6 +14,11 @@ in {
         file = "${secretsPath}/wireguard/thor.age";
         mode = "400";
       };
+
+      "k3s/common" = {
+        file = "${secretsPath}/k3s/common.age";
+        mode = "400";
+      };
     };
   };
 }
