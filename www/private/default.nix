@@ -6,11 +6,11 @@
 }:
 
 let
-  domain = (import ../vpn/values.nix { inherit config inputs lib; }).publicDomain;
+  domain = (import ../../vpn/values.nix { inherit config inputs lib; }).privateDomain;
 in stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "website";
+  pname = "www-private";
   version = "1.0.0";
-  
+
   src = ./.;
 
   installPhase = ''

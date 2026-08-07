@@ -2,7 +2,8 @@
 
 let
   values = import ../../../vpn/values.nix { inherit config inputs lib; };
-  website = pkgs.callPackage ../../../website { inherit config inputs lib; };
+  publicWebsite = pkgs.callPackage ../../../www/public { inherit config inputs lib; };
+  privateWebsite = pkgs.callPackage ../../../www/private { inherit config inputs lib; };
 
   publicDomain = values.publicDomain;
   privateDomain = values.privateDomain;
@@ -20,8 +21,16 @@ let
       autoindex on;
     '' else "";
   };
+  
+  makePrivateHost = root: withAutoindex: {
+    inherit root;
 
-  makePrivateHost = id: port: isPrivate: {
+    extraConfig = if withAutoindex then ''
+      autoindex on;
+    '' else "";
+  };
+
+  makePrivateProxyHost = id: port: isPrivate: {
     locations."/".proxyPass = "http://${vpn.prefix}.${toString id}:${toString port}";
 
     extraConfig = if isPrivate then ''
@@ -43,15 +52,16 @@ in {
 
     virtualHosts = {
       # Public
-      "${publicDomain}" = makePublicHost website false;
+      "${publicDomain}" = makePublicHost publicWebsite false;
       "files.${publicDomain}" = makePublicHost "/srv/files" true;
 
       # Private
-      "music.${privateDomain}" = makePrivateHost 2 9001 false;
-      "images.${privateDomain}" = makePrivateHost 2 9002 true;
-      "papers.${privateDomain}" = makePrivateHost 2 9003 true;
-      "cinema.${privateDomain}" = makePrivateHost 2 9004 false;
-      "torrent.${privateDomain}" = makePrivateHost 2 9005 true;
+      "${privateDomain}" = makePrivateHost privateWebsite false;
+      "music.${privateDomain}" = makePrivateProxyHost 2 9001 false;
+      "images.${privateDomain}" = makePrivateProxyHost 2 9002 true;
+      "papers.${privateDomain}" = makePrivateProxyHost 2 9003 true;
+      "cinema.${privateDomain}" = makePrivateProxyHost 2 9004 false;
+      "torrent.${privateDomain}" = makePrivateProxyHost 2 9005 true;
     };
   };
 }
