@@ -16,5 +16,10 @@ in {
     role = "server";
     tokenFile = config.age.secrets."k3s/common".path;
     clusterInit = true;
+
+    extraFlags = [
+      "--write-kubeconfig-mode=644"
+      "--disable=traefik"
+    ];
   };
 }
