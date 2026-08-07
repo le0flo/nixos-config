@@ -6,7 +6,18 @@ let
   readKey = path: lib.trim (builtins.readFile path);
 in {
   publicDomain = "leoflo.net";
+  publicSubdomains = [ "files" ];
+
   privateDomain = "home.arpa";
+  privateSubdomains = [
+    "music"
+    "images"
+    "papers"
+    "cinema"
+    "torrent"
+    "bt.sharing"
+    "slsk.sharing"
+  ];
 
   networks = {
     "home" = {

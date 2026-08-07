@@ -4,6 +4,7 @@ let
   values = import ../../../vpn/values.nix { inherit config inputs lib; };
 
   domain = values.privateDomain;
+  subdomains = values.privateSubdomains;
   networks = values.networks;
 
   makeZone = entrypoint: pkgs.writeText "${domain}-${entrypoint}" ''
@@ -21,11 +22,7 @@ let
     ns1 IN A   ${entrypoint}
     @   IN A   ${entrypoint}
 
-    music   IN CNAME @
-    images  IN CNAME @
-    papers  IN CNAME @
-    cinema  IN CNAME @
-    torrent IN CNAME @
+    ${lib.concatStringsSep "\n" (map (x: "${x} IN CNAME @") subdomains)}
   '';
 
   makeView = name: let
