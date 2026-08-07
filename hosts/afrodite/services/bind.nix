@@ -38,7 +38,7 @@ let
       zone "${domain}" {
         type master;
         file "${makeZone "${vpn.prefix}.1"}";
-        allow-query { ${vpn.prefix}.0/24; };
+        allow-query { ${if isPrimary vpn then "127.0.0.0/8;" else ""} ${vpn.prefix}.0/24; };
         allow-transfer { none; };
       };
     };
