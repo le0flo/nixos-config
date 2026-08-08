@@ -19,7 +19,6 @@
       (name: lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/initialPassword.nix
           ./hosts/${nameToModule name "-"}
           disko.nixosModules.default
           agenix.nixosModules.default
