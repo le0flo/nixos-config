@@ -24,6 +24,7 @@
     "system-build" = "sudo nixos-rebuild build --flake ~/nixos#host-hermes";
     "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#host-hermes";
     "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#host-hermes";
+    "k" = "~/.config/scripts/kubectl-wrapper.sh";
   };
 
   system.stateVersion = "26.05";

@@ -53,15 +53,27 @@ in {
     virtualHosts = {
       # Public
       "${publicDomain}" = makePublicHost publicWebsite false;
-      "files.${publicDomain}" = makePublicHost "/srv/files" true;
+      "files.${publicDomain}" = makePublicHost "/srv/files/public" true;
 
       # Private
       "${privateDomain}" = makePrivateHost privateWebsite false;
+      "files.${privateDomain}" = makePrivateHost "/srv/files/private" true;
       "music.${privateDomain}" = makePrivateProxyHost 2 9001 false;
       "images.${privateDomain}" = makePrivateProxyHost 2 9002 true;
       "papers.${privateDomain}" = makePrivateProxyHost 2 9003 true;
       "cinema.${privateDomain}" = makePrivateProxyHost 2 9004 false;
       "torrent.${privateDomain}" = makePrivateProxyHost 2 9005 true;
     };
+  };
+
+  systemd.tmpfiles.settings."nginx" = let
+    dirConfig = {
+      mode = "0755";
+      user = "leo";
+      group = "users";
+    };
+  in {
+    "/srv/files/public".d = dirConfig;
+    "/srv/files/private".d = dirConfig;
   };
 }
