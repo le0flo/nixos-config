@@ -10,6 +10,7 @@ in {
 
   privateDomain = "home.arpa";
   privateSubdomains = [
+    "files"
     "music"
     "images"
     "papers"
