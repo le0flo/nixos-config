@@ -1,18 +1,41 @@
-{...}:
+{config, lib, ...}:
 
-{
-  services.i2pd = {
-    enable = true;
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types;
+in {
+  options.otis.services.i2pd = {
+    enable = mkEnableOption "I2Pd proxy";
 
-    address = "127.0.0.1";
-    port = 4444;
+    address = mkOption {
+      type = types.str;
+      description = "I2Pd address";
+      default = "127.0.0.1";
+    };
 
-    proto = {
-      http.enable = true;
-      httpProxy.enable = true;
-      socksProxy.enable = true;
-      sam.enable = true;
-      i2cp.enable = true;
+    port = mkOption {
+      type = types.port;
+      description = "I2Pd port";
+      default = 4444;
     };
   };
+
+  config =
+    let
+      i2pd = config.otis.services.i2pd;
+    in {
+      services.i2pd = {
+        inherit (i2pd) enable address port;
+
+        proto = {
+          http.enable = true;
+          httpProxy.enable = true;
+          socksProxy.enable = true;
+          sam.enable = true;
+          i2cp.enable = true;
+        };
+      };
+    };
 }

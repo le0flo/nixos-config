@@ -3,6 +3,7 @@
 let
   inherit (builtins)
     attrNames
+    attrValues
     concatStringsSep
     head
     mapAttrs
@@ -121,6 +122,8 @@ in {
           vpn.networks);
       })
       (mkIf vpn.role == "server" {
+        networking.firewall.allowedUDPPorts = map (x: x.port) (attrValues vpn.networks);
+
         wg-quick.interfaces = (mapAttrs
           (x: y: {
             inherit (y) privateKeyFile;

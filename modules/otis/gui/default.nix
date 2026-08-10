@@ -1,9 +1,12 @@
 {config, lib, pkgs, ...}:
 
 let
+  inherit (builtins) attrNames;
+
   inherit (lib)
     mkEnableOption
     mkIf
+    mkMerge
     mkOption
     types;
 in {
@@ -22,9 +25,6 @@ in {
     in {
       enable = mkEnableOption "Enable gui for a host system";
 
-      terminal = mkPkgOption "The default terminal emulator" pkgs.alacritty;
-      launcher = mkPkgOption "The default app launcher" pkgs.rofi;
-
       fonts = mkOption {
         type = types.listOf types.package;
         description = "Fonts to include in the system";
@@ -36,48 +36,95 @@ in {
           nerd-fonts.iosevka
         ];
       };
+
+      alacritty.config = mkOption {
+        type = types.attrs;
+        description = "Configuration values for alacritty";
+        default = {
+          window = {
+            padding = {
+              x = 5;
+              y = 5;
+            };
+
+            opacity = 1.0;
+            blur = false;
+          };
+
+          env = {
+            TERM = "xterm-256color";
+            WINIT_X11_SCALE_FACTOR = "1.0";
+          };
+
+          font = {
+            size = 18.00;
+
+            normal = {
+              family = "ComicShannsMono Nerd Font Mono";
+              style = "Regular";
+            };
+            bold = {
+              family = "ComicShannsMono Nerd Font Mono";
+              style = "Bold";
+            };
+          };
+        };
+      };
     };
 
   config =
     let
       gui = config.otis.gui;
-    in mkIf gui.enable {
-      environment.systemPackages = [
-        gui.terminal
-        gui.launcher
-        wl-clipboard
-        xclip
-      ];
 
-      fonts.packages = gui.fonts;
+      forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
+    in mkIf gui.enable mkMerge [
+      {
+        environment.systemPackages = with pkgs; [
+          alacritty
+          rofi
+          wl-clipboard
+          xclip
+        ];
 
-      programs.uwsm.enable = true;
+        fonts.packages = gui.fonts;
 
-      services.xserver = {
-        enable = true;
-    
-        desktopManager.xterm.enable = false;
-        displayManager = {
-          lightdm.enable = false;
-          startx.enable = true;
-        };
+        programs.uwsm.enable = true;
 
-        deviceSection = ''
+        services.xserver = {
+          enable = true;
+          
+          desktopManager.xterm.enable = false;
+          displayManager = {
+            lightdm.enable = false;
+            startx.enable = true;
+          };
+
+          deviceSection = ''
           Option "TearFree" "true"
           Option "DRI" "3"
         '';
-    
-        videoDrivers = [ "modesetting" ];
-      };
-
-      xdg = {
-        icons.enable = true;
-        autostart.enable = true;
-
-        portal = {
-          enable = true;
-          xdgOpenUsePortal = true;
+          
+          videoDrivers = [ "modesetting" ];
         };
+
+        xdg = {
+          icons.enable = true;
+          autostart.enable = true;
+
+          portal = {
+            enable = true;
+            xdgOpenUsePortal = true;
+          };
+        };
+      }
+    ]
+    ++ forEachUser {
+      xdg.config.files."alacritty/alacritty.toml" = {
+        type = "copy";
+        permissions = "644";
+
+        generator = (pkgs.formats.toml {}).generate "alacritty.toml";
+        value = gui.alacritty.config;
       };
     };
 }

@@ -1,13 +1,22 @@
-{...}:
+{config, lib, ...}:
 
-{
-  services = {
-    power-profiles-daemon.enable = false;
-    tlp.enable = false;
+let
+  inherit (lib) mkEnableOption;
+in {
+  options.otis.services.power.enable = mkEnableOption "Power manager";
 
-    tuned = {
-      enable = true;
-      ppdSupport = true;
+  config =
+    let
+      power = config.otis.services.power;
+    in {
+      services = {
+        power-profiles-daemon.enable = false;
+        tlp.enable = false;
+
+        tuned = {
+          enable = power.enable;
+          ppdSupport = true;
+        };
+      };
     };
-  };
 }
