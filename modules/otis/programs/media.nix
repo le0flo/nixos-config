@@ -12,7 +12,7 @@ in {
     let
       media = config.otis.programs.media;
       gui = config.otis.gui;
-    in mkIf media.enable mkMerge [
+    in mkIf media.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [
           imagemagick
@@ -28,5 +28,5 @@ in {
           kid3
         ];
       })
-    ];
+    ]);
 }

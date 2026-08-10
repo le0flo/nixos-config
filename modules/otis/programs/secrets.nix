@@ -46,7 +46,7 @@ in {
         ];
       })
     ]
-    ++ forEachUser mkIf gui.enable {
+    ++ mkIf gui.enable (forEachUser {
       xdg.config.files."keepassxc/keepassxc.ini" = {
         type = "copy";
         permissions = "644";
@@ -54,5 +54,5 @@ in {
         generator = (pkgs.formats.ini {}).generate "keepassxc.ini";
         value = secrets.keepassxc.config;
       };
-    };
+    });
 }

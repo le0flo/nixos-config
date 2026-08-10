@@ -4,6 +4,7 @@ let
   inherit (builtins)
     attrNames
     readDir
+    readFile
     replaceStrings;
   
   inherit (lib)
@@ -24,14 +25,14 @@ in {
 
       dockapps = mkPkgsOption
         "Dockapps for windowmaker"
-        with pkgs.dockapps; [
+        (with pkgs.dockapps; [
           cputnik
           wmacpi
           wmclockmon
           wmnd
           wmpulsemixer
           wmsystemtray
-        ];
+        ]);
 
       extraPackages = mkPkgsOption "Additional packages" [];
     };
@@ -51,12 +52,12 @@ in {
         type = "copy";
         permissions = "644";
       };
-    in mkIf windowmaker.enable mkMerge [
+    in mkIf windowmaker.enable (mkMerge [
       {
         environment = {
           shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/WMStart.sh";
 
-          systemPackages = dockapps ++ extraPackages;
+          systemPackages = windowmaker.dockapps ++ windowmaker.extraPackages;
         };
 
         nixpkgs.overlays = [ inputs.gnustep.overlays.${system} ];
@@ -94,5 +95,5 @@ in {
             [ "${pkgs.windowmaker}" ]
             (readFile ./windowmaker/WindowMaker));
       };
-    };
+    });
 }

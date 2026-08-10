@@ -7,6 +7,7 @@ let
     readDir;
 
   inherit (lib)
+    genAttrs
     hasSuffix
     join
     mkEnableOption
@@ -59,7 +60,13 @@ in {
       configFiles = filter
         (x: hasSuffix ".el" x)
         (attrNames (readDir ./emacs));
-    in mkIf dev.enable mkMerge [
+
+      copyText = text: {
+        inherit text;
+        type = "copy";
+        permissions = "644";
+      };
+    in mkIf dev.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [
           gnumake
@@ -93,7 +100,7 @@ in {
         };
       })
     ]
-    ++ forEachUser mkIf gui.enable {
+    ++ forEachUser (mkIf gui.enable {
       xdg.config.files = mkMerge [
         {
           "emacs/init.el" = copyText ''
@@ -114,6 +121,6 @@ in {
           source = ./emacs/${file};
           target = "emacs/${file}";
         }))
-      ]
-    };
+      ];
+    }));
 }

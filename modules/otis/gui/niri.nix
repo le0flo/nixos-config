@@ -4,8 +4,9 @@ let
   inherit (builtins)
     attrNames
     filter
-    readDir;
-  
+    readDir
+    substring;
+
   inherit (lib)
     genAttrs
     hasSuffix
@@ -36,10 +37,12 @@ in {
 
       forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
 
+      parseColor = color: substring 1 6 color;
+
       configFiles = filter
         (x: hasSuffix ".kdl" x)
         (attrNames (readDir ./niri));
-    in mkIf niri.enable mkMerge [
+    in mkIf niri.enable (mkMerge [
       {
         environment = {
           shellAliases."start-niri" = "uwsm start niri.desktop";
@@ -178,5 +181,5 @@ in {
           target = "niri/${file}";
         }))
       ];
-    };
+    });
 }

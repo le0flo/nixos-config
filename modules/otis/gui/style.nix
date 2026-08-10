@@ -62,10 +62,10 @@ in {
 
         packages = mkPkgsOption
           "Icon pack packages"
-          with pkgs; [
+          (with pkgs; [
             adwaita-icon-theme
             elementary-xfce-icon-theme
-          ];
+          ]);
       };
 
       gtk = {
@@ -106,8 +106,8 @@ in {
               value.source = "${x}/share/${directory}/${y}";
             })
             (readDir "${x}/share/${directory}"))
-          packages);
-    in mkIf gui.enable mkMerge [
+          packages));
+    in mkIf gui.enable (mkMerge [
       {
         environment.systemPackages =
           [ pkgs.qt6Packages.qt6ct ]
@@ -176,5 +176,5 @@ in {
 
         # TODO: mancano gli sfondi
       };
-    };
+    });
 }

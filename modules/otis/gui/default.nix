@@ -77,7 +77,7 @@ in {
       gui = config.otis.gui;
 
       forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
-    in mkIf gui.enable mkMerge [
+    in mkIf gui.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [
           alacritty
@@ -126,5 +126,5 @@ in {
         generator = (pkgs.formats.toml {}).generate "alacritty.toml";
         value = gui.alacritty.config;
       };
-    };
+    });
 }

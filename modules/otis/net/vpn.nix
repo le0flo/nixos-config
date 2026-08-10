@@ -13,6 +13,7 @@ let
     last
     mkEnableOption
     mkIf
+    mkMerge
     mkOption
     splitString
     take
@@ -105,7 +106,7 @@ in {
       prefix = subnet: concatStringsSep "." (take
         ((toInt (mask subnet)) / 8)
         (splitString "." (head (splitString "/" subnet))));
-    in mkIf vpn.enable mkMerge [
+    in mkIf vpn.enable (mkMerge [
       (mkIf vpn.role == "client" {
         wg-quick.interfaces = (mapAttrs
           (x: y: {
@@ -145,5 +146,5 @@ in {
           })
           vpn.networks);
       })
-    ];
+    ]);
 }

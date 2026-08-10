@@ -70,13 +70,14 @@ in {
         ];
       };
     };
+  };
 
   config =
     let
       fun = config.otis.programs.fun;
       
-      forEachUser = attrs: (x: { hjem.users."${x}" = attrs }) (attrNames config.hjem.users);
-    in mkIf fun.enable mkMerge [
+      forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
+    in mkIf fun.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [
           fastfetch
@@ -93,5 +94,5 @@ in {
         generator = (pkgs.formats.json {}).generate "config.jsonc";
         value = fun.fastfetch.config;
       };
-    };
+    });
 }

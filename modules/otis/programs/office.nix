@@ -37,7 +37,7 @@ in {
     let
       office = config.otis.programs.office;
       gui = config.otis.gui;
-    in mkIf office.enable mkMerge [
+    in mkIf office.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [
           (texliveBasic.withPackages (ps: office.texlivePlugins))
@@ -51,5 +51,5 @@ in {
           gnucash
         ];
       })
-    ];
+    ]);
 }

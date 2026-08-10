@@ -11,7 +11,7 @@ in {
   options.otis.users = mkOption {
     type = types.attrsOf (types.submodule {
       groups = mkOption {
-        type = types.listOf types.str;
+        type = with types; listOf str;
         description = "Groups assigned to that user";
         default = [];
       };

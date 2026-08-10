@@ -12,7 +12,7 @@ in {
     let
       devices = config.otis.programs.devices;
       gui = config.otis.gui;
-    in mkIf devices.enable mkMerge [
+    in mkIf devices.enable (mkMerge [
       {
         boot.supportedFilesystems = [
           "exfat"
@@ -32,5 +32,5 @@ in {
           veracrypt
         ];        
       })
-    ];
+    ]);
 }

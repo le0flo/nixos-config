@@ -2,6 +2,7 @@
 
 let
   inherit (builtins)
+    attrValues
     filter
     listToAttrs;
 
@@ -69,10 +70,10 @@ in {
       vpn = config.otis.net.vpn;
 
       mkVirtualHost = zone: sites: listToAttrs
-        (map (x: {
-          name = let
-            domain = if zone == "public" then domains.public else domains.private;
-          in if x.subdomain == "@" then domain else "${x.subdomain}.${domain}";
+        (map (x: let
+          domain = if zone == "public" then domains.public else domains.private;
+        in {
+          name = if x.subdomain == "@" then domain else "${x.subdomain}.${domain}";
           value = mkMerge [
             (mkIf zone == "public" {
               useACMEHost = "${domain}";
@@ -93,7 +94,7 @@ in {
             })
             (mkIf x.onlyPrimary {
               extraConfig = if x.onlyPrimary then ''
-                ${join "\n" (map (x: "allow ${x.subnet};") (filter (y: y.primary) vpn.networks))}
+                ${join "\n" (map (x: "allow ${x.subnet};") (filter (y: y.primary) (attrValues vpn.networks)))}
                 deny all;
               '' else "";
             })

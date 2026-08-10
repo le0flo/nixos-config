@@ -12,7 +12,7 @@ in {
     let
       internet = config.otis.programs.internet;
       gui = config.otis.gui;
-    in mkIf internet.enable mkMerge [
+    in mkIf internet.enable (mkMerge [
       {
         environment.systemPackages = with pkgs; [
           curl
@@ -35,5 +35,5 @@ in {
           thunderbird.enable = true;
         };
       })
-    ];
+    ]);
 }
