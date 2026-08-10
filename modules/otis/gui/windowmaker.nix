@@ -1,14 +1,23 @@
 {config, inputs, lib, pkgs, ...}:
 
-{
+let
+  inherit (builtins)
+    attrNames
+    readDir
+    replaceStrings;
+  
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkMerge
+    mkOption
+    types;
+in {
   options.otis.gui.windowmaker =
-    with lib;
     let
-      t = types;
-
       mkPkgsOption = description: default: mkOption {
         inherit description default;
-        type = t.listOf t.package;
+        type = types.listOf types.package;
       };
     in {
       enable = mkEnableOption "Install the windowmaker window manager";
@@ -29,9 +38,20 @@
 
   config =
     let
-      system = config.nixpkgs.hostPlatform.system;
       windowmaker = config.otis.gui.windowmaker;
-    in lib.mkIf windowmaker.enable lib.mkMerge [
+      system = config.nixpkgs.hostPlatform.system;
+
+      forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
+      
+      gnustepDir = "GNUstep/Defaults";
+  
+      copyText = text: {
+        inherit text;
+
+        type = "copy";
+        permissions = "644";
+      };
+    in mkIf windowmaker.enable mkMerge [
       {
         environment = {
           shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/WMStart.sh";
@@ -57,32 +77,22 @@
           extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
         };
       }
-    ] ++ map
-      (x: let
-        gnustepDir = "GNUstep/Defaults";
-  
-        copyText = text: {
-          inherit text;
+    ]
+    ++ forEachUser {
+      files = {
+        "${gnustepDir}/WMStart.sh" = copyText (readFile ./windowmaker/WMStart.sh);
 
-          type = "copy";
-          permissions = "644";
-        };
-      in {
-        hjem.users."${x}".files = {
-          "${gnustepDir}/WMStart.sh" = copyText (builtins.readFile ./windowmaker/WMStart.sh);
+        "${gnustepDir}/WMRootMenu" = copyText
+          (replaceStrings
+            [ "*windowmaker*" ]
+            [ "${pkgs.windowmaker}" ]
+            (readFile ./windowmaker/WMRootMenu));
 
-          "${gnustepDir}/WMRootMenu" = copyText
-            (builtins.replaceStrings
-              [ "*windowmaker*" ]
-              [ "${pkgs.windowmaker}" ]
-              (builtins.readFile ./windowmaker/WMRootMenu));
-
-          "${gnustepDir}/WindowMaker" = copyText
-            (builtins.replaceStrings
-              [ "*windowmaker*" ]
-              [ "${pkgs.windowmaker}" ]
-              (builtins.readFile ./windowmaker/WindowMaker));
-        };
-      })
-      (lib.attrNames config.hjem.users);
+        "${gnustepDir}/WindowMaker" = copyText
+          (replaceStrings
+            [ "*windowmaker*" ]
+            [ "${pkgs.windowmaker}" ]
+            (readFile ./windowmaker/WindowMaker));
+      };
+    };
 }

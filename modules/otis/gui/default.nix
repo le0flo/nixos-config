@@ -1,6 +1,12 @@
 {config, lib, pkgs, ...}:
 
-{
+let
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types;
+in {
   imports = [
     ./niri.nix
     ./style.nix
@@ -8,13 +14,10 @@
   ];
 
   options.otis.gui =
-    with lib;
     let
-      t = types;
-
       mkPkgOption = description: default: mkOption {
         inherit description default;
-        type = t.package;
+        type = types.package;
       };
     in {
       enable = mkEnableOption "Enable gui for a host system";
@@ -23,7 +26,7 @@
       launcher = mkPkgOption "The default app launcher" pkgs.rofi;
 
       fonts = mkOption {
-        type = t.listOf t.package;
+        type = types.listOf types.package;
         description = "Fonts to include in the system";
         default = with pkgs; [
           dejavu_fonts
@@ -36,7 +39,6 @@
     };
 
   config =
-    with lib;
     let
       gui = config.otis.gui;
     in mkIf gui.enable {
