@@ -20,7 +20,7 @@ in {
     virt-manager = mkEnableOption "Enables virt-manager";
     
     emacsPlugins = mkOption {
-      type = types.listOf types.package;
+      type = with types; listOf package;
       description = "List of emacs plugins";
       default = with pkgs.emacsPackages; [
         auctex

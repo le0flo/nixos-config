@@ -26,7 +26,7 @@ in {
       enable = mkEnableOption "Enable gui for a host system";
 
       fonts = mkOption {
-        type = types.listOf types.package;
+        type = with types; listOf package;
         description = "Fonts to include in the system";
         default = with pkgs; [
           dejavu_fonts

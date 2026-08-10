@@ -17,7 +17,7 @@ in {
     let
       mkPkgsOption = description: default: mkOption {
         inherit description default;
-        type = types.listOf types.package;
+        type = with types; listOf package;
       };
     in {
       enable = mkEnableOption "Install the windowmaker window manager";

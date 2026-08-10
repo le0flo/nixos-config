@@ -56,7 +56,7 @@ in {
           };
 
           clients = mkOption {
-            type = types.listOf (types.submodule clientOpts);
+            type = with types; listOf (submodule clientOpts);
             description = "List of allowed clients in the vpn";
             default = [];
           };
@@ -88,7 +88,7 @@ in {
       };
 
       networks = mkOption {
-        type = types.attrsOf (types.submodule networkModule);
+        type = with types; attrsOf (submodule networkModule);
         description = "Different vpns";
         default = [];
       };

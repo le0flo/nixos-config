@@ -1,7 +1,6 @@
-{microvm, ...}:
+{microvm, serviceName ? "navidrome", ...}:
 
 {
-  _module.args.serviceName = "navidrome";
   imports = [ ../template.nix ];
   
   microvm = {

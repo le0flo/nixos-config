@@ -3,18 +3,12 @@
 let
   inherit (builtins) attrNames;
 
-  inherit (lib)
-    mkEnableOption
-    mkIf;
+  inherit (lib) mkMerge;
 in {
-  options.otis.programs.shell.enable = mkEnableOption "Enables the shell";
-
   config =
     let
-      shell = config.programs.otis.shell;
-
       forEachUser = attrs: map (x: { users.users."${x}" = attrs; }) (attrNames config.users.users);
-    in mkIf shell.enable mkMerge [
+    in mkMerge [
       {
         programs.bash = {
           enable = true;

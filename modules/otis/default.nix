@@ -4,5 +4,6 @@
     ./net
     ./programs
     ./services
+    ./users.nix
   ];
 }

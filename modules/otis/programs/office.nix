@@ -12,7 +12,7 @@ in {
     enable = mkEnableOption "Add office related programs";
 
     texlivePlugins = mkOption {
-      type = types.listOf types.package;
+      type = with types; listOf package;
       description = "List of texlive plugins";
       default = with pkgs.texlivePackages; [
         metafont

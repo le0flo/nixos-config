@@ -48,13 +48,13 @@ in {
 
       sites = {
         public = mkOption {
-          type = types.listOf (types.submodule site);
+          type = with types; listOf (submodule site);
           description = "List of public websites";
           default = [];
         };
 
         private = mkOption {
-          type = types.listOf (types.submodule site);
+          type = with types; listOf (submodule site);
           description = "List of private websites";
           default = [];
         };

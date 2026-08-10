@@ -1,13 +1,9 @@
 {
-  config,
-  inputs,
-  lib,
   stdenvNoCC,
+  domain ? "example.com",
 }:
 
-let
-  domain = (import ../../vpn/values.nix { inherit config inputs lib; }).publicDomain;
-in stdenvNoCC.mkDerivation (finalAttrs: {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "www-public";
   version = "1.0.0";
 
@@ -15,7 +11,7 @@ in stdenvNoCC.mkDerivation (finalAttrs: {
 
   installPhase = ''
     mkdir -p $out
-    cp -r ./* $out/
+    cp -r ./*.html ./*.css ./*.gif $out/.
     substituteInPlace $out/index.html --replace-fail '*domain*' '${domain}'
   '';
 })

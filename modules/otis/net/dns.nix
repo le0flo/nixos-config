@@ -24,7 +24,7 @@ in {
       mkStrListOption = description: default: mkOption {
         inherit description default;
 
-        type = types.listOf types.str;
+        type = with types; listOf str;
       };
     in {
       domains = {

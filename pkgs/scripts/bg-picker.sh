@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 bg_dir=$HOME/.local/share/backgrounds
 
 files=`find $bg_dir -type f`
@@ -12,5 +10,5 @@ new_bg=`printf '%s\n' "${filenames[@]}" | rofi -dmenu`
 
 if test ! -z $new_bg; then
   ln -sf $new_bg $bg_dir/default
-  kill -9 $(pgrep swaybg); swaybg -m fill -i ~/.local/share/backgrounds/default & disown
+  kill -9 $(pgrep swaybg); swaybg -m fill -i $HOME/.local/share/backgrounds/default & disown
 fi

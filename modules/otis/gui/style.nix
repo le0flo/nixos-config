@@ -24,7 +24,7 @@ in {
 
       mkPkgsOption = description: default: {
         inherit description default;
-        type = types.listOf types.package;
+        type = with types; listOf package;
       };
     in {
       polarity = mkOption {

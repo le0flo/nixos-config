@@ -20,7 +20,7 @@ in {
     enable = mkEnableOption "Install the niri compositor";
 
     extraPackages = mkOption {
-      type = types.listOf types.package;
+      type = with types; listOf package;
       description = "Additional packages";
       default = with pkgs; [
         pavucontrol
