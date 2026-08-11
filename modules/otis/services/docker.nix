@@ -2,13 +2,12 @@
 
 let
   inherit (lib) mkEnableOption;
-in {
-  options.otis.services.docker.enable = true;
 
-  config =
-    let
-      docker = config.otis.services.docker;
-    in  {
-      virtualisation.docker.enable = docker.enable;
-    };
+  docker = config.otis.services.docker;
+in {
+  options.otis.services.docker.enable = mkEnableOption "Docker engine";
+
+  config = {
+    virtualisation.docker.enable = docker.enable;
+  };
 }

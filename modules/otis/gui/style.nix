@@ -12,111 +12,105 @@ let
     mkMerge
     mkOption
     types;
+
+  gui = config.otis.gui;
+  inherit (gui) style;
+
+  mkStrOption = description: default: mkOption {
+    inherit description default;
+    type = types.str;
+  };
+
+  mkColorOption = name: default: mkStrOption "Color for the ${name}" default;
+
+  mkPkgsOption = description: default: mkOption {
+    inherit description default;
+    type = with types; listOf package;
+  };
+
+  generateIni = name: value: {
+    inherit value;
+
+    type = "copy";
+    permissions = "644";
+    generator = (pkgs.formats.ini {}).generate name;
+  };
+
+  packageLinks = directory: packages: (listToAttrs
+    (concatMap
+      (x: map
+        (y: {
+          name = "${directory}/${y}";
+          value.source = "${x}/share/${directory}/${y}";
+        })
+        (readDir "${x}/share/${directory}"))
+      packages));
 in {
-  options.otis.gui.style =
-    let
-      mkStrOption = description: default: mkOption {
-        inherit description default;
-        type = types.str;
-      };
-
-      mkColorOption = name: default: mkStrOption "Color for the ${name}" default;
-
-      mkPkgsOption = description: default: {
-        inherit description default;
-        type = with types; listOf package;
-      };
-    in {
-      polarity = mkOption {
-        type = types.enum [ "light" "dark" ];
-        description = "Whether you want dark or light theme";
-        default = "dark";
-      };
-
-      wallpaper = mkStrOption
-        "Name of the default wallpaper (choose only from the ones inside of the wallpapers package)"
-        "road.png";
-
-      colors = {
-        border = mkColorOption "border" "#adc178";
-        background = mkColorOption "background" "#3d3d3d";
-        text = mkColorOption "text" "#fefae0";
-        primary = mkColorOption "primary accent" "#adc178";
-        secondary = mkColorOption "secondary accent" "#dde5b6";
-      };
-
-      cursor = {
-        name = mkStrOption "Default cursor theme name" "Adwaita";
-
-        size = mkOption {
-          type = types.int;
-          description = "Default cursor size";
-          default = 20;
-        };
-
-        packages = mkPkgsOption "Cursor theme packages" [];
-      };
-
-      icons = {
-        name = mkStrOption "Default icon pack name" "elementary-xfce-dark";
-
-        packages = mkPkgsOption
-          "Icon pack packages"
-          (with pkgs; [
-            adwaita-icon-theme
-            elementary-xfce-icon-theme
-          ]);
-      };
-
-      gtk = {
-        name = mkStrOption
-          "Default gtk theme name"
-          "Adwaita";
-
-        packages = mkPkgsOption "Gtk theme packages" [];
-      };
-
-      qt = {
-        style = mkStrOption "Qt widgets style" "Fusion";
-        colorScheme = mkStrOption "Qt applications color scheme" "darker";
-        dialogs = mkStrOption "Which file picker implementation to use" "xdgdesktopportal";
-      };
+  options.otis.gui.style = {
+    polarity = mkOption {
+      type = types.enum [ "light" "dark" ];
+      description = "Whether you want dark or light theme";
+      default = "dark";
     };
 
-  config =
-    let
-      gui = config.otis.gui;
-      style = gui.style;
+    wallpaper = mkStrOption
+      "Name of the default wallpaper (choose only from the ones inside of the wallpapers package)"
+      "road.png";
 
-      forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
+    colors = {
+      border = mkColorOption "border" "#adc178";
+      background = mkColorOption "background" "#3d3d3d";
+      text = mkColorOption "text" "#fefae0";
+      primary = mkColorOption "primary accent" "#adc178";
+      secondary = mkColorOption "secondary accent" "#dde5b6";
+    };
 
-      generateIni = name: value: {
-        inherit value;
+    cursor = {
+      name = mkStrOption "Default cursor theme name" "Adwaita";
 
-        type = "copy";
-        permissions = "644";
-        generator = (pkgs.formats.ini {}).generate name;
+      size = mkOption {
+        type = types.int;
+        description = "Default cursor size";
+        default = 20;
       };
 
-      packageLinks = directory: packages: (listToAttrs
-        (concatMap
-          (x: map
-            (y: {
-              name = "${directory}/${y}";
-              value.source = "${x}/share/${directory}/${y}";
-            })
-            (readDir "${x}/share/${directory}"))
-          packages));
-    in mkIf gui.enable (mkMerge [
-      {
-        environment.systemPackages =
-          [ pkgs.qt6Packages.qt6ct ]
-          ++ style.cursor.packages
-          ++ style.icons.packages
-          ++ style.gtk.packages;
-      }
-    ]
-    ++ forEachUser {
+      packages = mkPkgsOption "Cursor theme packages" [];
+    };
+
+    icons = {
+      name = mkStrOption "Default icon pack name" "elementary-xfce-dark";
+
+      packages = mkPkgsOption
+        "Icon pack packages"
+        (with pkgs; [
+          adwaita-icon-theme
+          elementary-xfce-icon-theme
+        ]);
+    };
+
+    gtk = {
+      name = mkStrOption
+        "Default gtk theme name"
+        "Adwaita";
+
+      packages = mkPkgsOption "Gtk theme packages" [];
+    };
+
+    qt = {
+      style = mkStrOption "Qt widgets style" "Fusion";
+      colorScheme = mkStrOption "Qt applications color scheme" "darker";
+      dialogs = mkStrOption "Which file picker implementation to use" "xdgdesktopportal";
+    };
+  };
+
+  config = mkIf gui.enable {
+    environment.systemPackages =
+      [ pkgs.qt6Packages.qt6ct ]
+      ++ style.cursor.packages
+      ++ style.icons.packages
+      ++ style.gtk.packages;
+
+    otis.hjem = {
       xdg = {
         config.files = {
           "gtk-3.0/settings.ini" = generateIni "settings.ini" {
@@ -176,5 +170,6 @@ in {
 
         # TODO: mancano gli sfondi
       };
-    });
+    };
+  };
 }

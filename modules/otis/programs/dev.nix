@@ -15,11 +15,24 @@ let
     mkMerge
     mkOption
     types;
+
+  dev = config.otis.programs.dev;
+  gui = config.otis.gui;
+
+  configFiles = filter
+    (x: hasSuffix ".el" x)
+    (attrNames (readDir ./emacs));
+
+  copyText = text: {
+    inherit text;
+    type = "copy";
+    permissions = "644";
+  };
 in {
   options.otis.programs.dev = {
     enable = mkEnableOption "Add development programs";
     virt-manager = mkEnableOption "Enables virt-manager";
-    
+
     emacsPlugins = mkOption {
       type = with types; listOf package;
       description = "List of emacs plugins";
@@ -50,60 +63,35 @@ in {
     };
   };
 
-  config =
-    let
-      dev = config.otis.programs.dev;
-      gui = config.otis.gui;
+  config = mkIf dev.enable (mkMerge [
+    {
+      environment.systemPackages = with pkgs; [
+        gnumake
+        postgresql
+        sqlite
+        kubectl
+        kubernetes-helm
+      ];
 
-      forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
+      programs.git = {
+        enable = true;
 
-      configFiles = filter
-        (x: hasSuffix ".el" x)
-        (attrNames (readDir ./emacs));
-
-      copyText = text: {
-        inherit text;
-        type = "copy";
-        permissions = "644";
+        config = {
+          core.editor = "nano";
+          init.defaultBranch = "master";
+        };
       };
-    in mkIf dev.enable (mkMerge [
-      {
-        environment.systemPackages = with pkgs; [
-          gnumake
-          postgresql
-          sqlite
-          kubectl
-          kubernetes-helm
-        ];
+    }
+    (mkIf gui.enable {
+      environment.systemPackages = with pkgs; [
+        tree-sitter
+        ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: dev.emacsPlugins))
+      ];
 
-        programs.git = {
-          enable = true;
-
-          config = {
-            core.editor = "nano";
-            init.defaultBranch = "master";
-          };
-        };
-      }
-      (mkIf gui.enable {
-        environment.systemPackages = with pkgs; [
-          tree-sitter
-          ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: dev.emacsPlugins))
-        ];
-      })
-      (mkIf (gui.enable && dev.virt-manager) {
-        programs.virt-manager.enable = true;
-
-        virtualisation = {
-          libvirtd.enable = true;
-          spiceUSBRedirection.enable = true;
-        };
-      })
-    ]
-    ++ forEachUser (mkIf gui.enable {
-      xdg.config.files = mkMerge [
-        {
-          "emacs/init.el" = copyText ''
+      otis.hjem = {
+        xdg.config.files = mkMerge [
+          {
+            "emacs/init.el" = copyText ''
             ;; Includes
             ${join "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
 
@@ -112,15 +100,25 @@ in {
             (load-file custom-file)
           '';
 
-          "emacs/custom.el" = copyText "";
-        }
-        (genAttrs configFiles (file: {
-          type = "copy";
-          permissions = "644";
+            "emacs/custom.el" = copyText "";
+          }
+          (genAttrs configFiles (file: {
+            type = "copy";
+            permissions = "644";
 
-          source = ./emacs/${file};
-          target = "emacs/${file}";
-        }))
-      ];
-    }));
+            source = ./emacs/${file};
+            target = "emacs/${file}";
+          }))
+        ];
+      };
+    })
+    (mkIf (gui.enable && dev.virt-manager) {
+      programs.virt-manager.enable = true;
+
+      virtualisation = {
+        libvirtd.enable = true;
+        spiceUSBRedirection.enable = true;
+      };
+    })
+  ]);
 }

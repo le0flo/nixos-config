@@ -5,6 +5,8 @@ let
     mkEnableOption
     mkOption
     types;
+
+  i2pd = config.otis.services.i2pd;
 in {
   options.otis.services.i2pd = {
     enable = mkEnableOption "I2Pd proxy";
@@ -22,20 +24,17 @@ in {
     };
   };
 
-  config =
-    let
-      i2pd = config.otis.services.i2pd;
-    in {
-      services.i2pd = {
-        inherit (i2pd) enable address port;
+  config = {
+    services.i2pd = {
+      inherit (i2pd) enable address port;
 
-        proto = {
-          http.enable = true;
-          httpProxy.enable = true;
-          socksProxy.enable = true;
-          sam.enable = true;
-          i2cp.enable = true;
-        };
+      proto = {
+        http.enable = true;
+        httpProxy.enable = true;
+        socksProxy.enable = true;
+        sam.enable = true;
+        i2cp.enable = true;
       };
     };
+  };
 }

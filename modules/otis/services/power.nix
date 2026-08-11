@@ -2,21 +2,20 @@
 
 let
   inherit (lib) mkEnableOption;
+
+  power = config.otis.services.power;
 in {
   options.otis.services.power.enable = mkEnableOption "Power manager";
 
-  config =
-    let
-      power = config.otis.services.power;
-    in {
-      services = {
-        power-profiles-daemon.enable = false;
-        tlp.enable = false;
+  config = {
+    services = {
+      power-profiles-daemon.enable = false;
+      tlp.enable = false;
 
-        tuned = {
-          enable = power.enable;
-          ppdSupport = true;
-        };
+      tuned = {
+        enable = power.enable;
+        ppdSupport = true;
       };
     };
+  };
 }

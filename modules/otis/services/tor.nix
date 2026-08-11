@@ -5,6 +5,8 @@ let
     mkEnableOption
     mkOption
     types;
+
+  tor = config.otis.services.tor;
 in {
   options.otis.services.tor = {
     enable = mkEnableOption "Tor proxy";
@@ -22,24 +24,21 @@ in {
     };
   };
 
-  config =
-    let
-      tor = config.otis.services.tor;
-    in {
-      services.tor = {
-        enable = tor.enable;
-        enableGeoIP = false;
+  config = {
+    services.tor = {
+      enable = tor.enable;
+      enableGeoIP = false;
 
-        client = {
-          enable = true;
-          dns.enable = true;
+      client = {
+        enable = true;
+        dns.enable = true;
 
-          socksListenAddress = {
-            IsolateDestAddr = true;
-            addr = tor.address;
-            port = tor.port;
-          };
+        socksListenAddress = {
+          IsolateDestAddr = true;
+          addr = tor.address;
+          port = tor.port;
         };
       };
     };
+  };
 }

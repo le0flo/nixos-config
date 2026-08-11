@@ -16,6 +16,15 @@ let
     mkMerge
     mkOption
     types;
+
+  niri = config.otis.gui.niri;
+  style = config.otis.gui.style;
+
+  parseColor = color: substring 1 6 color;
+
+  configFiles = filter
+    (x: hasSuffix ".kdl" x)
+    (attrNames (readDir ./niri));
 in {
   options.otis.gui.niri = {
     enable = mkEnableOption "Install the niri compositor";
@@ -30,54 +39,23 @@ in {
     };
   };
 
-  config =
-    let
-      niri = config.otis.gui.niri;
-      style = config.otis.gui.style;
+  config = mkIf niri.enable {
+    environment = {
+      shellAliases."start-niri" = "uwsm start niri.desktop";
 
-      forEachUser = attrs: map (x: { hjem.users."${x}" = attrs; }) (attrNames config.hjem.users);
+      systemPackages = with pkgs; [
+        swaybg
+        swaylock-effects
+        swayidle
+        mako
+        playerctl
+        brightnessctl
+        xwayland-satellite
+      ]
+      ++ niri.extraPackages;
+    };
 
-      parseColor = color: substring 1 6 color;
-
-      configFiles = filter
-        (x: hasSuffix ".kdl" x)
-        (attrNames (readDir ./niri));
-    in mkIf niri.enable (mkMerge [
-      {
-        environment = {
-          shellAliases."start-niri" = "uwsm start niri.desktop";
-
-          systemPackages = with pkgs; [
-            swaybg
-            swaylock-effects
-            swayidle
-            mako
-            playerctl
-            brightnessctl
-            xwayland-satellite
-          ]
-          ++ niri.extraPackages;
-        };
-
-        programs = {
-          niri = {
-            enable = true;
-            useNautilus = false;
-          };
-
-          thunar = {
-            enable = true;
-            plugins = with pkgs; [
-              thunar-shares-plugin
-              thunar-volman
-            ];
-          };
-        };
-
-        xdg.portal.configPackages = with pkgs; [ niri ];
-      }
-    ]
-    ++ forEachUser {
+    otis.hjem = {
       xdg.config.files = mkMerge [
         {
           "niri/config.kdl" = {
@@ -181,5 +159,23 @@ in {
           target = "niri/${file}";
         }))
       ];
-    });
+    };
+
+    programs = {
+      niri = {
+        enable = true;
+        useNautilus = false;
+      };
+
+      thunar = {
+        enable = true;
+        plugins = with pkgs; [
+          thunar-shares-plugin
+          thunar-volman
+        ];
+      };
+    };
+
+    xdg.portal.configPackages = with pkgs; [ niri ];
+  };
 }

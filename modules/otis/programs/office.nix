@@ -7,6 +7,9 @@ let
     mkMerge
     mkOption
     types;
+
+  office = config.otis.programs.office;
+  gui = config.otis.gui;
 in {
   options.otis.programs.office = {
     enable = mkEnableOption "Add office related programs";
@@ -33,23 +36,19 @@ in {
     };
   };
 
-  config =
-    let
-      office = config.otis.programs.office;
-      gui = config.otis.gui;
-    in mkIf office.enable (mkMerge [
-      {
-        environment.systemPackages = with pkgs; [
-          (texliveBasic.withPackages (ps: office.texlivePlugins))
-        ];
-      }
-      (mkIf gui.enable {
-        environment.systemPackages = with pkgs; [
-          atril
-          libreoffice
-          xournalpp
-          gnucash
-        ];
-      })
-    ]);
+  config = mkIf office.enable (mkMerge [
+    {
+      environment.systemPackages = with pkgs; [
+        (texliveBasic.withPackages (ps: office.texlivePlugins))
+      ];
+    }
+    (mkIf gui.enable {
+      environment.systemPackages = with pkgs; [
+        atril
+        libreoffice
+        xournalpp
+        gnucash
+      ];
+    })
+  ]);
 }
