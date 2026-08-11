@@ -29,7 +29,7 @@
     hosts = genAttrs
       (map (x: "host-${x}") (configs ./hosts))
       (name: nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs self; };
         modules = [
           ./hosts/${nameToModule name "-"}
           self.nixosModules.otis

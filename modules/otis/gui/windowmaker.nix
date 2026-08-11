@@ -12,8 +12,7 @@ let
     types;
 
   windowmaker = config.otis.gui.windowmaker;
-  system = config.nixpkgs.hostPlatform.system;
-  gnustepOverlay = inputs.gnustep.overlays.${system};
+  gnustepOverlay = inputs.gnustep.overlays."${config.nixpkgs.hostPlatform.system}";
   gnustepPkgs = pkgs.extend gnustepOverlay;
   gnustepDir = "GNUstep/Defaults";
 
@@ -55,23 +54,25 @@ in {
 
     nixpkgs.overlays = [ gnustepOverlay ];
     
-    otis.hjem = {
-      files = {
-        "${gnustepDir}/WMStart.sh" = copyText (readFile ./windowmaker/WMStart.sh);
+    otis.hjem = [
+      {
+        files = {
+          "${gnustepDir}/WMStart.sh" = copyText (readFile ./windowmaker/WMStart.sh);
 
-        "${gnustepDir}/WMRootMenu" = copyText
-          (replaceStrings
-            [ "*windowmaker*" ]
-            [ "${pkgs.windowmaker}" ]
-            (readFile ./windowmaker/WMRootMenu));
+          "${gnustepDir}/WMRootMenu" = copyText
+            (replaceStrings
+              [ "*windowmaker*" ]
+              [ "${pkgs.windowmaker}" ]
+              (readFile ./windowmaker/WMRootMenu));
 
-        "${gnustepDir}/WindowMaker" = copyText
-          (replaceStrings
-            [ "*windowmaker*" ]
-            [ "${pkgs.windowmaker}" ]
-            (readFile ./windowmaker/WindowMaker));
-      };
-    };
+          "${gnustepDir}/WindowMaker" = copyText
+            (replaceStrings
+              [ "*windowmaker*" ]
+              [ "${pkgs.windowmaker}" ]
+              (readFile ./windowmaker/WindowMaker));
+        };
+      }
+    ];
 
     programs.thunar = {
       enable = true;

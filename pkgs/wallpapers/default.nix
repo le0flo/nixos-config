@@ -9,7 +9,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   src = ./.;
 
   installPhase = ''
-    mkdir -p $out
-    cp -r ./*.png ./*.jpg $out/.
+    mkdir -p $out/share/wallpapers
+    cp -r ./*.png ./*.jpg $out/share/wallpapers/.
   '';
 })

@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, self, ...}:
 
 let
   inherit (builtins)
@@ -15,6 +15,7 @@ let
 
   gui = config.otis.gui;
   inherit (gui) style;
+  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
 
   mkStrOption = description: default: mkOption {
     inherit description default;
@@ -43,7 +44,7 @@ let
           name = "${directory}/${y}";
           value.source = "${x}/share/${directory}/${y}";
         })
-        (readDir "${x}/share/${directory}"))
+        (attrNames (readDir "${x}/share/${directory}")))
       packages));
 in {
   options.otis.gui.style = {
@@ -104,72 +105,80 @@ in {
   };
 
   config = mkIf gui.enable {
-    environment.systemPackages =
-      [ pkgs.qt6Packages.qt6ct ]
-      ++ style.cursor.packages
-      ++ style.icons.packages
-      ++ style.gtk.packages;
+    environment.systemPackages = [
+      pkgs.qt6Packages.qt6ct
+      selfPkgs.wallpapers
+    ]
+    ++ style.cursor.packages
+    ++ style.icons.packages
+    ++ style.gtk.packages;
 
-    otis.hjem = {
-      xdg = {
-        config.files = {
-          "gtk-3.0/settings.ini" = generateIni "settings.ini" {
-            Settings = {
-              gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
+    otis.hjem = [
+      {
+        xdg = {
+          config.files = {
+            "gtk-3.0/settings.ini" = generateIni "settings.ini" {
+              Settings = {
+                gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
 
-              gtk-cursor-theme-name = style.cursor.name;
-              gtk-cursor-theme-size = style.cursor.size;
+                gtk-cursor-theme-name = style.cursor.name;
+                gtk-cursor-theme-size = style.cursor.size;
 
-              gtk-theme-name = style.gtk.name;
-              gtk-icon-theme-name = style.icons.name;
+                gtk-theme-name = style.gtk.name;
+                gtk-icon-theme-name = style.icons.name;
+              };
+            };
+
+            "gtk-4.0/settings.ini" = generateIni "settings.ini" {
+              Settings = {
+                gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
+
+                gtk-cursor-theme-name = style.cursor.name;
+                gtk-cursor-theme-size = style.cursor.size;
+
+                gtk-theme-name = style.gtk.name;
+                gtk-icon-theme-name = style.icons.name;
+              };
+            };
+
+            "qt6ct/qt6ct.conf" = generateIni "qt6ct.conf" {
+              Appearance = {
+                style = style.qt.style;
+                icon_theme = style.icons.name;
+                color_scheme_path = "${pkgs.qt6Packages.qt6ct}/share/qt6ct/colors/${style.qt.colorScheme}.conf";
+                custom_palette = true;
+                standard_dialogs = style.qt.dialogs;
+              };
+
+              Fonts = {
+                general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+                fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+              };
             };
           };
 
-          "gtk-4.0/settings.ini" = generateIni "settings.ini" {
-            Settings = {
-              gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
-
-              gtk-cursor-theme-name = style.cursor.name;
-              gtk-cursor-theme-size = style.cursor.size;
-
-              gtk-theme-name = style.gtk.name;
-              gtk-icon-theme-name = style.icons.name;
-            };
-          };
-
-          "qt6ct/qt6ct.conf" = generateIni "qt6ct.conf" {
-            Appearance = {
-              style = style.qt.style;
-              icon_theme = style.icons.name;
-              color_scheme_path = "${pkgs.qt6Packages.qt6ct}/share/qt6ct/colors/${style.qt.colorScheme}.conf";
-              custom_palette = true;
-              standard_dialogs = style.qt.dialogs;
+          data.files = {
+            "icons" = {
+              type = "directory";
+              permissions = "755";
             };
 
-            Fonts = {
-              general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
-              fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+            "themes" = {
+              type = "directory";
+              permissions = "755";
             };
-          };
+
+            "wallpapers" = {
+              type = "directory";
+              permissions = "755";
+            };
+          }
+          // packageLinks "icons" style.cursor.packages
+          // packageLinks "icons" style.icons.packages
+          // packageLinks "themes" style.gtk.packages
+          // packageLinks "wallpapers" [ selfPkgs.wallpapers ];
         };
-
-        data.files = {
-          "icons" = {
-            type = "directory";
-            permissions = "755";
-          };
-
-          "themes" = {
-            type = "directory";
-            permissions = "755";
-          };
-        }
-        // packageLinks "icons" style.cursor.packages
-        // packageLinks "icons" style.icons.packages
-        // packageLinks "themes" style.gtk.packages;
-
-        # TODO: mancano gli sfondi
-      };
-    };
+      }
+    ];
   };
 }

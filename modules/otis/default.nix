@@ -38,23 +38,23 @@ in {
     };
 
     hjem = mkOption {
-      type = types.attrs;
-      description = "Attribute set for all the hjem configurations";
-      default = {};
+      type = with types; listOf attrs;
+      description = "List of attributes for all the hjem configurations";
+      default = [];
     };
   };
 
   config = {
+    hjem.users = mapAttrs (x: y: {
+      directory = "/home/${x}";
+      clobberFiles = true;
+    } // mkMerge config.otis.hjem) config.otis.users;
+    
     users.users = mapAttrs (x: y: {
       inherit (y) isNormalUser;
 
       extraGroups = y.groups;
       shell = pkgs.bash;
     }) config.otis.users;
-
-    hjem.users = mapAttrs (x: y: {
-      directory = "/home/${x}";
-      clobberFiles = true;
-    } // config.otis.hjem) config.otis.users;
   };
 }

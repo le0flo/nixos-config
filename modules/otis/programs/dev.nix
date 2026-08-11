@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, self, ...}:
 
 let
   inherit (builtins)
@@ -18,6 +18,7 @@ let
 
   dev = config.otis.programs.dev;
   gui = config.otis.gui;
+  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
 
   configFiles = filter
     (x: hasSuffix ".el" x)
@@ -65,13 +66,18 @@ in {
 
   config = mkIf dev.enable (mkMerge [
     {
-      environment.systemPackages = with pkgs; [
-        gnumake
-        postgresql
-        sqlite
-        kubectl
-        kubernetes-helm
-      ];
+      environment = {
+        shellAliases."k" = "${selfPkgs.scripts}/bin/kubectl-wrapper";
+        
+        systemPackages = with pkgs; [
+          gnumake
+          postgresql
+          sqlite
+          kubectl
+          kubernetes-helm
+          selfPkgs.scripts
+        ];
+      };
 
       programs.git = {
         enable = true;
@@ -88,29 +94,31 @@ in {
         ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: dev.emacsPlugins))
       ];
 
-      otis.hjem = {
-        xdg.config.files = mkMerge [
-          {
-            "emacs/init.el" = copyText ''
-            ;; Includes
-            ${join "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
+      otis.hjem = [
+        {
+          xdg.config.files = mkMerge [
+            {
+              "emacs/init.el" = copyText ''
+                ;; Includes
+                ${join "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
 
-            ;; Custom file
-            (setq custom-file "~/.config/emacs/custom.el")
-            (load-file custom-file)
-          '';
+                ;; Custom file
+                (setq custom-file "~/.config/emacs/custom.el")
+                (load-file custom-file)
+              '';
 
-            "emacs/custom.el" = copyText "";
-          }
-          (genAttrs configFiles (file: {
-            type = "copy";
-            permissions = "644";
+              "emacs/custom.el" = copyText "";
+            }
+            (genAttrs configFiles (file: {
+              type = "copy";
+              permissions = "644";
 
-            source = ./emacs/${file};
-            target = "emacs/${file}";
-          }))
-        ];
-      };
+              source = ./emacs/${file};
+              target = "emacs/${file}";
+            }))
+          ];
+        }
+      ];
     })
     (mkIf (gui.enable && dev.virt-manager) {
       programs.virt-manager.enable = true;

@@ -21,26 +21,28 @@ in {
         veracrypt
       ];
 
-      otis.hjem = {
-        xdg.config.files."keepassxc/keepassxc.ini" = {
-          type = "copy";
-          permissions = "644";
+      otis.hjem = [
+        {
+          xdg.config.files."keepassxc/keepassxc.ini" = {
+            type = "copy";
+            permissions = "644";
 
-          generator = (pkgs.formats.ini {}).generate "keepassxc.ini";
-          value = {
-            Browser.Enabled = true;
-            GUI.ApplicationTheme = config.otis.gui.style.polarity;
-            Security.Security_HideNotes = true;
+            generator = (pkgs.formats.ini {}).generate "keepassxc.ini";
+            value = {
+              Browser.Enabled = true;
+              GUI.ApplicationTheme = config.otis.gui.style.polarity;
+              Security.Security_HideNotes = true;
 
-            PasswordGenerator = {
-              Length = 128;
-              LowerCase = true;
-              UpperCase = true;
-              SpecialChars = true;
+              PasswordGenerator = {
+                Length = 128;
+                LowerCase = true;
+                UpperCase = true;
+                SpecialChars = true;
+              };
             };
           };
-        };
-      };
+        }
+      ];
     })
   ];
 }
