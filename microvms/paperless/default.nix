@@ -1,9 +1,6 @@
 {microvm, ...}:
 
 {
-  _module.args.serviceName = "paperless";
-  imports = [ ../template.nix ];
-  
   microvm = {
     shares = [];
 

@@ -1,8 +1,6 @@
-{microvm, serviceName ? "navidrome", ...}:
+{microvm, ...}:
 
 {
-  imports = [ ../template.nix ];
-  
   microvm = {
     shares = [
       {

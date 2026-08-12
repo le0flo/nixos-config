@@ -1,9 +1,6 @@
 {microvm, ...}:
 
 {
-  _module.args.serviceName = "sharing";
-  imports = [ ../template.nix ];
-  
   microvm = {
     shares = [];
 

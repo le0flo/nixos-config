@@ -16,37 +16,49 @@
       genAttrs
       nixosSystem;
 
-    configs = folder: attrNames (filterAttrs (x: y: y == "directory") (readDir folder));
     systems = [
       "x86_64-linux"
       "i686-linux"
       "aarch64-linux"
     ];
 
+    configs = folder: attrNames (filterAttrs (x: y: y == "directory") (readDir folder));
     nameToModule = name: sep: elemAt (flatten (split sep name)) 1;
     nameToSystem = name: sep: concatStringsSep sep (drop 2 (flatten (split sep name)));
 
     hosts = genAttrs
       (map (x: "host-${x}") (configs ./hosts))
-      (name: nixosSystem {
-        specialArgs = { inherit inputs self; };
+      (name: nixosSystem let
+        hostName = nameToModule name "-";
+      in {
+        specialArgs = { inherit hostName inputs self; };
+
         modules = [
-          ./hosts/${nameToModule name "-"}
           self.nixosModules.otis
           disko.nixosModules.default
           agenix.nixosModules.default
           hjem.nixosModules.default
           microvm.nixosModules.host
+
+          ./hosts/template.nix
+          ./hosts/${hostName}
         ];
       });
 
     microvms = genAttrs
       (flatten (map (x: map (y: "microvm-${x}-${y}") systems) (configs ./microvms)))
-      (name: nixosSystem {
+      (name: nixosSystem let
+        serviceName = nameToModule name "-";
+      in {
         system = nameToSystem name "-";
+
+        specialArgs = { inherit serviceName; };
+
         modules = [
-          ./microvms/${nameToModule name "-"}
           microvm.nixosModules.microvm
+
+          ./microvms/template.nix
+          ./microvms/${serviceName}
         ];
       });
 

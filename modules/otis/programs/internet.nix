@@ -24,7 +24,6 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        localsend
         qbittorrent
         nicotine_plus
       ];
@@ -32,6 +31,7 @@ in {
       programs = {
         firefox.enable = true;
         thunderbird.enable = true;
+        localsend.enable = true;
       };
     })
   ]);

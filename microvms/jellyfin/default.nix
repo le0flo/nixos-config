@@ -1,9 +1,6 @@
 {microvm, lib, ...}:
 
 {
-  _module.args.serviceName = "jellyfin";
-  imports = [ ../template.nix ];
-  
   microvm = {
     mem = lib.mkForce 4096;
     

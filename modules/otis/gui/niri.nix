@@ -32,10 +32,7 @@ in {
     extraPackages = mkOption {
       type = with types; listOf package;
       description = "Additional packages";
-      default = with pkgs; [
-        pavucontrol
-        ristretto
-      ];
+      default = [];
     };
   };
 
@@ -51,6 +48,8 @@ in {
         playerctl
         brightnessctl
         xwayland-satellite
+        pavucontrol
+        ristretto
       ]
       ++ niri.extraPackages;
     };

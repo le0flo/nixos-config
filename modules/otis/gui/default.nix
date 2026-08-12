@@ -26,16 +26,10 @@ in {
   options.otis.gui = {
     enable = mkEnableOption "Enable gui for a host system";
 
-    fonts = mkOption {
+    extraFonts = mkOption {
       type = with types; listOf package;
-      description = "Fonts to include in the system";
-      default = with pkgs; [
-        dejavu_fonts
-        liberation_ttf
-        noto-fonts
-        nerd-fonts.comic-shanns-mono
-        nerd-fonts.iosevka
-      ];
+      description = "Additional fonts to include in the system";
+      default = [];
     };
   };
 
@@ -47,7 +41,14 @@ in {
       xclip
     ];
 
-    fonts.packages = gui.fonts;
+    fonts.packages = with pkgs; [
+      dejavu_fonts
+      liberation_ttf
+      noto-fonts
+      nerd-fonts.comic-shanns-mono
+      nerd-fonts.iosevka
+    ]
+    ++ gui.extraFonts;
 
     otis.hjem = [
       {
