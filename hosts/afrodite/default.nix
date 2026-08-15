@@ -115,8 +115,6 @@ in {
         "wheel"
       ];
 
-      isNormalUser = true;
-
       ssh.authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes" ];
     };
   };

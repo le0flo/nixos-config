@@ -21,8 +21,8 @@ in {
 
       grub = {
         enable = true;
-        efiSupport = true;
         device = "nodev";
+        efiSupport = true;
 
         splashImage = "${selfPkgs.wallpapers}/share/wallpapers/gnulove.jpg";
       };

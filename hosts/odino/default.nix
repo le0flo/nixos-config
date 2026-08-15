@@ -1,29 +1,51 @@
-{pkgs, ...}:
+{config, inputs, pkgs, ...}:
 
-{
+let
+  secretsPath = toString inputs.nixos-secrets;
+  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+in {
   imports = [
-    ./boot.nix
-    ./disk.nix
     ./hardware.nix
     ./secrets.nix
-    ./networking.nix
-    ./locales.nix
-    ./users.nix
-
-    ./services.nix
-    ./programs.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  otis = {
+    net.vpn = {
+      enable = true;
+      role = "client";
 
-  environment.shellAliases = {
-    "system-build" = "sudo nixos-rebuild build --flake ~/nixos#host-odino";
-    "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#host-odino";
-    "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#host-odino";
+      networks."home" = {
+        privateKeyFile = "${config.age.secretsDir}/wireguard/home";
+        publicKey = readKey "afrodite-home";
+        port = 51820;
+        subnet = "10.69.0.0/24";
+        id = "2";
+      };
+    };
+
+    programs = {
+      archive.enable = true;
+      dev.enable = true;
+      internet.enable = true;
+      media.enable = true;
+    };
+
+    services = {
+      docker.enable = true;
+      k3s.enable = true;
+      openssh.enable = true;
+    };
+
+    users."leo" = {
+      groups = [
+        "docker"
+        "wheel"
+      ];
+
+      ssh.authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAokSVn78uTLEMp73AkLVA2q6+U+IPtqaeTc/HKGIFsV leo@hermes"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWsnFie3ktqVVpKf5MFQPaOpLd+O21rWzdyFX0Lavhy leo@afrodite"
+      ];
+    };
   };
-
-  system.stateVersion = "26.05";
 }

@@ -50,18 +50,14 @@ in {
       smartcards.enable = true;
     };
 
-    users."leo" = {
-      groups = [
-        "audio"
-        "dialout"
-        "docker"
-        "libvirtd"
-        "video"
-        "wheel"
-      ];
-
-      isNormalUser = true;
-    };
+    users."leo".groups = [
+      "audio"
+      "dialout"
+      "docker"
+      "libvirtd"
+      "video"
+      "wheel"
+    ];
   };
 
   networking = {
