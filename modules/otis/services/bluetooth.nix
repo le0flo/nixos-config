@@ -8,6 +8,7 @@ in {
   options.otis.services.bluetooth.enable = mkEnableOption "Bluetooth stack";
 
   config = {
+    hardware.bluetooth.enable = bluetooth.enable;
     services.blueman.enable = bluetooth.enable;
   };
 }

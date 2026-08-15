@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./boot.nix
     ./hardware.nix
     ./secrets.nix
   ];

@@ -1,10 +1,50 @@
-{lib, inputs, modulesPath, ...}:
+{config, inputs, lib, modulesPath, pkgs, self, ...}:
 
-{
+let
+  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
   ];
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  hardware = {
+    cpu.intel.updateMicrocode = true;
+    intel-gpu-tools.enable = true;
+  };
+
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+
+        splashImage = "${selfPkgs.wallpapers}/share/wallpapers/gnulove.jpg";
+      };
+
+      timeout = 3;
+    };
+
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [
+      "boot.shell_on_fail"
+      "i8042.nomux=1"
+    ];
+
+    initrd.availableKernelModules = [
+      "kvm-intel"
+      "nvme"
+      "sd_mod"
+      "sdhci_pci"
+      "usb_storage"
+      "xhci_pci"
+    ];
+  };
 
   /* TODO: usare disko
   disko.devices.disk."main" = {
@@ -72,12 +112,4 @@
   swapDevices = [
     { device = "/dev/disk/by-uuid/d5e4b700-4eb2-4b19-8d7f-8a8e154a4df1"; }
   ];
-
-  hardware = {
-    bluetooth.enable = true;
-    cpu.intel.updateMicrocode = true;
-    intel-gpu-tools.enable = true;
-  };
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
