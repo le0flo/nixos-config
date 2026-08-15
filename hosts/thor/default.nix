@@ -1,29 +1,47 @@
-{pkgs, ...}:
+{config, inputs, pkgs, ...}:
 
-{
+let
+  secretsPath = toString inputs.nixos-secrets;
+  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+in {
   imports = [
-    ./boot.nix
-    ./disk.nix
     ./hardware.nix
     ./secrets.nix
-    ./networking.nix
-    ./locales.nix
-    ./users.nix
-
-    ./services.nix
-    ./programs.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  otis = {
+    net.vpn = {
+      enable = true;
+      role = "client";
 
-  environment.shellAliases = {
-    "system-build" = "sudo nixos-rebuild build --flake ~/nixos#host-thor";
-    "system-boot" = "sudo nixos-rebuild boot --flake ~/nixos#host-thor";
-    "system-update" = "sudo nixos-rebuild switch --flake ~/nixos#host-thor";
-  };
+      networks."home" = {
+        privateKeyFile = "${config.age.secretsDir}/wireguard/home";
+        publicKey = readKey "afrodite-home";
+        port = 51820;
+        subnet = "10.69.0.0/24";
+        id = "3";
+      };
+    };
 
-  system.stateVersion = "26.05";
+    programs = {
+      archive.enable = true;
+      dev.enable = true;
+      internet.enable = true;
+      media.enable = true;
+    };
+
+    services = {
+      k3s.enable = true;
+      openssh.enable = true;
+    };
+
+    users."leo" = {
+      groups = [ "wheel" ];
+
+      ssh.authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDG5j5kM8yANb6RGeFLGFJI8u62TBH01LgpN9jVmEALT leo@hermes"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVH95IieMMZ2R383n4+414Yu1T6NjmWYoUx1QsjTdOL leo@afrodite"
+      ];
+    };
+  };  
 }
