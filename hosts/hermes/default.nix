@@ -1,6 +1,9 @@
 {config, inputs, pkgs, ...}:
 
-{
+let
+  secretsPath = toString inputs.nixos-secrets;
+  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+in {
   imports = [
     ./hardware.nix
     ./secrets.nix
@@ -19,7 +22,7 @@
 
       networks."home" = {
         privateKeyFile = "${config.age.secretsDir}/wireguard/home";
-        publicKey = builtins.readFile "${inputs.nixos-secrets}/wireguard/afrodite-home.pub";
+        publicKey = readKey "afrodite-home";
         port = 51820;
         subnet = "10.69.0.0/24";
         id = "101";

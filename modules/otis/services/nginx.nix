@@ -15,31 +15,33 @@ let
     types;
 
   site = {
-    subdomain = mkOption {
-      type = types.str;
-      description = "The subdomain where this website is hosted on (use @ to reference the root domain)";
-      default = null;
-    };
+    options = {
+      onlyPrimary = mkEnableOption "Only allow primary vpn devices to connect";
 
-    onlyPrimary = mkEnableOption "Only allow primary vpn devices to connect";
+      subdomain = mkOption {
+        type = types.str;
+        description = "The subdomain where this website is hosted on (use @ to reference the root domain)";
+        default = null;
+      };
 
-    type = mkOption {
-      type = types.enum [ "files" "proxy" ];
-      description = "Type of website";
-    };
+      type = mkOption {
+        type = types.enum [ "files" "proxy" ];
+        description = "Type of website";
+      };
 
-    root = mkOption {
-      type = types.path;
-      description = "The path for the root of the website";
-      default = ./website;
-    };
+      root = mkOption {
+        type = types.str;
+        description = "The path for the root of the website";
+        default = "/srv/www";
+      };
 
-    autoindex = mkEnableOption "Whether to autoindex the root of the website";
+      autoindex = mkEnableOption "Whether to autoindex the root of the website";
 
-    address = mkOption {
-      type = types.str;
-      description = "The address of the proxied website";
-      default = "http://127.0.0.1:8080";
+      address = mkOption {
+        type = types.str;
+        description = "The address of the proxied website";
+        default = "http://127.0.0.1:8080";
+      };
     };
   };
 
@@ -65,17 +67,17 @@ let
           inherit (x) root;
 
           extraConfig = if x.autoindex then ''
-                autoindex on;
-              '' else "";
+            autoindex on;
+          '' else "";
         })
         (mkIf (x.type == "proxy") {
           locations."/".proxyPass = x.address;
         })
         (mkIf x.onlyPrimary {
           extraConfig = if x.onlyPrimary then ''
-                ${join "\n" (map (x: "allow ${x.subnet};") (filter (y: y.primary) (attrValues vpn.networks)))}
-                deny all;
-              '' else "";
+            ${join "\n" (map (x: "allow ${x.subnet};") (filter (y: y.primary) (attrValues vpn.networks)))}
+            deny all;
+          '' else "";
         })
       ];
     }) sites);

@@ -32,6 +32,12 @@ in {
             description = "Whether the user is a normal behaving user";
             default = true;
           };
+
+          ssh.authorizedKeys = mkOption {
+            type = with types; listOf str;
+            description = "List of allowed ssh keys";
+            default = [];
+          };
         };
       });
       description = "Set of users";
@@ -59,6 +65,7 @@ in {
 
       extraGroups = y.groups;
       shell = pkgs.bash;
+      openssh.authorizedKeys.keys = y.ssh.authorizedKeys;
     }) config.otis.users;
 
     services.fwupd.enable = true;

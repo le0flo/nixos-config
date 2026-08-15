@@ -106,6 +106,8 @@ in {
 
   config = mkIf vpn.enable (mkMerge [
     (mkIf (vpn.role == "client") {
+      boot.kernel.sysctl."net.ipv4.ip_forward" = true;
+
       networking.wg-quick.interfaces = (mapAttrs
         (x: y: {
           inherit (y) privateKeyFile;
