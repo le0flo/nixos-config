@@ -27,7 +27,6 @@ in {
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
         scrcpy
-        rustdesk
         veracrypt
       ];        
     })

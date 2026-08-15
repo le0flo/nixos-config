@@ -1,6 +1,8 @@
-{pkgs, ...}:
+{config, pkgs, self, ...}:
 
-{
+let
+  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
+in {
   boot = {
     loader = {
       grub = {
@@ -8,7 +10,7 @@
         device = "nodev";
         efiSupport = true;
 
-        splashImage = ../../assets/grub/gnulove.jpg;
+        splashImage = "${selfPkgs.wallpapers}/share/wallpapers/gnulove.jpg";
       };
 
       efi.canTouchEfiVariables = true;

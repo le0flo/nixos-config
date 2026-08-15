@@ -92,21 +92,31 @@ in {
     
     programs.uwsm.enable = true;
 
-    services.xserver = {
-      enable = true;
-      
-      desktopManager.xterm.enable = false;
-      displayManager = {
-        lightdm.enable = false;
-        startx.enable = true;
-      };
+    services = {
+      dbus.enable = true;
+      flatpak.enable = true;
+      gvfs.enable = true;
+      gnome.gnome-keyring.enable = true;
+      libinput.enable = true;
+      tumbler.enable = true;      
+      xserver = {
+        enable = true;
+        
+        desktopManager.xterm.enable = false;
+        displayManager = {
+          lightdm.enable = false;
+          startx.enable = true;
+        };
 
-      deviceSection = ''
+        deviceSection = ''
           Option "TearFree" "true"
           Option "DRI" "3"
         '';
-      
-      videoDrivers = [ "modesetting" ];
+        
+        videoDrivers = [ "modesetting" ];
+
+        xkb.layout = "it";
+      };
     };
 
     xdg = {

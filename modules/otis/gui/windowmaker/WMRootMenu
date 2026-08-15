@@ -96,7 +96,7 @@
       (
         "Images",
         OPEN_MENU,
-        "-noext $HOME/.local/share/backgrounds WITH wmsetbg -u -t"
+        "-noext $HOME/.local/share/wallpapers WITH wmsetbg -u -t"
       )
     )
   ),

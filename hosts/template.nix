@@ -1,4 +1,4 @@
-{hostName, ...}:
+{lib, hostName, ...}:
 
 {
   console.keyMap = "it";

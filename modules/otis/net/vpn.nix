@@ -27,10 +27,10 @@ let
 
   networkOpts = {
     options = {
-      privateKeyFile = {
-        type = types.path;
+      privateKeyFile = mkOption {
+        type = types.str;
         description = "Private key file for this host";
-        default = ./private.key;
+        default = "/run/secrets/private.key";
       };
 
       publicKey = mkOption {
@@ -109,7 +109,7 @@ in {
       networking.wg-quick.interfaces = (mapAttrs
         (x: y: {
           inherit (y) privateKeyFile;
-          address = "${prefix y.subnet}.${y.id}/${mask y.subnet}";
+          address = [ "${prefix y.subnet}.${y.id}/${mask y.subnet}" ];
 
           peers = [{
             inherit (y) publicKey;
@@ -127,7 +127,7 @@ in {
         wg-quick.interfaces = (mapAttrs
           (x: y: {
             inherit (y) privateKeyFile;
-            address = "${prefix y.subnet}.${y.id}/${mask y.subnet}";
+            address = [ "${prefix y.subnet}.${y.id}/${mask y.subnet}" ];
             listenPort = y.port;
 
             peers = map

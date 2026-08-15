@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, self, ...}:
 
 let
   inherit (builtins)
@@ -19,6 +19,7 @@ let
 
   niri = config.otis.gui.niri;
   style = config.otis.gui.style;
+  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
 
   parseColor = color: substring 1 6 color;
 
@@ -65,19 +66,21 @@ in {
               text = ''
                 ${join "\n" (map (x: "include \"${x}\"") configFiles)}
 
-                layout {
-                  border {
-                    active-color "${style.colors.border}"
-                    inactive-color "${style.colors.background}"
-                    urgent-color "${style.colors.text}"
-                  }
-                }
+                binds { Mod+B { spawn "${selfPkgs.scripts}/bin/bg-picker"; }; }
 
                 cursor {
                   xcursor-theme "${style.cursor.name}"
                   xcursor-size ${toString style.cursor.size}
 
                   hide-when-typing
+                }
+
+                layout {
+                  border {
+                    active-color "${style.colors.border}"
+                    inactive-color "${style.colors.background}"
+                    urgent-color "${style.colors.text}"
+                  }
                 }
               '';
             };
@@ -119,7 +122,7 @@ in {
                 timestr=%H:%M:%S
                 datestr=%d %B
 
-                image=${config.xdg.data.directory}/backgrounds/default
+                image=~/.local/share/wallpapers/default
                 effect-blur=6x7
                 color=${parseColor style.colors.background}
 
@@ -177,6 +180,6 @@ in {
       };
     };
 
-    xdg.portal.configPackages = with pkgs; [ niri ];
+    xdg.portal.configPackages = [ pkgs.niri ];
   };
 }

@@ -172,6 +172,11 @@ in {
               type = "directory";
               permissions = "755";
             };
+
+            "wallpapers/default" = {
+              type = "symlink";
+              source = "${selfPkgs.wallpapers}/share/wallpapers/${style.wallpaper}";
+            };
           }
           // packageLinks "icons" style.cursor.packages
           // packageLinks "icons" style.icons.packages

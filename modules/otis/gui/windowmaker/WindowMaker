@@ -25,7 +25,7 @@
   TitleJustify = left;
   ToggleKbdModeKey = None;
   WindowPlacement = center;
-  WorkspaceBack = (tpixmap, "~/.local/share/backgrounds/default", gray20);
+  WorkspaceBack = (tpixmap, "~/.local/share/wallpapers/default", gray20);
 
   ClipTitleFont = "Trebuchet MS,sans serif:bold:pixelsize=10";
   IconTitleFont = "Trebuchet MS,sans serif:pixelsize=9";

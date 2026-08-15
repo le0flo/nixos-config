@@ -5,6 +5,7 @@ let
   
   inherit (lib)
     flatten
+    mkForce
     mkMerge
     mkOption
     types;
@@ -45,16 +46,21 @@ in {
   };
 
   config = {
-    hjem.users = mapAttrs (x: y: {
-      directory = "/home/${x}";
-      clobberFiles = true;
-    } // mkMerge config.otis.hjem) config.otis.users;
-    
+    hjem.users = mapAttrs (x: y: mkMerge (flatten [
+      {
+        directory = "/home/${x}";
+        clobberFiles = mkForce true;
+      }
+      config.otis.hjem
+    ])) config.otis.users;
+
     users.users = mapAttrs (x: y: {
       inherit (y) isNormalUser;
 
       extraGroups = y.groups;
       shell = pkgs.bash;
     }) config.otis.users;
+
+    services.fwupd.enable = true;
   };
 }

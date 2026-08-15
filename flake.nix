@@ -28,9 +28,9 @@
 
     hosts = genAttrs
       (map (x: "host-${x}") (configs ./hosts))
-      (name: nixosSystem let
+      (name: let
         hostName = nameToModule name "-";
-      in {
+      in nixosSystem {
         specialArgs = { inherit hostName inputs self; };
 
         modules = [
@@ -47,9 +47,9 @@
 
     microvms = genAttrs
       (flatten (map (x: map (y: "microvm-${x}-${y}") systems) (configs ./microvms)))
-      (name: nixosSystem let
+      (name: let
         serviceName = nameToModule name "-";
-      in {
+      in nixosSystem {
         system = nameToSystem name "-";
 
         specialArgs = { inherit serviceName; };

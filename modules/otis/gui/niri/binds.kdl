@@ -5,7 +5,6 @@ binds {
   Mod+Ctrl+L { spawn "swaylock"; }
   Mod+Return { spawn "alacritty"; }
   Mod+P { spawn "rofi" "-show" "drun"; }
-  Mod+B { spawn "~/.config/scripts/bg-picker.sh"; }
 
   Mod+O repeat=false { toggle-overview; }
   Mod+V { toggle-window-floating; }

@@ -25,7 +25,7 @@ in {
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
         qbittorrent
-        nicotine_plus
+        nicotine-plus
       ];
 
       programs = {

@@ -1,4 +1,4 @@
-spawn-sh-at-startup "swaybg -m fill -i ~/.local/share/backgrounds/default"
+spawn-sh-at-startup "swaybg -m fill -i ~/.local/share/wallpapers/default"
 spawn-sh-at-startup "swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f'"
 spawn-at-startup "mako"
 spawn-at-startup "xwayland-satellite"
