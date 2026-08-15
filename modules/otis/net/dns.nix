@@ -7,10 +7,13 @@ let
     head;
 
   inherit (lib)
+    last
     mkEnableOption
     mkIf
     mkOption
     splitString
+    take
+    toInt
     types;
 
   net = config.otis.net;
@@ -48,6 +51,11 @@ let
 
     ${concatStringsSep "\n" (map (x: "${x} IN CNAME @") subdomains)}
   '';
+
+  mask = subnet: last (splitString "/" subnet);
+  prefix = subnet: concatStringsSep "." (take
+    ((toInt (mask subnet)) / 8)
+    (splitString "." (head (splitString "/" subnet))));
 in {
   options.otis.net.dns = {
     domains = {
@@ -102,7 +110,7 @@ in {
 
             zone "${domain}" {
               type master;
-              file "${makeZone (head (splitString "/" net.subnet))}";
+              file "${makeZone "${prefix net.subnet}.${net.id}"}";
               allow-query { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
               allow-transfer { none; };
             };
