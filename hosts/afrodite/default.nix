@@ -2,7 +2,12 @@
 
 let
   secretsPath = toString inputs.nixos-secrets;
+
+  domains = config.otis.net.dns.domains;
   selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
+  www-public = selfPkgs.www-public.override { domain = domains.public; };
+  www-private = selfPkgs.www-private.override { domain = domains.private; };
+
   tmpfilesConfig = {
     mode = "0755";
     user = "leo";
@@ -87,11 +92,11 @@ in {
 
         sites = {
           public = [
-            { subdomain = "@"; type = "files"; root = "${selfPkgs.www-public}"; }
+            { subdomain = "@"; type = "files"; root = "${www-public}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/public"; autoindex = true; }
           ];
           private = [
-            { subdomain = "@"; type = "files"; root = "${selfPkgs.www-private}"; }
+            { subdomain = "@"; type = "files"; root = "${www-private}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/private"; autoindex = true; }
             { subdomain = "music"; type = "proxy"; address = "http://10.69.0.2:9001"; }
             { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.0.2:9002"; }
