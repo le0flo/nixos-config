@@ -6,8 +6,7 @@ let
     attrValues
     concatStringsSep
     head
-    mapAttrs
-    replaceStrings;
+    mapAttrs;
 
   inherit (lib)
     last
@@ -135,12 +134,7 @@ in {
             peers = map
               (z: {
                 inherit (z) publicKey;
-                allowedIPs = [
-                  (replaceStrings
-                    [ "/${mask y.subnet}" ]
-                    [ "/32" ]
-                    y.subnet)
-                ];
+                allowedIPs = [ "${prefix y.subnet}.${z.id}/32" ];
                 persistentKeepalive = 25;
               })
               y.clients;

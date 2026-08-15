@@ -26,7 +26,7 @@
   };
 
   networking = {
-    hostName = "hermes";
+    inherit hostName;
     useDHCP = lib.mkDefault true;
 
     resolvconf.enable = true;
