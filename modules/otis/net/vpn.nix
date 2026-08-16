@@ -19,11 +19,6 @@ let
     toInt
     types;
 
-  net = config.otis.net;
-  
-  vpn = net.vpn;
-  domain = net.dns.domains.public;
-
   networkOpts = {
     options = {
       privateKeyFile = mkOption {
@@ -81,6 +76,10 @@ let
       };
     };
   };
+
+  net = config.otis.net;  
+  vpn = net.vpn;
+  domain = net.dns.domains.public;
 
   mask = subnet: last (splitString "/" subnet);
   prefix = subnet: concatStringsSep "." (take

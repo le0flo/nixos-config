@@ -1,19 +1,23 @@
-{config, lib, ...}:
+{config, inputs, lib, ...}:
 
 let
   inherit (lib)
     mkEnableOption
     mkIf
+    mkMerge
     mkOption
     types;
 
-  net = config.otis.net;
+  secretsPath = toString inputs.nixos-secrets;
 
-  server = net.tls.server;
+  net = config.otis.net;
+  tls = net.tls;
   domains = net.dns.domains;
   subdomains = net.dns.subdomains;
 in {
   options.otis.net.tls = {
+    custom.enable = mkEnableOption "Load custom tls certificates";
+
     server = {
       enable = mkEnableOption "Marks this host as the tls CA";
 
@@ -25,24 +29,29 @@ in {
     };
   };
 
-  config = mkIf server.enable {
-    networking.firewall.allowedTCPPorts = [
-      80
-      443
-    ];
+  config = mkMerge [
+    (mkIf tls.custom.enable {
+      security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
+    })
+    (mkIf tls.server.enable {
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
 
-    users.groups."acme".members = [ config.services.nginx.user ];
+      users.groups."acme".members = [ config.services.nginx.user ];
 
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = server.email;
+      security.acme = {
+        acceptTerms = true;
+        defaults.email = tls.server.email;
 
-      certs."${domains.public}" = {
-        group = "acme";
-        webroot = "/var/lib/acme/acme-challenge";
+        certs."${domains.public}" = {
+          group = "acme";
+          webroot = "/var/lib/acme/acme-challenge";
 
-        extraDomainNames = map (x: "${x}.${domains.public}") subdomains.public;
+          extraDomainNames = map (x: "${x}.${domains.public}") subdomains.public;
+        };
       };
-    };
-  };
+    })
+  ];
 }

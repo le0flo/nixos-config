@@ -16,16 +16,20 @@ in {
       windowmaker.enable = true;
     };
 
-    net.vpn = {
-      enable = true;
-      role = "client";
+    net = {
+      tls.custom.enable = true;
 
-      networks."home" = {
-        privateKeyFile = "${config.age.secretsDir}/wireguard/home";
-        publicKey = readKey "afrodite-home";
-        port = 51820;
-        subnet = "10.69.0.0/24";
-        id = "101";
+      vpn = {
+        enable = true;
+        role = "client";
+
+        networks."home" = {
+          privateKeyFile = "${config.age.secretsDir}/wireguard/home";
+          publicKey = readKey "afrodite-home";
+          port = 51820;
+          subnet = "10.69.0.0/24";
+          id = "101";
+        };
       };
     };
 
