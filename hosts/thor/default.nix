@@ -31,7 +31,10 @@ in {
     };
 
     services = {
-      k3s.enable = true;
+      k3s = {
+        enable = true;
+        role = "agent";
+      };
       openssh.enable = true;
     };
 
