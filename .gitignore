@@ -1,4 +1,5 @@
 # Project
 result
+*.bak
 *.img
 *.sock
