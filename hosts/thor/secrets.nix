@@ -15,8 +15,8 @@ in {
         mode = "400";
       };
 
-      "k3s/common" = {
-        file = "${secretsPath}/k3s/common.age";
+      "k3s/token" = {
+        file = "${secretsPath}/k3s/token.age";
         mode = "400";
       };
     };

@@ -39,7 +39,7 @@ in {
     services.k3s = mkMerge [
       {
         inherit (k3s) enable role;
-        tokenFile = config.age.secrets."k3s/common".path;
+        tokenFile = config.age.secrets."k3s/token".path;
       }
       (mkIf (k3s.role == "agent") {
         serverAddr = "https://${domain}:${toString k3s.port}";
