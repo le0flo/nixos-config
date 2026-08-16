@@ -105,6 +105,15 @@ in {
             { onlyPrimary = true; subdomain = "bt.sharing"; type = "proxy"; address = "http://10.69.0.2:9005"; }
           ];
         };
+
+        tls = {
+          public.type = "acme";
+          private = {
+            type = "manual";
+            cert = "${secretsPath}/tls/${domains.private}.pem";
+            key = "${config.age.secretsDir}/tls/${domains.private}.key";
+          };
+        };
       };
       openssh.enable = true;
     };
@@ -122,5 +131,9 @@ in {
   systemd.tmpfiles.settings."nginx" = {
     "/srv/files/public".d = tmpfilesConfig;
     "/srv/files/private".d = tmpfilesConfig;
+    "/srv/files/private/ca.pem".C = {
+      age = "-";
+      argument = "${secretsPath}/tls/ca.pem";
+    };
   };
 }

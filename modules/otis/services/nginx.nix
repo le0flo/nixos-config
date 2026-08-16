@@ -14,34 +14,52 @@ let
     mkOption
     types;
 
-  site = {
-    options = {
-      onlyPrimary = mkEnableOption "Only allow primary vpn devices to connect";
+  siteOpts.options = {
+    onlyPrimary = mkEnableOption "Only allow primary vpn devices to connect";
 
-      subdomain = mkOption {
-        type = types.str;
-        description = "The subdomain where this website is hosted on (use @ to reference the root domain)";
-        default = null;
-      };
+    subdomain = mkOption {
+      type = types.str;
+      description = "The subdomain where this website is hosted on (use @ to reference the root domain)";
+      default = null;
+    };
 
-      type = mkOption {
-        type = types.enum [ "files" "proxy" ];
-        description = "Type of website";
-      };
+    type = mkOption {
+      type = types.enum [ "files" "proxy" ];
+      description = "Type of website";
+    };
 
-      root = mkOption {
-        type = types.str;
-        description = "The path for the root of the website";
-        default = "/srv/www";
-      };
+    root = mkOption {
+      type = types.str;
+      description = "The path for the root of the website";
+      default = "/srv/www";
+    };
 
-      autoindex = mkEnableOption "Whether to autoindex the root of the website";
+    autoindex = mkEnableOption "Whether to autoindex the root of the website";
 
-      address = mkOption {
-        type = types.str;
-        description = "The address of the proxied website";
-        default = "http://127.0.0.1:8080";
-      };
+    address = mkOption {
+      type = types.str;
+      description = "The address of the proxied website";
+      default = "http://127.0.0.1:8080";
+    };
+  };
+
+  tlsOpts.options = {
+    type = mkOption {
+      type = types.enum [ "none" "acme" "manual" ];
+      description = "Type of tls handling";
+      default = "none";
+    };
+    
+    cert = mkOption {
+      type = with types; nullOr str;
+      description = "Path of the tls certificate";
+      default = null;
+    };
+
+    key = mkOption {
+      type = with types; nullOr str;
+      description = "Path of the tls certificate's key";
+      default = null;
     };
   };
 
@@ -53,16 +71,16 @@ let
   mkVirtualHost = zone: sites: listToAttrs
     (map (x: let
       domain = if zone == "public" then domains.public else domains.private;
+      tls = nginx.tls."${zone}";
     in {
       name = if x.subdomain == "@" then domain else "${x.subdomain}.${domain}";
       value = mkMerge [
-        (mkIf (zone == "public") {
-          useACMEHost = "${domain}";
-          addSSL = true;
-        })
-        (mkIf (zone == "private") {
-          addSSL = false;
-        })
+        {
+          addSSL = tls.type != "none";
+          useACMEHost = if tls.type == "acme" then "${domain}" else null;
+          sslCertificate = tls.cert;
+          sslCertificateKey = tls.key;
+        }
         (mkIf (x.type == "files") {
           inherit (x) root;
 
@@ -87,15 +105,29 @@ in {
 
     sites = {
       public = mkOption {
-        type = with types; listOf (submodule site);
+        type = with types; listOf (submodule siteOpts);
         description = "List of public websites";
         default = [];
       };
 
       private = mkOption {
-        type = with types; listOf (submodule site);
+        type = with types; listOf (submodule siteOpts);
         description = "List of private websites";
         default = [];
+      };
+    };
+
+    tls = {
+      public = mkOption {
+        type = types.submodule tlsOpts;
+        description = "";
+        default = {};
+      };
+
+      private = mkOption {
+        type = types.submodule tlsOpts;
+        description = "List of private websites";
+        default = {};
       };
     };
   };
