@@ -18,7 +18,7 @@ in {
 
       "tls/${privateDomain}.key" = {
         file = "${secretsPath}/tls/${privateDomain}.age";
-        mode = "400";
+        mode = "444";
       };
 
       "wireguard/home" = {
