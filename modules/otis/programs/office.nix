@@ -14,32 +14,32 @@ in {
   options.otis.programs.office = {
     enable = mkEnableOption "Add office related programs";
 
-    texlivePlugins = mkOption {
+    extraTexlivePlugins = mkOption {
       type = with types; listOf package;
       description = "List of texlive plugins";
-      default = with pkgs.texlivePackages; [
-        metafont
-        titling
-        setspace
-        xcolor
-        hyperref
-        enumitem
-        standalone
-        filehook
-        svn-prov
-        amsfonts
-        amsmath
-        amstex
-        tikz-ext
-        tikz-3dplot          
-      ];
+      default = [];
     };
   };
 
   config = mkIf office.enable (mkMerge [
     {
       environment.systemPackages = with pkgs; [
-        (texliveBasic.withPackages (ps: office.texlivePlugins))
+        (texliveBasic.withPackages (ps: with ps; [
+          metafont
+          titling
+          setspace
+          xcolor
+          hyperref
+          enumitem
+          standalone
+          filehook
+          svn-prov
+          amsfonts
+          amsmath
+          amstex
+          tikz-ext
+          tikz-3dplot
+        ] ++ office.extraTexlivePlugins))
       ];
     }
     (mkIf gui.enable {

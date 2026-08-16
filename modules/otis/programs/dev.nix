@@ -34,33 +34,10 @@ in {
     enable = mkEnableOption "Add development programs";
     virt-manager = mkEnableOption "Enables virt-manager";
 
-    emacsPlugins = mkOption {
+    extraEmacsPlugins = mkOption {
       type = with types; listOf package;
       description = "List of emacs plugins";
-      default = with pkgs.emacsPackages; [
-        auctex
-        bnf-mode
-        colorful-mode
-        csv-mode
-        dart-mode
-        dockerfile-mode
-        git-modes
-        json-mode
-        kdl-mode
-        kirigami
-        lua-mode
-        magit
-        markdown-mode
-        nginx-mode
-        nix-mode
-        rfc-mode
-        rust-mode
-        sass-mode
-        typescript-mode
-        web-mode
-        yaml-mode
-        zig-mode
-      ];
+      default = [];
     };
   };
 
@@ -91,7 +68,31 @@ in {
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
         tree-sitter
-        ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: dev.emacsPlugins))
+        ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
+          auctex
+          bnf-mode
+          colorful-mode
+          csv-mode
+          dart-mode
+          dockerfile-mode
+          git-modes
+          json-mode
+          kdl-mode
+          kirigami
+          lua-mode
+          magit
+          markdown-mode
+          nginx-mode
+          nix-mode
+          rfc-mode
+          rust-mode
+          sass-mode
+          typescript-mode
+          web-mode
+          yaml-mode
+          zig-mode
+        ]
+        ++ dev.extraEmacsPlugins))
       ];
 
       otis.hjem = [
