@@ -50,6 +50,7 @@ in {
           gnumake
           postgresql
           sqlite
+          openssl
           kubectl
           kubernetes-helm
           selfPkgs.scripts
