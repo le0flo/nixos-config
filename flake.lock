@@ -169,11 +169,11 @@
     "nixos-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1786915420,
-        "narHash": "sha256-mLmJm3DJzJigiWQKOx6e5LCif8+uFby97KzxEOWD9SA=",
+        "lastModified": 1786945616,
+        "narHash": "sha256-upGpGdwmJuGI6lifBjeikqfX1ON0f4+FGY4iqj+6FRQ=",
         "ref": "refs/heads/master",
-        "rev": "77e309123fc72923eb76c19dff741cbb56aae89d",
-        "revCount": 10,
+        "rev": "cdbfa5465232429753798a053c0f3b3c0f64fe38",
+        "revCount": 11,
         "type": "git",
         "url": "https://codeberg.org/leoflo/nixos-secrets"
       },
