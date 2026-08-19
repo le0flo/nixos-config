@@ -13,6 +13,7 @@ in {
       environment.systemPackages = with pkgs; [
         rage
         ragenix
+        cryptsetup
       ];
     }
     (mkIf gui.enable {
