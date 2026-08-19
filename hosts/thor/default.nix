@@ -43,6 +43,7 @@ in {
 
       ssh.authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDG5j5kM8yANb6RGeFLGFJI8u62TBH01LgpN9jVmEALT leo@hermes"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAUd1moOuOfUDSnljNzRHqs/HfFLSWz252h41MLm32Y7 leo@zeus"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVH95IieMMZ2R383n4+414Yu1T6NjmWYoUx1QsjTdOL leo@afrodite"
       ];
     };

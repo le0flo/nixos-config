@@ -124,7 +124,10 @@ in {
         "wheel"
       ];
 
-      ssh.authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes" ];
+      ssh.authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEmIanMLV3pgQFhe9V6Pb8483u+CuPwZF3vZ7Kt+Eyje leo@zeus"
+      ];
     };
   };
 
