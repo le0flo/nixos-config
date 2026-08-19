@@ -57,7 +57,7 @@ in {
               { publicKey = readKey "odino"; id = "2"; } # odino
               { publicKey = readKey "thor"; id = "3"; } # thor
               { publicKey = readKey "hermes"; id = "101"; } # hermes
-              { publicKey = "cR1TRWLX8DqZtOEOR7djqlX0ewy648h8oHaZkW9JUjU="; id = "102"; } # zeus
+              { publicKey = readKey "zeus"; id = "102"; } # zeus
               { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = "103"; } # ares
             ];
           };
