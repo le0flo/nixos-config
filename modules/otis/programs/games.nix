@@ -12,10 +12,7 @@ in {
   options.otis.programs.games.enable = mkEnableOption "Add games";
 
   config = mkIf (gui.enable && games.enable) {
-    environment.systemPackages = with pkgs; [
-      prismlauncher
-      lutris
-    ];
+    environment.systemPackages = with pkgs; [ prismlauncher ];
 
     hardware.steam-hardware.enable = true;
 

@@ -95,4 +95,14 @@ in {
       };
     };
   };
+
+  fileSystems."/mnt/giochi" = {
+    device = "/dev/disk/by-label/giochi";
+    fsType = "ext4";
+
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=1s"
+    ];
+  };
 }
