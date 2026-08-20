@@ -41,6 +41,7 @@ in {
       };
       devices.enable = true;
       fun.enable = true;
+      games.enable = true;
       internet.enable = true;
       media.enable = true;
       office.enable = true;
@@ -86,7 +87,6 @@ in {
   environment.systemPackages = with pkgs; [
     iwgtk
     vesktop
-    opencode
   ];
 
   nixpkgs.config.allowUnfree = true;

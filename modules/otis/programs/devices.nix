@@ -22,6 +22,7 @@ in {
         exfat
         ntfs3g
         android-tools
+        wine
       ];        
     }
     (mkIf gui.enable {

@@ -6,6 +6,7 @@
     ./devices.nix
     ./dev.nix
     ./fun.nix
+    ./games.nix
     ./internet.nix
     ./media.nix
     ./office.nix
