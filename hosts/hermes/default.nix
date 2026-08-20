@@ -18,6 +18,7 @@ in {
 
     net = {
       tls.custom.enable = true;
+      wifi.enable = true;
 
       vpn = {
         enable = true;
@@ -64,25 +65,9 @@ in {
     ];
   };
 
-  networking = {
-    firewall.trustedInterfaces = [ "home" ];
-
-    wireless.iwd = {
-      enable = true;
-
-      settings = {
-        General = {
-          EnableNetworkConfiguration = true;
-          AddressRandomization = "network";
-        };
-
-        Network.NameResolvingService = "resolvconf";
-      };
-    };
-  };
+  networking.firewall.trustedInterfaces = [ "home" ];
 
   environment.systemPackages = with pkgs; [
-    iwgtk
     vesktop
     opencode
     openfortivpn

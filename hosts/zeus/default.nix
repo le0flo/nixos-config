@@ -18,6 +18,7 @@ in {
 
     net = {
       tls.custom.enable = true;
+      wifi.enable = true;
 
       vpn = {
         enable = true;
@@ -65,29 +66,11 @@ in {
     ];
   };
 
-  networking = {
-    firewall.trustedInterfaces = [ "home" ];
-
-    wireless.iwd = {
-      enable = true;
-
-      settings = {
-        General = {
-          EnableNetworkConfiguration = true;
-          AddressRandomization = "network";
-        };
-
-        Network.NameResolvingService = "resolvconf";
-      };
-    };
-  };
+  networking.firewall.trustedInterfaces = [ "home" ];
 
   services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
-  environment.systemPackages = with pkgs; [
-    iwgtk
-    vesktop
-  ];
+  environment.systemPackages = with pkgs; [ vesktop ];
 
   nixpkgs.config.allowUnfree = true;
 }

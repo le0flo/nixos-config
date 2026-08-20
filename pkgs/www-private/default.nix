@@ -11,7 +11,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   installPhase = ''
     mkdir -p $out
-    cp -r ./*.html ./*.css ./*.png ./*.gif $out/.
+    cp -r ./*.html ./*.css $out/.
     substituteInPlace $out/index.html --replace-fail '*domain*' '${domain}'
   '';
 })

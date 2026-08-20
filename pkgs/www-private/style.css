@@ -41,23 +41,17 @@ h1 {
   color: var(--accent);
 }
 
-.badges {
-  width: 100%;
+ul {
+  list-style-type: disc;
 
-  margin: 10px 0px;
+  font-size: 20px;
+}
 
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
+li::marker {
+  color: var(--accent);
 }
 
 a {
-  height: 31px;
-
-  display: grid;
-  place-items: center;
-
   color: var(--accent);
 
   &:focus {
