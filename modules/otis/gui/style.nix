@@ -106,6 +106,7 @@ in {
 
   config = mkIf gui.enable {
     environment.systemPackages = [
+      pkgs.dconf
       pkgs.qt6Packages.qt6ct
       selfPkgs.wallpapers
     ]
@@ -185,5 +186,22 @@ in {
         };
       }
     ];
+
+    systemd.user.services."defaults-gtk" = {
+      description = "Set default GTK theme and icon pack";
+      wantedBy = [ "default.target" ];
+      path = [ pkgs.dconf ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+
+      script = ''
+        dconf write /org/gnome/desktop/interface/color-scheme "'prefer-${style.polarity}'"
+        dconf write /org/gnome/desktop/interface/gtk-theme "'${style.gtk.name}'"
+        dconf write /org/gnome/desktop/interface/icon-theme "'${style.icons.name}'"
+      '';
+    };
   };
 }

@@ -4,14 +4,6 @@ window-rule {
 }
 
 window-rule {
-  match app-id="firefox"
-  match app-id="thunderbird"
-  match app-id="emacs"
-
-  open-maximized true
-}
-
-window-rule {
   match app-id="org.xfce.ristretto"
 
   open-maximized false
@@ -27,8 +19,16 @@ window-rule {
 }
 
 window-rule {
+  match app-id="emacs"
+  match app-id="firefox"
+  match app-id="thunderbird"
+
+  open-maximized true
+}
+
+window-rule {
   match app-id="org.keepassxc.KeePassXC"
-  match app-id="firefox" title=r#"work — Mozilla Firefox$"#
+  match app-id="firefox"
   match app-id="thunderbird"
 
   block-out-from "screencast"

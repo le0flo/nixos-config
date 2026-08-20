@@ -78,7 +78,6 @@ in {
           dockerfile-mode
           git-modes
           json-mode
-          kdl-mode
           kirigami
           lua-mode
           magit
