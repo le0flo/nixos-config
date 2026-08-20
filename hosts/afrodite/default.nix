@@ -1,12 +1,11 @@
-{config, inputs, pkgs, self, ...}:
+{config, inputs, pkgs, ...}:
 
 let
   secretsPath = toString inputs.nixos-secrets;
 
   domains = config.otis.net.dns.domains;
-  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
-  www-public = selfPkgs.www-public.override { domain = domains.public; };
-  www-private = selfPkgs.www-private.override { domain = domains.private; };
+  www-public = pkgs.www-public.override { domain = domains.public; };
+  www-private = pkgs.www-private.override { domain = domains.private; };
 
   tmpfilesConfig = {
     mode = "0755";

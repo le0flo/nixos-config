@@ -66,15 +66,15 @@
       (configs ./modules)
       (name: import ./modules/${name});
 
-    packages = genAttrs systems
-      (system: genAttrs
-        (configs ./pkgs)
-        (name: nixpkgs.legacyPackages."${system}".callPackage ./pkgs/${name} {}));
+    perSystem = genAttrs systems;
+    callPackage = system: (pkgs system).lib.callPackageWith (pkgs system // customPkgs system);
+    pkgs = system: nixpkgs.legacyPackages.${system};
+    customPkgs = system: genAttrs (configs ./pkgs) (name: callPackage system ./pkgs/${name} {});
   in {
-    inherit packages;
-    
     nixosModules = modules;
     nixosConfigurations = hosts // microvms;
+    packages = perSystem customPkgs;
+    overlays = perSystem (system: final: prev: customPkgs system);
   };
 
   inputs = {
@@ -92,11 +92,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-secrets = {
-      url = "git+https://codeberg.org/leoflo/nixos-secrets";
-      flake = false;
-    };
-
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -106,10 +101,10 @@
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
-    gnustep = {
-      url = "git+https://codeberg.org/leoflo/gnustep-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-secrets = {
+      url = "git+https://codeberg.org/leoflo/nixos-secrets";
+      flake = false;
     };
   };
 }

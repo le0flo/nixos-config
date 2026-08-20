@@ -1,4 +1,4 @@
-{config, lib, pkgs, self, ...}:
+{config, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -18,7 +18,6 @@ let
 
   dev = config.otis.programs.dev;
   gui = config.otis.gui;
-  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
 
   configFiles = filter
     (x: hasSuffix ".el" x)
@@ -44,7 +43,7 @@ in {
   config = mkIf dev.enable (mkMerge [
     {
       environment = {
-        shellAliases."k" = "${selfPkgs.scripts}/bin/kubectl-wrapper";
+        shellAliases."k" = "${pkgs.scripts}/bin/kubectl-wrapper";
         
         systemPackages = with pkgs; [
           gnumake
@@ -53,7 +52,7 @@ in {
           openssl
           kubectl
           kubernetes-helm
-          selfPkgs.scripts
+          scripts
         ];
       };
 

@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}:
+{config, lib, pkgs, self, ...}:
 
 let
   inherit (builtins) mapAttrs;
@@ -67,6 +67,8 @@ in {
       shell = pkgs.bash;
       openssh.authorizedKeys.keys = y.ssh.authorizedKeys;
     }) config.otis.users;
+
+    nixpkgs.overlays = [ self.overlays."${config.nixpkgs.hostPlatform.system}" ];
 
     services.fwupd.enable = true;
   };

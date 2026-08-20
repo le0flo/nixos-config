@@ -1,4 +1,4 @@
-{config, inputs, lib, pkgs, ...}:
+{config, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -12,8 +12,6 @@ let
     types;
 
   windowmaker = config.otis.gui.windowmaker;
-  gnustepOverlay = inputs.gnustep.overlays."${config.nixpkgs.hostPlatform.system}";
-  gnustepPkgs = pkgs.extend gnustepOverlay;
   gnustepDir = "GNUstep/Defaults";
 
   mkPkgsOption = description: default: mkOption {
@@ -33,7 +31,7 @@ in {
 
     dockapps = mkPkgsOption
       "Dockapps for windowmaker"
-      (with gnustepPkgs.dockapps; [
+      (with pkgs.dockapps; [
         cputnik
         wmacpi
         wmclockmon
@@ -52,8 +50,6 @@ in {
       systemPackages = windowmaker.dockapps ++ windowmaker.extraPackages;
     };
 
-    nixpkgs.overlays = [ gnustepOverlay ];
-    
     otis.hjem = [
       {
         files = {

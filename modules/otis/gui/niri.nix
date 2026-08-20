@@ -1,4 +1,4 @@
-{config, lib, pkgs, self, ...}:
+{config, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -19,7 +19,6 @@ let
 
   niri = config.otis.gui.niri;
   style = config.otis.gui.style;
-  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
 
   parseColor = color: substring 1 6 color;
 
@@ -66,7 +65,7 @@ in {
               text = ''
                 ${join "\n" (map (x: "include \"${x}\"") configFiles)}
 
-                binds { Mod+B { spawn "${selfPkgs.scripts}/bin/bg-picker"; }; }
+                binds { Mod+B { spawn "${pkgs.scripts}/bin/bg-picker"; }; }
 
                 cursor {
                   xcursor-theme "${style.cursor.name}"

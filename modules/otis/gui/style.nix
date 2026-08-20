@@ -1,4 +1,4 @@
-{config, lib, pkgs, self, ...}:
+{config, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -15,7 +15,6 @@ let
 
   gui = config.otis.gui;
   inherit (gui) style;
-  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
 
   mkStrOption = description: default: mkOption {
     inherit description default;
@@ -105,10 +104,10 @@ in {
   };
 
   config = mkIf gui.enable {
-    environment.systemPackages = [
-      pkgs.dconf
-      pkgs.qt6Packages.qt6ct
-      selfPkgs.wallpapers
+    environment.systemPackages = with pkgs; [
+      dconf
+      qt6Packages.qt6ct
+      wallpapers
     ]
     ++ style.cursor.packages
     ++ style.icons.packages
@@ -176,13 +175,13 @@ in {
 
             "wallpapers/default" = {
               type = "symlink";
-              source = "${selfPkgs.wallpapers}/share/wallpapers/${style.wallpaper}";
+              source = "${pkgs.wallpapers}/share/wallpapers/${style.wallpaper}";
             };
           }
           // packageLinks "icons" style.cursor.packages
           // packageLinks "icons" style.icons.packages
           // packageLinks "themes" style.gtk.packages
-          // packageLinks "wallpapers" [ selfPkgs.wallpapers ];
+          // packageLinks "wallpapers" [ pkgs.wallpapers ];
         };
       }
     ];

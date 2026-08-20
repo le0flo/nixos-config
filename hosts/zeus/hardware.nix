@@ -1,9 +1,9 @@
-{config, inputs, lib, modulesPath, pkgs, self, ...}:
+{config, inputs, lib, modulesPath, pkgs, ...}:
 
-let
-  selfPkgs = self.packages."${config.nixpkgs.hostPlatform.system}";
-in {
+{
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+  services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
@@ -25,7 +25,7 @@ in {
         device = "nodev";
         efiSupport = true;
 
-        splashImage = "${selfPkgs.wallpapers}/share/wallpapers/gnulove.jpg";
+        splashImage = "${pkgs.wallpapers}/share/wallpapers/gnulove.jpg";
       };
 
       timeout = 3;

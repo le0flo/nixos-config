@@ -53,7 +53,6 @@ in {
       bluetooth.enable = true;
       docker.enable = true;
       power.enable = true;
-      smartcards.enable = true;
     };
 
     users."leo".groups = [
@@ -67,8 +66,6 @@ in {
   };
 
   networking.firewall.trustedInterfaces = [ "home" ];
-
-  services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
   environment.systemPackages = with pkgs; [ vesktop ];
 
