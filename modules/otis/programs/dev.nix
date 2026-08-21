@@ -68,6 +68,7 @@ in {
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
         tree-sitter
+        ungoogled-chromium
         ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
           auctex
           bnf-mode
