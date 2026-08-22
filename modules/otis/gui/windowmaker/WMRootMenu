@@ -4,15 +4,19 @@
   (
     "Applications",
     (
+      "Development",
+      ("GNU Emacs", EXEC, "emacs"),
+      ("HeidiSQL", EXEC, "heidisql")
+    ),
+    (
+      "Games",
+      ("Prismlauncher", EXEC, "prismlauncher"),
+      ("Steam", EXEC, "steam")
+    ),
+    (
       "Internet",
       ("Firefox", EXEC, "firefox"),
       ("Thunderbird", EXEC, "thunderbird")
-    ),
-    (
-      "Editors",
-      ("Emacs", EXEC, "emacs"),
-      ("HeidiSQL", EXEC, "heidisql"),
-      ("Nano", EXEC, "alacritty -e nano")
     ),
     (
       "Media",
@@ -34,6 +38,7 @@
       ("KeepassXC", EXEC, "keepassxc"),
       ("LocalSend", EXEC, "localsend_app"),
       ("iwgtk", EXEC, "iwgtk"),
+      ("GNU nano", EXEC, "alacritty -e nano"),
       ("htop", EXEC, "alacritty -e htop")
     )
   ),
