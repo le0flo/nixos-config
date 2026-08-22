@@ -6,7 +6,7 @@ let
     mkIf
     mkMerge;
 
-  games = config.otis.programs.media;
+  games = config.otis.programs.games;
   gui = config.otis.gui;
 in {
   options.otis.programs.games.enable = mkEnableOption "Add games";
