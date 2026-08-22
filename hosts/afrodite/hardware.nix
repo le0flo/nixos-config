@@ -1,4 +1,4 @@
-{config, disko, inputs, lib, modulesPath, pkgs, ...}:
+{config, inputs, lib, modulesPath, pkgs, ...}:
 
 {
   imports = [

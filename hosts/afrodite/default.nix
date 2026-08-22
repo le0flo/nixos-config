@@ -53,10 +53,10 @@ in {
             subnet = "10.69.0.0/24";
             id = "1";
             clients = [
-              { publicKey = readKey "odino"; id = "2"; } # odino
-              { publicKey = readKey "thor"; id = "3"; } # thor
-              { publicKey = readKey "hermes"; id = "101"; } # hermes
-              { publicKey = readKey "zeus"; id = "102"; } # zeus
+              { publicKey = readKey "odino"; id = "2"; }
+              { publicKey = readKey "thor"; id = "3"; }
+              { publicKey = readKey "hermes"; id = "101"; }
+              { publicKey = readKey "zeus"; id = "102"; }
               { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = "103"; } # ares
             ];
           };
@@ -69,6 +69,7 @@ in {
             clients = [
               { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "2"; } # firetv
               { publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0="; id = "3"; } # mybaby
+              { publicKey = readKey "efesto"; id = "4"; }
             ];
           };
         };

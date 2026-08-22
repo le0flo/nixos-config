@@ -1,47 +1,37 @@
-{lib, modulesPath, pkgs, ...}:
+{inputs, lib, modulesPath, pkgs, ...}:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+  ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware.raspberry-pi.firmware.uboot.enable = true;
 
   boot = {
-    loader = {
-      efi.canTouchEfiVariables = true;
-
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-      };
-
-      timeout = 3;
-    };
-
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "boot.shell_on_fail" ];
 
     initrd.availableKernelModules = [
-      "ahci"
-      "kvm-intel"
-      "nvme"
       "sd_mod"
+      "sdhci_pci"
       "usb_storage"
-      "usbhid"
-      "xhci_pci"
     ];
+
+    supportedFilesystems.zfs = lib.mkForce false;
   };
 
+  /*
   disko.devices.disk."main" = {
-    device = "/dev/nvme0n1";
+    device = "/dev/sda";
     type = "disk";
     
     content = {
       type = "gpt";
 
-      partitions = {        
+      partitions = {
         ESP = {
           type = "EF00";
           size = "1G";
@@ -55,7 +45,7 @@
         };
 
         swap = {
-          size = "4G";
+          size = "1G";
 
           content = {
             type = "swap";
@@ -63,7 +53,7 @@
             resumeDevice = true;
           };
         };
-        
+
         root = {
           size = "100%";
 
@@ -75,15 +65,5 @@
         };
       };
     };
-  };
-
-  fileSystems."/mnt/storage" = {
-    device = "/dev/disk/by-label/storage";
-    fsType = "ext4";
-
-    options = [
-      "nofail"
-      "x-systemd.device-timeout=1s"
-    ];
-  };
+  };*/
 }
