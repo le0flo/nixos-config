@@ -1,9 +1,9 @@
-{lib, modulesPath, pkgs, ...}:
+{modulesPath, pkgs, ...}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   hardware.cpu.intel.updateMicrocode = true;
 

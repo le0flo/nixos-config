@@ -1,69 +1,46 @@
 {inputs, lib, modulesPath, pkgs, ...}:
 
-{
+let
+  pkgsLocal = import inputs.nixpkgs { localSystem = "x86_64-linux"; };
+  pkgsCross = pkgsLocal.pkgsCross.aarch64-multiplatform;
+
+  kernelCross = pkgsCross.callPackage
+    "${inputs.nixos-hardware}/raspberry-pi/common/kernel.nix"
+    { rpiVersion = 4; };
+in {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  services.fwupd.enable = lib.mkForce false;
+  
+  nixpkgs.hostPlatform = "aarch64-linux";
 
-  hardware.raspberry-pi.firmware.uboot.enable = true;
+  hardware = {
+    enableAllHardware = lib.mkForce false;
+
+    raspberry-pi.firmware = {
+      enable = true;
+      uboot.enable = true;
+    };
+  };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    loader = {
+      grub.enable = false;
+      generic-extlinux-compatible.enable = true;
+    };
+
+    kernelPackages = lib.mkForce (pkgsCross.linuxPackagesFor kernelCross);
     kernelParams = [ "boot.shell_on_fail" ];
 
     initrd.availableKernelModules = [
-      "sd_mod"
-      "sdhci_pci"
+      "usbhid"
       "usb_storage"
+      "xhci_pci"
     ];
 
     supportedFilesystems.zfs = lib.mkForce false;
   };
-
-  /*
-  disko.devices.disk."main" = {
-    device = "/dev/sda";
-    type = "disk";
-    
-    content = {
-      type = "gpt";
-
-      partitions = {
-        ESP = {
-          type = "EF00";
-          size = "1G";
-
-          content = {
-            type = "filesystem";
-            format = "vfat";
-            mountpoint = "/boot";
-            mountOptions = [ "umask=0077" ];
-          };
-        };
-
-        swap = {
-          size = "1G";
-
-          content = {
-            type = "swap";
-            discardPolicy = "both";
-            resumeDevice = true;
-          };
-        };
-
-        root = {
-          size = "100%";
-
-          content = {
-            type = "filesystem";
-            format = "ext4";
-            mountpoint = "/";
-          };
-        };
-      };
-    };
-  };*/
 }

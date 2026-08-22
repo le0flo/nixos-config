@@ -1,4 +1,4 @@
-{config, inputs, lib, modulesPath, pkgs, ...}:
+{inputs, lib, modulesPath, pkgs, ...}:
 
 {
   imports = [
@@ -6,7 +6,7 @@
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   hardware = {
     cpu.intel.updateMicrocode = true;
@@ -14,6 +14,8 @@
   };
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     loader = {
       efi.canTouchEfiVariables = true;
 

@@ -1,11 +1,11 @@
-{config, inputs, lib, modulesPath, pkgs, ...}:
+{config, lib, modulesPath, pkgs, ...}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   hardware = {
     cpu.intel.updateMicrocode = true;
@@ -17,6 +17,8 @@
   };
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     loader = {
       efi.canTouchEfiVariables = true;
 

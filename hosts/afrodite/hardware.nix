@@ -1,4 +1,4 @@
-{config, inputs, lib, modulesPath, pkgs, ...}:
+{inputs, lib, modulesPath, pkgs, ...}:
 
 {
   imports = [
@@ -6,7 +6,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   boot = {
     loader = {
