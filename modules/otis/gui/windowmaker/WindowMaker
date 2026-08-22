@@ -17,7 +17,7 @@
   HotCornerActions = (None, None, None, None);
   HotCornerDelay = 250;
   HotCornerEdge = 2;
-  IconPosition = trh;
+  IconPosition = tlh;
   ModifierKey = Mod4;
   MoveTo12to6Head = None;
   MoveTo6to12Head = None;
@@ -35,17 +35,11 @@
   WindowTitleFont = "Trebuchet MS,sans serif:weight=200:pixelsize=12";
 
   IconPath = (
-    "~/GNUstep/Library/Icons",
-    "~/GNUstep/Library/WindowMaker/Pixmaps",
-    "~/GNUstep/Library/WindowMaker/CachedPixmaps",
     "*windowmaker*/share/WindowMaker/Icons",
     "*windowmaker*/share/WindowMaker/Pixmaps"
   );
 
   PixmapPath = (
-    "~/GNUstep/Library/WindowMaker/Pixmaps",
-    "~/GNUstep/Library/WindowMaker/Backgrounds",
-    "~/GNUstep/Library/WindowMaker/CachedPixmaps",
     "*windowmaker*/share/WindowMaker/Pixmaps",
     "*windowmaker*/share/WindowMaker/Backgrounds"
   );

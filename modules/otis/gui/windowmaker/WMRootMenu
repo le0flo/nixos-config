@@ -11,7 +11,8 @@
     (
       "Editors",
       ("Emacs", EXEC, "emacs"),
-      ("Nano", EXEC, "xterm -e nano")
+      ("HeidiSQL", EXEC, "heidisql"),
+      ("Nano", EXEC, "alacritty -e nano")
     ),
     (
       "Media",
@@ -30,10 +31,10 @@
     (
       "System",
       ("Thunar", EXEC, "thunar"),
-      ("LocalSend", EXEC, "localsend_app"),
       ("KeepassXC", EXEC, "keepassxc"),
-      ("VeraCrypt", EXEC, "veracrypt"),
-      ("htop", EXEC, "xterm -e htop")
+      ("LocalSend", EXEC, "localsend_app"),
+      ("iwgtk", EXEC, "iwgtk"),
+      ("htop", EXEC, "alacritty -e htop")
     )
   ),
   (
@@ -49,55 +50,9 @@
       "-noext *windowmaker*/share/WindowMaker/Styles $HOME/GNUstep/Library/WindowMaker/Styles WITH setstyle"
     ),
     (
-      "Background",
-      (
-        "Solid",
-        (
-          "Black",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"black\")'"
-        ),
-        (
-          "Blue",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"#505075\")'"
-        ),
-        (
-          "Indigo",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"#243e6c\")'"
-        ),
-        (
-          "Bluemarine",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"#243e6c\")'"
-        ),
-        (
-          "Purple",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"#554466\")'"
-        ),
-        (
-          "Wheat",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"wheat4\")'"
-        ),
-        (
-          "Dark Gray",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"#333340\")'"
-        ),
-        (
-          "Wine",
-          EXEC,
-          "wdwrite WindowMaker WorkspaceBack '(solid, \"#400020\")'"
-        )
-      ),
-      (
-        "Images",
-        OPEN_MENU,
-        "-noext $HOME/.local/share/wallpapers WITH wmsetbg -u -t"
-      )
+      "Wallpapers",
+      OPEN_MENU,
+      "-noext $HOME/.local/share/wallpapers WITH wmsetbg -u -t"
     )
   ),
   ("Configure Window Maker", EXEC, "WPrefs"),

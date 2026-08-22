@@ -69,6 +69,7 @@ in {
       environment.systemPackages = with pkgs; [
         tree-sitter
         ungoogled-chromium
+        heidisql
         ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
           auctex
           bnf-mode
