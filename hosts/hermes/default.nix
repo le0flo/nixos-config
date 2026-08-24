@@ -69,7 +69,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     vesktop
-    opencode
+    codex
     openfortivpn
     freetds
     kubelogin
