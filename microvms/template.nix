@@ -1,8 +1,9 @@
-{microvm, serviceName, ...}:
+{microvm, pkgs, serviceName, ...}:
 
 {
   microvm = {
     hypervisor = "qemu";
+    qemu.package = pkgs.qemu_kvm;
 
     vcpu = 1;
     mem = 1024;
