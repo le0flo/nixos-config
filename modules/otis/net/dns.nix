@@ -7,6 +7,7 @@ let
     head;
 
   inherit (lib)
+    genAttrs
     last
     mkEnableOption
     mkIf
@@ -91,7 +92,7 @@ in {
   };
 
   config = mkIf (server.enable && vpn.role == "server") {
-    networking.firewall.allowedUDPPorts = [ 53 ];
+    networking.firewall.interfaces = genAttrs (attrNames vpn.networks) (name: { allowedUDPPorts = [ 53 ]; });
 
     services.bind = {
       inherit (server) forwarders;

@@ -1,36 +1,42 @@
 {microvm, ...}:
 
-{
+let
+  btPort = 10005;
+  slskPort = 10006;
+in {
   microvm = {
-    shares = [];
-
     forwardPorts = [
       {
         from = "host";
-        host.port = 10005;
-        guest.port = 10005;
+        host.port = btPort;
+        guest.port = btPort;
       }
       {
         from = "host";
-        host.port = 10006;
-        guest.port = 10006;
+        host.port = slskPort;
+        guest.port = slskPort;
       }
     ];
+
+    shares = [];
   };
+
+  networking.firewall.allowedTCPPorts = [
+    btPort
+    slskPort
+  ];
 
   services = {
     qbittorrent = {
       enable = true;
-      openFirewall = true;
-      
-      webuiPort = 10005;
+
+      webuiPort = btPort;
     };
 
-    #slskd = {
-    #  enable = true;
-    #  openFirewall = true;
-
-    #  settings.web.port = 10006;
-    #};
+    /*slskd = {
+      enable = true;
+    
+      settings.web.port = slskPort;
+    };*/
   };
 }

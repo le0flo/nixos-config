@@ -31,10 +31,16 @@
   };
 
   users.users."debug" = {
-    isNormalUser = true;
     createHome = true;
-    extraGroups = [ "wheel" ];
+
+    extraGroups = [
+      "render"
+      "video"
+      "wheel"
+    ];
+
     initialPassword = "debug";
+    isNormalUser = true;
   };
 
   programs.htop.enable = true;

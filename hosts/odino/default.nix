@@ -31,7 +31,6 @@ in {
     };
 
     services = {
-      docker.enable = true;
       k3s = {
         enable = true;
         role = "agent";
@@ -40,10 +39,7 @@ in {
     };
 
     users."leo" = {
-      groups = [
-        "docker"
-        "wheel"
-      ];
+      groups = [ "wheel" ];
 
       ssh.authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAokSVn78uTLEMp73AkLVA2q6+U+IPtqaeTc/HKGIFsV leo@hermes"

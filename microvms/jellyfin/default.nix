@@ -1,9 +1,22 @@
-{microvm, lib, ...}:
+{microvm, lib, serviceName, ...}:
 
-{
+let
+  inherit (lib) mkForce;
+
+  port = 9004;
+  dataDir = "/var/lib/jellyfin";
+in {
   microvm = {
-    mem = lib.mkForce 4096;
-    
+    forwardPorts = [
+      {
+        from = "host";
+        host = { inherit port; };
+        guest.port = 8096;
+      }
+    ];
+
+    mem = mkForce 4096;
+
     shares = [
       {
         tag = "movies";
@@ -12,24 +25,30 @@
         readOnly = true;
       }
       {
-        tag = "series";
-        source = "/mnt/storage/series";
-        mountPoint = "/media/series";
+        tag = "shows";
+        source = "/mnt/storage/shows";
+        mountPoint = "/media/shows";
         readOnly = true;
       }
     ];
 
-    forwardPorts = [
+    volumes = [
       {
-        from = "host";
-        host.port = 9004;
-        guest.port = 8096;
+        image = "${serviceName}-data.img";
+        mountPoint = "/var/lib/jellyfin";
+        size = 4096;
       }
     ];
   };
 
   services.jellyfin = {
+    inherit dataDir;
+
     enable = true;
     openFirewall = true;
+
+    configDir = "${dataDir}/config";
+    cacheDir = "${dataDir}/cache";
+    logDir = "${dataDir}/log";
   };
 }
