@@ -34,7 +34,11 @@ in {
     ];
 
     vcpu = 1;
-    vsock.cid = vsockNumber;
+
+    vsock = {
+      cid = vsockNumber;
+      ssh.enable = true;
+    };
   };
 
   networking = {
