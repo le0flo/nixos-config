@@ -1,27 +1,13 @@
 {config, inputs, pkgs, self, ...}:
 
 let
-  inherit (config.nixpkgs.hostPlatform) system;
-
   secretsPath = toString inputs.nixos-secrets;
-  vmConfig = {
-    autostart = true;
-    flake = self;
-    restartIfChanged = true;
-    updateFlake = null;
-  };
-
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
   imports = [
     ./hardware.nix
     ./secrets.nix
   ];
-
-  microvm.vms = {
-    "microvm-immich-${system}" = vmConfig;
-    "microvm-paperless-${system}" = vmConfig;
-  };
 
   otis = {
     net.vpn = {
@@ -48,6 +34,13 @@ in {
       k3s = {
         enable = true;
         role = "agent";
+      };
+      microvm = {
+        enable = true;
+        vms = [
+          "immich"
+          "paperless"
+        ];
       };
       openssh.enable = true;
     };
