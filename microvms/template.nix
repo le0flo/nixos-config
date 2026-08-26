@@ -1,11 +1,27 @@
 {microvm, pkgs, serviceName, ...}:
 
-{
+let
+  inherit (builtins)
+    hashString
+    substring;
+
+  hash = hashString "sha256" serviceName;
+
+  mod = a: b: a - (b * (a / b));
+  macDigit = pos: substring pos 2 hash;
+  vsockNumber = mod (builtins.fromTOML "n = 0x${substring 0 8 hash}").n 4096;
+in {
   microvm = {
     hypervisor = "qemu";
-    qemu.package = pkgs.qemu_kvm;
 
-    vcpu = 1;
+    interfaces = [
+      {
+        type = "user";
+        id = "vm-${serviceName}";
+        mac = "02:00:00:${macDigit 1}:${macDigit 3}:${macDigit 5}";
+      }
+    ];    
+
     mem = 1024;
 
     shares = [
@@ -17,13 +33,8 @@
       }
     ];
 
-    interfaces = [
-      {
-        type = "user";
-        id = "vm-${serviceName}";
-        mac = "02:00:00:00:00:01";
-      }
-    ];    
+    vcpu = 1;
+    vsock.cid = vsockNumber;
   };
 
   networking = {
