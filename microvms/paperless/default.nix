@@ -2,6 +2,7 @@
 
 let
   port = 9003;
+  passwordFile = "/run/secrets/paperless-admin-password";
   exportDir = "/media/documents";  
 in {
   microvm = {
@@ -14,6 +15,14 @@ in {
     ];
 
     shares = [
+      {
+        tag = "secret";
+        source = "/run/agenix/microvms/paperless";
+        mountPoint = passwordFile;
+        readOnly = true;
+
+        proto = "virtiofs";
+      }
       {
         tag = "documents";
         source = "/mnt/storage/documents";
@@ -40,7 +49,7 @@ in {
   networking.firewall.allowedTCPPorts = [ port ];
 
   services.paperless = {
-    inherit port;
+    inherit port passwordFile;
 
     enable = true;
     address = "0.0.0.0";
@@ -49,6 +58,7 @@ in {
       enable = true;
       directory = exportDir;
       onCalendar = "07:00:00";
+      settings.zip = true;
     };
   };
 

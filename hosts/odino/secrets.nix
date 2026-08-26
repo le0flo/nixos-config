@@ -10,13 +10,18 @@ in {
     ];
 
     secrets = {
-      "wireguard/home" = {
-        file = "${secretsPath}/wireguard/odino.age";
+      "k3s/token" = {
+        file = "${secretsPath}/k3s/token.age";
         mode = "400";
       };
 
-      "k3s/token" = {
-        file = "${secretsPath}/k3s/token.age";
+      "microvms/slskd" = {
+        file = "${secretsPath}/microvms/slskd.age";
+        mode = "444";
+      };
+
+      "wireguard/home" = {
+        file = "${secretsPath}/wireguard/odino.age";
         mode = "400";
       };
     };
