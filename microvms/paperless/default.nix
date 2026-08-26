@@ -1,8 +1,6 @@
 {microvm, pkgs, serviceName, ...}:
 
 let
-  inherit (lib) mkForce;
-
   port = 9003;
   exportDir = "/media/documents";  
 in {
