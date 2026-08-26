@@ -23,12 +23,16 @@ in {
         source = "/mnt/storage/movies";
         mountPoint = "/media/movies";
         readOnly = true;
+
+        proto = "virtiofs";
       }
       {
         tag = "shows";
         source = "/mnt/storage/shows";
         mountPoint = "/media/shows";
         readOnly = true;
+
+        proto = "virtiofs";
       }
     ];
 

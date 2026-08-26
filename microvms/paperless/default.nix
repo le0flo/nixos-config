@@ -1,4 +1,4 @@
-{lib, microvm, pkgs, serviceName, ...}:
+{microvm, pkgs, serviceName, ...}:
 
 let
   inherit (lib) mkForce;
@@ -14,8 +14,6 @@ in {
         guest = { inherit port; };
       }
     ];
-
-    mem = mkForce 2048;
 
     shares = [
       {

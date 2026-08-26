@@ -30,6 +30,8 @@ in {
         source = "/nix/store";
         mountPoint = "/nix/.ro-store";
         readOnly = true;
+
+        proto = "virtiofs";
       }
     ];
 

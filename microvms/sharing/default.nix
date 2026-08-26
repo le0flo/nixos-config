@@ -17,8 +17,6 @@ in {
         guest.port = slskPort;
       }
     ];
-
-    shares = [];
   };
 
   networking.firewall.allowedTCPPorts = [

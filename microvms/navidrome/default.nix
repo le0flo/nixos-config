@@ -19,6 +19,8 @@ in {
         source = "/mnt/storage/music";
         mountPoint = musicDir;
         readOnly = true;
+
+        proto = "virtiofs";
       }
     ];
 
