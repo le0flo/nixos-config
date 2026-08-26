@@ -15,7 +15,7 @@ in {
         mode = "400";
       };
 
-      "microvms/paperless" = {
+      "microvms/paperless/admin-pass" = {
         file = "${secretsPath}/microvms/paperless.age";
         mode = "444";
       };

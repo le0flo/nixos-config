@@ -15,7 +15,7 @@ in {
         mode = "400";
       };
 
-      "microvms/slskd" = {
+      "microvms/slskd/environment" = {
         file = "${secretsPath}/microvms/slskd.age";
         mode = "444";
       };
