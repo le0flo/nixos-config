@@ -1,4 +1,4 @@
-{microvm, lib, pkgs, serviceName, ...}:
+{lib, microvm, pkgs, serviceName, ...}:
 
 let
   inherit (lib) mkForce;

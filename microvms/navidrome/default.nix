@@ -1,4 +1,4 @@
-{microvm, serviceName, ...}:
+{lib, microvm, serviceName, ...}:
 
 let
   port = 9001;

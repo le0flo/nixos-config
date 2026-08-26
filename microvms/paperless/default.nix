@@ -1,6 +1,8 @@
-{microvm, pkgs, serviceName, ...}:
+{lib, microvm, pkgs, serviceName, ...}:
 
 let
+  inherit (lib) mkForce;
+
   port = 9003;
   exportDir = "/media/documents";  
 in {
@@ -12,6 +14,8 @@ in {
         guest = { inherit port; };
       }
     ];
+
+    mem = mkForce 2048;
 
     shares = [
       {
