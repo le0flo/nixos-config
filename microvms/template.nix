@@ -48,22 +48,9 @@ in {
     firewall.enable = true;
   };
 
-  users.users."debug" = {
-    createHome = true;
-
-    extraGroups = [
-      "render"
-      "video"
-      "wheel"
-    ];
-
-    initialPassword = "debug";
-    isNormalUser = true;
-  };
+  users.users."root".initialPassword = "root";
 
   programs.htop.enable = true;
   
-  services.getty.autologinUser = "debug";
-
   system.stateVersion = "26.05";
 }

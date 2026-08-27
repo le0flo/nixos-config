@@ -21,13 +21,13 @@ in {
         mode = "444";
       };
 
-      "wireguard/home" = {
-        file = "${secretsPath}/wireguard/afrodite-home.age";
+      "wireguard/external" = {
+        file = "${secretsPath}/wireguard/afrodite-external.age";
         mode = "400";
       };
 
-      "wireguard/external" = {
-        file = "${secretsPath}/wireguard/afrodite-external.age";
+      "wireguard/home" = {
+        file = "${secretsPath}/wireguard/afrodite-home.age";
         mode = "400";
       };
     };

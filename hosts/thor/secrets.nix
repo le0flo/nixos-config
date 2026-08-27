@@ -15,11 +15,6 @@ in {
         mode = "400";
       };
 
-      "microvms/paperless/admin-pass" = {
-        file = "${secretsPath}/microvms/paperless.age";
-        mode = "444";
-      };
-
       "wireguard/home" = {
         file = "${secretsPath}/wireguard/thor.age";
         mode = "400";

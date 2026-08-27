@@ -2,7 +2,6 @@
 
 let
   port = 9003;
-  secretsDir = "/run/secrets/paperless";
   exportDir = "/media/documents";  
 in {
   microvm = {
@@ -15,14 +14,6 @@ in {
     ];
 
     shares = [
-      {
-        tag = "secret";
-        source = "/run/agenix/microvms/paperless";
-        mountPoint = secretsDir;
-        readOnly = true;
-
-        proto = "virtiofs";
-      }
       {
         tag = "documents";
         source = "/mnt/storage/documents";
@@ -53,7 +44,6 @@ in {
 
     enable = true;
     address = "0.0.0.0";
-    passwordFile = "${secretsDir}/admin-pass";
 
     exporter = {
       enable = true;
