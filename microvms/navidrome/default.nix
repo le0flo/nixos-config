@@ -41,7 +41,8 @@ in {
     settings = {
       Address = "0.0.0.0";
       Port = port;
-      MusicFolder = musicDir;
     };
   };
+
+  systemd.services."navidrome".serviceConfig.BindReadOnlyPaths = [ musicDir ];
 }

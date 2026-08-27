@@ -31,10 +31,10 @@ in {
       webuiPort = btPort;
     };
 
-    /*slskd = {
+    slskd = {
       enable = true;
     
       settings.web.port = slskPort;
-    };*/
+    };
   };
 }

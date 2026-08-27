@@ -26,8 +26,8 @@ in {
         proto = "virtiofs";
         posixAcl = false;
         extraArgs = [
-          "--translate-uid" "host:1000:999:1"
-          "--translate-gid" "host:100:999:1"
+          "--translate-uid" "map:999:1000:1"
+          "--translate-gid" "map:999:100:1"
         ];
       }
     ];
@@ -60,7 +60,7 @@ in {
 
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.coreutils}/bin/chmod 777 ${mediaDir}";
+      ExecStart = "${pkgs.coreutils}/bin/chmod 755 ${mediaDir}";
     };
   };
 }

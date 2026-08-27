@@ -3,14 +3,13 @@
 let
   inherit (lib) mkForce;
 
-  port = 9004;
   dataDir = "/var/lib/jellyfin";
 in {
   microvm = {
     forwardPorts = [
       {
         from = "host";
-        host = { inherit port; };
+        host.port = 9004;
         guest.port = 8096;
       }
     ];

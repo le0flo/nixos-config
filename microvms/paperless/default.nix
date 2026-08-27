@@ -22,8 +22,8 @@ in {
         proto = "virtiofs";
         posixAcl = false;
         extraArgs = [
-          "--translate-uid" "host:1000:315:1"
-          "--translate-gid" "host:100:315:1"
+          "--translate-uid" "map:315:1000:1"
+          "--translate-gid" "map:315:100:1"
         ];
       }
     ];
