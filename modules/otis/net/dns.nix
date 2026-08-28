@@ -62,11 +62,11 @@ in {
     domains = {
       public = mkStrOption
         "Public facing domain for the otis network"
-        "leoflo.net";
+        "example.com";
 
       private = mkStrOption
         "Private domain for internal communications between otis network devices"
-        "home.arpa";
+        "example.com";
     };
 
     subdomains = {

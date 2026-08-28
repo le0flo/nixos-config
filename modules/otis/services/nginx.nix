@@ -115,6 +115,12 @@ in {
         description = "List of private websites";
         default = [];
       };
+
+      extra = mkOption {
+        type = types.attrs;
+        description = "Other virtual hosts definitions";
+        default = {};
+      };
     };
 
     tls = {
@@ -147,6 +153,7 @@ in {
       virtualHosts = mkMerge [
         (mkVirtualHost "public" nginx.sites.public)
         (mkVirtualHost "private" nginx.sites.private)
+        nginx.sites.extra
       ];
     };
   };

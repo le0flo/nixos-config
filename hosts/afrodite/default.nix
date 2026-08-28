@@ -1,12 +1,11 @@
 {config, inputs, pkgs, ...}:
 
 let
-  secretsPath = toString inputs.nixos-secrets;
+  inherit (config.otis.net.dns) domains;
 
-  domains = config.otis.net.dns.domains;
+  secretsPath = toString inputs.nixos-secrets;
   www-public = pkgs.www.public.override { domain = domains.public; };
   www-private = pkgs.www.private.override { domain = domains.private; };
-
   tmpfilesConfig = {
     mode = "0755";
     user = "leo";
@@ -23,6 +22,11 @@ in {
   otis = {
     net = {
       dns = {
+        domains = {
+          public = "leoflo.net";
+          private = "home.arpa";
+        };
+
         subdomains = {
           public = [ "files" ];
           private = [
@@ -98,11 +102,12 @@ in {
           private = [
             { subdomain = "@"; type = "files"; root = "${www-private}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/private"; autoindex = true; }
+            { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.0.2:10001"; }
+            { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.0.2:10002"; }
             { subdomain = "music"; type = "proxy"; address = "http://10.69.0.2:9001"; }
-            { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.0.2:9002"; }
-            { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.0.2:9003"; }
             { subdomain = "cinema"; type = "proxy"; address = "http://10.69.0.2:9004"; }
-            { onlyPrimary = true; subdomain = "bt.sharing"; type = "proxy"; address = "http://10.69.0.2:9005"; }
+            { onlyPrimary = true; subdomain = "bt.sharing"; type = "proxy"; address = "http://10.69.0.2:12001"; }
+            { onlyPrimary = true; subdomain = "slsk.sharing"; type = "proxy"; address = "http://10.69.0.2:12002"; }
           ];
         };
 
@@ -119,10 +124,7 @@ in {
     };
 
     users."leo" = {
-      groups = [
-        "docker"
-        "wheel"
-      ];
+      groups = [ "wheel" ];
 
       ssh.authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
