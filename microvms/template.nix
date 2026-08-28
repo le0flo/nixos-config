@@ -48,9 +48,14 @@ in {
     firewall.enable = true;
   };
 
-  users.users."root".initialPassword = "root";
+  users.users."root".openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2uZphRK1orNSM4hMSELHVWfL29W4EpA5F9UGxrY7Nk leo@odino"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1B/uxIDrKCh5PuJbJN92Dzs8zZjSywJ4LoSZZtFViS leo@thor"
+  ];
 
   programs.htop.enable = true;
-  
+
+  services.getty.autologinUser = "root";
+
   system.stateVersion = "26.05";
 }
