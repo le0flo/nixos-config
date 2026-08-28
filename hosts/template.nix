@@ -44,6 +44,11 @@
     "flakes"
   ];
 
+  otis.net.dns.domains = {
+    public = "leoflo.net";
+    private = "home.arpa";
+  };
+
   time.timeZone = "Europe/Rome";
   
   users.users."root".initialHashedPassword = null;

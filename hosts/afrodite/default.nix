@@ -22,11 +22,6 @@ in {
   otis = {
     net = {
       dns = {
-        domains = {
-          public = "leoflo.net";
-          private = "home.arpa";
-        };
-
         subdomains = {
           public = [ "files" ];
           private = [
