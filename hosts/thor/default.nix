@@ -56,8 +56,13 @@ in {
     };
   };
 
-  environment.etc."paperless/environment".text = ''
-  PAPERLESS_URL=https://papers.${config.otis.net.dns.domains.private}
-  PAPERLESS_TRUSTED_PROXIES=10.69.0.1
-  '';
+  system.activationScripts."paperless-environment" = {
+    text = ''
+    mkdir -p /etc/paperless
+    cat > /etc/paperless/environment <<'EOF'
+    PAPERLESS_URL=https://papers.${config.otis.net.dns.domains.private}
+    PAPERLESS_TRUSTED_PROXIES=10.69.0.1
+    EOF
+    '';
+  };
 }
