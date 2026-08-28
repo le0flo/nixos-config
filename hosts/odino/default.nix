@@ -35,6 +35,14 @@ in {
         enable = true;
         role = "agent";
       };
+      microvm = {
+        enable = true;
+        vms = [
+          "navidrome"
+          "jellyfin"
+          "sharing"
+        ];
+      };
       openssh.enable = true;
     };
 
