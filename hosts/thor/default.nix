@@ -54,5 +54,10 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVH95IieMMZ2R383n4+414Yu1T6NjmWYoUx1QsjTdOL leo@afrodite"
       ];
     };
-  };  
+  };
+
+  environment.etc."paperless/environment".text = ''
+  PAPERLESS_URL=https://papers.${domains.private}
+  PAPERLESS_TRUSTED_PROXIES=10.69.0.1
+  '';
 }

@@ -2,6 +2,7 @@
 
 let
   port = 10001;
+  environmentDir = "/etc/paperless";
   exportDir = "/media/documents";  
 in {
   microvm = {
@@ -14,6 +15,14 @@ in {
     ];
 
     shares = [
+      {
+        tag = "environment";
+        source = environmentDir;
+        mountPoint = environmentDir;
+        readOnly = true;
+
+        proto = "virtiofs";
+      }
       {
         tag = "documents";
         source = "/mnt/storage/documents";
@@ -44,6 +53,7 @@ in {
 
     enable = true;
     address = "0.0.0.0";
+    environmentFile = "${environmentDir}/environment";
 
     exporter = {
       enable = true;
