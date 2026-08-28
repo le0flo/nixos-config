@@ -57,7 +57,7 @@ in {
   };
 
   environment.etc."paperless/environment".text = ''
-  PAPERLESS_URL=https://papers.${domains.private}
+  PAPERLESS_URL=https://papers.${config.otis.net.dns.domains.private}
   PAPERLESS_TRUSTED_PROXIES=10.69.0.1
   '';
 }
