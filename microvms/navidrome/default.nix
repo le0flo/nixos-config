@@ -1,7 +1,7 @@
 {lib, microvm, serviceName, ...}:
 
 let
-  port = 9001;
+  port = 11001;
   musicDir = "/media/music";
 in {
   microvm = {

@@ -1,7 +1,7 @@
 {microvm, pkgs, serviceName, ...}:
 
 let
-  port = 9003;
+  port = 10001;
   exportDir = "/media/documents";  
 in {
   microvm = {

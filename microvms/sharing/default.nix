@@ -1,10 +1,10 @@
 {microvm, serviceName, ...}:
 
 let
-  btPort = 11001;
+  btPort = 12001;
   btDownloadDir = "/media/bt";
 
-  slskPort = 11002;
+  slskPort = 12002;
   slskEnvDir = "/run/secrets/slsk";
   slskDownloadDir = "/media/slsk";
 in {

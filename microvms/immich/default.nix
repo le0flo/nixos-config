@@ -3,7 +3,7 @@
 let
   inherit (lib) mkForce;
 
-  port = 9002;
+  port = 10002;
   mediaDir = "/media/pictures";
 in {
   microvm = {

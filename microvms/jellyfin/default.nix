@@ -9,7 +9,7 @@ in {
     forwardPorts = [
       {
         from = "host";
-        host.port = 9004;
+        host.port = 11002;
         guest.port = 8096;
       }
     ];
