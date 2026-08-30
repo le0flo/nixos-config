@@ -89,6 +89,9 @@ in {
 
             ReverseProxySupportEnabled = true;
             TrustedReverseProxiesList = "10.69.0.1";
+
+            AuthSubnetWhitelistEnabled = true;
+            AuthSubnetWhitelist = "10.69.0.0/24";
           };
         };
       };
