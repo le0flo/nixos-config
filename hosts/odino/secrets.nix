@@ -19,6 +19,7 @@ in {
         file = "${secretsPath}/microvms/slskd.age";
         path = "/etc/slskd/environment";
         mode = "444";
+        symlink = false;
       };
 
       "wireguard/home" = {
