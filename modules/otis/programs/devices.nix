@@ -16,20 +16,19 @@ in {
       boot.supportedFilesystems = [
         "exfat"
         "ntfs"
+        "f2fs"
       ];
 
       environment.systemPackages = with pkgs; [
         exfat
         ntfs3g
+        f2fs-tools
         android-tools
         wine
       ];        
     }
     (mkIf gui.enable {
-      environment.systemPackages = with pkgs; [
-        scrcpy
-        veracrypt
-      ];        
+      environment.systemPackages = with pkgs; [ scrcpy ];
     })
   ]);
 }
