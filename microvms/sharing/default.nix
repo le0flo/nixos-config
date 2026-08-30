@@ -25,7 +25,7 @@ in {
     shares = [
       {
         tag = "soulseek-secrets";
-        source = "/run/agenix/microvms/slskd";
+        source = "/etc/slskd";
         mountPoint = slskEnvDir;
         readOnly = true;
 
@@ -83,7 +83,13 @@ in {
             SavePath = "${btDownloadDir}/complete";
             TempPath = "${btDownloadDir}/incomplete";
           };
-          WebUI.AlternativeUIEnabled = true;
+          WebUI = {
+            CSRFProtection = false;
+            HostHeaderValidation = false;
+
+            ReverseProxySupportEnabled = true;
+            TrustedReverseProxiesList = "10.69.0.1";
+          };
         };
       };
     };
