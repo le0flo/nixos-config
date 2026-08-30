@@ -45,7 +45,7 @@ in {
 
   config = mkIf windowmaker.enable {
     environment = {
-      shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/WMStart.sh";
+      shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/start.sh";
 
       systemPackages = windowmaker.dockapps ++ windowmaker.extraPackages;
     };
@@ -53,7 +53,11 @@ in {
     otis.hjem = [
       {
         files = {
-          "${gnustepDir}/WMStart.sh" = copyText (readFile ./windowmaker/WMStart.sh);
+          "${gnustepDir}/start.sh" = {
+            type = "copy";
+            permissions = "644";
+            source = ./windowmaker/start.sh;
+          };
 
           "${gnustepDir}/WMRootMenu" = copyText
             (replaceStrings
