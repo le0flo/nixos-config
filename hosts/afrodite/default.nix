@@ -99,8 +99,8 @@ in {
             { subdomain = "files"; type = "files"; root = "/srv/files/private"; autoindex = true; }
             { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.0.3:10001"; }
             { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.0.3:10002"; }
-            { subdomain = "music"; type = "proxy"; address = "http://10.69.0.2:9001"; }
-            { subdomain = "cinema"; type = "proxy"; address = "http://10.69.0.2:9004"; }
+            { subdomain = "music"; type = "proxy"; address = "http://10.69.0.2:11001"; }
+            { subdomain = "cinema"; type = "proxy"; address = "http://10.69.0.2:11002"; }
             { onlyPrimary = true; subdomain = "bt.sharing"; type = "proxy"; address = "http://10.69.0.2:12001"; }
             { onlyPrimary = true; subdomain = "slsk.sharing"; type = "proxy"; address = "http://10.69.0.2:12002"; }
           ];
