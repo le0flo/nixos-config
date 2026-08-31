@@ -30,8 +30,8 @@ in {
             "images"
             "papers"
             "cinema"
-            "bt.sharing"
-            "slsk.sharing"
+            "bt"
+            "slsk"
           ];
         };
 
@@ -101,8 +101,8 @@ in {
             { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.0.3:10002"; }
             { subdomain = "music"; type = "proxy"; address = "http://10.69.0.2:11001"; }
             { subdomain = "cinema"; type = "proxy"; address = "http://10.69.0.2:11002"; }
-            { onlyPrimary = true; subdomain = "bt.sharing"; type = "proxy"; address = "http://10.69.0.2:12001"; }
-            { onlyPrimary = true; subdomain = "slsk.sharing"; type = "proxy"; address = "http://10.69.0.2:12002"; }
+            { onlyPrimary = true; subdomain = "bt"; type = "proxy"; address = "http://10.69.0.2:12001"; }
+            { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.0.2:12002"; }
           ];
         };
 

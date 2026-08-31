@@ -1,6 +1,7 @@
 {
   stdenvNoCC,
-  domain ? "example.com",
+  privateDomain ? "example.com",
+  publicDomain ? "example.com"
 }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
@@ -12,6 +13,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     mkdir -p $out
     cp -r ./*.html ./*.css ./*.gif $out/.
-    substituteInPlace $out/index.html --replace-fail '*domain*' '${domain}'
+    substituteInPlace $out/index.html --replace-fail '*privateDomain*' '${privateDomain}'
+    substituteInPlace $out/index.html --replace-fail '*publicDomain*' '${publicDomain}'
   '';
 })
