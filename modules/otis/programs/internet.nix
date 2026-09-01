@@ -31,6 +31,8 @@ in {
         curl
         wget
         dig
+        tcpdump
+        nftables
         openssh
         rsync
         wireguard-tools

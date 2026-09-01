@@ -1,4 +1,4 @@
-{microvm, serviceName, ...}:
+{microvm, ...}:
 
 let
   btPort = 12001;
@@ -9,19 +9,6 @@ let
   slskDownloadDir = "/media/slsk";
 in {
   microvm = {
-    forwardPorts = [
-      {
-        from = "host";
-        host.port = btPort;
-        guest.port = btPort;
-      }
-      {
-        from = "host";
-        host.port = slskPort;
-        guest.port = slskPort;
-      }
-    ];
-
     shares = [
       {
         tag = "soulseek-secrets";
@@ -54,14 +41,6 @@ in {
           "--translate-uid" "map:997:1000:1"
           "--translate-gid" "map:997:100:1"
         ];
-      }
-    ];
-
-    volumes = [
-      {
-        image = "${serviceName}-data.img";
-        mountPoint = "/var/lib";
-        size = 4096;
       }
     ];
   };

@@ -37,10 +37,8 @@ in {
       };
       microvm = {
         enable = true;
-        vms = [
-          "immich"
-          "paperless"
-        ];
+        externalInterface = "enp0s31f6";
+        vms = [ "archive" ];
       };
       openssh.enable = true;
     };

@@ -37,10 +37,10 @@ in {
       };
       microvm = {
         enable = true;
+        externalInterface = "eno1";
         vms = [
-          "navidrome"
-          "jellyfin"
           "sharing"
+          "streaming"
         ];
       };
       openssh.enable = true;
