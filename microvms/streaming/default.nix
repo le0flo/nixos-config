@@ -1,4 +1,4 @@
-{lib, microvm, pkgs, ...}:
+{config, lib, microvm, pkgs, ...}:
 
 let
   inherit (lib)
@@ -73,11 +73,16 @@ in {
       before = [ "jellyfin.service" ];
 
       serviceConfig.Type = "oneshot";
-      script = ''
-      mkdir -p ${jellyfinDataDir}/config
 
-      if [ ! -e ${jellyfinDataDir}/config/network.xml ]; then
-        cat > ${jellyfinDataDir}/config/network.xml <<'EOF'
+      script = let
+        inherit (config.services.jellyfin) group user;
+      in ''
+      mkdir -p ${jellyfinDataDir}/config
+      if [ -e ${jellyfinDataDir}/config/network.xml ]; then
+        exit 0
+      fi
+
+      cat > ${jellyfinDataDir}/config/network.xml <<'EOF'
       <?xml version="1.0" encoding="utf-8"?>
       <NetworkConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <BaseUrl />
@@ -103,7 +108,7 @@ in {
       </NetworkConfiguration>
       EOF
 
-        chown -R jellyfin:jellyfin ${jellyfinDataDir}/config
+      chown -R ${user}:${group} ${jellyfinDataDir}/config
       fi
       '';
     };

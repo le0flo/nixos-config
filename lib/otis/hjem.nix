@@ -1,0 +1,5 @@
+{
+  hjem = {
+    copyText = text
+  };
+}
