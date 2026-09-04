@@ -1,17 +1,19 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
+  inherit (config.otis) gui;
+
+  inherit (customLibs.otis.opts) mkBoolOption;
+
   inherit (lib)
-    mkEnableOption
     mkIf
     mkMerge;
 
-  devices = config.otis.programs.devices;
-  gui = config.otis.gui;
+  cfg = config.otis.programs.devices;
 in {
-  options.otis.programs.devices.enable = mkEnableOption "Add external devices tools and drivers";
+  options.otis.programs.devices.enable = mkBoolOption "Add external devices tools and drivers" false;
 
-  config = mkIf devices.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       boot.supportedFilesystems = [
         "exfat"

@@ -1,17 +1,17 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    mkMerge;
+  inherit (config.otis) gui;
 
-  games = config.otis.programs.games;
-  gui = config.otis.gui;
+  inherit (customLibs.otis.opts) mkBoolOption;
+
+  inherit (lib) mkIf;
+
+  cfg = config.otis.programs.games;
 in {
-  options.otis.programs.games.enable = mkEnableOption "Add games";
+  options.otis.programs.games.enable = mkBoolOption "Add games" false;
 
-  config = mkIf (gui.enable && games.enable) {
+  config = mkIf (gui.enable && cfg.enable) {
     environment.systemPackages = with pkgs; [ prismlauncher ];
 
     hardware.steam-hardware.enable = true;

@@ -1,4 +1,4 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -6,52 +6,34 @@ let
     concatMap
     listToAttrs
     readDir;
-  
+
+  inherit (config.otis) gui;
+
+  inherit (customLibs.otis.hjem)
+    configDir
+    configFmt;
+
+  inherit (customLibs.otis.opts)
+    mkEnumOption
+    mkIntOption
+    mkStrOption
+    mkPkgsOption;
+
   inherit (lib)
     mkIf
-    mkMerge
-    mkOption
-    types;
+    mkMerge;
 
-  gui = config.otis.gui;
-  inherit (gui) style;
-
-  mkStrOption = description: default: mkOption {
-    inherit description default;
-    type = types.str;
-  };
-
+  cfg = gui.style;
+  
   mkColorOption = name: default: mkStrOption "Color for the ${name}" default;
-
-  mkPkgsOption = description: default: mkOption {
-    inherit description default;
-    type = with types; listOf package;
-  };
-
-  generateIni = name: value: {
-    inherit value;
-
-    type = "copy";
-    permissions = "644";
-    generator = (pkgs.formats.ini {}).generate name;
-  };
-
-  packageLinks = directory: packages: (listToAttrs
-    (concatMap
-      (x: map
-        (y: {
-          name = "${directory}/${y}";
-          value.source = "${x}/share/${directory}/${y}";
-        })
-        (attrNames (readDir "${x}/share/${directory}")))
-      packages));
+  configFmtIni = configFmt pkgs.formats.ini;
+  packageLinks = dir: pkgs: (listToAttrs (concatMap (x: map (y: {
+    name = "${dir}/${y}";
+    value.source = "${x}/share/${dir}/${y}";
+  }) (attrNames (readDir "${x}/share/${dir}"))) pkgs));
 in {
   options.otis.gui.style = {
-    polarity = mkOption {
-      type = types.enum [ "light" "dark" ];
-      description = "Whether you want dark or light theme";
-      default = "dark";
-    };
+    polarity = mkEnumOption [ "light" "dark" ] "Whether you want dark or light theme" "dark";
 
     wallpaper = mkStrOption
       "Name of the default wallpaper (choose only from the ones inside of the wallpapers package)"
@@ -67,32 +49,20 @@ in {
 
     cursor = {
       name = mkStrOption "Default cursor theme name" "Adwaita";
-
-      size = mkOption {
-        type = types.int;
-        description = "Default cursor size";
-        default = 20;
-      };
-
+      size = mkIntOption "Default cursor size" 20;
       packages = mkPkgsOption "Cursor theme packages" [];
     };
 
     icons = {
       name = mkStrOption "Default icon pack name" "elementary-xfce-dark";
-
-      packages = mkPkgsOption
-        "Icon pack packages"
-        (with pkgs; [
-          adwaita-icon-theme
-          elementary-xfce-icon-theme
-        ]);
+      packages = mkPkgsOption "Icon pack packages" (with pkgs; [
+        adwaita-icon-theme
+        elementary-xfce-icon-theme
+      ]);
     };
 
     gtk = {
-      name = mkStrOption
-        "Default gtk theme name"
-        "Adwaita";
-
+      name = mkStrOption "Default gtk theme name" "Adwaita";
       packages = mkPkgsOption "Gtk theme packages" [];
     };
 
@@ -109,85 +79,71 @@ in {
       qt6Packages.qt6ct
       wallpapers
     ]
-    ++ style.cursor.packages
-    ++ style.icons.packages
-    ++ style.gtk.packages;
+    ++ cfg.cursor.packages
+    ++ cfg.icons.packages
+    ++ cfg.gtk.packages;
 
-    otis.hjem = [
-      {
-        xdg = {
-          config.files = {
-            "gtk-3.0/settings.ini" = generateIni "settings.ini" {
-              Settings = {
-                gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
+    otis.hjem = [{
+      xdg = {
+        config.files = {
+          "gtk-3.0/settings.ini" = configFmtIni "settings.ini" {
+            Settings = {
+              gtk-application-prefer-dark-theme = if cfg.polarity == "dark" then 1 else 0;
 
-                gtk-cursor-theme-name = style.cursor.name;
-                gtk-cursor-theme-size = style.cursor.size;
+              gtk-cursor-theme-name = cfg.cursor.name;
+              gtk-cursor-theme-size = cfg.cursor.size;
 
-                gtk-theme-name = style.gtk.name;
-                gtk-icon-theme-name = style.icons.name;
-              };
-            };
-
-            "gtk-4.0/settings.ini" = generateIni "settings.ini" {
-              Settings = {
-                gtk-application-prefer-dark-theme = if style.polarity == "dark" then 1 else 0;
-
-                gtk-cursor-theme-name = style.cursor.name;
-                gtk-cursor-theme-size = style.cursor.size;
-
-                gtk-theme-name = style.gtk.name;
-                gtk-icon-theme-name = style.icons.name;
-              };
-            };
-
-            "qt6ct/qt6ct.conf" = generateIni "qt6ct.conf" {
-              Appearance = {
-                style = style.qt.style;
-                icon_theme = style.icons.name;
-                color_scheme_path = "${pkgs.qt6Packages.qt6ct}/share/qt6ct/colors/${style.qt.colorScheme}.conf";
-                custom_palette = true;
-                standard_dialogs = style.qt.dialogs;
-              };
-
-              Fonts = {
-                general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
-                fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
-              };
+              gtk-theme-name = cfg.gtk.name;
+              gtk-icon-theme-name = cfg.icons.name;
             };
           };
 
-          data.files = {
-            "icons" = {
-              type = "directory";
-              permissions = "755";
+          "gtk-4.0/settings.ini" = configFmtIni "settings.ini" {
+            Settings = {
+              gtk-application-prefer-dark-theme = if cfg.polarity == "dark" then 1 else 0;
+
+              gtk-cursor-theme-name = cfg.cursor.name;
+              gtk-cursor-theme-size = cfg.cursor.size;
+
+              gtk-theme-name = cfg.gtk.name;
+              gtk-icon-theme-name = cfg.icons.name;
+            };
+          };
+
+          "qt6ct/qt6ct.conf" = configFmtIni "qt6ct.conf" {
+            Appearance = {
+              style = cfg.qt.style;
+              icon_theme = cfg.icons.name;
+              color_scheme_path = "${pkgs.qt6Packages.qt6ct}/share/qt6ct/colors/${cfg.qt.colorScheme}.conf";
+              custom_palette = true;
+              standard_dialogs = cfg.qt.dialogs;
             };
 
-            "themes" = {
-              type = "directory";
-              permissions = "755";
+            Fonts = {
+              general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+              fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
             };
-
-            "wallpapers" = {
-              type = "directory";
-              permissions = "755";
-            };
-
-            "wallpapers/default" = {
-              type = "symlink";
-              source = "${pkgs.wallpapers}/share/wallpapers/${style.wallpaper}";
-            };
-          }
-          // packageLinks "icons" style.cursor.packages
-          // packageLinks "icons" style.icons.packages
-          // packageLinks "themes" style.gtk.packages
-          // packageLinks "wallpapers" [ pkgs.wallpapers ];
+          };
         };
-      }
-    ];
 
-    systemd.user.services."defaults-gtk" = {
-      description = "Set default GTK theme and icon pack";
+        data.files = {
+          "icons" = configDir;
+          "themes" = configDir;
+          "wallpapers" = configDir;
+
+          "wallpapers/default" = {
+            type = "symlink";
+            source = "${pkgs.wallpapers}/share/wallpapers/${cfg.wallpaper}";
+          };
+        }
+        // packageLinks "icons" cfg.cursor.packages
+        // packageLinks "icons" cfg.icons.packages
+        // packageLinks "themes" cfg.gtk.packages
+        // packageLinks "wallpapers" [ pkgs.wallpapers ];
+      };
+    }];
+
+    systemd.user.services."dconf-init" = {
       wantedBy = [ "default.target" ];
       path = [ pkgs.dconf ];
 
@@ -197,9 +153,9 @@ in {
       };
 
       script = ''
-        dconf write /org/gnome/desktop/interface/color-scheme "'prefer-${style.polarity}'"
-        dconf write /org/gnome/desktop/interface/gtk-theme "'${style.gtk.name}'"
-        dconf write /org/gnome/desktop/interface/icon-theme "'${style.icons.name}'"
+      dconf write /org/gnome/desktop/interface/color-scheme "'prefer-${cfg.polarity}'"
+      dconf write /org/gnome/desktop/interface/gtk-theme "'${cfg.gtk.name}'"
+      dconf write /org/gnome/desktop/interface/icon-theme "'${cfg.icons.name}'"
       '';
     };
   };

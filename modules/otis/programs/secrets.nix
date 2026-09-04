@@ -1,12 +1,13 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
+  inherit (config.otis) gui;
+
+  inherit (customLibs.otis.hjem) configFmt;
+
   inherit (lib)
     mkIf
     mkMerge;
-
-  secrets = config.otis.programs.secrets;
-  gui = config.otis.gui;
 in {  
   config = mkMerge [
     {
@@ -17,33 +18,22 @@ in {
       ];
     }
     (mkIf gui.enable {
-      environment.systemPackages = with pkgs; [
-        keepassxc
-        veracrypt
-      ];
+      environment.systemPackages = with pkgs; [ keepassxc ];
 
-      otis.hjem = [
-        {
-          xdg.config.files."keepassxc/keepassxc.ini" = {
-            type = "copy";
-            permissions = "644";
+      otis.hjem = [{
+        xdg.config.files."keepassxc/keepassxc.ini" = configFmt pkgs.formats.ini "keepassxc.ini" {
+          Browser.Enabled = true;
+          GUI.ApplicationTheme = gui.style.polarity;
+          Security.Security_HideNotes = true;
 
-            generator = (pkgs.formats.ini {}).generate "keepassxc.ini";
-            value = {
-              Browser.Enabled = true;
-              GUI.ApplicationTheme = config.otis.gui.style.polarity;
-              Security.Security_HideNotes = true;
-
-              PasswordGenerator = {
-                Length = 128;
-                LowerCase = true;
-                UpperCase = true;
-                SpecialChars = true;
-              };
-            };
+          PasswordGenerator = {
+            Length = 128;
+            LowerCase = true;
+            UpperCase = true;
+            SpecialChars = true;
           };
-        }
-      ];
+        };
+      }];
     })
   ];
 }

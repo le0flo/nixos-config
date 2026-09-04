@@ -1,42 +1,37 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
   inherit (builtins)
-    attrNames
-    filter
-    readDir
+    concatStringsSep
     substring;
+
+  inherit (config.otis.gui) style;
+
+  inherit (customLibs.otis.hjem)
+    configFmt
+    configText
+    getConfigFiles;
+
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkPkgsOption;
 
   inherit (lib)
     genAttrs
-    hasSuffix
-    join
-    mkEnableOption
     mkIf
-    mkMerge
-    mkOption
-    types;
+    mkMerge;
 
-  niri = config.otis.gui.niri;
-  style = config.otis.gui.style;
+  cfg = config.otis.gui.niri;
+  configFiles = getConfigFiles ./niri ".kdl";
 
   parseColor = color: substring 1 6 color;
-
-  configFiles = filter
-    (x: hasSuffix ".kdl" x)
-    (attrNames (readDir ./niri));
 in {
   options.otis.gui.niri = {
-    enable = mkEnableOption "Install the niri compositor";
-
-    extraPackages = mkOption {
-      type = with types; listOf package;
-      description = "Additional packages";
-      default = [];
-    };
+    enable = mkBoolOption "Install the niri compositor" false;
+    extraPackages = mkPkgsOption "Additional packages" [];
   };
 
-  config = mkIf niri.enable {
+  config = mkIf cfg.enable {
     environment = {
       shellAliases."start-niri" = "uwsm start niri.desktop";
 
@@ -51,112 +46,95 @@ in {
         pavucontrol
         ristretto
       ]
-      ++ niri.extraPackages;
+      ++ cfg.extraPackages;
     };
 
     otis.hjem = [
       {
         xdg.config.files = mkMerge [
           {
-            "niri/config.kdl" = {
-              type = "copy";
-              permissions = "644";
+            "niri/config.kdl" = configText ''
+            ${concatStringsSep "\n" (map (x: "include \"${x}\"") configFiles)}
 
-              text = ''
-                ${join "\n" (map (x: "include \"${x}\"") configFiles)}
+            binds { Mod+B { spawn "${pkgs.scripts}/bin/bg-picker"; }; }
 
-                binds { Mod+B { spawn "${pkgs.scripts}/bin/bg-picker"; }; }
+            cursor {
+              xcursor-theme "${style.cursor.name}"
+              xcursor-size ${toString style.cursor.size}
 
-                cursor {
-                  xcursor-theme "${style.cursor.name}"
-                  xcursor-size ${toString style.cursor.size}
+              hide-when-typing
+            }
 
-                  hide-when-typing
-                }
+            layout {
+              border {
+                active-color "${style.colors.border}"
+                inactive-color "${style.colors.background}"
+                urgent-color "${style.colors.text}"
+              }
+            }
+            '';
 
-                layout {
-                  border {
-                    active-color "${style.colors.border}"
-                    inactive-color "${style.colors.background}"
-                    urgent-color "${style.colors.text}"
-                  }
-                }
-              '';
-            };
+            "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
+              globalSection = {
+                actions = true;
+                ignore-timeout = false;
 
-            "mako/config" = {
-              type = "copy";
-              permissions = "644";
-
-              generator = (pkgs.formats.iniWithGlobalSection {}).generate "config";
-              value = {
-                globalSection = {
-                  actions = true;
-                  ignore-timeout = false;
-
-                  background-color = style.colors.background;
-                  text-color = style.colors.text;
-                  border-color = style.colors.border;
-                  
-                  outer-margin = 0;
-                  margin = 5;
-                };
+                background-color = style.colors.background;
+                text-color = style.colors.text;
+                border-color = style.colors.border;
+                
+                outer-margin = 0;
+                margin = 5;
               };
             };
 
-            "swaylock/config" = {
-              type = "copy";
-              permissions = "644";
+            "swaylock/config" = configText ''
+            ignore-empty-password
+            show-failed-attempts
 
-              text =  ''
-                ignore-empty-password
-                show-failed-attempts
+            indicator-idle-visible
+            indicator-radius=100
 
-                indicator-idle-visible
-                indicator-radius=100
+            line-uses-inside
 
-                line-uses-inside
+            clock
+            timestr=%H:%M:%S
+            datestr=%d %B
 
-                clock
-                timestr=%H:%M:%S
-                datestr=%d %B
+            image=~/.local/share/wallpapers/default
+            effect-blur=6x7
+            color=${parseColor style.colors.background}
 
-                image=~/.local/share/wallpapers/default
-                effect-blur=6x7
-                color=${parseColor style.colors.background}
+            inside-color=${parseColor style.colors.background}
+            inside-clear-color=${parseColor style.colors.background}
+            inside-caps-lock-color=${parseColor style.colors.background}
+            inside-ver-color=${parseColor style.colors.background}
+            inside-wrong-color=${parseColor style.colors.background}
 
-                inside-color=${parseColor style.colors.background}
-                inside-clear-color=${parseColor style.colors.background}
-                inside-caps-lock-color=${parseColor style.colors.background}
-                inside-ver-color=${parseColor style.colors.background}
-                inside-wrong-color=${parseColor style.colors.background}
+            key-hl-color=${parseColor style.colors.primary}
+            caps-lock-key-hl-color=${parseColor style.colors.primary}
 
-                key-hl-color=${parseColor style.colors.primary}
-                caps-lock-key-hl-color=${parseColor style.colors.primary}
+            bs-hl-color=${parseColor style.colors.secondary}
+            caps-lock-bs-hl-color=${parseColor style.colors.secondary}
 
-                bs-hl-color=${parseColor style.colors.secondary}
-                caps-lock-bs-hl-color=${parseColor style.colors.secondary}
+            ring-color=${parseColor style.colors.background}
+            ring-clear-color=${parseColor style.colors.background}
+            ring-caps-lock-color=${parseColor style.colors.background}
+            ring-ver-color=${parseColor style.colors.background}
+            ring-wrong-color=${parseColor style.colors.background}
 
-                ring-color=${parseColor style.colors.background}
-                ring-clear-color=${parseColor style.colors.background}
-                ring-caps-lock-color=${parseColor style.colors.background}
-                ring-ver-color=${parseColor style.colors.background}
-                ring-wrong-color=${parseColor style.colors.background}
+            separator-color=${parseColor style.colors.background}
 
-                separator-color=${parseColor style.colors.background}
-
-                text-color=${parseColor style.colors.text}
-                text-clear-color=${parseColor style.colors.text}
-                text-caps-lock-color=${parseColor style.colors.text}
-                text-ver-color=${parseColor style.colors.text}
-                text-wrong-color=${parseColor style.colors.text}
-              '';
-            };
+            text-color=${parseColor style.colors.text}
+            text-clear-color=${parseColor style.colors.text}
+            text-caps-lock-color=${parseColor style.colors.text}
+            text-ver-color=${parseColor style.colors.text}
+            text-wrong-color=${parseColor style.colors.text}
+            '';
           }
           (genAttrs configFiles (file: {
             type = "copy";
             permissions = "644";
-
             source = ./niri/${file};
             target = "niri/${file}";
           }))

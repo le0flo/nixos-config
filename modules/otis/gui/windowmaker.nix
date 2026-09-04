@@ -1,78 +1,55 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
   inherit (builtins)
     readFile
     replaceStrings;
-  
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    mkOption
-    types;
 
-  windowmaker = config.otis.gui.windowmaker;
+  inherit (customLibs.otis.hjem)
+    configSource
+    configText;
+
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkPkgsOption;
+
+  inherit (lib) mkIf;
+
+  cfg = config.otis.gui.windowmaker;
   gnustepDir = "GNUstep/Defaults";
 
-  mkPkgsOption = description: default: mkOption {
-    inherit description default;
-    type = with types; listOf package;
-  };
-
-  copyText = text: {
-    inherit text;
-
-    type = "copy";
-    permissions = "644";
-  };
+  fixText = path: replaceStrings
+    [ "*windowmaker*" ]
+    [ "${pkgs.windowmaker}" ]
+    (readFile path);
 in {
   options.otis.gui.windowmaker = {
-    enable = mkEnableOption "Install the windowmaker window manager";
-
-    dockapps = mkPkgsOption
-      "Dockapps for windowmaker"
-      (with pkgs.dockapps; [
-        cputnik
-        wmacpi
-        wmclockmon
-        wmnd
-        wmpulsemixer
-        wmsystemtray
-      ]);
-
+    enable = mkBoolOption "Install the windowmaker window manager" false;
+    dockapps = mkPkgsOption "Dockapps for windowmaker" (with pkgs.dockapps; [
+      cputnik
+      wmacpi
+      wmclockmon
+      wmnd
+      wmpulsemixer
+      wmsystemtray
+    ]);
     extraPackages = mkPkgsOption "Additional packages" [];
   };
 
-  config = mkIf windowmaker.enable {
+  config = mkIf cfg.enable {
     environment = {
       shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/start.sh";
 
-      systemPackages = windowmaker.dockapps ++ windowmaker.extraPackages;
+      systemPackages = cfg.dockapps ++ cfg.extraPackages;
     };
 
-    otis.hjem = [
-      {
-        files = {
-          "${gnustepDir}/start.sh" = {
-            type = "copy";
-            permissions = "644";
-            source = ./windowmaker/start.sh;
-          };
-
-          "${gnustepDir}/WMRootMenu" = copyText
-            (replaceStrings
-              [ "*windowmaker*" ]
-              [ "${pkgs.windowmaker}" ]
-              (readFile ./windowmaker/WMRootMenu));
-
-          "${gnustepDir}/WindowMaker" = copyText
-            (replaceStrings
-              [ "*windowmaker*" ]
-              [ "${pkgs.windowmaker}" ]
-              (readFile ./windowmaker/WindowMaker));
-        };
-      }
-    ];
+    otis.hjem = [{
+      files = {
+        "${gnustepDir}/start.sh" = configSource ./windowmaker/start.sh;
+        "${gnustepDir}/WMRootMenu" = configText (fixText ./windowmaker/WMRootMenu);
+        "${gnustepDir}/WindowMaker" = configText (fixText ./windowmaker/WindowMaker);
+      };
+    }];
 
     programs.thunar = {
       enable = true;

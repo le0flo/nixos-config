@@ -1,15 +1,15 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf;
+  inherit (customLibs.otis.opts) mkBoolOption;
 
-  archive = config.otis.programs.archive;
+  inherit (lib) mkIf;
+
+  cfg = config.otis.programs.archive;
 in {
-  options.otis.programs.archive.enable = mkEnableOption "Add archive programs";
+  options.otis.programs.archive.enable = mkBoolOption "Add archive programs" false;
 
-  config = mkIf archive.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       zip
       unzip

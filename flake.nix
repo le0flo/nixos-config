@@ -6,6 +6,7 @@
       attrNames
       concatStringsSep
       elemAt
+      listToAttrs
       readDir
       split;
 
@@ -14,7 +15,8 @@
       filterAttrs
       flatten
       genAttrs
-      nixosSystem;
+      nixosSystem
+      toSentenceCase;
 
     systems = [
       "x86_64-linux"
@@ -23,53 +25,52 @@
     ];
 
     configs = folder: attrNames (filterAttrs (x: y: y == "directory") (readDir folder));
-    nameToModule = name: sep: elemAt (flatten (split sep name)) 1;
-    nameToSystem = name: sep: concatStringsSep sep (drop 2 (flatten (split sep name)));
+    perSystem = genAttrs systems;
+    callPackage = system: (pkgs system).lib.callPackageWith (pkgs system // customPkgs system);
+    pkgs = system: nixpkgs.legacyPackages.${system};
 
-    hosts = genAttrs
-      (map (x: "host-${x}") (configs ./hosts))
-      (name: let
-        hostName = nameToModule name "-";
-      in nixosSystem {
-        specialArgs = { inherit hostName inputs self; };
-
-        modules = [
-          self.nixosModules.otis
-          disko.nixosModules.default
-          agenix.nixosModules.default
-          hjem.nixosModules.default
-          microvm.nixosModules.host
-
-          ./hosts/template.nix
-          ./hosts/${hostName}
-        ];
-      });
-
-    microvms = genAttrs
-      (flatten (map (x: map (y: "microvm-${x}-${y}") systems) (configs ./microvms)))
-      (name: let
-        serviceName = nameToModule name "-";
-      in nixosSystem {
-        system = nameToSystem name "-";
-
-        specialArgs = { inherit serviceName; };
-
-        modules = [
-          microvm.nixosModules.microvm
-
-          ./microvms/template.nix
-          ./microvms/${serviceName}
-        ];
-      });
+    customPkgs = system: genAttrs (configs ./pkgs) (name: callPackage system ./pkgs/${name} {});
+    customLibs = genAttrs (configs ./libs) (name: import ./libs/${name} { inherit nixpkgs; });
 
     modules = genAttrs
       (configs ./modules)
       (name: import ./modules/${name});
 
-    perSystem = genAttrs systems;
-    callPackage = system: (pkgs system).lib.callPackageWith (pkgs system // customPkgs system);
-    pkgs = system: nixpkgs.legacyPackages.${system};
-    customPkgs = system: genAttrs (configs ./pkgs) (name: callPackage system ./pkgs/${name} {});
+    hosts = listToAttrs (map (x: {
+      name = "host-${x}";
+      value = nixosSystem {
+        specialArgs = {
+          inherit customLibs inputs self;
+          hostName = x;
+        };
+
+        modules = [
+          disko.nixosModules.default
+          agenix.nixosModules.default
+          hjem.nixosModules.default
+          microvm.nixosModules.host
+          ./hosts/template.nix
+          ./hosts/${x}
+        ] ++ (map
+          (x: self.nixosModules."${x}")
+          (attrNames self.nixosModules));
+      };
+    }) (configs ./hosts));
+
+    microvms = listToAttrs (flatten (map (x: map (y: {
+      name = "microvm-${x}-${y}";
+      value = nixosSystem {
+        system = y;
+
+        specialArgs = { serviceName = x; };
+
+        modules = [
+          microvm.nixosModules.microvm
+          ./microvms/template.nix
+          ./microvms/${x}
+        ];
+      };
+    }) systems) (configs ./microvms)));
   in {
     nixosModules = modules;
     nixosConfigurations = hosts // microvms;

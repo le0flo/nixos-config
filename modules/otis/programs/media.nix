@@ -1,17 +1,19 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
+  inherit (config.otis) gui;
+
+  inherit (customLibs.otis.opts) mkBoolOption;
+
   inherit (lib)
-    mkEnableOption
     mkIf
     mkMerge;
 
-  media = config.otis.programs.media;
-  gui = config.otis.gui;
+  cfg = config.otis.programs.media;
 in {
-  options.otis.programs.media.enable = mkEnableOption "Add media related programs";
+  options.otis.programs.media.enable = mkBoolOption "Add media related programs" false;
 
-  config = mkIf media.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages = with pkgs; [
         imagemagick

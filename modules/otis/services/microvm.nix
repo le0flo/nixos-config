@@ -1,24 +1,30 @@
-{config, lib, self, ...}:
+{config, customLibs, lib, self, ...}:
 
 let
   inherit (builtins)
     attrNames
     attrValues
     concatStringsSep
-    head;
+    head
+    listToAttrs;
 
   inherit (config.nixpkgs.hostPlatform) system;
 
   inherit (config.otis.net.vpn) networks;
 
+  inherit (customLibs.otis.net) subnetToPrefix;
+
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkListOption
+    mkStrOption;
+
   inherit (lib)
     flatten
     genAttrs
     last
-    mkEnableOption
     mkIf
     mkMerge
-    mkOption
     replaceString
     splitString
     take
@@ -29,16 +35,12 @@ let
 
   vmAddrFromGateway = gateway: "${concatStringsSep "." (take 3 (splitString "." gateway))}.2";
   vmSubFromGateway = gateway: "${concatStringsSep "." (take 3 (splitString "." gateway))}.0/30";
-  mask = subnet: last (splitString "/" subnet);
-  prefix = subnet: concatStringsSep "." (take
-    ((toInt (mask subnet)) / 8)
-    (splitString "." (head (splitString "/" subnet))));
 
   forwardRule = proto: gateway: port: {
     inherit proto;
     sourcePort = port;
     destination = "${vmAddrFromGateway gateway}:${toString port}";
-    loopbackIPs = map (x: "${prefix x.subnet}.${x.id}") (attrValues networks);
+    loopbackIPs = map (x: "${subnetToPrefix x.subnet}.${x.id}") (attrValues networks);
   };
 
   snatRule = stop: proto: subnet: gateway: port: ''
@@ -59,19 +61,9 @@ let
   '';
 in {
   options.otis.services.microvm = {
-    enable = mkEnableOption "microvm.nix host";
-
-    externalInterface = mkOption {
-      type = types.str;
-      description = "The interface that microvms use for communications with the outside world";
-      default = "";
-    };
-
-    vms = mkOption {
-      type = with types; listOf str;
-      description = "List hosted microvms";
-      default = [];
-    };
+    enable = mkBoolOption "microvm.nix host" false;
+    externalInterface = mkStrOption "The interface that microvms use for communications with the outside world" "";
+    vms = mkListOption types.str "List hosted microvms" [];
   };
 
   config = mkIf cfg.enable {
@@ -89,16 +81,17 @@ in {
         trustedInterfaces = map (x: "vm-${x}") cfg.vms;
       };
 
-      interfaces = genAttrs
-        (map (x: "vm-${x}") cfg.vms)
-        (name: {
+      interfaces = listToAttrs (map (x: {
+        name = "vm-${x}";
+        value = {
           ipv4.addresses = [
             {
-              inherit (self.nixosConfigurations."micro${name}-${system}".config.networking.defaultGateway) address;
+              inherit (self.nixosConfigurations."microvm-${x}-${system}".config.networking.defaultGateway) address;
               prefixLength = 30;
             }
           ];
-        });
+        };
+      }) cfg.vms);
 
       nat = {
         enable = true;

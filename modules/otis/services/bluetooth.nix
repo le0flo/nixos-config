@@ -1,14 +1,14 @@
-{config, lib, ...}:
+{config, customLibs, ...}:
 
 let
-  inherit (lib) mkEnableOption;
+  inherit (customLibs.otis.opts) mkBoolOption;
 
-  bluetooth = config.otis.services.bluetooth;
+  cfg = config.otis.services.bluetooth;
 in {
-  options.otis.services.bluetooth.enable = mkEnableOption "Bluetooth stack";
+  options.otis.services.bluetooth.enable = mkBoolOption "Bluetooth stack" false;
 
   config = {
-    hardware.bluetooth.enable = bluetooth.enable;
-    services.blueman.enable = bluetooth.enable;
+    hardware.bluetooth = { inherit (cfg) enable; };
+    services.blueman = { inherit (cfg) enable; };
   };
 }

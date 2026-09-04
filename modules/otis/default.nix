@@ -1,14 +1,29 @@
-{config, lib, pkgs, self, ...}:
+{config, customLibs, lib, pkgs, self, ...}:
 
 let
   inherit (builtins) mapAttrs;
-  
+
+  inherit (config.nixpkgs.hostPlatform) system;
+
+  inherit (customLibs.otis.opts)
+    mkAttrSubOption
+    mkBoolOption
+    mkListOption;
+
   inherit (lib)
     flatten
+    mkDefault
     mkForce
     mkMerge
-    mkOption
     types;
+
+  userOpts.options = {
+    groups = mkListOption types.str "Groups assigned to that user" [];
+    isNormalUser = mkBoolOption "Whether the user is a normal behaving user" true;
+    ssh.authorizedKeys = mkListOption types.str "List of allowed ssh keys" [];
+  };    
+
+  cfg = config.otis;
 in {
   imports = [
     ./gui
@@ -18,37 +33,8 @@ in {
   ];
 
   options.otis = {
-    users = mkOption {
-      type = types.attrsOf (types.submodule {
-        options = {
-          groups = mkOption {
-            type = with types; listOf str;
-            description = "Groups assigned to that user";
-            default = [];
-          };
-
-          isNormalUser = mkOption {
-            type = types.bool;
-            description = "Whether the user is a normal behaving user";
-            default = true;
-          };
-
-          ssh.authorizedKeys = mkOption {
-            type = with types; listOf str;
-            description = "List of allowed ssh keys";
-            default = [];
-          };
-        };
-      });
-      description = "Set of users";
-      default = {};
-    };
-
-    hjem = mkOption {
-      type = with types; listOf attrs;
-      description = "List of attributes for all the hjem configurations";
-      default = [];
-    };
+    users = mkAttrSubOption userOpts "Set of users" {};
+    hjem = mkListOption types.attrs "List of attributes for all the hjem configurations" [];
   };
 
   config = {
@@ -57,8 +43,8 @@ in {
         directory = "/home/${x}";
         clobberFiles = mkForce true;
       }
-      config.otis.hjem
-    ])) config.otis.users;
+      cfg.hjem
+    ])) cfg.users;
 
     users.users = mapAttrs (x: y: {
       inherit (y) isNormalUser;
@@ -66,10 +52,10 @@ in {
       extraGroups = y.groups;
       shell = pkgs.bash;
       openssh.authorizedKeys.keys = y.ssh.authorizedKeys;
-    }) config.otis.users;
+    }) cfg.users;
 
-    nixpkgs.overlays = [ self.overlays."${config.nixpkgs.hostPlatform.system}" ];
+    nixpkgs.overlays = [ self.overlays."${system}" ];
 
-    services.fwupd.enable = true;
+    services.fwupd.enable = mkDefault true;
   };
 }

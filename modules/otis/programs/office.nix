@@ -1,27 +1,24 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    mkMerge
-    mkOption
-    types;
+  inherit (config.otis) gui;
 
-  office = config.otis.programs.office;
-  gui = config.otis.gui;
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkPkgsOption;
+
+  inherit (lib)
+    mkIf
+    mkMerge;
+
+  cfg = config.otis.programs.office;
 in {
   options.otis.programs.office = {
-    enable = mkEnableOption "Add office related programs";
-
-    extraTexlivePlugins = mkOption {
-      type = with types; listOf package;
-      description = "List of texlive plugins";
-      default = [];
-    };
+    enable = mkBoolOption "Add office related programs" false;
+    extraTexlivePlugins = mkPkgsOption "List of texlive plugins" [];
   };
 
-  config = mkIf office.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages = with pkgs; [
         (texliveBasic.withPackages (ps: with ps; [
@@ -39,7 +36,7 @@ in {
           amstex
           tikz-ext
           tikz-3dplot
-        ] ++ office.extraTexlivePlugins))
+        ] ++ cfg.extraTexlivePlugins))
       ];
     }
     (mkIf gui.enable {

@@ -1,11 +1,11 @@
-{config, lib, ...}:
+{config, customLibs, ...}:
 
 let
-  inherit (lib) mkEnableOption;
+  inherit (customLibs.otis.opts) mkBoolOption;
 
-  power = config.otis.services.power;
+  cfg = config.otis.services.power;
 in {
-  options.otis.services.power.enable = mkEnableOption "Power manager";
+  options.otis.services.power.enable = mkBoolOption "Power manager" false;
 
   config = {
     services = {
@@ -13,7 +13,7 @@ in {
       tlp.enable = false;
 
       tuned = {
-        enable = power.enable;
+        inherit (cfg) enable;
         ppdSupport = true;
       };
     };

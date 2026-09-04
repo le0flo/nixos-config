@@ -1,19 +1,19 @@
-{config, lib, ...}:
+{config, customLibs, lib, ...}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf;
+  inherit (customLibs.otis.opts) mkBoolOption;
 
-  openssh = config.otis.services.openssh;
+  inherit (lib) mkIf;
+
+  cfg = config.otis.services.openssh;
 in {
-  options.otis.services.openssh.enable = mkEnableOption "OpenSSH server";
+  options.otis.services.openssh.enable = mkBoolOption "OpenSSH server" false;
   
   config = {
-    networking.firewall.allowedTCPPorts = mkIf openssh.enable [ 22 ];
+    networking.firewall.allowedTCPPorts = mkIf cfg.enable [ 22 ];
 
     services.openssh = {
-      enable = openssh.enable;
+      inherit (cfg) enable;
 
       settings = {
         PermitRootLogin = "no";
@@ -22,12 +22,12 @@ in {
       };
 
       extraConfig = ''
-        Match user git
-          AllowTcpForwarding no
-          AllowAgentForwarding no
-          PasswordAuthentication no
-          PermitTTY no
-          X11Forwarding no
+      Match user git
+        AllowTcpForwarding no
+        AllowAgentForwarding no
+        PasswordAuthentication no
+        PermitTTY no
+        X11Forwarding no
       '';
     };
   };

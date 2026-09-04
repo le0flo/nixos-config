@@ -15,6 +15,13 @@ in {
         mode = "400";
       };
 
+      "microvms/qbittorrent/password" = {
+        file = "${secretsPath}/microvms/qbittorrent.age";
+        path = "/etc/qbittorrent/password";
+        mode = "444";
+        symlink = false;
+      };
+
       "microvms/slskd/environment" = {
         file = "${secretsPath}/microvms/slskd.age";
         path = "/etc/slskd/environment";

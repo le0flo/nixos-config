@@ -1,15 +1,15 @@
-{config, lib, ...}:
+{config, customLibs, ...}:
 
 let
-  inherit (lib) mkEnableOption;
+  inherit (customLibs.otis.opts) mkBoolOption;
 
-  audio = config.otis.services.audio;
+  cfg = config.otis.services.audio;
 in {
-  options.otis.services.audio.enable = mkEnableOption "Audio stack";
+  options.otis.services.audio.enable = mkBoolOption "Audio stack" false;
 
   config = {
     services.pipewire = {
-      inherit (audio) enable;
+      inherit (cfg) enable;
       
       alsa.enable = true;
       alsa.support32Bit = true;

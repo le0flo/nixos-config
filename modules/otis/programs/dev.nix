@@ -1,46 +1,41 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
   inherit (builtins)
     attrNames
+    concatStringsSep
     filter
     readDir;
+
+  inherit (config.otis) gui;
+
+  inherit (customLibs.otis.hjem)
+    configText
+    getConfigFiles;
+
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkPkgsOption;
 
   inherit (lib)
     genAttrs
     hasSuffix
-    join
     mkEnableOption
     mkIf
     mkMerge
     mkOption
     types;
 
-  dev = config.otis.programs.dev;
-  gui = config.otis.gui;
-
-  configFiles = filter
-    (x: hasSuffix ".el" x)
-    (attrNames (readDir ./emacs));
-
-  copyText = text: {
-    inherit text;
-    type = "copy";
-    permissions = "644";
-  };
+  cfg = config.otis.programs.dev;
+  configFiles = getConfigFiles ./emacs ".el";
 in {
   options.otis.programs.dev = {
-    enable = mkEnableOption "Add development programs";
-    virt-manager = mkEnableOption "Enables virt-manager";
-
-    extraEmacsPlugins = mkOption {
-      type = with types; listOf package;
-      description = "List of emacs plugins";
-      default = [];
-    };
+    enable = mkBoolOption "Add development programs" false;
+    virt-manager = mkBoolOption "Enables virt-manager" false;
+    extraEmacsPlugins = mkPkgsOption "List of emacs plugins" [];
   };
 
-  config = mkIf dev.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       environment = {
         shellAliases."k" = "${pkgs.scripts}/bin/kubectl-wrapper";
@@ -93,36 +88,32 @@ in {
           yaml-mode
           zig-mode
         ]
-        ++ dev.extraEmacsPlugins))
+        ++ cfg.extraEmacsPlugins))
       ];
 
-      otis.hjem = [
-        {
-          xdg.config.files = mkMerge [
-            {
-              "emacs/init.el" = copyText ''
-                ;; Includes
-                ${join "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
+      otis.hjem = [{
+        xdg.config.files = mkMerge [
+          {
+            "emacs/custom.el" = configText "";
+            "emacs/init.el" = configText ''
+            ;; Includes
+            ${concatStringsSep "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
 
-                ;; Custom file
-                (setq custom-file "~/.config/emacs/custom.el")
-                (load-file custom-file)
-              '';
-
-              "emacs/custom.el" = copyText "";
-            }
-            (genAttrs configFiles (file: {
-              type = "copy";
-              permissions = "644";
-
-              source = ./emacs/${file};
-              target = "emacs/${file}";
-            }))
-          ];
-        }
-      ];
+            ;; Custom file
+            (setq custom-file "~/.config/emacs/custom.el")
+            (load-file custom-file)
+            '';
+          }
+          (genAttrs configFiles (file: {
+            type = "copy";
+            permissions = "644";
+            source = ./emacs/${file};
+            target = "emacs/${file}";
+          }))
+        ];
+      }];
     })
-    (mkIf (gui.enable && dev.virt-manager) {
+    (mkIf (gui.enable && cfg.virt-manager) {
       programs.virt-manager.enable = true;
 
       virtualisation = {

@@ -1,4 +1,4 @@
-{config, lib, ...}:
+{config, customLibs, lib, ...}:
 
 let
   inherit (builtins)
@@ -8,137 +8,82 @@ let
     head
     mapAttrs;
 
+  inherit (config.otis.net.dns) domains;
+
+  inherit (customLibs.otis.net)
+    subnetToMask
+    subnetToPrefix;
+
+  inherit (customLibs.otis.opts)
+    mkAttrSubOption
+    mkBoolOption
+    mkEnumOption
+    mkListSubOption
+    mkPortOption
+    mkStrOption;
+
   inherit (lib)
     last
-    mkEnableOption
     mkIf
     mkMerge
-    mkOption
     splitString
     take
-    toInt
-    types;
+    toInt;
 
-  networkOpts = {
-    options = {
-      privateKeyFile = mkOption {
-        type = types.str;
-        description = "Private key file for this host";
-        default = "/run/secrets/private.key";
-      };
+  cfg = config.otis.net.vpn;
 
-      publicKey = mkOption {
-        type = types.str;
-        description = "Public key for this host";
-        default = "";
-      };
-
-      port = mkOption {
-        type = types.port;
-        description = "The port which the vpn is hosted on";
-        default = 51820;
-      };
-
-      subnet = mkOption {
-        type = types.str;
-        description = "Subnet for the vpn";
-        default = "10.0.0.0/24";
-      };
-
-      primary = mkEnableOption "Whether this is the primary vpn";
-
-      id = mkOption {
-        type = types.str;
-        description = "Id for this host";
-        default = "1";
-      };
-
-      clients = mkOption {
-        type = with types; listOf (submodule clientOpts);
-        description = "List of allowed clients in the vpn";
-        default = [];
-      };
-    };
+  clientOpts.options = {
+    publicKey = mkStrOption "Public key for this client" "";
+    id = mkStrOption "Id for this client" "1";
   };
 
-  clientOpts = {
-    options = {
-      publicKey = mkOption {
-        type = types.str;
-        description = "Public key for this client";
-        default = "";
-      };
-
-      id = mkOption {
-        type = types.str;
-        description = "Id for this client";
-        default = "1";
-      };
-    };
+  networkOpts.options = {
+    privateKeyFile = mkStrOption "Private key file for this host" "/run/secrets/private.key";
+    publicKey = mkStrOption "Public key for this host" "";
+    port = mkPortOption "The port which the vpn is hosted on" 51820;
+    subnet = mkStrOption "Subnet for the vpn" "10.0.0.0/24";
+    primary = mkBoolOption "Whether this is the primary vpn" false;
+    id = mkStrOption "Id for this host" "1";
+    clients = mkListSubOption clientOpts "List of allowed clients in the vpn" [];
   };
-
-  net = config.otis.net;  
-  vpn = net.vpn;
-  domain = net.dns.domains.public;
-
-  mask = subnet: last (splitString "/" subnet);
-  prefix = subnet: concatStringsSep "." (take
-    ((toInt (mask subnet)) / 8)
-    (splitString "." (head (splitString "/" subnet))));
 in {
   options.otis.net.vpn = {
-    enable = mkEnableOption "Enable the vpn";
-
-    role = mkOption {
-      type = types.enum [ "client" "server" ];
-      description = "Role for the host in the vpn";
-      default = "client";
-    };
-
-    networks = mkOption {
-      type = with types; attrsOf (submodule networkOpts);
-      description = "Different vpns";
-      default = {};
-    };
+    enable = mkBoolOption "Enable the vpn" false;
+    role = mkEnumOption [ "client" "server" ] "Role for the host in the vpn" "client";
+    networks = mkAttrSubOption networkOpts "Different vpns" {};
   };
 
-  config = mkIf vpn.enable (mkMerge [
-    (mkIf (vpn.role == "client") {
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf (cfg.role == "client") {
+      networking.wg-quick.interfaces = (mapAttrs (x: y: {
+        inherit (y) privateKeyFile;
+        address = [ "${subnetToPrefix y.subnet}.${y.id}/${subnetToMask y.subnet}" ];
+
+        peers = [{
+          inherit (y) publicKey;
+          allowedIPs = [ y.subnet ];
+          endpoint = "${domains.public}:${toString y.port}";
+          persistentKeepalive = 25;
+        }];
+      }) cfg.networks);
+    })
+    (mkIf (cfg.role == "server") {
       boot.kernel.sysctl."net.ipv4.ip_forward" = true;
 
-      networking.wg-quick.interfaces = (mapAttrs
-        (x: y: {
-          inherit (y) privateKeyFile;
-          address = [ "${prefix y.subnet}.${y.id}/${mask y.subnet}" ];
-
-          peers = [{
-            inherit (y) publicKey;
-            allowedIPs = [ y.subnet ];
-            endpoint = "${domain}:${toString y.port}";
-            persistentKeepalive = 25;
-          }];
-        })
-        vpn.networks);
-    })
-    (mkIf (vpn.role == "server") {
       networking = {
-        firewall.allowedUDPPorts = map (x: x.port) (attrValues vpn.networks);
+        firewall.allowedUDPPorts = map (x: x.port) (attrValues cfg.networks);
 
-        wg-quick.interfaces = (mapAttrs
-          (x: y: {
-            inherit (y) privateKeyFile;
-            address = [ "${prefix y.subnet}.${y.id}/${mask y.subnet}" ];
-            listenPort = y.port;
+        wg-quick.interfaces = (mapAttrs (x: y: {
+          inherit (y) privateKeyFile;
+          address = [ "${subnetToPrefix y.subnet}.${y.id}/${subnetToMask y.subnet}" ];
+          listenPort = y.port;
 
-            peers = map
-              (z: {
-                inherit (z) publicKey;
-                allowedIPs = [ "${prefix y.subnet}.${z.id}/32" ];
-                persistentKeepalive = 25;
-              })
-              y.clients;
-          })
-          vpn.networks);
+          peers = map (z: {
+            inherit (z) publicKey;
+            allowedIPs = [ "${subnetToPrefix y.subnet}.${z.id}/32" ];
+            persistentKeepalive = 25;
+          }) y.clients;
+        }) cfg.networks);
       };
     })
   ]);

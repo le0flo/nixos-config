@@ -1,39 +1,35 @@
-{config, inputs, lib, ...}:
+{config, customLibs, inputs, lib, ...}:
 
 let
+  inherit (config.otis.net.dns)
+    domains
+    subdomains;
+
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkStrOption;
+
   inherit (lib)
-    mkEnableOption
     mkIf
-    mkMerge
-    mkOption
-    types;
+    mkMerge;
 
+  cfg = config.otis.net.tls;
   secretsPath = toString inputs.nixos-secrets;
-
-  net = config.otis.net;
-  tls = net.tls;
-  domains = net.dns.domains;
-  subdomains = net.dns.subdomains;
 in {
   options.otis.net.tls = {
-    custom.enable = mkEnableOption "Load custom tls certificates";
+    custom.enable = mkBoolOption "Load custom tls certificates" true;
 
     server = {
-      enable = mkEnableOption "Marks this host as the tls CA";
-
-      email = mkOption {
-        type = types.str;
-        description = "Email used to manage ACME tls certificates";
-        default = "amministrazione@${domains.public}";
-      };
+      enable = mkBoolOption "Marks this host as the tls CA" false;
+      email = mkStrOption "Email used to manage ACME tls certificates" "amministrazione@${domains.public}";
     };
   };
 
   config = mkMerge [
-    (mkIf tls.custom.enable {
+    (mkIf cfg.custom.enable {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
     })
-    (mkIf tls.server.enable {
+    (mkIf cfg.server.enable {
       networking.firewall.allowedTCPPorts = [
         80
         443
@@ -43,7 +39,7 @@ in {
 
       security.acme = {
         acceptTerms = true;
-        defaults.email = tls.server.email;
+        defaults.email = cfg.server.email;
 
         certs."${domains.public}" = {
           group = "acme";

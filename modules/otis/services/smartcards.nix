@@ -1,20 +1,21 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf;
+  inherit (config.otis) gui;
 
-  smartcards = config.otis.services.smartcards;
-  gui = config.otis.gui;
+  inherit (customLibs.otis.opts) mkBoolOption;
+
+  inherit (lib) mkIf;
+
+  cfg = config.otis.services.smartcards;
 in {
-  options.otis.services.smartcards.enable = mkEnableOption "Smartcard reader";
+  options.otis.services.smartcards.enable = mkBoolOption "Smartcard reader" false;
 
-  config = mkIf smartcards.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ pcsc-tools ];
 
-    services.pcscd.enable = true;
-
     programs.firefox.nativeMessagingHosts.packages = mkIf gui.enable (with pkgs; [ web-eid-app ]);
+
+    services.pcscd.enable = true;
   };
 }

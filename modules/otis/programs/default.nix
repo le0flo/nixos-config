@@ -1,6 +1,8 @@
-{pkgs, ...}:
+{customLibs, pkgs, ...}:
 
-{
+let
+  inherit (customLibs.otis.hjem) configText;
+in {
   imports = [
     ./archive.nix
     ./devices.nix
@@ -24,21 +26,14 @@
       psmisc
     ];
 
-    otis.hjem = [
-      {
-        xdg.config.files."tmux/tmux.conf" = {
-          type = "copy";
-          permissions = "644";
-
-          text = ''
-            set -g mouse on
-            set -g base-index 1
-            setw -g pane-base-index 1
-            setw -g clock-mode-style 24
-          '';
-        };
-      }
-    ];
+    otis.hjem = [{
+      xdg.config.files."tmux/tmux.conf" = configText ''
+      set -g mouse on
+      set -g base-index 1
+      setw -g pane-base-index 1
+      setw -g clock-mode-style 24
+      '';
+    }];
 
     programs = {
       nix-ld.enable = true;

@@ -1,16 +1,17 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf;
+  inherit (config.otis) gui;
 
-  wifi = config.otis.net.wifi;
-  gui = config.otis.gui;
+  inherit (customLibs.otis.opts) mkBoolOption;
+
+  inherit (lib) mkIf;
+
+  cfg = config.otis.net.wifi;
 in {
-  options.otis.net.wifi.enable = mkEnableOption "Toggles the wifi stack";
+  options.otis.net.wifi.enable = mkBoolOption "Toggles the wifi stack" false;
 
-  config = mkIf wifi.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       iw
       (mkIf gui.enable iwgtk)
@@ -20,9 +21,7 @@ in {
       enable = true;
 
       settings = {
-        DriverQuirks = {
-          PowerSaveDisable = "*";
-        };
+        DriverQuirks.PowerSaveDisable = "*";
 
         General = {
           EnableNetworkConfiguration = true;

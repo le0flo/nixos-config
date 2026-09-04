@@ -1,6 +1,14 @@
-{config, inputs, pkgs, self, ...}:
+{config, inputs, lib, pkgs, self, ...}:
 
 let
+  inherit (builtins)
+    concatStringsSep
+    head;
+
+  inherit (lib)
+    dropEnd
+    splitString;
+
   secretsPath = toString inputs.nixos-secrets;
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
@@ -57,9 +65,9 @@ in {
   system.activationScripts."paperless-environment" = {
     text = ''
     mkdir -p /etc/paperless
-    cat > /etc/paperless/environment <<'EOF'
+    cat > /etc/paperless/environment <<EOF
     PAPERLESS_URL=https://papers.${config.otis.net.dns.domains.private}
-    PAPERLESS_TRUSTED_PROXIES=10.69.0.1
+    PAPERLESS_TRUSTED_PROXIES=${concatStringsSep "." (dropEnd 1 (splitString "." (head (splitString "/" config.otis.net.vpn.networks."home".subnet))))}.1
     EOF
     '';
   };

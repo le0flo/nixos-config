@@ -1,123 +1,86 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
   inherit (builtins)
     attrNames
-    concatStringsSep
-    head;
+    concatStringsSep;
+
+  inherit (config.otis.net) vpn;
+
+  inherit (customLibs.otis.net) subnetToPrefix;
+
+  inherit (customLibs.otis.opts)
+    mkBoolOption
+    mkListOption
+    mkStrOption;
 
   inherit (lib)
     genAttrs
-    last
-    mkEnableOption
     mkIf
-    mkOption
-    splitString
-    take
-    toInt
     types;
 
-  net = config.otis.net;
-  domain = net.dns.domains.private;
-  subdomains = net.dns.subdomains.private;
-  server = net.dns.server;
-  vpn = net.vpn;
+  cfg = config.otis.net.dns;
 
-  mkStrOption = description: default: mkOption {
-    inherit description default;
+  makeZone = entrypoint: pkgs.writeText "${cfg.domains.private}-${entrypoint}" ''
+  $TTL 86400
 
-    type = types.str;
-  };
+  @ IN SOA ns1.${cfg.domains.private}. admin.${cfg.domains.private}. (
+    2026031801 ; serial
+    3600       ; refresh
+    900        ; retry
+    604800     ; expire
+    86400      ; minimum TTL
+  )
 
-  mkStrListOption = description: default: mkOption {
-    inherit description default;
+  @   IN NS  ns1.${cfg.domains.private}.
+  ns1 IN A   ${entrypoint}
+  @   IN A   ${entrypoint}
 
-    type = with types; listOf str;
-  };
-
-  makeZone = entrypoint: pkgs.writeText "${domain}-${entrypoint}" ''
-    $TTL 86400
-
-    @ IN SOA ns1.${domain}. admin.${domain}. (
-      2026031801 ; serial
-      3600       ; refresh
-      900        ; retry
-      604800     ; expire
-      86400      ; minimum TTL
-    )
-
-    @   IN NS  ns1.${domain}.
-    ns1 IN A   ${entrypoint}
-    @   IN A   ${entrypoint}
-
-    ${concatStringsSep "\n" (map (x: "${x} IN CNAME @") subdomains)}
+  ${concatStringsSep "\n" (map (x: "${x} IN CNAME @") cfg.subdomains.private)}
   '';
-
-  mask = subnet: last (splitString "/" subnet);
-  prefix = subnet: concatStringsSep "." (take
-    ((toInt (mask subnet)) / 8)
-    (splitString "." (head (splitString "/" subnet))));
 in {
   options.otis.net.dns = {
     domains = {
-      public = mkStrOption
-        "Public facing domain for the otis network"
-        "example.com";
-
-      private = mkStrOption
-        "Private domain for internal communications between otis network devices"
-        "example.com";
+      public = mkStrOption "Public facing domain" "example.com";
+      private = mkStrOption "Private domain for internal communications" "example.com";
     };
 
     subdomains = {
-      public = mkStrListOption
-        "List of subdomains for the public domain"
-        [ "files" ];
-
-      private = mkStrListOption
-        "List of subdomains for the private domain"
-        [ "files" ];
+      public = mkListOption types.str "List of public subdomains" [];
+      private = mkListOption types.str "List of private subdomains" [];
     };
 
     server = {
-      enable = mkEnableOption "Marks this host as the dns server";
-
-      forwarders = mkStrListOption
-        "List of dns servers that the local one uses to forward other requests"
-        [
-          "1.1.1.1"
-          "1.0.0.1"
-        ];
+      enable = mkBoolOption "Marks this host as the dns server" false;
+      forwarders = mkListOption types.str "List of dns servers" [ "1.1.1.1" "1.0.0.1" ];
     };
   };
 
-  config = mkIf (server.enable && vpn.role == "server") {
+  config = mkIf (cfg.server.enable && vpn.role == "server") {
     networking.firewall.interfaces = genAttrs (attrNames vpn.networks) (name: { allowedUDPPorts = [ 53 ]; });
 
     services.bind = {
-      inherit (server) forwarders;
+      inherit (cfg.server) forwarders;
 
       enable = true;
       forward = "only";
 
       cacheNetworks = [ "127.0.0.0/8" ] ++ map (x: vpn.networks."${x}".subnet) (attrNames vpn.networks);
 
-      extraConfig = concatStringsSep "\n" (map
-        (x: let
-          net = vpn.networks."${x}";
-        in ''
-          view "private-${x}" {
-            match-clients { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
+      extraConfig = concatStringsSep "\n" (map (x: let
+        net = vpn.networks."${x}";
+      in ''
+      view "private-${x}" {
+        match-clients { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
 
-            zone "${domain}" {
-              type master;
-              file "${makeZone "${prefix net.subnet}.${net.id}"}";
-              allow-query { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
-              allow-transfer { none; };
-            };
-          };
-        '')
-        (attrNames vpn.networks));
+        zone "${cfg.domains.private}" {
+          type master;
+          file "${makeZone "${subnetToPrefix net.subnet}.${net.id}"}";
+          allow-query { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
+          allow-transfer { none; };
+        };
+      };
+      '') (attrNames vpn.networks));
     };
   };
 }

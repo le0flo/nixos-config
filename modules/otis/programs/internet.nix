@@ -1,13 +1,15 @@
-{config, lib, pkgs, ...}:
+{config, customLibs, lib, pkgs, ...}:
 
 let
+  inherit (config.otis) gui;
+
+  inherit (customLibs.otis.opts) mkBoolOption;
+
   inherit (lib)
-    mkEnableOption
     mkIf
     mkMerge;
 
-  internet = config.otis.programs.internet;
-  gui = config.otis.gui;
+  cfg = config.otis.programs.internet;
 
   mkBookmark = name: url: {
     Title = name;
@@ -23,9 +25,9 @@ let
     default_area = "navbar";
   };
 in {
-  options.otis.programs.internet.enable = mkEnableOption "Add internet related programs";
+  options.otis.programs.internet.enable = mkBoolOption "Add internet related programs" false;
 
-  config = mkIf internet.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages = with pkgs; [
         curl

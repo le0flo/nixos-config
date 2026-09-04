@@ -1,13 +1,13 @@
-{config, lib, ...}:
+{config, customLibs, ...}:
 
 let
-  inherit (lib) mkEnableOption;
+  inherit (customLibs.otis.opts) mkBoolOption;
 
-  docker = config.otis.services.docker;
+  cfg = config.otis.services.docker;
 in {
-  options.otis.services.docker.enable = mkEnableOption "Docker engine";
+  options.otis.services.docker.enable = mkBoolOption "Docker engine" false;
 
   config = {
-    virtualisation.docker.enable = docker.enable;
+    virtualisation.docker = { inherit (cfg) enable; };
   };
 }
