@@ -35,7 +35,11 @@ in {
         443
       ];
 
-      users.groups."acme".members = [ config.services.nginx.user ];
+      users.groups."acme".members = [
+        config.services.dovecot2.settings.mail_uid
+        config.services.nginx.user
+        config.services.postfix.user
+      ];
 
       security.acme = {
         acceptTerms = true;
