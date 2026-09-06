@@ -26,7 +26,10 @@ in {
     net = {
       dns = {
         subdomains = {
-          public = [ "files" ];
+          public = [
+            "files"
+            "mx1"
+          ];
           private = [
             "files"
             "music"
@@ -88,6 +91,12 @@ in {
       k3s = {
         enable = true;
         role = "server";
+      };
+      mail = {
+        enable = true;
+        domain = domains.public;
+        subdomain = "mx1";
+        tls = "acme";
       };
       nginx = {
         enable = true;

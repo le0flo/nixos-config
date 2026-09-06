@@ -90,6 +90,7 @@ in {
               (mkBookmark "Telegram" "https://web.telegram.org/a/")
               (mkBookmark "Youtube" "https://youtube.com/")
               (mkBookmark "Soundcloud" "https://soundcloud.com/")
+              (mkBookmark "Rete privata" "https://home.arpa/")
             ];
 
             FirefoxHome = {

@@ -1,6 +1,8 @@
 {config, inputs, ...}:
 
 let
+  inherit (config.services.dovecot2.settings) mail_uid mail_gid;
+
   secretsPath = toString inputs.nixos-secrets;
   privateDomain = config.otis.net.dns.domains.private;
 in {
@@ -14,6 +16,13 @@ in {
       "k3s/token" = {
         file = "${secretsPath}/k3s/token.age";
         mode = "400";
+      };
+
+      "mail/dovecot-passwd" = {
+        file = "${secretsPath}/mail/dovecot-passwd.age";
+        mode = "440";
+        owner = "dovecot2";
+        group = "dovecot2";
       };
 
       "tls/${privateDomain}.key" = {
