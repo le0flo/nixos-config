@@ -84,6 +84,7 @@ in {
 
     slskd = {
       enable = true;
+      openFirewall = true;
 
       environmentFile = "${slskEnvDir}/environment";
       settings = {
