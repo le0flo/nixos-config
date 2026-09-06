@@ -109,6 +109,24 @@ in {
         (mkVirtualHost "public" cfg.sites.public)
         (mkVirtualHost "private" cfg.sites.private)
         cfg.sites.extra
+        {
+          "_" = {
+            default = true;
+
+            listen = [{
+              addr = "0.0.0.0";
+              port = 80;
+            }];
+
+            locations."/.well-known/acme-challenge/" = {
+              root = "/var/lib/acme/acme-challenge";
+            };
+
+            locations."/" = {
+              return = "404";
+            };
+          };
+        }
       ];
     };
   };
