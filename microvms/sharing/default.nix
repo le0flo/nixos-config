@@ -7,7 +7,8 @@ let
   btEnvDir = "/run/secrets/bt";
   btDownloadDir = "/media/bt";
 
-  slskPort = 12002;
+  slskWebPort = 12002;
+  slskPort = 12003;
   slskEnvDir = "/run/secrets/slsk";
   slskDownloadDir = "/media/slsk";
 in {
@@ -59,6 +60,7 @@ in {
   networking.firewall.allowedTCPPorts = [
     btPort
     slskPort
+    slskWebPort
   ];
 
   services = {
@@ -92,7 +94,8 @@ in {
           downloads = "${slskDownloadDir}/complete";
           incomplete = "${slskDownloadDir}/incomplete";
         };
-        web.port = slskPort;
+        soulseek.listen_port = slskPort;
+        web.port = slskWebPort;
       };
     };
   };
