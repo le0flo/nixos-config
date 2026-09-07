@@ -88,8 +88,10 @@ in {
               (mkBookmark "Virtuale" "https://virtuale.unibo.it/")
               (mkBookmark "Whatsapp" "https://web.whatsapp.com/") 
               (mkBookmark "Telegram" "https://web.telegram.org/a/")
-              (mkBookmark "Youtube" "https://youtube.com/")
               (mkBookmark "Soundcloud" "https://soundcloud.com/")
+              (mkBookmark "ChatGPT" "https://chatgpt.com/")
+              (mkBookmark "Google Drive" "https://drive.google.com/drive/home/")
+              (mkBookmark "Microsoft Azure" "https://portal.azure.com/#home/")
               (mkBookmark "Rete privata" "https://home.arpa/")
             ];
 
