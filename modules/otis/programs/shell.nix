@@ -5,7 +5,7 @@
       vteIntegration = true;
 
       interactiveShellInit = ''
-      secrets_dir="$HOME/.config/secrets"
+      secrets_dir="$HOME/.config/env"
 
       if [[ -d "$secrets_dir" ]]; then
         set -a
