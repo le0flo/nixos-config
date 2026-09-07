@@ -59,6 +59,11 @@ let
           sslCertificate = tls.cert;
           sslCertificateKey = tls.key;
         }
+        (mkIf (zone == "private") {
+          extraConfig = ''
+          client_max_body_size 50000M;
+          '';
+        })
         (mkIf (x.type == "files") {
           inherit (x) root;
 
@@ -67,6 +72,10 @@ let
           '' else "";
         })
         (mkIf (x.type == "proxy") {
+          extraConfig = ''
+          proxy_request_buffering off;
+          '';
+
           locations."/".proxyPass = x.address;
         })
         (mkIf x.onlyPrimary {
