@@ -67,7 +67,15 @@ in {
 
   networking.firewall.trustedInterfaces = [ "home" ];
 
-  environment.systemPackages = with pkgs; [ vesktop ];
+  environment.systemPackages = with pkgs; [
+    vesktop
+    codex
+    openfortivpn
+    freetds
+    kubelogin
+    azure-cli
+    gh
+  ];
 
   nixpkgs.config.allowUnfree = true;
 }
