@@ -21,6 +21,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       environment.systemPackages = with pkgs; [
+        pandoc
         (texliveBasic.withPackages (ps: with ps; [
           metafont
           titling
@@ -36,6 +37,8 @@ in {
           amstex
           tikz-ext
           tikz-3dplot
+          booktabs
+          footnotehyper
         ] ++ cfg.extraTexlivePlugins))
       ];
     }
