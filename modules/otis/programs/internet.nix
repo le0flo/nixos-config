@@ -3,6 +3,8 @@
 let
   inherit (config.otis) gui;
 
+  inherit (config.otis.net.dns) domains;
+
   inherit (customLibs.otis.opts) mkBoolOption;
 
   inherit (lib)
@@ -84,15 +86,15 @@ in {
               (mkBookmark "Github" "https://github.com/")
               (mkBookmark "Cloudflare" "https://dash.cloudflare.com/")
               (mkBookmark "Contabo" "https://new.contabo.com/")
+              (mkBookmark "Rete privata" "https://${domains.private}/")
               (mkBookmark "Studenti Online" "https://studenti.unibo.it/")
               (mkBookmark "Virtuale" "https://virtuale.unibo.it/")
               (mkBookmark "Whatsapp" "https://web.whatsapp.com/") 
               (mkBookmark "Telegram" "https://web.telegram.org/a/")
               (mkBookmark "Soundcloud" "https://soundcloud.com/")
               (mkBookmark "ChatGPT" "https://chatgpt.com/")
-              (mkBookmark "Google Drive" "https://drive.google.com/drive/home/")
-              (mkBookmark "Microsoft Azure" "https://portal.azure.com/#home/")
-              (mkBookmark "Rete privata" "https://home.arpa/")
+              (mkBookmark "Google Drive" "https://drive.google.com/")
+              (mkBookmark "Microsoft Azure" "https://portal.azure.com/")
             ];
 
             FirefoxHome = {
