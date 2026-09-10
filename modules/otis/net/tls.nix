@@ -5,7 +5,7 @@ let
     domains
     subdomains;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkStrOption;
 

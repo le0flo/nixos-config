@@ -1,7 +1,7 @@
 {customLibs, pkgs, ...}:
 
 let
-  inherit (customLibs.otis.hjem) configText;
+  inherit (customLibs.cake.hjem) configText;
 in {
   imports = [
     ./archive.nix

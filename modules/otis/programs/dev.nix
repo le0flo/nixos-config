@@ -9,11 +9,11 @@ let
 
   inherit (config.otis) gui;
 
-  inherit (customLibs.otis.hjem)
+  inherit (customLibs.cake.hjem)
     configText
     getConfigFiles;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkPkgsOption;
 
@@ -66,6 +66,7 @@ in {
         ungoogled-chromium
         heidisql
         ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
+          asciidoc-mode
           auctex
           bnf-mode
           colorful-mode

@@ -3,7 +3,7 @@
 let
   inherit (config.otis) gui;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkPkgsOption;
 

@@ -12,9 +12,9 @@ let
 
   inherit (config.otis.net.vpn) networks;
 
-  inherit (customLibs.otis.net) subnetToPrefix;
+  inherit (customLibs.cake.net) subnetToPrefix;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkListOption
     mkStrOption;

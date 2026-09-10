@@ -38,6 +38,9 @@ in {
             "cinema"
             "bt"
             "slsk"
+            "code"
+            "oci"
+            "farm"
           ];
         };
 
@@ -115,6 +118,8 @@ in {
             { subdomain = "cinema"; type = "proxy"; address = "http://10.69.0.2:11002"; }
             { onlyPrimary = true; subdomain = "bt"; type = "proxy"; address = "http://10.69.0.2:12001"; }
             { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.0.2:12002"; }
+            { onlyPrimary = true; subdomain = "code"; type = "proxy"; address = "http://10.69.0.2:13001"; }
+            { onlyPrimary = true; subdomain = "oci"; type = "proxy"; address = "http://10.69.0.2:13002"; }
           ];
         };
 

@@ -9,11 +9,11 @@ let
 
   inherit (config.otis) gui;
 
-  inherit (customLibs.otis.hjem)
+  inherit (customLibs.cake.hjem)
     configDir
     configFmt;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkEnumOption
     mkIntOption
     mkStrOption
