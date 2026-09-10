@@ -3,7 +3,7 @@
 let
   inherit (config.otis) gui;
 
-  inherit (customLibs.otis.hjem) configFmt;
+  inherit (customLibs.cake.hjem) configFmt;
 
   inherit (lib)
     mkIf

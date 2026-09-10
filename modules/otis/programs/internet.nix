@@ -5,7 +5,7 @@ let
 
   inherit (config.otis.net.dns) domains;
 
-  inherit (customLibs.otis.opts) mkBoolOption;
+  inherit (customLibs.cake.opts) mkBoolOption;
 
   inherit (lib)
     mkIf

@@ -1,11 +1,11 @@
 {config, customLibs, lib, pkgs, ...}:
 
 let
-  inherit (customLibs.otis.hjem)
+  inherit (customLibs.cake.hjem)
     configFmt
     configText;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkPkgsOption;
 
@@ -17,6 +17,7 @@ let
 in {
   imports = [
     ./niri.nix
+    ./plasma-bigscreen.nix
     ./style.nix
     ./windowmaker.nix
   ];

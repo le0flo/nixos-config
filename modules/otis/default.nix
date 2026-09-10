@@ -5,7 +5,7 @@ let
 
   inherit (config.nixpkgs.hostPlatform) system;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkAttrSubOption
     mkBoolOption
     mkListOption;

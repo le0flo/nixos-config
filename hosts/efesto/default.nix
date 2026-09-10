@@ -10,6 +10,11 @@ in {
   ];
 
   otis = {
+    gui = {
+      enable = true;
+      plasma-bigscreen.enable = true;
+    };
+
     net = {
       tls.custom.enable = true;
 
@@ -43,7 +48,4 @@ in {
       ];
     };
   };
-
-  # TODO: capire come far funzionare plasma-bigscreen
-  environment.systemPackages = with pkgs; [ kdePackages.plasma-bigscreen ];
 }

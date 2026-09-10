@@ -1,7 +1,7 @@
 {config, customLibs, lib, ...}:
 
 let
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkEnumOption
     mkStrOption;

@@ -1,7 +1,7 @@
 {config, customLibs, ...}:
 
 let
-  inherit (customLibs.otis.opts) mkBoolOption;
+  inherit (customLibs.cake.opts) mkBoolOption;
 
   cfg = config.otis.services.docker;
 in {

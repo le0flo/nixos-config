@@ -5,11 +5,11 @@ let
     readFile
     replaceStrings;
 
-  inherit (customLibs.otis.hjem)
+  inherit (customLibs.cake.hjem)
     configSource
     configText;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkPkgsOption;
 

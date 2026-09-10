@@ -10,11 +10,11 @@ let
 
   inherit (config.otis.net.dns) domains;
 
-  inherit (customLibs.otis.net)
+  inherit (customLibs.cake.net)
     subnetToMask
     subnetToPrefix;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkAttrSubOption
     mkBoolOption
     mkEnumOption

@@ -7,12 +7,12 @@ let
 
   inherit (config.otis.gui) style;
 
-  inherit (customLibs.otis.hjem)
+  inherit (customLibs.cake.hjem)
     configFmt
     configText
     getConfigFiles;
 
-  inherit (customLibs.otis.opts)
+  inherit (customLibs.cake.opts)
     mkBoolOption
     mkPkgsOption;
 

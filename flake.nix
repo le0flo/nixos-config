@@ -49,11 +49,10 @@
           agenix.nixosModules.default
           hjem.nixosModules.default
           microvm.nixosModules.host
+          self.nixosModules.otis
           ./hosts/template.nix
           ./hosts/${x}
-        ] ++ (map
-          (x: self.nixosModules."${x}")
-          (attrNames self.nixosModules));
+        ];
       };
     }) (configs ./hosts));
 
@@ -62,10 +61,14 @@
       value = nixosSystem {
         system = y;
 
-        specialArgs = { serviceName = x; };
+        specialArgs = {
+          inherit customLibs;
+          serviceName = x;
+        };
 
         modules = [
           microvm.nixosModules.microvm
+          self.nixosModules.sirah
           ./microvms/template.nix
           ./microvms/${x}
         ];
