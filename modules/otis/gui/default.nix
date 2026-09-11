@@ -1,6 +1,10 @@
 {config, customLibs, lib, pkgs, ...}:
 
 let
+  inherit (builtins) substring;
+
+  inherit (config.otis.gui) style;
+
   inherit (customLibs.cake.hjem)
     configFmt
     configText;
@@ -14,8 +18,11 @@ let
     mkMerge;
 
   cfg = config.otis.gui;
+
+  parseColor = color: substring 1 6 color;
 in {
   imports = [
+    ./hyprland.nix
     ./niri.nix
     ./plasma-bigscreen.nix
     ./style.nix
@@ -30,7 +37,15 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       alacritty
+      brightnessctl
+      mako
+      pavucontrol
+      playerctl
+      ristretto
       rofi
+      swaybg
+      swayidle
+      swaylock-effects
       wl-clipboard
       xclip
     ];
@@ -41,8 +56,7 @@ in {
       noto-fonts
       nerd-fonts.comic-shanns-mono
       nerd-fonts.iosevka
-    ]
-    ++ cfg.extraFonts;
+    ] ++ cfg.extraFonts;
 
     otis.hjem = [{
       xdg.config.files = {
@@ -76,10 +90,72 @@ in {
           };
         };
         "rofi/config.rasi" = configText "@theme \"${pkgs.rofi}/share/rofi/themes/Arc-Dark.rasi\"";
+        "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
+          globalSection = {
+            actions = true;
+            ignore-timeout = false;
+
+            background-color = style.colors.background;
+            text-color = style.colors.text;
+            border-color = style.colors.border;
+            
+            outer-margin = 0;
+            margin = 5;
+          };
+        };
+        "swaylock/config" = configText ''
+        ignore-empty-password
+        show-failed-attempts
+
+        indicator-idle-visible
+        indicator-radius=100
+
+        line-uses-inside
+
+        clock
+        timestr=%H:%M:%S
+        datestr=%d %B
+
+        image=~/.local/share/wallpapers/default
+        effect-blur=6x7
+        color=${parseColor style.colors.background}
+
+        inside-color=${parseColor style.colors.background}
+        inside-clear-color=${parseColor style.colors.background}
+        inside-caps-lock-color=${parseColor style.colors.background}
+        inside-ver-color=${parseColor style.colors.background}
+        inside-wrong-color=${parseColor style.colors.background}
+
+        key-hl-color=${parseColor style.colors.primary}
+        caps-lock-key-hl-color=${parseColor style.colors.primary}
+
+        bs-hl-color=${parseColor style.colors.secondary}
+        caps-lock-bs-hl-color=${parseColor style.colors.secondary}
+
+        ring-color=${parseColor style.colors.background}
+        ring-clear-color=${parseColor style.colors.background}
+        ring-caps-lock-color=${parseColor style.colors.background}
+        ring-ver-color=${parseColor style.colors.background}
+        ring-wrong-color=${parseColor style.colors.background}
+
+        separator-color=${parseColor style.colors.background}
+
+        text-color=${parseColor style.colors.text}
+        text-clear-color=${parseColor style.colors.text}
+        text-caps-lock-color=${parseColor style.colors.text}
+        text-ver-color=${parseColor style.colors.text}
+        text-wrong-color=${parseColor style.colors.text}
+        '';
       };
     }];
 
-    programs.uwsm.enable = true;
+    programs.thunar = {
+      enable = true;
+      plugins = with pkgs; [
+        thunar-shares-plugin
+        thunar-volman
+      ];
+    };
 
     services = {
       dbus.enable = true;
@@ -99,8 +175,8 @@ in {
         };
 
         deviceSection = ''
-          Option "TearFree" "true"
-          Option "DRI" "3"
+        Option "TearFree" "true"
+        Option "DRI" "3"
         '';
         
         videoDrivers = [ "modesetting" ];

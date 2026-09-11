@@ -1,8 +1,8 @@
 binds {
   Mod+M { quit; }
   Mod+Q repeat=false { close-window; }
-
   Mod+Ctrl+L { spawn "swaylock"; }
+
   Mod+Return { spawn "alacritty"; }
   Mod+P { spawn "rofi" "-show" "drun"; }
 

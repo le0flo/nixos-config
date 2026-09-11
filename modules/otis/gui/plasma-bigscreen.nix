@@ -52,14 +52,13 @@ let
   '';
 in {
   options.otis.gui.plasma-bigscreen = {
-    enable = mkBoolOption "Install the plasma bigscreen graphical session" false;
+    enable = mkBoolOption "Plasma Bigscreen graphical session" false;
     extraPackages = mkPkgsOption "Additional packages" [];
   };
 
   config = mkIf cfg.enable {
     environment = {
       shellAliases."start-plasma-bigscreen" = "${sessionScript}/bin/plasma-bigscreen-session";
-
       systemPackages = [ sessionScript ] ++ kdePackages ++ cfg.extraPackages;
     };
 
