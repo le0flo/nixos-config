@@ -24,8 +24,8 @@ let
     (readFile path);
 in {
   options.otis.gui.windowmaker = {
-    enable = mkBoolOption "Install the windowmaker window manager" false;
-    dockapps = mkPkgsOption "Dockapps for windowmaker" (with pkgs.dockapps; [
+    enable = mkBoolOption "Windowmaker window manager" false;
+    dockapps = mkPkgsOption "Dockapps" (with pkgs.dockapps; [
       cputnik
       wmacpi
       wmclockmon
@@ -39,7 +39,6 @@ in {
   config = mkIf cfg.enable {
     environment = {
       shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/start.sh";
-
       systemPackages = cfg.dockapps ++ cfg.extraPackages;
     };
 
@@ -51,19 +50,10 @@ in {
       };
     }];
 
-    programs.thunar = {
-      enable = true;
-      plugins = with pkgs; [
-        thunar-shares-plugin
-        thunar-volman
-      ];
-    };
-
     services.xserver.windowManager.windowmaker.enable = true;
 
     xdg.portal = {
       config."windowmaker".default = [ "gtk" ];
-
       extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     };
   };

@@ -12,7 +12,7 @@ in {
   otis = {
     gui = {
       enable = true;
-      niri.enable = true;
+      hyprland.enable = true;
       windowmaker.enable = true;
     };
 
