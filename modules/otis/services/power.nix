@@ -1,7 +1,7 @@
-{config, customLibs, ...}:
+{config, customLib, ...}:
 
 let
-  inherit (customLibs.cake.opts) mkBoolOption;
+  inherit (customLib.opts) mkBoolOption;
 
   cfg = config.otis.services.power;
 in {

@@ -1,11 +1,11 @@
-{config, customLibs, inputs, lib, ...}:
+{config, customLib, inputs, lib, ...}:
 
 let
   inherit (config.otis.net.dns)
     domains
     subdomains;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkStrOption;
 

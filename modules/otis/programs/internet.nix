@@ -1,11 +1,11 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (config.otis) gui;
 
   inherit (config.otis.net.dns) domains;
 
-  inherit (customLibs.cake.opts) mkBoolOption;
+  inherit (customLib.opts) mkBoolOption;
 
   inherit (lib)
     mkIf

@@ -1,7 +1,7 @@
-{config, customLibs, lib, ...}:
+{config, customLib, lib, ...}:
 
 let
-  inherit (customLibs.cake.opts) mkBoolOption;
+  inherit (customLib.opts) mkBoolOption;
 
   inherit (lib) mkIf;
 

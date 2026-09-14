@@ -1,11 +1,14 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkPkgsOption;
 
-  inherit (lib) getBin makeSearchPath mkIf;
+  inherit (lib)
+    getBin
+    makeSearchPath
+    mkIf;
 
   cfg = config.otis.gui.plasma-bigscreen;
   kdePackages = with pkgs.kdePackages; [

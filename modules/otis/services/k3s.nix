@@ -1,4 +1,4 @@
-{config, customLibs, lib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (builtins) mapAttrs;
@@ -7,7 +7,7 @@ let
 
   inherit (config.otis.net) vpn;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkEnumOption
     mkPortOption;

@@ -1,11 +1,11 @@
-{config, customLibs, lib, pkgs, self, ...}:
+{config, customLib, lib, pkgs, self, ...}:
 
 let
   inherit (builtins) mapAttrs;
 
   inherit (config.nixpkgs.hostPlatform) system;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkAttrSubOption
     mkBoolOption
     mkListOption;
@@ -17,13 +17,13 @@ let
     mkMerge
     types;
 
+  cfg = config.otis;
+
   userOpts.options = {
     groups = mkListOption types.str "Groups assigned to that user" [];
     isNormalUser = mkBoolOption "Whether the user is a normal behaving user" true;
     ssh.authorizedKeys = mkListOption types.str "List of allowed ssh keys" [];
-  };    
-
-  cfg = config.otis;
+  };
 in {
   imports = [
     ./gui

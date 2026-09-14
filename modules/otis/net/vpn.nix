@@ -1,4 +1,4 @@
-{config, customLibs, lib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (builtins)
@@ -10,11 +10,11 @@ let
 
   inherit (config.otis.net.dns) domains;
 
-  inherit (customLibs.cake.net)
+  inherit (customLib.net)
     subnetToMask
     subnetToPrefix;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkAttrSubOption
     mkBoolOption
     mkEnumOption

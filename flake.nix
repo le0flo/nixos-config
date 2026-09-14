@@ -1,84 +1,16 @@
 {
   description = "NixOS config";
 
-  outputs = {self, nixpkgs, disko, agenix, hjem, microvm, ...}@inputs: let
-    inherit (builtins)
-      attrNames
-      concatStringsSep
-      elemAt
-      listToAttrs
-      readDir
-      split;
+  outputs = inputs: let
+    inherit (inputs.nixpkgs.lib) mkMerge;
 
-    inherit (nixpkgs.lib)
-      drop
-      filterAttrs
-      flatten
-      genAttrs
-      nixosSystem
-      toSentenceCase;
-
-    systems = [
-      "x86_64-linux"
-      "i686-linux"
-      "aarch64-linux"
-    ];
-
-    configs = folder: attrNames (filterAttrs (x: y: y == "directory") (readDir folder));
-    perSystem = genAttrs systems;
-    callPackage = system: (pkgs system).lib.callPackageWith (pkgs system // customPkgs system);
-    pkgs = system: nixpkgs.legacyPackages.${system};
-
-    customPkgs = system: genAttrs (configs ./pkgs) (name: callPackage system ./pkgs/${name} {});
-    customLibs = genAttrs (configs ./libs) (name: import ./libs/${name} { inherit nixpkgs; });
-
-    modules = genAttrs
-      (configs ./modules)
-      (name: import ./modules/${name});
-
-    hosts = listToAttrs (map (x: {
-      name = "host-${x}";
-      value = nixosSystem {
-        specialArgs = {
-          inherit customLibs inputs self;
-          hostName = x;
-        };
-
-        modules = [
-          disko.nixosModules.default
-          agenix.nixosModules.default
-          hjem.nixosModules.default
-          microvm.nixosModules.host
-          self.nixosModules.otis
-          ./hosts/template.nix
-          ./hosts/${x}
-        ];
-      };
-    }) (configs ./hosts));
-
-    microvms = listToAttrs (flatten (map (x: map (y: {
-      name = "microvm-${x}-${y}";
-      value = nixosSystem {
-        system = y;
-
-        specialArgs = {
-          inherit customLibs;
-          serviceName = x;
-        };
-
-        modules = [
-          microvm.nixosModules.microvm
-          self.nixosModules.sirah
-          ./microvms/template.nix
-          ./microvms/${x}
-        ];
-      };
-    }) systems) (configs ./microvms)));
+    customLib = import ./lib { inherit (inputs) nixpkgs; };
   in {
-    nixosModules = modules;
-    nixosConfigurations = hosts // microvms;
-    packages = perSystem customPkgs;
-    overlays = perSystem (system: final: prev: customPkgs system);
+    packages = import ./pkgs { inherit customLib inputs; };
+    overlays = import ./overlays { inherit customLib inputs; };
+
+    nixosModules = import ./modules { inherit customLib inputs; };
+    nixosConfigurations = (import ./hosts { inherit customLib inputs; }) // (import ./microvms { inherit customLib inputs; });
   };
 
   inputs = {

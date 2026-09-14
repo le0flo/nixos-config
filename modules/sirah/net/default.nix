@@ -1,4 +1,4 @@
-{config, customLibs, microvm, ...}:
+{config, customLib, microvm, ...}:
 
 {
 }
