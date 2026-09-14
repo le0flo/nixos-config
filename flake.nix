@@ -2,8 +2,6 @@
   description = "NixOS config";
 
   outputs = inputs: let
-    inherit (inputs.nixpkgs.lib) mkMerge;
-
     customLib = import ./lib { inherit (inputs) nixpkgs; };
   in {
     packages = import ./pkgs { inherit customLib inputs; };
