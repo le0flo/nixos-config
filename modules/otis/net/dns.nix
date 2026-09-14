@@ -1,4 +1,4 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -7,9 +7,9 @@ let
 
   inherit (config.otis.net) vpn;
 
-  inherit (customLibs.cake.net) subnetToPrefix;
+  inherit (customLib.net) subnetToPrefix;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkListOption
     mkStrOption;

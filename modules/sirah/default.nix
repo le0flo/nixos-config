@@ -1,9 +1,9 @@
-{config, customLibs, lib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (builtins) mapAttrs;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkAttrSubOption
     mkBoolOption
     mkNullOption;

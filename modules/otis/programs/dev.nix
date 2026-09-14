@@ -1,4 +1,4 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (builtins)
@@ -9,11 +9,11 @@ let
 
   inherit (config.otis) gui;
 
-  inherit (customLibs.cake.hjem)
+  inherit (customLib.hjem)
     configText
     getConfigFiles;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkPkgsOption;
 

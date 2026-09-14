@@ -1,15 +1,15 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (builtins)
     readFile
     replaceStrings;
 
-  inherit (customLibs.cake.hjem)
+  inherit (customLib.hjem)
     configSource
     configText;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkPkgsOption;
 

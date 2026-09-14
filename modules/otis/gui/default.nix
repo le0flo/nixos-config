@@ -1,15 +1,15 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (builtins) substring;
 
   inherit (config.otis.gui) style;
 
-  inherit (customLibs.cake.hjem)
+  inherit (customLib.hjem)
     configFmt
     configText;
 
-  inherit (customLibs.cake.opts)
+  inherit (customLib.opts)
     mkBoolOption
     mkPkgsOption;
 
@@ -23,7 +23,6 @@ let
 in {
   imports = [
     ./hyprland.nix
-    ./niri.nix
     ./plasma-bigscreen.nix
     ./style.nix
     ./windowmaker.nix
@@ -38,11 +37,13 @@ in {
     environment.systemPackages = with pkgs; [
       alacritty
       brightnessctl
+      grim
       mako
       pavucontrol
       playerctl
       ristretto
       rofi
+      slurp
       swaybg
       swayidle
       swaylock-effects

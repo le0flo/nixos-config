@@ -1,9 +1,9 @@
-{config, customLibs, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (config.otis) gui;
 
-  inherit (customLibs.cake.hjem) configFmt;
+  inherit (customLib.hjem) configFmt;
 
   inherit (lib)
     mkIf
