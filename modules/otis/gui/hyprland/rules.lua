@@ -37,6 +37,13 @@ hl.window_rule({
    size = { "(monitor_w*0.75)", "(monitor_h*0.65)" },
 })
 
+hl.window_rule({
+   name = "maximized-windows",
+   match = { class = "^(firefox|thunderbird|emacs)$"},
+
+   scrolling_width = 1.0,
+})
+
 local no_screenshare_window = hl.window_rule({
    name = "no-screenshare-windows",
    match = { class = "^(firefox|thunderbird|org.keepassxc.KeePassXC)$" },

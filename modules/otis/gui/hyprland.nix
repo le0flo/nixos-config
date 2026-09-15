@@ -48,8 +48,10 @@ in {
           ${concatStringsSep "\n" (map (x: "require(\"${removeSuffix ".lua" x}\")") configFiles)}
           hl.bind("SUPER + B", hl.dsp.exec_cmd("${pkgs.scripts}/bin/bg-picker"))
 
-          hl.env("XCURSOR_SIZE", "${toString style.cursor.size}")
           hl.env("HYPRCURSOR_SIZE", "${toString style.cursor.size}")
+          hl.env("HYPRCURSOR_THEME", "${style.cursor.name}")
+          hl.env("XCURSOR_SIZE", "${toString style.cursor.size}")
+          hl.env("XCURSOR_THEME", "${style.cursor.name}")
 
           hl.config({ general = { col = {
              active_border = "rgba(${parseColor style.colors.border}ff)",

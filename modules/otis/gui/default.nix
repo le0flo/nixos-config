@@ -78,7 +78,7 @@ in {
           };
 
           font = {
-            size = 18.00;
+            size = 14.00;
 
             normal = {
               family = "ComicShannsMono Nerd Font Mono";
