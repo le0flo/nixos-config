@@ -70,6 +70,7 @@ in {
           auctex
           bnf-mode
           colorful-mode
+          corfu
           csv-mode
           dart-mode
           dockerfile-mode
@@ -97,6 +98,8 @@ in {
           {
             "emacs/custom.el" = configText "";
             "emacs/init.el" = configText ''
+            ;;; -*- lexical-binding: t; -*-
+
             ;; Includes
             ${concatStringsSep "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
 

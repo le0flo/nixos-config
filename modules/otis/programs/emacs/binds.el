@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; Dired binds
 (progn
   (require 'dired)
