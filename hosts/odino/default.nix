@@ -39,7 +39,7 @@ in {
         enable = true;
         externalInterface = "eno1";
         vms = [
-          "devops"
+          #"devops"
           "sharing"
           "streaming"
         ];
