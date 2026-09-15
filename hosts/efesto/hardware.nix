@@ -41,6 +41,13 @@ in {
       "xhci_pci"
     ];
 
+    growPartition = true;
     supportedFilesystems.zfs = lib.mkForce false;
+  };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
+    autoResize = true;
   };
 }
