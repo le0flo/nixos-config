@@ -1,13 +1,23 @@
 {customLib, inputs}:
 
 let
-  inherit (builtins) listToAttrs;
+  inherit (builtins)
+    listToAttrs
+    pathExists;
 
   inherit (customLib.config) listDirs;
 
-  inherit (inputs) agenix disko hjem microvm nixpkgs self;
+  inherit (inputs)
+    agenix
+    disko
+    hjem
+    microvm
+    nixpkgs
+    self;
 
-  inherit (nixpkgs.lib) nixosSystem;
+  inherit (nixpkgs.lib)
+    nixosSystem
+    optional;
 in listToAttrs (map (x: {
   name = "host-${x}";
   value = nixosSystem {
@@ -22,8 +32,8 @@ in listToAttrs (map (x: {
       hjem.nixosModules.default
       microvm.nixosModules.host
       self.nixosModules.otis
-      ./template.nix
       ./${x}
-    ];
+    ]
+    ++ (optional (pathExists ./password.nix) ./password.nix);
   };
 }) (listDirs ./.))

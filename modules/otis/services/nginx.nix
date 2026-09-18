@@ -138,5 +138,7 @@ in {
         }
       ];
     };
+
+    users.groups."acme".members = [ config.services.nginx.user ];
   };
 }

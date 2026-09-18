@@ -1,4 +1,4 @@
-{config, customLib, lib, pkgs, self, ...}:
+{config, customLib, hostName, lib, pkgs, ...}:
 
 let
   inherit (builtins) mapAttrs;
@@ -6,13 +6,14 @@ let
   inherit (config.nixpkgs.hostPlatform) system;
 
   inherit (customLib.opts)
+    mkAttrOption
     mkAttrSubOption
     mkBoolOption
-    mkListOption;
+    mkListOption
+    mkPkgsOption;
 
   inherit (lib)
     flatten
-    mkDefault
     mkForce
     mkMerge
     types;
@@ -22,6 +23,7 @@ let
   userOpts.options = {
     groups = mkListOption types.str "Groups assigned to that user" [];
     isNormalUser = mkBoolOption "Whether the user is a normal behaving user" true;
+    packages = mkPkgsOption "Additional packages" [];
     ssh.authorizedKeys = mkListOption types.str "List of allowed ssh keys" [];
   };
 in {
@@ -30,39 +32,35 @@ in {
     ./net
     ./programs
     ./services
+
+    ./locale.nix
+    ./system.nix
   ];
 
   options.otis = {
     users = mkAttrSubOption userOpts "Set of users" {};
     hjem = mkListOption types.attrs "List of attributes for all the hjem configurations" [];
+    secrets = mkAttrOption "Set of agenix secrets" {};
   };
 
   config = {
-    hjem.users = mapAttrs (x: y: mkMerge (flatten [
-      {
-        directory = "/home/${x}";
-        clobberFiles = mkForce true;
-      }
-      cfg.hjem
-    ])) cfg.users;
+    age = {
+      inherit (cfg) secrets;
+
+      identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    };
+
+    hjem.users = mapAttrs (x: y: mkMerge (flatten ([{
+      directory = "/home/${x}";
+      clobberFiles = mkForce true;
+    }] ++ cfg.hjem))) cfg.users;
 
     users.users = mapAttrs (x: y: {
-      inherit (y) isNormalUser;
+      inherit (y) isNormalUser packages;
 
       extraGroups = y.groups;
       shell = pkgs.bash;
       openssh.authorizedKeys.keys = y.ssh.authorizedKeys;
     }) cfg.users;
-
-    nixpkgs.overlays = [ self.overlays."${system}" ];
-
-    nix.settings = {
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-      trusted-users = ["root" "@wheel"];
-    };
-
-    services.fwupd.enable = mkDefault true;
   };
 }

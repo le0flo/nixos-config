@@ -4,10 +4,9 @@ let
   secretsPath = toString inputs.nixos-secrets;
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
-  imports = [
-    ./hardware.nix
-    ./secrets.nix
-  ];
+  imports = [ ./hardware.nix ];
+
+  nixpkgs.config.allowUnfree = true;
 
   otis = {
     gui = {
@@ -24,6 +23,7 @@ in {
         role = "client";
 
         networks."home" = {
+          primary = true;
           privateKeyFile = "${config.age.secretsDir}/wireguard/home";
           publicKey = readKey "afrodite-home";
           port = 51820;
@@ -54,27 +54,30 @@ in {
       smartcards.enable = true;
     };
 
-    users."leo".groups = [
-      "audio"
-      "dialout"
-      "docker"
-      "libvirtd"
-      "video"
-      "wheel"
-    ];
+    users."leo" = {
+      groups = [
+        "audio"
+        "dialout"
+        "docker"
+        "libvirtd"
+        "video"
+        "wheel"
+      ];
+
+      packages = with pkgs; [
+        vesktop
+        codex
+        openfortivpn
+        freetds
+        kubelogin
+        azure-cli
+        gh
+      ];
+    };
+
+    secrets."wireguard/home" = {
+      file = "${secretsPath}/wireguard/hermes.age";
+      mode = "400";
+    };
   };
-
-  networking.firewall.trustedInterfaces = [ "home" ];
-
-  environment.systemPackages = with pkgs; [
-    vesktop
-    codex
-    openfortivpn
-    freetds
-    kubelogin
-    azure-cli
-    gh
-  ];
-
-  nixpkgs.config.allowUnfree = true;
 }

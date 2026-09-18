@@ -12,10 +12,7 @@ let
   secretsPath = toString inputs.nixos-secrets;
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
-  imports = [
-    ./hardware.nix
-    ./secrets.nix
-  ];
+  imports = [ ./hardware.nix ];
 
   otis = {
     net.vpn = {
@@ -23,6 +20,7 @@ in {
       role = "client";
 
       networks."home" = {
+        primary = true;
         privateKeyFile = "${config.age.secretsDir}/wireguard/home";
         publicKey = readKey "afrodite-home";
         port = 51820;
@@ -59,6 +57,18 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAUd1moOuOfUDSnljNzRHqs/HfFLSWz252h41MLm32Y7 leo@zeus"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKVH95IieMMZ2R383n4+414Yu1T6NjmWYoUx1QsjTdOL leo@afrodite"
       ];
+    };
+
+    secrets = {
+      "k3s/token" = {
+        file = "${secretsPath}/k3s/token.age";
+        mode = "400";
+      };
+
+      "wireguard/home" = {
+        file = "${secretsPath}/wireguard/thor.age";
+        mode = "400";
+      };
     };
   };
 

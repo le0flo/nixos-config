@@ -2,13 +2,14 @@
   description = "NixOS config";
 
   outputs = inputs: let
+    args = { inherit customLib inputs; };
     customLib = import ./lib { inherit (inputs) nixpkgs; };
   in {
-    packages = import ./pkgs { inherit customLib inputs; };
-    overlays = import ./overlays { inherit customLib inputs; };
+    packages = import ./pkgs args;
+    overlays = import ./overlays args;
 
-    nixosModules = import ./modules { inherit customLib inputs; };
-    nixosConfigurations = (import ./hosts { inherit customLib inputs; }) // (import ./microvms { inherit customLib inputs; });
+    nixosModules = import ./modules args;
+    nixosConfigurations = (import ./hosts args) // (import ./microvms args);
   };
 
   inputs = {

@@ -6,6 +6,8 @@
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-l14-intel
   ];
 
+  services.fwupd.enable = true;
+
   nixpkgs.hostPlatform = "x86_64-linux";
 
   hardware = {

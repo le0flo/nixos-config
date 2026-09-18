@@ -13,7 +13,7 @@ in {
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
 
-  services.fwupd.enable = lib.mkForce false;
+  services.fwupd.enable = false;
   
   nixpkgs.hostPlatform = "aarch64-linux";
 

@@ -4,10 +4,7 @@ let
   secretsPath = toString inputs.nixos-secrets;
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
-  imports = [
-    ./hardware.nix
-    ./secrets.nix
-  ];
+  imports = [ ./hardware.nix ];
 
   otis = {
     net.vpn = {
@@ -15,6 +12,7 @@ in {
       role = "client";
 
       networks."home" = {
+        primary = true;
         privateKeyFile = "${config.age.secretsDir}/wireguard/home";
         publicKey = readKey "afrodite-home";
         port = 51820;
@@ -55,6 +53,32 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxFVKXr1GkMyIYDfjGvZhV8sbMM8PVMFWNj//jzFQAv leo@zeus"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWsnFie3ktqVVpKf5MFQPaOpLd+O21rWzdyFX0Lavhy leo@afrodite"
       ];
+    };
+
+    secrets = {
+      "k3s/token" = {
+        file = "${secretsPath}/k3s/token.age";
+        mode = "400";
+      };
+
+      "microvms/qbittorrent/password" = {
+        file = "${secretsPath}/microvms/qbittorrent.age";
+        path = "/etc/qbittorrent/password";
+        mode = "444";
+        symlink = false;
+      };
+
+      "microvms/slskd/environment" = {
+        file = "${secretsPath}/microvms/slskd.age";
+        path = "/etc/slskd/environment";
+        mode = "444";
+        symlink = false;
+      };
+
+      "wireguard/home" = {
+        file = "${secretsPath}/wireguard/odino.age";
+        mode = "400";
+      };
     };
   };
 }

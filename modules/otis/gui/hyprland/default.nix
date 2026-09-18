@@ -25,7 +25,7 @@ let
     removeSuffix;
 
   cfg = config.otis.gui.hyprland;
-  configFiles = getConfigFiles ./hyprland ".lua";
+  configFiles = getConfigFiles ./. ".lua";
   hyprPkgs = inputs.hyprland.packages."${system}";
 
   parseColor = color: substring 1 6 color;
@@ -62,7 +62,7 @@ in {
         (genAttrs configFiles (file: {
           type = "copy";
           permissions = "644";
-          source = ./hyprland/${file};
+          source = ./${file};
           target = "hypr/${file}";
         }))
       ];
