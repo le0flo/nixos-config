@@ -124,11 +124,7 @@ in {
 
         tls = {
           public.type = "acme";
-          private = {
-            type = "manual";
-            cert = "${secretsPath}/tls/${domains.private}.pem";
-            key = "${config.age.secretsDir}/tls/${domains.private}.key";
-          };
+          private.type = "acme";
         };
       };
       openssh.enable = true;
@@ -156,8 +152,8 @@ in {
         group = "dovecot2";
       };
 
-      "tls/${domains.private}.key" = {
-        file = "${secretsPath}/tls/${domains.private}.age";
+      "tls/ca.key" = {
+        file = "${secretsPath}/tls/ca.age";
         mode = "400";
       };
 

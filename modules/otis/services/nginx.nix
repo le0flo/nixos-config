@@ -1,4 +1,4 @@
-{config, customLib, lib, ...}:
+{config, customLib, inputs, lib, ...}:
 
 let
   inherit (builtins)
@@ -30,6 +30,7 @@ let
     types;
 
   cfg = config.otis.services.nginx;
+  secretsPath = toString inputs.nixos-secrets;
 
   siteOpts.options = {
     onlyPrimary = mkBoolOption "Only allow primary vpn devices to connect" false;
@@ -55,9 +56,9 @@ let
       value = mkMerge [
         {
           addSSL = tls.type != "none";
-          useACMEHost = if tls.type == "acme" then "${domain}" else null;
-          sslCertificate = tls.cert;
-          sslCertificateKey = tls.key;
+          useACMEHost = if (tls.type == "acme" && zone == "public") then "${domain}" else null;
+          sslCertificate = if (tls.type == "acme" && zone == "private") then "/etc/ssl/certs/${domain}/cert.pem" else tls.cert;
+          sslCertificateKey = if (tls.type == "acme" && zone == "private") then "/etc/ssl/certs/${domain}/private.key" else tls.key;
         }
         (mkIf (zone == "private") {
           extraConfig = ''
@@ -135,10 +136,16 @@ in {
               return = "404";
             };
           };
+          "${domains.private}".locations."/ca.pem" = {
+            root = "${secretsPath}/tls/ca.pem";
+          };
         }
       ];
     };
 
-    users.groups."acme".members = [ config.services.nginx.user ];
+    users.groups = {
+      "public-acme".members = [ config.services.nginx.user ];
+      "private-acme".members = [ config.services.nginx.user ];
+    };
   };
 }

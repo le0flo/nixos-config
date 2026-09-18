@@ -138,7 +138,7 @@ in {
       };
     };
 
-    users.groups."acme".members = [
+    users.groups."public-acme".members = [
       config.services.dovecot2.settings.mail_uid
       config.services.postfix.user
     ];
