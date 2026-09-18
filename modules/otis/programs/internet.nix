@@ -131,8 +131,8 @@ in {
             "sidebar.history.sortOption" = "date";
           };
         };
+        kdeconnect.enable = true;
         thunderbird.enable = true;
-        localsend.enable = true;
       };
     })
   ]);

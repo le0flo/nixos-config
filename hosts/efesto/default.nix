@@ -4,15 +4,15 @@ let
   secretsPath = toString inputs.nixos-secrets;
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
-  imports = [
-    ./hardware.nix
-    ./secrets.nix
-  ];
+  imports = [ ./hardware.nix ];
 
   otis = {
     gui = {
       enable = true;
-      plasma-bigscreen.enable = true;
+      plasma-bigscreen = {
+        enable = true;
+        extraPackages = [ pkgs.kdePackages.discover ];
+      };
     };
 
     net = {
@@ -23,6 +23,7 @@ in {
         role = "client";
 
         networks."home" = {
+          primary = true;
           privateKeyFile = "${config.age.secretsDir}/wireguard/home";
           publicKey = readKey "afrodite-external";
           port = 51821;
@@ -39,13 +40,18 @@ in {
 
     services.openssh.enable = true;
 
-    users."leo" = {
+    users."tv" = {
       groups = [ "wheel" ];
 
       ssh.authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKck97agpd7zRxRl2B40+5IK6wGCauT+u0M3QgRxLjxr leo@hermes"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFIRcZxOfHi7XyMLUZMZEqRnY/RQpF0IT7wNqYtkOoa leo@zeus"
       ];
+    };
+
+    secrets."wireguard/home" = {
+      file = "${secretsPath}/wireguard/efesto.age";
+      mode = "400";
     };
   };
 }

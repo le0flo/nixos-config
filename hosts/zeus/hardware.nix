@@ -3,7 +3,10 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+  services = {
+    fwupd.enable = true;
+    xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+  };
 
   nixpkgs.hostPlatform = "x86_64-linux";
 

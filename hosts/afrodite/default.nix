@@ -3,12 +3,14 @@
 let
   inherit (config.otis.net.dns) domains;
 
-  secretsPath = toString inputs.nixos-secrets;
   www-public = pkgs.www.public.override { domain = domains.public; };
   www-private = pkgs.www.private.override {
     privateDomain = domains.private;
     publicDomain = domains.public;
   };
+
+  secretsPath = toString inputs.nixos-secrets;
+
   tmpfilesConfig = {
     mode = "0755";
     user = "leo";
@@ -17,10 +19,7 @@ let
 
   readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
 in {
-  imports = [
-    ./hardware.nix
-    ./secrets.nix
-  ];
+  imports = [ ./hardware.nix ];
 
   otis = {
     net = {
@@ -142,6 +141,35 @@ in {
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEmIanMLV3pgQFhe9V6Pb8483u+CuPwZF3vZ7Kt+Eyje leo@zeus"
       ];
+    };
+
+    secrets = {
+      "k3s/token" = {
+        file = "${secretsPath}/k3s/token.age";
+        mode = "400";
+      };
+
+      "mail/dovecot-passwd" = {
+        file = "${secretsPath}/mail/dovecot-passwd.age";
+        mode = "440";
+        owner = "dovecot2";
+        group = "dovecot2";
+      };
+
+      "tls/${domains.private}.key" = {
+        file = "${secretsPath}/tls/${domains.private}.age";
+        mode = "400";
+      };
+
+      "wireguard/external" = {
+        file = "${secretsPath}/wireguard/afrodite-external.age";
+        mode = "400";
+      };
+
+      "wireguard/home" = {
+        file = "${secretsPath}/wireguard/afrodite-home.age";
+        mode = "400";
+      };
     };
   };
 

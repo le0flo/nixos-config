@@ -22,10 +22,11 @@ let
   parseColor = color: substring 1 6 color;
 in {
   imports = [
-    ./hyprland.nix
-    ./plasma-bigscreen.nix
+    ./hyprland
+    ./plasma-bigscreen
+    ./windowmaker
+
     ./style.nix
-    ./windowmaker.nix
   ];
 
   options.otis.gui = {
@@ -38,6 +39,7 @@ in {
       alacritty
       brightnessctl
       grim
+      libnotify
       mako
       pavucontrol
       playerctl
@@ -78,7 +80,7 @@ in {
           };
 
           font = {
-            size = 14.00;
+            size = 16.00;
 
             normal = {
               family = "ComicShannsMono Nerd Font Mono";
@@ -90,20 +92,23 @@ in {
             };
           };
         };
-        "rofi/config.rasi" = configText "@theme \"${pkgs.rofi}/share/rofi/themes/Arc-Dark.rasi\"";
         "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
           globalSection = {
             actions = true;
             ignore-timeout = false;
+            default-timeout = 10000;
 
             background-color = style.colors.background;
             text-color = style.colors.text;
             border-color = style.colors.border;
-            
+
             outer-margin = 0;
             margin = 5;
           };
         };
+        "rofi/config.rasi" = configText ''
+        @theme "${pkgs.rofi}/share/rofi/themes/Arc-Dark.rasi"
+        '';
         "swaylock/config" = configText ''
         ignore-empty-password
         show-failed-attempts

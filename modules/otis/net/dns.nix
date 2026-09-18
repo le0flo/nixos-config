@@ -3,11 +3,15 @@
 let
   inherit (builtins)
     attrNames
+    attrValues
+    filter
     concatStringsSep;
 
   inherit (config.otis.net) vpn;
 
-  inherit (customLib.net) subnetToPrefix;
+  inherit (customLib.net)
+    subnetToGateway
+    subnetToPrefix;
 
   inherit (customLib.opts)
     mkBoolOption
@@ -41,8 +45,8 @@ let
 in {
   options.otis.net.dns = {
     domains = {
-      public = mkStrOption "Public facing domain" "example.com";
-      private = mkStrOption "Private domain for internal communications" "example.com";
+      public = mkStrOption "Public facing domain" "leoflo.net";
+      private = mkStrOption "Private domain for internal communications" "home.arpa";
     };
 
     subdomains = {
@@ -50,19 +54,28 @@ in {
       private = mkListOption types.str "List of private subdomains" [];
     };
 
+    nameservers = mkListOption types.str "List of dns servers" [ "1.1.1.1" "1.0.0.1" ];
+
     server = {
       enable = mkBoolOption "Marks this host as the dns server" false;
       forwarders = mkListOption types.str "List of dns servers" [ "1.1.1.1" "1.0.0.1" ];
     };
   };
 
-  config = mkIf (cfg.server.enable && vpn.role == "server") {
-    networking.firewall.interfaces = genAttrs (attrNames vpn.networks) (name: { allowedUDPPorts = [ 53 ]; });
+  config = {
+    networking = {
+      firewall = mkIf (cfg.server.enable) {
+        interfaces = genAttrs (attrNames vpn.networks) (name: { allowedUDPPorts = [ 53 ]; });
+      };
+
+      nameservers = (map (x: subnetToGateway x.subnet) (filter (y: y.primary) (attrValues vpn.networks))) ++ cfg.nameservers;
+
+      resolvconf.enable = true;
+    };
 
     services.bind = {
-      inherit (cfg.server) forwarders;
+      inherit (cfg.server) enable forwarders;
 
-      enable = true;
       forward = "only";
 
       cacheNetworks = [ "127.0.0.0/8" ] ++ map (x: vpn.networks."${x}".subnet) (attrNames vpn.networks);

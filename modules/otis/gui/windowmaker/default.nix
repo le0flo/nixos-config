@@ -38,15 +38,15 @@ in {
 
   config = mkIf cfg.enable {
     environment = {
-      shellAliases."start-windowmaker" = "startx ~/GNUstep/Defaults/start.sh";
+      shellAliases."start-windowmaker" = "startx ~/${gnustepDir}/start.sh";
       systemPackages = cfg.dockapps ++ cfg.extraPackages;
     };
 
     otis.hjem = [{
       files = {
-        "${gnustepDir}/start.sh" = configSource ./windowmaker/start.sh;
-        "${gnustepDir}/WMRootMenu" = configText (fixText ./windowmaker/WMRootMenu);
-        "${gnustepDir}/WindowMaker" = configText (fixText ./windowmaker/WindowMaker);
+        "${gnustepDir}/start.sh" = configSource ./start.sh;
+        "${gnustepDir}/WMRootMenu" = configText (fixText ./WMRootMenu);
+        "${gnustepDir}/WindowMaker" = configText (fixText ./WindowMaker);
       };
     }];
 
