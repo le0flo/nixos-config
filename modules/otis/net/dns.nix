@@ -19,6 +19,7 @@ let
     mkStrOption;
 
   inherit (lib)
+    filterAttrs
     genAttrs
     mkIf
     types;
@@ -64,36 +65,47 @@ in {
 
   config = {
     networking = {
+      inherit (cfg) nameservers;
+
       firewall = mkIf (cfg.server.enable) {
         interfaces = genAttrs (attrNames vpn.networks) (name: { allowedUDPPorts = [ 53 ]; });
       };
-
-      nameservers = (map (x: subnetToGateway x.subnet) (filter (y: y.primary) (attrValues vpn.networks))) ++ cfg.nameservers;
-
-      resolvconf.enable = true;
     };
 
-    services.bind = {
-      inherit (cfg.server) enable forwarders;
+    services = {
+      bind = {
+        inherit (cfg.server) enable forwarders;
 
-      forward = "only";
+        listenOn = map (x: "${subnetToPrefix x.subnet}.${x.id}") (attrValues vpn.networks);
+        listenOnIpv6 = [];
+        forward = "only";
 
-      cacheNetworks = [ "127.0.0.0/8" ] ++ map (x: vpn.networks."${x}".subnet) (attrNames vpn.networks);
+        cacheNetworks = map (x: vpn.networks."${x}".subnet) (attrNames vpn.networks);
 
-      extraConfig = concatStringsSep "\n" (map (x: let
-        net = vpn.networks."${x}";
-      in ''
-      view "private-${x}" {
-        match-clients { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
+        extraConfig = concatStringsSep "\n" (map (x: let
+          net = vpn.networks."${x}";
+        in ''
+        view "private-${x}" {
+          match-clients { ${net.subnet}; };
 
-        zone "${cfg.domains.private}" {
-          type master;
-          file "${makeZone "${subnetToPrefix net.subnet}.${net.id}"}";
-          allow-query { ${if net.primary then "127.0.0.0/8;" else ""} ${net.subnet}; };
-          allow-transfer { none; };
+          zone "${cfg.domains.private}" {
+            type master;
+            file "${makeZone "${subnetToPrefix net.subnet}.${net.id}"}";
+            allow-query { ${net.subnet}; };
+            allow-transfer { none; };
+          };
         };
+        '') (attrNames vpn.networks));
       };
-      '') (attrNames vpn.networks));
+
+      resolved.enable = true;
+    };
+
+    systemd.network.networks."30-vpn" = {
+      matchConfig.Name =  concatStringsSep "," (attrNames (filterAttrs (_: y: y.primary) vpn.networks));
+
+      dns = map (x: subnetToGateway x.subnet) (filter (y: y.primary) (attrValues vpn.networks));
+      domains = [ "~${cfg.domains.private}" ];
     };
   };
 }

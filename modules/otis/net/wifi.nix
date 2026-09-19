@@ -24,11 +24,11 @@ in {
         DriverQuirks.PowerSaveDisable = "*";
 
         General = {
-          EnableNetworkConfiguration = true;
+          EnableNetworkConfiguration = false;
           AddressRandomization = "network";
         };
 
-        Network.NameResolvingService = "resolvconf";
+        Network.NameResolvingService = "systemd";
       };
     };
   };
