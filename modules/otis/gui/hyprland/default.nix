@@ -10,7 +10,6 @@ let
   inherit (config.otis.gui) style;
 
   inherit (customLib.hjem)
-    configFmt
     configText
     getConfigFiles;
 

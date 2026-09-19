@@ -1,4 +1,4 @@
-{inputs, lib, modulesPath, pkgs, ...}:
+{inputs, modulesPath, pkgs, ...}:
 
 {
   imports = [
@@ -51,7 +51,7 @@
   disko.devices.disk."main" = {
     device = "/dev/nvme0n1";
     type = "disk";
-    
+
     content = {
       type = "gpt";
 
@@ -77,7 +77,7 @@
             resumeDevice = true;
           };
         };
-                
+
         root = {
           size = "100%";
 

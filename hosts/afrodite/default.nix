@@ -123,8 +123,8 @@ in {
         };
 
         tls = {
-          public.type = "acme";
-          private.type = "acme";
+          public.type = "auto";
+          private.type = "auto";
         };
       };
       openssh.enable = true;

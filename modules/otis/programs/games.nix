@@ -12,7 +12,7 @@ in {
   options.otis.programs.games.enable = mkBoolOption "Add games" false;
 
   config = mkIf (gui.enable && cfg.enable) {
-    environment.systemPackages = with pkgs; [ prismlauncher ];
+    environment.systemPackages = [ pkgs.prismlauncher ];
 
     hardware.steam-hardware.enable = true;
 

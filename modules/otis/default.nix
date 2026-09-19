@@ -1,9 +1,7 @@
-{config, customLib, hostName, lib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (builtins) mapAttrs;
-
-  inherit (config.nixpkgs.hostPlatform) system;
 
   inherit (customLib.opts)
     mkAttrOption

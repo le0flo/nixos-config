@@ -4,15 +4,22 @@
   fetchgit,
 }:
 
-lib.makeScope pkgs.newScope (self: let
-  dockapps-packages = lib.genAttrs
-    (builtins.map
-      (x: lib.removeSuffix ".nix" x)
-      (builtins.filter
-        (x: x != "package.nix")
-        (builtins.attrNames (builtins.readDir ./.))))
+let
+  inherit (builtins)
+    attrNames
+    filter
+    readDir;
+
+  inherit (lib)
+    genAttrs
+    makeScope
+    removeSuffix;
+
+  dockapps-packages = self: genAttrs (map
+    (x: removeSuffix ".nix" x)
+    (filter (x: x != "package.nix") (attrNames (readDir ./.))))
     (name: self.callPackage ./${name}.nix {});
-in {
+in makeScope pkgs.newScope (self: {
   dockapps-sources = {
     pname = "dockapps-sources";
     version = "2025-1-1";
@@ -24,4 +31,4 @@ in {
     };
   };
 }
-// dockapps-packages)
+// dockapps-packages self)

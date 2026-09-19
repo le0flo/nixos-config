@@ -67,15 +67,16 @@ in {
     networking = {
       inherit (cfg) nameservers;
 
-      firewall = mkIf (cfg.server.enable) {
+      firewall = mkIf cfg.server.enable {
         interfaces = genAttrs (attrNames vpn.networks) (name: { allowedUDPPorts = [ 53 ]; });
       };
     };
 
     services = {
-      bind = {
-        inherit (cfg.server) enable forwarders;
+      bind = mkIf cfg.server.enable {
+        inherit (cfg.server) forwarders;
 
+        enable = true;
         listenOn = map (x: "${subnetToPrefix x.subnet}.${x.id}") (attrValues vpn.networks);
         listenOnIpv6 = [];
         forward = "only";

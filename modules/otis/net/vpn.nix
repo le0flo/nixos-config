@@ -2,10 +2,7 @@
 
 let
   inherit (builtins)
-    attrNames
     attrValues
-    concatStringsSep
-    head
     mapAttrs;
 
   inherit (config.otis.net.dns) domains;
@@ -23,12 +20,8 @@ let
     mkStrOption;
 
   inherit (lib)
-    last
     mkIf
-    mkMerge
-    splitString
-    take
-    toInt;
+    mkMerge;
 
   cfg = config.otis.net.vpn;
 

@@ -7,18 +7,14 @@ let
     filter
     listToAttrs;
 
-  inherit (config.otis.net.dns)
-    domains
-    subdomains;
+  inherit (config.otis.net.dns) domains;
 
   inherit (config.otis.net) vpn;
 
   inherit (customLib.opts)
     mkAttrOption
-    mkAttrSubOption
     mkBoolOption
     mkEnumOption
-    mkListOption
     mkListSubOption
     mkNullOption
     mkStrOption
@@ -42,7 +38,7 @@ let
   };
 
   tlsOpts.options = {
-    type = mkEnumOption [ "none" "acme" "manual" ] "Type of tls handling" "none";
+    type = mkEnumOption [ "none" "auto" "manual" ] "Type of tls handling" "none";
     cert = mkNullOption types.str "Path of the tls certificate" null;
     key = mkNullOption types.str "Path of the tls certificate's key" null;
   };
@@ -56,9 +52,9 @@ let
       value = mkMerge [
         {
           addSSL = tls.type != "none";
-          useACMEHost = if (tls.type == "acme" && zone == "public") then "${domain}" else null;
-          sslCertificate = if (tls.type == "acme" && zone == "private") then "/etc/ssl/certs/${domain}/cert.pem" else tls.cert;
-          sslCertificateKey = if (tls.type == "acme" && zone == "private") then "/etc/ssl/certs/${domain}/private.key" else tls.key;
+          useACMEHost = if (tls.type == "auto" && zone == "public") then "${domain}" else null;
+          sslCertificate = if (tls.type == "auto" && zone == "private") then "/etc/ssl/certs/${domain}/cert.pem" else tls.cert;
+          sslCertificateKey = if (tls.type == "auto" && zone == "private") then "/etc/ssl/certs/${domain}/private.key" else tls.key;
         }
         (mkIf (zone == "private") {
           extraConfig = ''
@@ -103,15 +99,14 @@ in {
     };
   };
 
-  config = {
-    networking.firewall.allowedTCPPorts = mkIf cfg.enable [
+  config = mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [
       80
       443
     ];
 
     services.nginx = {
-      inherit (cfg) enable;
-
+      enable = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 

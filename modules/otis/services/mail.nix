@@ -9,6 +9,8 @@ let
   inherit (lib) mkIf;
 
   cfg = config.otis.services.mail;
+
+  sslCertDir = if cfg.tls == "acme" then config.security.acme.certs."${cfg.domain}".directory else cfg.tlsDir;
 in {
   options.otis.services.mail = {
     enable = mkBoolOption "Mail server" false;
@@ -18,10 +20,8 @@ in {
     tlsDir = mkStrOption "Location of the tls certificates" "/etc/ssl";
   };
 
-  config = let
-    sslCertDir = if cfg.tls == "acme" then config.security.acme.certs."${cfg.domain}".directory else cfg.tlsDir;
-  in {
-    networking.firewall.allowedTCPPorts = mkIf cfg.enable [
+  config = mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [
       25
       465
       993
@@ -29,7 +29,7 @@ in {
 
     services = {
       dovecot2 = {
-        inherit (cfg) enable;
+        enable = true;
         enablePAM = false;
         createMailUser = true;
 
@@ -99,7 +99,7 @@ in {
       };
 
       postfix = {
-        inherit (cfg) enable;
+        enable = true;
         enableSubmissions = true;
         postmasterAlias = "amministrazione";
 

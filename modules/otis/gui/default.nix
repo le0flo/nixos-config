@@ -13,9 +13,7 @@ let
     mkBoolOption
     mkPkgsOption;
 
-  inherit (lib)
-    mkIf
-    mkMerge;
+  inherit (lib) mkIf;
 
   cfg = config.otis.gui;
 
@@ -173,11 +171,11 @@ in {
       gvfs.enable = true;
       gnome.gnome-keyring.enable = true;
       libinput.enable = true;
-      tumbler.enable = true;      
+      tumbler.enable = true;
 
       xserver = {
         enable = true;
-        
+
         desktopManager.xterm.enable = false;
         displayManager = {
           lightdm.enable = false;
@@ -188,7 +186,7 @@ in {
         Option "TearFree" "true"
         Option "DRI" "3"
         '';
-        
+
         videoDrivers = [ "modesetting" ];
 
         xkb.layout = "it";

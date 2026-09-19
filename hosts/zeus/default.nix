@@ -1,4 +1,4 @@
-{config, inputs, lib, pkgs, ...}:
+{config, inputs, pkgs, ...}:
 
 let
   secretsPath = toString inputs.nixos-secrets;
@@ -16,7 +16,7 @@ in {
     };
 
     net = {
-      tls.custom.enable = true;
+      tls.ca.enable = true;
       wifi.enable = true;
 
       vpn = {
@@ -52,6 +52,10 @@ in {
       audio.enable = true;
       bluetooth.enable = true;
       docker.enable = true;
+      microvm = {
+        enable = true;
+        externalInterface = "eth0";
+      };
       power.enable = true;
     };
 

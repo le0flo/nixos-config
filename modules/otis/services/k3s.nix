@@ -25,14 +25,16 @@ in {
     port = mkPortOption "The port the k3s cluster api is hosted on" 6443;
   };
 
-  config = {
+  config = mkIf cfg.enable {
     networking.firewall.interfaces = mapAttrs
       (_: _: { allowedTCPPorts = [ cfg.port ]; })
       (filterAttrs (_: x: x.primary) vpn.networks);
     
     services.k3s = mkMerge [
       {
-        inherit (cfg) enable role;
+        inherit (cfg) role;
+
+        enable = true;
         tokenFile = config.age.secrets."k3s/token".path;
       }
       (mkIf (cfg.role == "agent") {

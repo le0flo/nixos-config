@@ -1,4 +1,4 @@
-{config, inputs, pkgs, ...}:
+{config, inputs, ...}:
 
 let
   secretsPath = toString inputs.nixos-secrets;
@@ -36,10 +36,10 @@ in {
       microvm = {
         enable = true;
         externalInterface = "eno1";
+        forwardInterface = "home";
         vms = [
-          #"devops"
-          "sharing"
-          "streaming"
+          "sharing-02"
+          "streaming-03"
         ];
       };
       openssh.enable = true;

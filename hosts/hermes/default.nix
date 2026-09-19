@@ -15,7 +15,7 @@ in {
     };
 
     net = {
-      tls.custom.enable = true;
+      tls.ca.enable = true;
       wifi.enable = true;
       wait-online.enable = false;
 
@@ -51,6 +51,10 @@ in {
       audio.enable = true;
       bluetooth.enable = true;
       docker.enable = true;
+      microvm = {
+        enable = true;
+        externalInterface = "enp0s31f6";
+      };
       power.enable = true;
       smartcards.enable = true;
     };

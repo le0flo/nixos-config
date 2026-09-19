@@ -19,7 +19,7 @@ let
   secretsPath = toString inputs.nixos-secrets;
 in {
   options.otis.net.tls = {
-    custom.enable = mkBoolOption "Load custom tls certificates" true;
+    ca.enable = mkBoolOption "Load custom tls certificates" true;
 
     server = {
       enable = mkBoolOption "Marks this host as the tls CA" false;
@@ -28,7 +28,7 @@ in {
   };
 
   config = mkMerge [
-    (mkIf cfg.custom.enable {
+    (mkIf cfg.ca.enable {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
     })
     (mkIf cfg.server.enable {
@@ -39,7 +39,7 @@ in {
 
       security.acme = {
         acceptTerms = true;
-        defaults.email = cfg.server.email;
+        defaults = { inherit (cfg.server) email; };
 
         certs."${domains.public}" = {
           group = "public-acme";
