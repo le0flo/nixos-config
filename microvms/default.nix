@@ -13,15 +13,16 @@ let
 in listToAttrs (flatten (map (x: (map (y: {
   name = "microvm-${x}-${y}";
   value = nixosSystem {
+    system = y;
+
     specialArgs = {
       inherit customLib;
-      serviceName = x;
+      hostName = x;
     };
 
     modules = [
       microvm.nixosModules.microvm
       self.nixosModules.sirah
-      ./template.nix
       ./${x}
     ];
   };

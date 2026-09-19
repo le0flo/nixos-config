@@ -52,6 +52,10 @@ in {
       audio.enable = true;
       bluetooth.enable = true;
       docker.enable = true;
+      microvm = {
+        enable = true;
+        externalInterface = "eth0";
+      };
       power.enable = true;
     };
 

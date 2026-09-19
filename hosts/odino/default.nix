@@ -37,9 +37,8 @@ in {
         enable = true;
         externalInterface = "eno1";
         vms = [
-          #"devops"
-          "sharing"
-          "streaming"
+          "sharing-02"
+          "streaming-03"
         ];
       };
       openssh.enable = true;

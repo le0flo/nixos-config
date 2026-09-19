@@ -44,7 +44,7 @@ in {
       microvm = {
         enable = true;
         externalInterface = "enp0s31f6";
-        vms = [ "archive" ];
+        vms = [ "archive-01" ];
       };
       openssh.enable = true;
     };
