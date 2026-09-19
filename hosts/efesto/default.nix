@@ -17,6 +17,7 @@ in {
 
     net = {
       tls.custom.enable = true;
+      wait-online.enable = false;
 
       vpn = {
         enable = true;
