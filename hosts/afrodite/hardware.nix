@@ -1,4 +1,4 @@
-{inputs, lib, modulesPath, pkgs, ...}:
+{lib, modulesPath, pkgs, ...}:
 
 {
   imports = [
@@ -33,7 +33,7 @@
   disko.devices.disk."main" = {
     device = "/dev/sda";
     type = "disk";
-    
+
     content = {
       type = "gpt";
 
@@ -43,7 +43,7 @@
           size = "1M";
           priority = 1;
         };
-        
+
         ESP = {
           type = "EF00";
           size = "1G";
@@ -65,7 +65,7 @@
             resumeDevice = true;
           };
         };
-        
+
         root = {
           size = "100%";
 

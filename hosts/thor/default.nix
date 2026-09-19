@@ -1,4 +1,4 @@
-{config, inputs, lib, pkgs, self, ...}:
+{config, inputs, lib, ...}:
 
 let
   inherit (builtins)
@@ -44,7 +44,8 @@ in {
       microvm = {
         enable = true;
         externalInterface = "enp0s31f6";
-        vms = [ "archive" ];
+        forwardInterface = "home";
+        vms = [ "archive-01" ];
       };
       openssh.enable = true;
     };

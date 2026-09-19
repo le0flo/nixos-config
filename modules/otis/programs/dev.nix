@@ -1,11 +1,7 @@
 {config, customLib, lib, pkgs, ...}:
 
 let
-  inherit (builtins)
-    attrNames
-    concatStringsSep
-    filter
-    readDir;
+  inherit (builtins) concatStringsSep;
 
   inherit (config.otis) gui;
 
@@ -19,12 +15,8 @@ let
 
   inherit (lib)
     genAttrs
-    hasSuffix
-    mkEnableOption
     mkIf
-    mkMerge
-    mkOption
-    types;
+    mkMerge;
 
   cfg = config.otis.programs.dev;
   configFiles = getConfigFiles ./emacs ".el";
@@ -39,7 +31,7 @@ in {
     {
       environment = {
         shellAliases."k" = "${pkgs.scripts}/bin/kubectl-wrapper";
-        
+
         systemPackages = with pkgs; [
           gnumake
           postgresql
@@ -80,6 +72,7 @@ in {
           lua-mode
           magit
           markdown-mode
+          matlab-mode
           nginx-mode
           nix-mode
           rfc-mode

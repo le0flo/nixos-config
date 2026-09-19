@@ -19,12 +19,10 @@ let
     mkStrOption
     mkPkgsOption;
 
-  inherit (lib)
-    mkIf
-    mkMerge;
+  inherit (lib) mkIf;
 
   cfg = gui.style;
-  
+
   mkColorOption = name: default: mkStrOption "Color for the ${name}" default;
   configFmtIni = configFmt pkgs.formats.ini;
   packageLinks = dir: pkgs: (listToAttrs (concatMap (x: map (y: {

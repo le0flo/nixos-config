@@ -93,8 +93,6 @@ in {
               (mkBookmark "Telegram" "https://web.telegram.org/a/")
               (mkBookmark "Soundcloud" "https://soundcloud.com/")
               (mkBookmark "ChatGPT" "https://chatgpt.com/")
-              (mkBookmark "Google Drive" "https://drive.google.com/")
-              (mkBookmark "Microsoft Azure" "https://portal.azure.com/")
             ];
 
             FirefoxHome = {

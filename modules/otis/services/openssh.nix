@@ -9,11 +9,11 @@ let
 in {
   options.otis.services.openssh.enable = mkBoolOption "OpenSSH server" false;
   
-  config = {
-    networking.firewall.allowedTCPPorts = mkIf cfg.enable [ 22 ];
+  config = mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [ 22 ];
 
     services.openssh = {
-      inherit (cfg) enable;
+      enable = true;
 
       settings = {
         PermitRootLogin = "no";

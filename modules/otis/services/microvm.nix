@@ -3,9 +3,8 @@
 let
   inherit (builtins)
     attrNames
-    attrValues
     concatStringsSep
-    head
+    filter
     listToAttrs;
 
   inherit (config.nixpkgs.hostPlatform) system;
@@ -17,125 +16,102 @@ let
   inherit (customLib.opts)
     mkBoolOption
     mkListOption
+    mkNullOption
     mkStrOption;
 
   inherit (lib)
+    drop
     flatten
     genAttrs
+    hasPrefix
     last
+    mkDefault
     mkIf
-    mkMerge
-    replaceString
     splitString
     take
-    toInt
-    types;
+    toIntBase10
+    types
+    unique;
 
   cfg = config.otis.services.microvm;
 
-  vmAddrFromGateway = gateway: "${concatStringsSep "." (take 3 (splitString "." gateway))}.2";
-  vmSubFromGateway = gateway: "${concatStringsSep "." (take 3 (splitString "." gateway))}.0/30";
+  allMicrovms = unique (map
+    (x: concatStringsSep "-" (take 2 (drop 1 (splitString "-" x))))
+    (filter (y: hasPrefix "microvm" y) (attrNames self.nixosConfigurations)));
 
-  forwardRule = proto: gateway: port: {
-    inherit proto;
-    sourcePort = port;
-    destination = "${vmAddrFromGateway gateway}:${toString port}";
-    loopbackIPs = map (x: "${subnetToPrefix x.subnet}.${x.id}") (attrValues networks);
-  };
+  forwardIp = let
+    inherit (networks."${cfg.forwardInterface}") id subnet;
+  in "${subnetToPrefix subnet}.${id}";
 
-  snatRule = stop: proto: subnet: gateway: port: ''
-  iptables -t nat -${if stop then "D" else "A"} POSTROUTING \
-    -j SNAT \
-    -p ${proto} \
-    -s ${subnet} \
-    -d ${vmAddrFromGateway gateway} \
-    --dport ${toString port} \
-    --to-source ${gateway} ${if stop then "|| true" else ""}
-  '';
+  forwardPorts = flatten (map (x: let
+    inherit (self.nixosConfigurations."microvm-${x}-${system}".config.sirah.net) allowedTCPPorts allowedUDPPorts;
+  in [
+    (map (y: {
+      port = y;
+      id = idFromName x;
+      isUdp = false;
+    }) allowedTCPPorts)
+    (map (z: {
+      port = z;
+      id = idFromName x;
+      isUdp = false;
+    }) allowedUDPPorts)
+  ]) cfg.vms);
 
-  masqueradeRule = stop: gateway: ''
-  iptables -t nat -${if stop then "D" else "A"} POSTROUTING \
-    -j MASQUERADE \
-    -s ${vmSubFromGateway gateway} \
-    -o ${cfg.externalInterface} ${if stop then "|| true" else ""}
-  '';
+  idFromName = name: toIntBase10 (last (splitString "-" name));
 in {
   options.otis.services.microvm = {
     enable = mkBoolOption "microvm.nix host" false;
     externalInterface = mkStrOption "The interface that microvms use for communications with the outside world" "";
+    forwardInterface = mkNullOption types.str "The interface where a reverse proxy contacts the actual microvms" null;
     vms = mkListOption types.str "List hosted microvms" [];
   };
 
   config = mkIf cfg.enable {
-    networking = {
-      firewall = {
-        interfaces = genAttrs
-          (attrNames networks)
-          (name: mkMerge (flatten (map (x: let
-            inherit (self.nixosConfigurations."microvm-${x}-${system}".config.networking) firewall;
-          in [
-            { inherit (firewall) allowedTCPPorts; }
-            { inherit (firewall) allowedUDPPorts; }
-          ]) cfg.vms)));
+    microvm.vms = (genAttrs
+      (map (x: "microvm-${x}-${system}") cfg.vms)
+      (name: {
+        autostart = true;
+        flake = self;
+        restartIfChanged = true;
+        updateFlake = null;
+      }));
 
-        trustedInterfaces = map (x: "vm-${x}") cfg.vms;
-      };
+    networking.nat = {
+      inherit (cfg) externalInterface;
 
-      interfaces = listToAttrs (map (x: {
-        name = "vm-${x}";
-        value = {
-          ipv4.addresses = [
-            {
-              inherit (self.nixosConfigurations."microvm-${x}-${system}".config.networking.defaultGateway) address;
-              prefixLength = 30;
-            }
-          ];
-        };
-      }) cfg.vms);
+      enable = true;
+      enableIPv6 = false;
 
-      nat = {
-        enable = true;
-
-        externalInterface = "home";
-        internalInterfaces = map (x: "vm-${x}") cfg.vms;
-
-        extraCommands = concatStringsSep "\n" (flatten (map
-          (x: let
-            inherit (self.nixosConfigurations."microvm-${x}-${system}".config.networking) defaultGateway firewall;
-            inherit (networks."${config.networking.nat.externalInterface}") subnet;
-          in [
-            (masqueradeRule false defaultGateway.address)
-            (map (y: snatRule false "tcp" subnet defaultGateway.address y) firewall.allowedTCPPorts)
-            (map (y: snatRule false "udp" subnet defaultGateway.address y) firewall.allowedUDPPorts)
-          ])
-          cfg.vms));
-
-        extraStopCommands = concatStringsSep "\n" (flatten (map
-          (x: let
-            inherit (self.nixosConfigurations."microvm-${x}-${system}".config.networking) defaultGateway firewall;
-            inherit (networks."${config.networking.nat.externalInterface}") subnet;
-          in [
-            (masqueradeRule true defaultGateway.address)
-            (map (y: snatRule true "tcp" subnet defaultGateway.address y) firewall.allowedTCPPorts)
-            (map (y: snatRule true "udp" subnet defaultGateway.address y) firewall.allowedUDPPorts)
-          ])
-          cfg.vms));
-
-        forwardPorts = flatten (map
-          (x: let
-            inherit (self.nixosConfigurations."microvm-${x}-${system}".config.networking) defaultGateway firewall;
-          in [
-            (map (y: forwardRule "tcp" defaultGateway.address y) firewall.allowedTCPPorts)
-            (map (y: forwardRule "udp" defaultGateway.address y) firewall.allowedUDPPorts)
-          ]) cfg.vms);
-      };
+      internalIPs = [ "10.67.0.0/24" ];
     };
 
-    microvm.vms = genAttrs (map (x: "microvm-${x}-${system}") cfg.vms) (name: {
-      autostart = true;
-      flake = self;
-      restartIfChanged = true;
-      updateFlake = null;
-    });
+    services.nginx = {
+      enable = mkDefault (cfg.forwardInterface != null);
+
+      streamConfig = ''
+      ${concatStringsSep "\n" (map (x: ''
+      server {
+        listen ${forwardIp}:${toString x.port} ${if x.isUdp then "udp" else ""};
+        proxy_pass 10.67.0.${toString x.id}:${toString x.port};
+      }
+      '') forwardPorts)}
+      '';
+    };
+
+    systemd.network.networks = listToAttrs (map (vmName: {
+      name = "40-microvm-${vmName}";
+      value = {
+        matchConfig.Name = "vm-${vmName}";
+        address = [ "10.67.0.0/32" ];
+
+        routes = [{ Destination = "10.67.0.${toString (idFromName vmName)}/32"; }];
+
+        networkConfig = {
+          IPv4Forwarding = true;
+          IPv6Forwarding = false;
+        };
+      };
+    }) allMicrovms);
   };
 }

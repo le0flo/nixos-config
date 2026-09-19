@@ -3,9 +3,14 @@
 let
   inherit (builtins) listToAttrs;
 
-  inherit (customLib.config) listDirs systems;
+  inherit (customLib.config)
+    listDirs
+    systems;
 
-  inherit (inputs) agenix disko hjem microvm nixpkgs self;
+  inherit (inputs)
+    microvm
+    nixpkgs
+    self;
 
   inherit (nixpkgs.lib)
     flatten
@@ -13,15 +18,16 @@ let
 in listToAttrs (flatten (map (x: (map (y: {
   name = "microvm-${x}-${y}";
   value = nixosSystem {
+    system = y;
+
     specialArgs = {
       inherit customLib;
-      serviceName = x;
+      hostName = x;
     };
 
     modules = [
       microvm.nixosModules.microvm
       self.nixosModules.sirah
-      ./template.nix
       ./${x}
     ];
   };

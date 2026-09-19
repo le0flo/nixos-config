@@ -12,10 +12,8 @@ in {
   options.otis.services.smartcards.enable = mkBoolOption "Smartcard reader" false;
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ pcsc-tools ];
-
-    programs.firefox.nativeMessagingHosts.packages = mkIf gui.enable (with pkgs; [ web-eid-app ]);
-
+    environment.systemPackages = [ pkgs.pcsc-tools ];
+    programs.firefox.nativeMessagingHosts.packages = mkIf gui.enable [ pkgs.web-eid-app ];
     services.pcscd.enable = true;
   };
 }

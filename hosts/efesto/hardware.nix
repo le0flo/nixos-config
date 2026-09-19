@@ -1,4 +1,4 @@
-{inputs, lib, modulesPath, pkgs, ...}:
+{inputs, lib, modulesPath, ...}:
 
 let
   pkgsLocal = import inputs.nixpkgs { localSystem = "x86_64-linux"; };
@@ -14,7 +14,7 @@ in {
   ];
 
   services.fwupd.enable = false;
-  
+
   nixpkgs.hostPlatform = "aarch64-linux";
 
   hardware = {
