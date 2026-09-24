@@ -78,9 +78,11 @@ in {
       }));
 
     networking = {
-      firewall.interfaces."${cfg.forwardInterface}" = {
-        allowedTCPPorts = map (x: x.port) (filter (y: y.isUdp == false) forwardPorts);
-        allowedUDPPorts = map (x: x.port) (filter (y: y.isUdp == true) forwardPorts);
+      firewall = mkIf (cfg.forwardInterface != null) {
+        interfaces."${cfg.forwardInterface}" = {
+          allowedTCPPorts = map (x: x.port) (filter (y: y.isUdp == false) forwardPorts);
+          allowedUDPPorts = map (x: x.port) (filter (y: y.isUdp == true) forwardPorts);
+        };
       };
 
       nat = {
