@@ -8,6 +8,7 @@ let
 
   inherit (customLib.opts)
     mkBoolOption
+    mkIntOption
     mkListSubOption
     mkStrOption;
 
