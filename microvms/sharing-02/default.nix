@@ -35,7 +35,7 @@
           gid = 100;
         };
         guest = {
-          dir = "/media/bt";
+          dir = "/media/slsk";
           uid = 997;
           gid = 997;
         };
