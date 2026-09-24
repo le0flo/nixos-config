@@ -22,14 +22,14 @@ let
   shareOpts.options = {
     host = {
       dir = mkStrOption "Directory to share with the guest" "";
-      uid = mkStrOption "The uid of the host owner" "";
-      gid = mkStrOption "The gid of the host owner" "";
+      uid = mkIntOption "The uid of the host owner" 1000;
+      gid = mkIntOption "The gid of the host owner" 100;
     };
 
     guest = {
       dir = mkStrOption "Destination on the guest fs" "";
-      uid = mkStrOption "The uid of the guest owner" "";
-      gid = mkStrOption "The gid of the guest owner" "";
+      uid = mkIntOption "The uid of the guest owner" 1000;
+      gid = mkIntOption "The gid of the guest owner" 100;
     };
 
     readOnly = mkBoolOption "Whether to make the directory read only" true;
@@ -55,8 +55,8 @@ in {
       (mkIf (x.readOnly == false) {
         posixAcl = false;
         extraArgs = [
-          "--translate-uid" "map:${x.guest.uid}:${x.host.uid}:1"
-          "--translate-gid" "map:${x.guest.gid}:${x.host.gid}:1"
+          "--translate-uid" "map:${toString x.guest.uid}:${toString x.host.uid}:1"
+          "--translate-gid" "map:${toString x.guest.gid}:${toString x.host.gid}:1"
         ];
       })
     ]) cfg;
