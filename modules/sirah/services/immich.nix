@@ -1,4 +1,4 @@
-{config, customLib, ...}:
+{config, customLib, pkgs, ...}:
 
 let
   inherit (customLib.opts)
