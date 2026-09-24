@@ -23,5 +23,7 @@ in {
       machine-learning.enable = false;
       mediaLocation = cfg.mediaDir;
     };
+
+    systemd.services."redis-immich".path = [ pkgs.coreutils ];
   };
 }
