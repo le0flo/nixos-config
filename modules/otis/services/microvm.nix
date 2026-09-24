@@ -54,7 +54,7 @@ let
     (map (z: {
       port = z;
       id = idFromName x;
-      isUdp = false;
+      isUdp = true;
     }) allowedUDPPorts)
   ]) cfg.vms);
 
@@ -77,13 +77,20 @@ in {
         updateFlake = null;
       }));
 
-    networking.nat = {
-      inherit (cfg) externalInterface;
+    networking = {
+      firewall.interfaces."${cfg.forwardInterface}" = {
+        allowedTCPPorts = map (x: x.port) (filter (y: y.isUdp == false) forwardPorts);
+        allowedUDPPorts = map (x: x.port) (filter (y: y.isUdp == true) forwardPorts);
+      };
 
-      enable = true;
-      enableIPv6 = false;
+      nat = {
+        inherit (cfg) externalInterface;
 
-      internalIPs = [ "10.67.0.0/24" ];
+        enable = true;
+        enableIPv6 = false;
+
+        internalIPs = [ "10.67.0.0/24" ];
+      };
     };
 
     services.nginx = {
