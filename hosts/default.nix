@@ -12,6 +12,7 @@ let
     disko
     hjem
     microvm
+    nixos-secrets
     nixpkgs
     self;
 
@@ -23,7 +24,11 @@ in listToAttrs (map (x: {
   value = nixosSystem {
     specialArgs = {
       inherit customLib inputs self;
+
       hostName = x;
+      secretsEnc = toString nixos-secrets;
+
+      readPubKey = customLib.net.readPubKey (toString nixos-secrets);
     };
 
     modules = [

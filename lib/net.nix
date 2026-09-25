@@ -4,7 +4,8 @@ let
   inherit (builtins)
     concatStringsSep
     genList
-    head;
+    head
+    readFile;
 
   inherit (nixpkgs.lib)
     flatten
@@ -23,6 +24,8 @@ let
     (splitString "." (head (splitString "/" subnet))));
 in {
   inherit subnetToMask subnetToPrefix;
+
+  readPubKey = secretsPath: name: readFile "${secretsPath}/wireguard/${name}.pub";
 
   subnetToGateway = subnet: concatStringsSep "." (flatten [
     (subnetToPrefix subnet)
