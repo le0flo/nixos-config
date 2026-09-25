@@ -1,16 +1,13 @@
-{config, inputs, lib, ...}:
+{config, customLib, inputs, lib, readPubKey, secretsEnc, ...}:
 
 let
-  inherit (builtins)
-    concatStringsSep
-    head;
+  inherit (config.age) secretsDir;
 
-  inherit (lib)
-    dropEnd
-    splitString;
+  inherit (config.otis.net)
+    dns
+    vpn;
 
-  secretsPath = toString inputs.nixos-secrets;
-  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+  inherit (customLib.net) subnetToGateway;
 in {
   imports = [ ./hardware.nix ];
 
@@ -19,13 +16,13 @@ in {
       enable = true;
       role = "client";
 
-      networks."home" = {
+      networks."internal" = {
         primary = true;
-        privateKeyFile = "${config.age.secretsDir}/wireguard/home";
-        publicKey = readKey "afrodite-home";
+        privateKeyFile = "${secretsDir}/wireguard/internal";
+        publicKey = readPubKey "afrodite-internal";
         port = 51820;
-        subnet = "10.69.0.0/24";
-        id = "3";
+        subnet = "10.69.0.0/16";
+        id = "1.2";
       };
     };
 
@@ -62,12 +59,12 @@ in {
 
     secrets = {
       "k3s/token" = {
-        file = "${secretsPath}/k3s/token.age";
+        file = "${secretsEnc}/k3s/token.age";
         mode = "400";
       };
 
-      "wireguard/home" = {
-        file = "${secretsPath}/wireguard/thor.age";
+      "wireguard/internal" = {
+        file = "${secretsEnc}/wireguard/thor.age";
         mode = "400";
       };
     };
@@ -77,8 +74,8 @@ in {
     text = ''
     mkdir -p /etc/paperless
     cat > /etc/paperless/environment <<EOF
-    PAPERLESS_URL=https://papers.${config.otis.net.dns.domains.private}
-    PAPERLESS_TRUSTED_PROXIES=${concatStringsSep "." (dropEnd 1 (splitString "." (head (splitString "/" config.otis.net.vpn.networks."home".subnet))))}.1
+    PAPERLESS_URL=https://papers.${dns.domains.private}
+    PAPERLESS_TRUSTED_PROXIES=${subnetToGateway vpn.networks."internal".subnet}
     EOF
     '';
   };

@@ -1,8 +1,7 @@
-{config, inputs, ...}:
+{config, inputs, readPubKey, secretsEnc, ...}:
 
 let
-  secretsPath = toString inputs.nixos-secrets;
-  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+  inherit (config.age) secretsDir;
 in {
   imports = [ ./hardware.nix ];
 
@@ -11,13 +10,13 @@ in {
       enable = true;
       role = "client";
 
-      networks."home" = {
+      networks."internal" = {
         primary = true;
-        privateKeyFile = "${config.age.secretsDir}/wireguard/home";
-        publicKey = readKey "afrodite-home";
+        privateKeyFile = "${secretsDir}/wireguard/internal";
+        publicKey = readPubKey "afrodite-internal";
         port = 51820;
-        subnet = "10.69.0.0/24";
-        id = "2";
+        subnet = "10.69.0.0/16";
+        id = "1.1";
       };
     };
 
@@ -57,26 +56,26 @@ in {
 
     secrets = {
       "k3s/token" = {
-        file = "${secretsPath}/k3s/token.age";
+        file = "${secretsEnc}/k3s/token.age";
         mode = "400";
       };
 
       "microvms/qbittorrent/password" = {
-        file = "${secretsPath}/microvms/qbittorrent.age";
+        file = "${secretsEnc}/microvms/qbittorrent.age";
         path = "/etc/qbittorrent/password";
         mode = "444";
         symlink = false;
       };
 
       "microvms/slskd/environment" = {
-        file = "${secretsPath}/microvms/slskd.age";
+        file = "${secretsEnc}/microvms/slskd.age";
         path = "/etc/slskd/environment";
         mode = "444";
         symlink = false;
       };
 
-      "wireguard/home" = {
-        file = "${secretsPath}/wireguard/odino.age";
+      "wireguard/internal" = {
+        file = "${secretsEnc}/wireguard/odino.age";
         mode = "400";
       };
     };

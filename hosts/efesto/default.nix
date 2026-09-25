@@ -1,8 +1,7 @@
-{config, inputs, pkgs, ...}:
+{config, customLib, inputs, pkgs, readPubKey, secretsEnc, ...}:
 
 let
-  secretsPath = toString inputs.nixos-secrets;
-  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+  inherit (config.age) secretsDir;
 in {
   imports = [ ./hardware.nix ];
 
@@ -23,13 +22,13 @@ in {
         enable = true;
         role = "client";
 
-        networks."home" = {
+        networks."external" = {
           primary = true;
-          privateKeyFile = "${config.age.secretsDir}/wireguard/home";
-          publicKey = readKey "afrodite-external";
+          privateKeyFile = "${secretsDir}/wireguard/external";
+          publicKey = readPubKey "afrodite-external";
           port = 51821;
-          subnet = "10.96.0.0/24";
-          id = "4";
+          subnet = "10.96.0.0/16";
+          id = "1.1";
         };
       };
     };
@@ -50,8 +49,8 @@ in {
       ];
     };
 
-    secrets."wireguard/home" = {
-      file = "${secretsPath}/wireguard/efesto.age";
+    secrets."wireguard/external" = {
+      file = "${secretsEnc}/wireguard/efesto.age";
       mode = "400";
     };
   };

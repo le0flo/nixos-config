@@ -1,15 +1,9 @@
-{config, inputs, pkgs, ...}:
+{config, inputs, pkgs, readPubKey, secretsEnc, ...}:
 
 let
+  inherit (config.age) secretsDir;
+
   inherit (config.otis.net.dns) domains;
-
-  www-public = pkgs.www.public.override { domain = domains.public; };
-  www-private = pkgs.www.private.override {
-    privateDomain = domains.private;
-    publicDomain = domains.public;
-  };
-
-  secretsPath = toString inputs.nixos-secrets;
 
   tmpfilesConfig = {
     mode = "0755";
@@ -17,7 +11,11 @@ let
     group = "users";
   };
 
-  readKey = name: builtins.readFile "${secretsPath}/wireguard/${name}.pub";
+  www-public = pkgs.www.public.override { domain = domains.public; };
+  www-private = pkgs.www.private.override {
+    privateDomain = domains.private;
+    publicDomain = domains.public;
+  };
 in {
   imports = [ ./hardware.nix ];
 
@@ -37,9 +35,6 @@ in {
             "cinema"
             "bt"
             "slsk"
-            "code"
-            "oci"
-            "farm"
           ];
         };
 
@@ -53,30 +48,30 @@ in {
         role = "server";
 
         networks = {
-          "home" = {
+          "internal" = {
             primary = true;
-            privateKeyFile = "${config.age.secretsDir}/wireguard/home";
+            privateKeyFile = "${secretsDir}/wireguard/internal";
             port = 51820;
-            subnet = "10.69.0.0/24";
-            id = "1";
+            subnet = "10.69.0.0/16";
+            id = "0.1";
             clients = [
-              { publicKey = readKey "odino"; id = "2"; }
-              { publicKey = readKey "thor"; id = "3"; }
-              { publicKey = readKey "hermes"; id = "101"; }
-              { publicKey = readKey "zeus"; id = "102"; }
-              { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = "103"; } # ares
+              { publicKey = readPubKey "odino"; id = "1.1"; }
+              { publicKey = readPubKey "thor"; id = "1.2"; }
+              { publicKey = readPubKey "hermes"; id = "2.1"; }
+              { publicKey = readPubKey "zeus"; id = "2.2"; }
+              { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = "2.3"; } # ares
             ];
           };
 
           "external" = {
-            privateKeyFile = "${config.age.secretsDir}/wireguard/external";
+            privateKeyFile = "${secretsDir}/wireguard/external";
             port = 51821;
-            subnet = "10.96.0.0/24";
-            id = "1";
+            subnet = "10.96.0.0/16";
+            id = "0.1";
             clients = [
-              { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "2"; } # firetv
-              { publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0="; id = "3"; } # mybaby
-              { publicKey = readKey "efesto"; id = "4"; }
+              { publicKey = readPubKey "efesto"; id = "1.1"; }
+              { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "1.2"; } # firetv
+              { publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0="; id = "2.1"; } # mybaby
             ];
           };
         };
@@ -111,14 +106,12 @@ in {
           private = [
             { subdomain = "@"; type = "files"; root = "${www-private}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/private"; autoindex = true; }
-            { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.0.3:10001"; }
-            { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.0.3:10002"; }
-            { subdomain = "music"; type = "proxy"; address = "http://10.69.0.2:11001"; }
-            { subdomain = "cinema"; type = "proxy"; address = "http://10.69.0.2:11002"; }
-            { onlyPrimary = true; subdomain = "bt"; type = "proxy"; address = "http://10.69.0.2:12001"; }
-            { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.0.2:12002"; }
-            { onlyPrimary = true; subdomain = "code"; type = "proxy"; address = "http://10.69.0.2:13001"; }
-            { onlyPrimary = true; subdomain = "oci"; type = "proxy"; address = "http://10.69.0.2:13002"; }
+            { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.1.2:10001"; }
+            { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.1.2:10002"; }
+            { subdomain = "music"; type = "proxy"; address = "http://10.69.1.1:11001"; }
+            { subdomain = "cinema"; type = "proxy"; address = "http://10.69.1.1:11002"; }
+            { onlyPrimary = true; subdomain = "bt"; type = "proxy"; address = "http://10.69.1.1:12001"; }
+            { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.1.1:12002"; }
           ];
         };
 
@@ -141,29 +134,29 @@ in {
 
     secrets = {
       "k3s/token" = {
-        file = "${secretsPath}/k3s/token.age";
+        file = "${secretsEnc}/k3s/token.age";
         mode = "400";
       };
 
       "mail/dovecot-passwd" = {
-        file = "${secretsPath}/mail/dovecot-passwd.age";
+        file = "${secretsEnc}/mail/dovecot-passwd.age";
         mode = "440";
         owner = "dovecot2";
         group = "dovecot2";
       };
 
       "tls/ca.key" = {
-        file = "${secretsPath}/tls/ca.age";
+        file = "${secretsEnc}/tls/ca.age";
         mode = "400";
       };
 
       "wireguard/external" = {
-        file = "${secretsPath}/wireguard/afrodite-external.age";
+        file = "${secretsEnc}/wireguard/afrodite-external.age";
         mode = "400";
       };
 
-      "wireguard/home" = {
-        file = "${secretsPath}/wireguard/afrodite-home.age";
+      "wireguard/internal" = {
+        file = "${secretsEnc}/wireguard/afrodite-internal.age";
         mode = "400";
       };
     };
@@ -174,7 +167,7 @@ in {
     "/srv/files/private".d = tmpfilesConfig;
     "/srv/files/private/ca.pem".C = {
       age = "-";
-      argument = "${secretsPath}/tls/ca.pem";
+      argument = "${secretsEnc}/tls/ca.pem";
     };
   };
 }
