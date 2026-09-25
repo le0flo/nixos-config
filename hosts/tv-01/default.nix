@@ -1,4 +1,4 @@
-{config, pkgs, readPubKey, secretsEnc, ...}:
+{config, hostName, pkgs, readPubKey, secretsEnc, ...}:
 
 let
   inherit (config.age) secretsDir;
@@ -34,7 +34,7 @@ in {
         networks."external" = {
           primary = true;
           privateKeyFile = "${secretsDir}/wireguard/external";
-          publicKey = readPubKey "afrodite-external";
+          publicKey = readPubKey "entrypoint-01-external";
           address = domains.public;
           port = 51821;
           subnet = "10.96.0.0/16";
@@ -62,7 +62,7 @@ in {
     };
 
     secrets."wireguard/external" = {
-      file = "${secretsEnc}/wireguard/efesto.age";
+      file = "${secretsEnc}/wireguard/${hostName}.age";
       mode = "400";
     };
   };
