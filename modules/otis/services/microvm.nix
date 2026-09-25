@@ -40,7 +40,7 @@ let
     (filter (y: hasPrefix "microvm" y) (attrNames self.nixosConfigurations)));
 
   forwardIp = let
-    inherit (networks."${cfg.forwardInterface}") id subnet;
+    inherit (networks."${cfg.vpnInterface}") id subnet;
   in "${subnetToPrefix subnet}.${id}";
 
   forwardPorts = flatten (map (x: let
@@ -63,7 +63,7 @@ in {
   options.otis.services.microvm = {
     enable = mkBoolOption "microvm.nix host" false;
     externalInterface = mkStrOption "The interface that microvms use for communications with the outside world" "";
-    forwardInterface = mkNullOption types.str "The interface where a reverse proxy contacts the actual microvms" null;
+    vpnInterface = mkNullOption types.str "The vpn interface where a reverse proxy contacts the actual microvms" null;
     vms = mkListOption types.str "List hosted microvms" [];
   };
 
@@ -78,8 +78,8 @@ in {
       }));
 
     networking = {
-      firewall = mkIf (cfg.forwardInterface != null) {
-        interfaces."${cfg.forwardInterface}" = {
+      firewall = mkIf (cfg.vpnInterface != null) {
+        interfaces."${cfg.vpnInterface}" = {
           allowedTCPPorts = map (x: x.port) (filter (y: y.isUdp == false) forwardPorts);
           allowedUDPPorts = map (x: x.port) (filter (y: y.isUdp == true) forwardPorts);
         };
@@ -96,7 +96,7 @@ in {
     };
 
     services.nginx = {
-      enable = mkDefault (cfg.forwardInterface != null);
+      enable = mkDefault (cfg.vpnInterface != null);
 
       streamConfig = ''
       ${concatStringsSep "\n" (map (x: ''

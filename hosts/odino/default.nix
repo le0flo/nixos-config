@@ -35,7 +35,7 @@ in {
       microvm = {
         enable = true;
         externalInterface = "eno1";
-        forwardInterface = "home";
+        vpnInterface = "internal";
         vms = [
           "sharing-02"
           "streaming-03"
