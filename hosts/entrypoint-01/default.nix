@@ -1,4 +1,4 @@
-{config, pkgs, readPubKey, secretsEnc, ...}:
+{config, hostName, pkgs, readPubKey, secretsEnc, ...}:
 
 let
   inherit (config.age) secretsDir;
@@ -82,11 +82,11 @@ in {
             subnet = "10.69.0.0/16";
             id = "0.1";
             clients = [
-              { publicKey = readPubKey "odino"; id = "1.1"; }
-              { publicKey = readPubKey "thor"; id = "1.2"; }
-              { publicKey = readPubKey "hermes"; id = "2.1"; }
-              { publicKey = readPubKey "zeus"; id = "2.2"; }
-              { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = "2.3"; } # ares
+              { publicKey = readPubKey "node-01"; id = "1.1"; }
+              { publicKey = readPubKey "node-02"; id = "1.2"; }
+              { publicKey = readPubKey "pc-01"; id = "2.1"; }
+              { publicKey = readPubKey "pc-02"; id = "2.2"; }
+              { publicKey = "vdQbZ0/xbQnGlyPRFEC4gugOXaVPyF6n0vHVAlyLFjU="; id = "3.1"; } # tel-01
             ];
           };
 
@@ -96,8 +96,8 @@ in {
             subnet = "10.96.0.0/16";
             id = "0.1";
             clients = [
-              { publicKey = readPubKey "efesto"; id = "1.1"; }
-              { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "1.2"; } # firetv
+              { publicKey = readPubKey "tv-01"; id = "1.1"; }
+              { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "1.2"; } # tv-02
               { publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0="; id = "2.1"; } # mybaby
             ];
           };
@@ -180,12 +180,12 @@ in {
       };
 
       "wireguard/external" = {
-        file = "${secretsEnc}/wireguard/afrodite-external.age";
+        file = "${secretsEnc}/wireguard/${hostName}-external.age";
         mode = "400";
       };
 
       "wireguard/internal" = {
-        file = "${secretsEnc}/wireguard/afrodite-internal.age";
+        file = "${secretsEnc}/wireguard/${hostName}-internal.age";
         mode = "400";
       };
     };
