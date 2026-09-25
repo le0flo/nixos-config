@@ -33,6 +33,7 @@ let
   networkOpts.options = {
     privateKeyFile = mkStrOption "Private key file for this host" "/run/secrets/private.key";
     publicKey = mkStrOption "Public key for this host" "";
+    address = mkStrOption "The address which the vpn is hosted on" domains.public;
     port = mkPortOption "The port which the vpn is hosted on" 51820;
     subnet = mkStrOption "Subnet for the vpn" "10.0.0.0/24";
     primary = mkBoolOption "Whether this is the primary vpn" false;
@@ -55,7 +56,7 @@ in {
         peers = [{
           inherit (y) publicKey;
           allowedIPs = [ y.subnet ];
-          endpoint = "${domains.public}:${toString y.port}";
+          endpoint = "${y.address}:${toString y.port}";
           persistentKeepalive = 25;
         }];
       }) cfg.networks);
