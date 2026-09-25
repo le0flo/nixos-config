@@ -1,7 +1,9 @@
-{config, customLib, inputs, pkgs, readPubKey, secretsEnc, ...}:
+{config, pkgs, readPubKey, secretsEnc, ...}:
 
 let
   inherit (config.age) secretsDir;
+
+  inherit (config.otis.net.dns) domains;
 in {
   imports = [ ./hardware.nix ];
 
@@ -15,8 +17,15 @@ in {
     };
 
     net = {
-      tls.ca.enable = true;
-      wait-online.enable = false;
+      dns.domains = {
+        public = "leoflo.net";
+        private = "home.arpa";
+      };
+
+      tls = {
+        enable = true;
+        role = "client";
+      };
 
       vpn = {
         enable = true;
@@ -26,11 +35,14 @@ in {
           primary = true;
           privateKeyFile = "${secretsDir}/wireguard/external";
           publicKey = readPubKey "afrodite-external";
+          address = domains.public;
           port = 51821;
           subnet = "10.96.0.0/16";
           id = "1.1";
         };
       };
+
+      wait-online.enable = false;
     };
 
     programs = {

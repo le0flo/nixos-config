@@ -1,7 +1,9 @@
 {config, customLib, inputs, lib, pkgs, ...}:
 
 let
-  inherit (builtins) concatStringsSep;
+  inherit (builtins)
+    concatStringsSep
+    listToAttrs;
 
   inherit (config.otis.net.dns)
     domains
@@ -9,29 +11,42 @@ let
 
   inherit (customLib.opts)
     mkBoolOption
+    mkEnumOption
+    mkListOption
+    mkListSubOption
     mkStrOption;
 
   inherit (lib)
     mkIf
-    mkMerge;
+    mkMerge
+    types;
 
   cfg = config.otis.net.tls;
   secretsPath = toString inputs.nixos-secrets;
+
+  certOpts.options = {
+    domain = mkStrOption "The domain for the certificate" "";
+    subdomains = mkListOption types.str "Additional subdomains" [];
+  };
 in {
   options.otis.net.tls = {
-    ca.enable = mkBoolOption "Load custom tls certificates" true;
+    enable = mkBoolOption "Enable tls handling for public and private network" true;
+    role = mkEnumOption [ "client" "server" ] "The role of the host" "client";
 
-    server = {
-      enable = mkBoolOption "Marks this host as the tls CA" false;
-      email = mkStrOption "Email used to manage ACME tls certificates" "amministrazione@${domains.public}";
+    publicAcme = {
+      enable = mkBoolOption "Enables the public acme service" false;
+      email = mkStrOption "Email used to manage ACME tls certificates" "";
+      certs = mkListSubOption certOpts "List of certificates to generate using acme" [];
     };
+
+    privateAcme.enable = mkBoolOption "Enables the private acme service" false;
   };
 
-  config = mkMerge [
-    (mkIf cfg.ca.enable {
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf (cfg.role == "client") {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
     })
-    (mkIf cfg.server.enable {
+    (mkIf (cfg.role == "server" && cfg.publicAcme.enable) {
       networking.firewall.allowedTCPPorts = [
         80
         443
@@ -39,15 +54,22 @@ in {
 
       security.acme = {
         acceptTerms = true;
-        defaults = { inherit (cfg.server) email; };
+        defaults = { inherit (cfg.publicAcme) email; };
 
-        certs."${domains.public}" = {
-          group = "public-acme";
-          webroot = "/var/lib/acme/acme-challenge";
-
-          extraDomainNames = map (x: "${x}.${domains.public}") subdomains.public;
-        };
+        certs = listToAttrs (map (x: {
+          name = x.domain;
+          value = {
+            group = "public-acme";
+            webroot = "/var/lib/acme/acme-challenge";
+            extraDomainNames = map (y: "${y}.${x.domain}") x.subdomains;
+          };
+        }) cfg.publicAcme.certs);
       };
+
+      users.groups."public-acme" = {};
+    })
+    (mkIf (cfg.role == "server" && cfg.privateAcme.enable) {
+      security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
 
       systemd = {
         services."private-acme" = {
@@ -118,10 +140,7 @@ in {
       ${config.systemd.package}/bin/systemctl start private-acme.service
       '';
 
-      users.groups = {
-        "public-acme" = {};
-        "private-acme" = {};
-      };
+      users.groups."private-acme" = {};
     })
-  ];
+  ]);
 }

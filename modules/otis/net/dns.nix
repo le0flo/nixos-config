@@ -46,8 +46,8 @@ let
 in {
   options.otis.net.dns = {
     domains = {
-      public = mkStrOption "Public facing domain" "leoflo.net";
-      private = mkStrOption "Private domain for internal communications" "home.arpa";
+      public = mkStrOption "Public facing domain" "";
+      private = mkStrOption "Private domain for internal communications" "";
     };
 
     subdomains = {
@@ -59,7 +59,7 @@ in {
 
     server = {
       enable = mkBoolOption "Marks this host as the dns server" false;
-      forwarders = mkListOption types.str "List of dns servers" [ "1.1.1.1" "1.0.0.1" ];
+      forwarders = mkListOption types.str "List of dns servers" [];
     };
   };
 

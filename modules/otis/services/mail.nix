@@ -9,15 +9,12 @@ let
   inherit (lib) mkIf;
 
   cfg = config.otis.services.mail;
-
-  sslCertDir = if cfg.tls == "acme" then config.security.acme.certs."${cfg.domain}".directory else cfg.tlsDir;
 in {
   options.otis.services.mail = {
     enable = mkBoolOption "Mail server" false;
     domain = mkStrOption "The domain name of the email" "example.com";
     subdomain = mkStrOption "The subdomain where the postfix server is hosted on" "mail";
-    tls = mkEnumOption [ "acme" "manual" ] "Which tls certificates to use" "manual";
-    tlsDir = mkStrOption "Location of the tls certificates" "/etc/ssl";
+    tls = mkStrOption "Location of the tls certificates" "/etc/ssl";
   };
 
   config = mkIf cfg.enable {
@@ -40,9 +37,9 @@ in {
           protocols = [ "imap" "lmtp" ];
 
           ssl = "required";
-          ssl_server_cert_file = "${sslCertDir}/fullchain.pem";
-          ssl_server_key_file = "${sslCertDir}/key.pem";
-          ssl_server_ca_file = "${sslCertDir}/chain.pem";
+          ssl_server_cert_file = "${cfg.tls}/fullchain.pem";
+          ssl_server_key_file = "${cfg.tls}/key.pem";
+          ssl_server_ca_file = "${cfg.tls}/chain.pem";
 
           auth_username_format = "%{user | lower}";
           auth_mechanisms = [ "plain" ];
@@ -117,8 +114,8 @@ in {
             smtpd_sasl_path = "/var/spool/postfix/dovecot-auth";
             smtpd_sasl_auth_enable = "yes";
             smtpd_tls_chain_files = [
-              "${sslCertDir}/key.pem"
-              "${sslCertDir}/fullchain.pem"
+              "${cfg.tls}/key.pem"
+              "${cfg.tls}/fullchain.pem"
             ];
           };
         };

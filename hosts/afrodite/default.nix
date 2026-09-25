@@ -1,9 +1,11 @@
-{config, inputs, pkgs, readPubKey, secretsEnc, ...}:
+{config, pkgs, readPubKey, secretsEnc, ...}:
 
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net.dns) domains;
+  inherit (config.otis.net.dns)
+    domains
+    subdomains;
 
   tmpfilesConfig = {
     mode = "0755";
@@ -22,6 +24,11 @@ in {
   otis = {
     net = {
       dns = {
+        domains = {
+          public = "leoflo.net";
+          private = "home.arpa";
+        };
+
         subdomains = {
           public = [
             "files"
@@ -38,10 +45,30 @@ in {
           ];
         };
 
-        server.enable = true;
+        server = {
+          enable = true;
+          forwarders = [
+            "1.1.1.1"
+            "1.0.0.1"
+          ];
+        };
       };
 
-      tls.server.enable = true;
+      tls = {
+        enable = true;
+        role = "server";
+
+        publicAcme = {
+          enable = true;
+          email = "amministrazione@${domains.public}";
+          certs = [{
+            domain = domains.public;
+            subdomains = subdomains.public;
+          }];
+        };
+
+        privateAcme.enable = true;
+      };
 
       vpn = {
         enable = true;
@@ -76,6 +103,8 @@ in {
           };
         };
       };
+
+      wait-online.enable = true;
     };
 
     programs = {
@@ -93,7 +122,7 @@ in {
         enable = true;
         domain = domains.public;
         subdomain = "mx1";
-        tls = "acme";
+        tls = config.security.acme.certs."${domains.public}".directory;
       };
       nginx = {
         enable = true;
