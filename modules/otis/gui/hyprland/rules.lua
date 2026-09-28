@@ -44,9 +44,16 @@ hl.window_rule({
    scrolling_width = 1.0,
 })
 
+hl.window_rule({
+   name = "never-screenshare-windows",
+   match = { class = "^(org.keepassxc.KeePassXC)$" },
+
+   no_screen_share = true,   
+})
+
 local no_screenshare_window = hl.window_rule({
    name = "no-screenshare-windows",
-   match = { class = "^(firefox|thunderbird|org.keepassxc.KeePassXC)$" },
+   match = { class = "^(firefox|thunderbird)$" },
 
    no_screen_share = true,   
 })
@@ -58,12 +65,29 @@ local no_screenshare_layer = hl.layer_rule({
    no_screen_share = true,
 })
 
+function hidden_msg(is_hidden)
+   if is_hidden then
+      return "nascoste"
+   end
+   return "mostrate"
+end
+
 hl.bind("SUPER + H", function()
-    no_screenshare_window:set_enabled(not no_screenshare_window:is_enabled())
+   local window_enabled = hidden_msg(no_screenshare_window:is_enabled())
+   local layer_enabled = hidden_msg(no_screenshare_layer:is_enabled())
+   hl.dispatch(hl.dsp.exec_cmd("notify-send 'Condivisione Schermo' 'Finestre: " .. window_enabled .. "\nLayers: " .. layer_enabled .. "'"))
 end)
 
 hl.bind("SUPER + SHIFT + H", function()
-    no_screenshare_layer:set_enabled(not no_screenshare_layer:is_enabled())
+   local enabled = not no_screenshare_window:is_enabled()
+   no_screenshare_window:set_enabled(enabled)
+   hl.dispatch(hl.dsp.exec_cmd("notify-send 'Finestre " .. hidden_msg(enabled) .. "'"))
+end)
+
+hl.bind("SUPER + CTRL + H", function()
+   local enabled = not no_screenshare_layer:is_enabled()
+   no_screenshare_layer:set_enabled(enabled)
+   hl.dispatch(hl.dsp.exec_cmd("notify-send 'Layers " .. hidden_msg(enabled) .. "'"))
 end)
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Permissions/

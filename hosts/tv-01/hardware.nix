@@ -20,6 +20,11 @@ in {
   hardware = {
     enableAllHardware = lib.mkForce false;
 
+    deviceTree = {
+      enable = true;
+      name = "broadcom/bcm2711-rpi-4-b.dtb";
+    };
+
     raspberry-pi.firmware = {
       enable = true;
       uboot.enable = true;

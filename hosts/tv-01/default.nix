@@ -43,6 +43,7 @@ in {
       };
 
       wait-online.enable = false;
+      wifi.enable = true;
     };
 
     programs = {
@@ -66,4 +67,12 @@ in {
       mode = "400";
     };
   };
+
+  services.getty.autologinUser = "tv";
+
+  programs.bash.loginShellInit = ''
+  if [ "$(tty)" = "/dev/tty1" ]; then
+    exec start-plasma-bigscreen
+  fi
+  '';
 }

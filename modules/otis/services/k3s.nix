@@ -10,7 +10,8 @@ let
   inherit (customLib.opts)
     mkBoolOption
     mkEnumOption
-    mkPortOption;
+    mkPortOption
+    mkStrOption;
 
   inherit (lib)
     filterAttrs
@@ -23,6 +24,7 @@ in {
     enable = mkBoolOption "Kubernetes k3s node" false;
     role = mkEnumOption [ "agent" "server" ] "The role of the k3s node" "agent";
     port = mkPortOption "The port the k3s cluster api is hosted on" 6443;
+    address = mkStrOption "The address the k3s cluster api is hosted on" domains.private;
   };
 
   config = mkIf cfg.enable {
@@ -38,7 +40,7 @@ in {
         tokenFile = config.age.secrets."k3s/token".path;
       }
       (mkIf (cfg.role == "agent") {
-        serverAddr = "https://${domains.private}:${toString cfg.port}";
+        serverAddr = "https://${cfg.address}:${toString cfg.port}";
       })
       (mkIf (cfg.role == "server") {
         clusterInit = true;
