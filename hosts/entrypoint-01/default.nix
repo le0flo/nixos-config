@@ -30,10 +30,7 @@ in {
         };
 
         subdomains = {
-          public = [
-            "files"
-            "mx1"
-          ];
+          public = [ "files" ];
           private = [
             "files"
             "music"
@@ -118,12 +115,6 @@ in {
         enable = true;
         role = "server";
       };
-      mail = {
-        enable = true;
-        domain = domains.public;
-        subdomain = "mx1";
-        tls = config.security.acme.certs."${domains.public}".directory;
-      };
       nginx = {
         enable = true;
 
@@ -156,8 +147,8 @@ in {
       groups = [ "wheel" ];
 
       ssh.authorizedKeys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAvs2K5ALiCxqylJ22zpMOXXGAaavoiXvZa1LuTq8Gx leo@hermes"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEmIanMLV3pgQFhe9V6Pb8483u+CuPwZF3vZ7Kt+Eyje leo@zeus"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWHB9ymzaRiCNoQVZQNaYJespbvwVslzG4+f5y4UqAh leo@pc-01"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEU3PBMp+qLf00ymWz4acYTV2triftuIbU7GvKklvKmt leo@pc-02"
       ];
     };
 
@@ -165,13 +156,6 @@ in {
       "k3s/token" = {
         file = "${secretsEnc}/k3s/token.age";
         mode = "400";
-      };
-
-      "mail/dovecot-passwd" = {
-        file = "${secretsEnc}/mail/dovecot-passwd.age";
-        mode = "440";
-        owner = "dovecot2";
-        group = "dovecot2";
       };
 
       "tls/ca.key" = {

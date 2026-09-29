@@ -57,8 +57,8 @@ in {
       groups = [ "wheel" ];
 
       ssh.authorizedKeys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKck97agpd7zRxRl2B40+5IK6wGCauT+u0M3QgRxLjxr leo@hermes"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFIRcZxOfHi7XyMLUZMZEqRnY/RQpF0IT7wNqYtkOoa leo@zeus"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDBx/mSCrgbajdcvcsF22Ufn/Qasxdufqj23AeVgivO8 leo@pc-01"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINA4bJ/Z/xH6QTXQu4YqtkgBtYIX+5p2GI5w9O656ZUG leo@pc-02"
       ];
     };
 
