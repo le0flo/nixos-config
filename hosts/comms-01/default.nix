@@ -34,6 +34,7 @@ in {
           certs = [{
             domain = "mx1.${domains.public}";
             subdomains = [];
+            webserver = true;
           }];
         };
       };

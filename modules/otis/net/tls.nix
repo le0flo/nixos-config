@@ -3,6 +3,7 @@
 let
   inherit (builtins)
     concatStringsSep
+    filter
     listToAttrs;
 
   inherit (config.otis.net.dns)
@@ -25,8 +26,9 @@ let
   secretsPath = toString inputs.nixos-secrets;
 
   certOpts.options = {
-    domain = mkStrOption "The domain for the certificate" "";
+    domain = mkStrOption "Domain for the certificate" "";
     subdomains = mkListOption types.str "Additional subdomains" [];
+    webserver = mkBoolOption "Config nginx server" false;
   };
 in {
   options.otis.net.tls = {
@@ -66,7 +68,19 @@ in {
         }) cfg.publicAcme.certs);
       };
 
-      users.groups."public-acme" = {};
+      services.nginx = {
+        enable = true;
+        virtualHosts = listToAttrs (map (x: {
+          name = x.domain;
+          value = {
+            forceSSL = true;
+            useACMEHost = x.domain;
+            locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
+          };
+        }) (filter (y: y.webserver) cfg.publicAcme.certs));
+      };
+
+      users.groups."public-acme".members = [ config.services.nginx.user ];
     })
     (mkIf (cfg.role == "server" && cfg.privateAcme.enable) {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];

@@ -156,9 +156,7 @@ in {
         };
       };
     };
-    users.groups = {
-      "public-acme".members = [ config.services.nginx.user ];
-      "private-acme".members = [ config.services.nginx.user ];
-    };
+
+    users.groups."private-acme".members = [ config.services.nginx.user ];
   };
 }
