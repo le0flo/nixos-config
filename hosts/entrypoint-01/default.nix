@@ -111,6 +111,7 @@ in {
     };
 
     services = {
+      fail2ban.enable = true;
       k3s = {
         enable = true;
         role = "server";

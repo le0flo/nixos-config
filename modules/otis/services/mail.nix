@@ -1,6 +1,8 @@
 {config, customLib, lib, ...}:
 
 let
+  inherit (config.otis.services) fail2ban;
+
   inherit (customLib.opts)
     mkBoolOption
     mkEnumOption
@@ -33,6 +35,8 @@ in {
         settings = {
           dovecot_config_version = "2.4.4";
           dovecot_storage_version = "2.4.4";
+
+          log_path = "/var/log/dovecot.log";
 
           protocols = [ "imap" "lmtp" ];
 
@@ -118,6 +122,23 @@ in {
               "${cfg.tls}/fullchain.pem"
             ];
           };
+        };
+      };
+
+      fail2ban.jails = mkIf fail2ban.enable {
+        "dovecot".settings = {
+          enabled = true;
+          backend = "auto";
+          action = "iptables[type=oneport, port=993, protocol=tcp]";
+          filter = "dovecot";
+          logpath = "/var/log/dovecot.log";
+        };
+        "postfix".settings = {
+          enabled = true;
+          backend = "auto";
+          action = ''iptables[type=multiport, port="25,465", protocol=tcp]'';
+          filter = "postfix";
+          logpath = "/var/log/mail.log";
         };
       };
     };

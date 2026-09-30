@@ -43,6 +43,7 @@ in {
     };
 
     services = {
+      fail2ban.enable = true;
       mail = {
         enable = true;
         domain = domains.public;

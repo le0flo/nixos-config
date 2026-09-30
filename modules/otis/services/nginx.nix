@@ -11,6 +11,8 @@ let
 
   inherit (config.otis.net) vpn;
 
+  inherit (config.otis.services) fail2ban;
+
   inherit (customLib.opts)
     mkAttrOption
     mkBoolOption
@@ -105,39 +107,57 @@ in {
       443
     ];
 
-    services.nginx = {
-      enable = true;
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
+    services = {
+      nginx = {
+        enable = true;
+        recommendedProxySettings = true;
+        recommendedTlsSettings = true;
 
-      virtualHosts = mkMerge [
-        (mkVirtualHost "public" cfg.sites.public)
-        (mkVirtualHost "private" cfg.sites.private)
-        cfg.sites.extra
-        {
-          "_" = {
-            default = true;
+        virtualHosts = mkMerge [
+          (mkVirtualHost "public" cfg.sites.public)
+          (mkVirtualHost "private" cfg.sites.private)
+          cfg.sites.extra
+          {
+            "_" = {
+              default = true;
 
-            listen = [{
-              addr = "0.0.0.0";
-              port = 80;
-            }];
+              listen = [{
+                addr = "0.0.0.0";
+                port = 80;
+              }];
 
-            locations."/.well-known/acme-challenge/" = {
-              root = "/var/lib/acme/acme-challenge";
+              locations."/.well-known/acme-challenge/" = {
+                root = "/var/lib/acme/acme-challenge";
+              };
+
+              locations."/" = {
+                return = "404";
+              };
             };
-
-            locations."/" = {
-              return = "404";
+            "${domains.private}".locations."/ca.pem" = {
+              root = "${secretsPath}/tls/ca.pem";
             };
-          };
-          "${domains.private}".locations."/ca.pem" = {
-            root = "${secretsPath}/tls/ca.pem";
-          };
-        }
-      ];
+          }
+        ];
+      };
+
+      fail2ban.jails = mkIf fail2ban.enable {
+        "nginx-badreq".settings = {
+          enabled = true;
+          backend = "auto";
+          action = ''iptables[type=multiport, port="80,443", protocol=tcp]'';
+          filter = "nginx-bad-request";
+          logpath = "/var/log/nginx/*.log";
+        };
+        "nginx-botsearch".settings = {
+          enabled = true;
+          backend = "auto";
+          action = ''iptables[type=multiport, port="80,443", protocol=tcp]'';
+          filter = "nginx-botsearch";
+          logpath = "/var/log/nginx/error.log";
+        };
+      };
     };
-
     users.groups = {
       "public-acme".members = [ config.services.nginx.user ];
       "private-acme".members = [ config.services.nginx.user ];
