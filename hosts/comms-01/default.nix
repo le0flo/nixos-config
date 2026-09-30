@@ -9,6 +9,12 @@ in {
 
   otis = {
     net = {
+      ethernet = {
+        static = true;
+        address = "169.58.30.196/17";
+        gateway = "169.58.0.1";
+      };
+
       dns = {
         domains = {
           public = "leoflo.net";

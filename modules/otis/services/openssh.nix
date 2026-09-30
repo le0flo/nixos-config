@@ -1,6 +1,8 @@
 {config, customLib, lib, ...}:
 
 let
+  inherit (config.otis.services) fail2ban;
+
   inherit (customLib.opts) mkBoolOption;
 
   inherit (lib) mkIf;

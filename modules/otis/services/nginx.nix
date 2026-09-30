@@ -142,19 +142,17 @@ in {
       };
 
       fail2ban.jails = mkIf fail2ban.enable {
-        "nginx-badreq".settings = {
+        "nginx-bad-request".settings = {
           enabled = true;
-          backend = "auto";
           action = ''iptables[type=multiport, port="80,443", protocol=tcp]'';
           filter = "nginx-bad-request";
-          logpath = "/var/log/nginx/*.log";
+          backend = "systemd";
         };
         "nginx-botsearch".settings = {
           enabled = true;
-          backend = "auto";
           action = ''iptables[type=multiport, port="80,443", protocol=tcp]'';
           filter = "nginx-botsearch";
-          logpath = "/var/log/nginx/error.log";
+          backend = "systemd";
         };
       };
     };

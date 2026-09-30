@@ -128,17 +128,15 @@ in {
       fail2ban.jails = mkIf fail2ban.enable {
         "dovecot".settings = {
           enabled = true;
-          backend = "auto";
           action = "iptables[type=oneport, port=993, protocol=tcp]";
           filter = "dovecot";
-          logpath = "/var/log/dovecot.log";
+          backend = "systemd";
         };
         "postfix".settings = {
           enabled = true;
-          backend = "auto";
           action = ''iptables[type=multiport, port="25,465", protocol=tcp]'';
           filter = "postfix";
-          logpath = "/var/log/mail.log";
+          backend = "systemd";
         };
       };
     };

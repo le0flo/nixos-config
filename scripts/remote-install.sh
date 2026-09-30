@@ -18,7 +18,7 @@ fi
 HASH=$(mkpasswd -m yescrypt "$ROOT_PASSWORD")
 ESCAPED_HASH=$(printf '%s' "$HASH" | sed 's/[&/\]/\\&/g')
 
-echo "{ users.root.initialHashedPassword = \"$ESCAPED_HASH\"; }" > hosts/password.nix
+echo "{ users.users.root.initialHashedPassword = \"$ESCAPED_HASH\"; }" > hosts/password.nix
 git add .
 
 nix run github:nix-community/nixos-anywhere -- --flake .#host-$host --target-host $host

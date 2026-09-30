@@ -37,6 +37,7 @@ in {
         dig
         tcpdump
         nftables
+        dhcpcd
         openssh
         rsync
         wireguard-tools
