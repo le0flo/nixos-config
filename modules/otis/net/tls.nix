@@ -109,6 +109,13 @@ in {
             expiry_epoch=$(date -d "$expiry" +%s)
             now_epoch=$(date +%s)
             rewrite=$(( (expiry_epoch - now_epoch) / 86400 ))
+
+            oldSAN=$(openssl x509 -in "$WORKDIR/cert.pem" -noout -ext subjectAltName | sed -n 's/^[[:space:]]*DNS://p; s/, DNS:/,/gp' | tail -1)
+            newSAN="${domains.private},${concatStringsSep "," (map (x: "${x}.${domains.private}") subdomains.private)}"
+
+            if [ "$oldSAN" = "$newSAN" ]; then
+              rewrite=0
+            fi
           fi
 
           if [ $rewrite -lt 1 ]; then
