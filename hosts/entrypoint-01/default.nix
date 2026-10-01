@@ -30,12 +30,16 @@ in {
         };
 
         subdomains = {
-          public = [ "files" ];
-          private = [
+          public = [
+            "www"
             "files"
-            "music"
+          ];
+          private = [
+            "www"
+            "files"
             "images"
             "papers"
+            "music"
             "cinema"
             "bt"
             "slsk"
@@ -61,6 +65,7 @@ in {
           certs = [{
             domain = domains.public;
             subdomains = subdomains.public;
+            cfTokenFile = "${secretsDir}/dns/cloudflare";
           }];
         };
 
@@ -121,11 +126,11 @@ in {
 
         sites = {
           public = [
-            { subdomain = "@"; type = "files"; root = "${www-public}"; }
+            { subdomain = "@"; aliases = [ "www.${domains.public}" ]; type = "files"; root = "${www-public}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/public"; autoindex = true; }
           ];
           private = [
-            { subdomain = "@"; type = "files"; root = "${www-private}"; }
+            { subdomain = "@"; aliases = [ "www.${domains.private}" ]; type = "files"; root = "${www-private}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/private"; autoindex = true; }
             { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.1.2:10001"; }
             { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.1.2:10002"; }
@@ -154,6 +159,11 @@ in {
     };
 
     secrets = {
+      "dns/cloudflare" = {
+        file = "${secretsEnc}/dns/cloudflare.age";
+        mode = "400";
+      };
+
       "k3s/token" = {
         file = "${secretsEnc}/k3s/token.age";
         mode = "400";

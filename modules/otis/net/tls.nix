@@ -28,7 +28,7 @@ let
   certOpts.options = {
     domain = mkStrOption "Domain for the certificate" "";
     subdomains = mkListOption types.str "Additional subdomains" [];
-    webserver = mkBoolOption "Config nginx server" false;
+    cfTokenFile = mkStrOption "Cloudflare dns api token file location" "";
   };
 in {
   options.otis.net.tls = {
@@ -49,11 +49,6 @@ in {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
     })
     (mkIf (cfg.role == "server" && cfg.publicAcme.enable) {
-      networking.firewall.allowedTCPPorts = [
-        80
-        443
-      ];
-
       security.acme = {
         acceptTerms = true;
         defaults = { inherit (cfg.publicAcme) email; };
@@ -61,26 +56,18 @@ in {
         certs = listToAttrs (map (x: {
           name = x.domain;
           value = {
-            group = "public-acme";
-            webroot = "/var/lib/acme/acme-challenge";
             extraDomainNames = map (y: "${y}.${x.domain}") x.subdomains;
+
+            dnsProvider = "cloudflare";
+            credentialFiles."CF_DNS_API_TOKEN_FILE" = x.cfTokenFile;
+
+            group = "public-acme";
+            webroot = null;
           };
         }) cfg.publicAcme.certs);
       };
 
-      services.nginx = {
-        enable = true;
-        virtualHosts = listToAttrs (map (x: {
-          name = x.domain;
-          value = {
-            forceSSL = true;
-            useACMEHost = x.domain;
-            locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
-          };
-        }) (filter (y: y.webserver) cfg.publicAcme.certs));
-      };
-
-      users.groups."public-acme".members = [ config.services.nginx.user ];
+      users.groups."public-acme" = {};
     })
     (mkIf (cfg.role == "server" && cfg.privateAcme.enable) {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];

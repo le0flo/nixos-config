@@ -17,6 +17,7 @@ let
     mkAttrOption
     mkBoolOption
     mkEnumOption
+    mkListOption
     mkListSubOption
     mkNullOption
     mkStrOption
@@ -33,6 +34,7 @@ let
   siteOpts.options = {
     onlyPrimary = mkBoolOption "Only allow primary vpn devices to connect" false;
     subdomain = mkStrOption "The subdomain where this website is hosted on (use @ to reference the root domain)" null;
+    aliases = mkListOption types.str "Virtual host aliases" [];
     type = mkEnumOption [ "files" "proxy" ] "Type of website" null;
     root = mkStrOption "The path for the root of the website""/srv/www";
     autoindex = mkBoolOption "Whether to autoindex the root of the website" false;
@@ -53,6 +55,7 @@ let
       name = if x.subdomain == "@" then domain else "${x.subdomain}.${domain}";
       value = mkMerge [
         {
+          serverAliases = x.aliases;
           addSSL = tls.type != "none";
           useACMEHost = if (tls.type == "auto" && zone == "public") then "${domain}" else null;
           sslCertificate = if (tls.type == "auto" && zone == "private") then "/etc/ssl/certs/${domain}/cert.pem" else tls.cert;
@@ -117,27 +120,6 @@ in {
           (mkVirtualHost "public" cfg.sites.public)
           (mkVirtualHost "private" cfg.sites.private)
           cfg.sites.extra
-          {
-            "_" = {
-              default = true;
-
-              listen = [{
-                addr = "0.0.0.0";
-                port = 80;
-              }];
-
-              locations."/.well-known/acme-challenge/" = {
-                root = "/var/lib/acme/acme-challenge";
-              };
-
-              locations."/" = {
-                return = "404";
-              };
-            };
-            "${domains.private}".locations."/ca.pem" = {
-              root = "${secretsPath}/tls/ca.pem";
-            };
-          }
         ];
       };
 
@@ -157,6 +139,9 @@ in {
       };
     };
 
-    users.groups."private-acme".members = [ config.services.nginx.user ];
+    users.groups = {
+      "public-acme".members = [ config.services.nginx.user ];
+      "private-acme".members = [ config.services.nginx.user ];
+    };
   };
 }

@@ -43,7 +43,6 @@ in {
           ssl = "required";
           ssl_server_cert_file = "${cfg.tls}/fullchain.pem";
           ssl_server_key_file = "${cfg.tls}/key.pem";
-          ssl_server_ca_file = "${cfg.tls}/chain.pem";
 
           auth_username_format = "%{user | lower}";
           auth_mechanisms = [ "plain" ];

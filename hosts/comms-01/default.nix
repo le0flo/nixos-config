@@ -3,7 +3,9 @@
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net.dns) domains;
+  inherit (config.otis.net.dns)
+    domains
+    subdomains;
 in {
   imports = [ ./hardware.nix ];
 
@@ -21,6 +23,17 @@ in {
           private = "home.arpa";
         };
 
+        subdomains = {
+          public = [
+            "mx1"
+            "xmpp"
+            "muc.xmpp"
+            "upload.xmpp"
+            "mumble"
+          ];
+          private = [];
+        };
+
         server.enable = false;
       };
 
@@ -32,9 +45,9 @@ in {
           enable = true;
           email = "amministrazione@${domains.public}";
           certs = [{
-            domain = "mx1.${domains.public}";
-            subdomains = [];
-            webserver = true;
+            domain = domains.public;
+            subdomains = subdomains.public;
+            cfTokenFile = "${secretsDir}/dns/cloudflare";
           }];
         };
       };
@@ -55,7 +68,7 @@ in {
         enable = true;
         domain = domains.public;
         subdomain = "mx1";
-        tls = config.security.acme.certs."mx1.${domains.public}".directory;
+        tls = config.security.acme.certs."${domains.public}".directory;
       };
       openssh.enable = true;
     };
@@ -69,11 +82,18 @@ in {
       ];
     };
 
-    secrets."mail/dovecot-passwd" = {
-      file = "${secretsEnc}/mail/dovecot-passwd.age";
-      mode = "440";
-      owner = "dovecot2";
-      group = "dovecot2";
+    secrets = {
+      "dns/cloudflare" = {
+        file = "${secretsEnc}/dns/cloudflare.age";
+        mode = "400";
+      };
+
+      "mail/dovecot-passwd" = {
+        file = "${secretsEnc}/mail/dovecot-passwd.age";
+        mode = "440";
+        owner = "dovecot2";
+        group = "dovecot2";
+      };
     };
   };
 }
