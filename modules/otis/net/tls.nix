@@ -59,6 +59,7 @@ in {
             extraDomainNames = map (y: "${y}.${x.domain}") x.subdomains;
 
             dnsProvider = "cloudflare";
+            dnsResolver = "1.1.1.1:53";
             credentialFiles."CF_DNS_API_TOKEN_FILE" = x.cfTokenFile;
 
             group = "public-acme";
