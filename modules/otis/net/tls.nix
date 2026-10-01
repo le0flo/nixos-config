@@ -113,7 +113,7 @@ in {
             oldSAN=$(openssl x509 -in "$WORKDIR/cert.pem" -noout -ext subjectAltName | sed -n 's/^[[:space:]]*DNS://p; s/, DNS:/,/gp' | tail -1)
             newSAN="${domains.private},${concatStringsSep "," (map (x: "${x}.${domains.private}") subdomains.private)}"
 
-            if [ "$oldSAN" = "$newSAN" ]; then
+            if [ ! "$oldSAN" = "$newSAN" ]; then
               rewrite=0
             fi
           fi
