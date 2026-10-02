@@ -1,10 +1,12 @@
-{config, customLib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (customLib.opts)
     mkBoolOption
     mkPortOption
     mkStrOption;
+
+  inherit (lib) mkIf;
 
   cfg = config.sirah.services.slskd;
 in {
@@ -15,10 +17,9 @@ in {
     storageDir = mkStrOption "Directory of the slsk downloads" "/media/slsk";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     services.slskd = {
-      inherit (cfg) enable;
-
+      enable = true;
       openFirewall = true;
 
       environmentFile = "${cfg.envDir}/environment";

@@ -69,7 +69,7 @@ in {
 
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = concatStringsSep "; " (map (x: "${pkgs.coreutils}/bin/chmod 755 ${x.guest.dir}") mountValid);
+        ExecStart = "${pkgs.coreutils}/bin/chmod 755 ${concatStringsSep " " (map (x: x.guest.dir) mountValid)}";
       };
     };
   };

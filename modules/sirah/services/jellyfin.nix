@@ -1,4 +1,4 @@
-{config, customLib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (config.services.jellyfin) dataDir group user;
@@ -7,6 +7,8 @@ let
     mkBoolOption
     mkPortOption;
 
+  inherit (lib) mkIf;
+
   cfg = config.sirah.services.jellyfin;
 in {
   options.sirah.services.jellyfin = {
@@ -14,10 +16,9 @@ in {
     port = mkPortOption "Port of the Jellyfin server" 11002;
   };
   
-  config = {
+  config = mkIf cfg.enable {
     services.jellyfin = {
-      inherit (cfg) enable;
-
+      enable = true;
       dataDir = "/var/lib/jellyfin";
       configDir = "${dataDir}/config";
       cacheDir = "${dataDir}/cache";

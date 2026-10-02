@@ -1,10 +1,12 @@
-{config, customLib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (customLib.opts)
     mkBoolOption
     mkPortOption
     mkStrOption;
+
+  inherit (lib) mkIf;
 
   cfg = config.sirah.services.paperless;
 in {
@@ -15,10 +17,11 @@ in {
     exportDir = mkStrOption "Directory of the exporter" "/media/documents";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     services.paperless = {
-      inherit (cfg) enable port;
+      inherit (cfg) port;
 
+      enable = true;
       address = "0.0.0.0";
 
       environmentFile = "${cfg.envDir}/environment";

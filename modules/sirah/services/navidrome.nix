@@ -1,10 +1,12 @@
-{config, customLib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (customLib.opts)
     mkBoolOption
     mkPortOption
     mkStrOption;
+
+  inherit (lib) mkIf;
 
   cfg = config.sirah.services.navidrome;
 in {
@@ -14,9 +16,9 @@ in {
     musicDir = mkStrOption "Directory of the music libraries" "/media/music";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     services.navidrome = {
-      inherit (cfg) enable;
+      enable = true;
 
       settings = {
         Address = "0.0.0.0";

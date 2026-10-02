@@ -5,11 +5,12 @@ let
 
   inherit (customLib.opts)
     mkAttrSubOption
-    mkBoolOption
     mkIntOption
     mkNullOption;
 
   inherit (lib)
+    mkDefault
+    mkForce
     mkMerge
     types;
 
@@ -20,9 +21,6 @@ let
   };
 
   userOpts.options = {
-    group = mkNullOption types.str "The user's group" null;
-    isNormalUser = mkBoolOption "Whether the user is a normal behaving user" true;
-    isSystemUser = mkBoolOption "Whether the user is a system user" false;
     id = mkNullOption types.int "User's id" null;
   };
 in {
@@ -61,12 +59,9 @@ in {
     };
 
     users = {
-      groups = mapAttrs (x: y: { gid = y.id; }) cfg.groups;
+      groups = mapAttrs (x: y: { gid = mkForce y.id; }) cfg.groups;
       users = mkMerge [
-        (mapAttrs (x: y: {
-          inherit (y) group isNormalUser isSystemUser;
-          uid = y.id;
-        }) cfg.users)
+        (mapAttrs (x: y: { uid = mkForce y.id; }) cfg.users)
         {
           "root".openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcXQtfp/MZUibmmXM5xZGHEhLDUGCSKu0+fH9Mh3+Qa leo@odino"
@@ -76,7 +71,13 @@ in {
       ];
     };
 
-    services.getty.autologinUser = "root";
+    services = {
+      getty.autologinUser = "root";
+      openssh = {
+        enable = true;
+        settings.PasswordAuthentication = false;
+      };
+    };
 
     system.stateVersion = "26.05";
 

@@ -6,5 +6,7 @@
     ./paperless.nix
     ./qbittorrent.nix
     ./slskd.nix
+    ./git.nix
+    ./kanboard.nix
   ];
 }

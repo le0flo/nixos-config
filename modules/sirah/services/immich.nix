@@ -1,10 +1,12 @@
-{config, customLib, pkgs, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (customLib.opts)
     mkBoolOption
     mkPortOption
     mkStrOption;
+
+  inherit (lib) mkIf;
 
   cfg = config.sirah.services.immich;
 in {
@@ -14,10 +16,11 @@ in {
     mediaDir = mkStrOption "Directory of the photo storage" "/media/photos";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     services.immich = {
-      inherit (cfg) enable port;
+      inherit (cfg) port;
 
+      enable = true;
       host = "0.0.0.0";
 
       machine-learning.enable = false;

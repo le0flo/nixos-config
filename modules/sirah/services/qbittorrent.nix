@@ -8,7 +8,7 @@ let
     mkPortOption
     mkStrOption;
 
-  inherit (lib) mkAfter;
+  inherit (lib) mkIf mkAfter;
 
   cfg = config.sirah.services.qbittorrent;
 in {
@@ -19,10 +19,9 @@ in {
     storageDir = mkStrOption "Directory of the qBitTorrent downloads" "/media/bt";
   };
 
-  config = {
+  config = mkIf cfg.enable {
     services.qbittorrent = {
-      inherit (cfg) enable;
-
+      enable = true;
       webuiPort = cfg.port;
 
       serverConfig = {
