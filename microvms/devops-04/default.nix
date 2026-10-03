@@ -45,7 +45,7 @@
         webPort = 13001;
         sshPort = 13022;
         projectsDir = "/media/projects";
-        adminPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPI+7asbvDbnI+fKQ4WkNyhLmhiTEeQefkSVZhTDfqcr leo@pc-01";
+        adminPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIENbelRRfee+W2Ba8R4fy5dHXS8F3AzjXP6UOQHNw28P master";
       };
       kanboard = {
         enable = true;

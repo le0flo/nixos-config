@@ -43,6 +43,8 @@ in {
             "cinema"
             "bt"
             "slsk"
+            "projects"
+            "tasks"
           ];
         };
 
@@ -138,6 +140,8 @@ in {
             { subdomain = "cinema"; type = "proxy"; address = "http://10.69.1.1:11002"; }
             { onlyPrimary = true; subdomain = "bt"; type = "proxy"; address = "http://10.69.1.1:12001"; }
             { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.1.1:12002"; }
+            { onlyPrimary = true; subdomain = "projects"; type = "proxy"; address = "http://10.69.1.2:13001"; }
+            { onlyPrimary = true; subdomain = "tasks"; type = "proxy"; address = "http://10.69.1.2:13002"; }
           ];
         };
 

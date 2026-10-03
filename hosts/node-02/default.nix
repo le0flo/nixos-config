@@ -57,7 +57,10 @@ in {
         enable = true;
         externalInterface = "enp0s31f6";
         vpnInterface = "internal";
-        vms = [ "archive-01" ];
+        vms = [
+          "archive-01"
+          "devops-04"
+        ];
       };
       openssh.enable = true;
     };
