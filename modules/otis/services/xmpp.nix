@@ -65,7 +65,7 @@ in {
         pep = true;
         ping = true;
         private = true;
-        proxy65 = true;
+        proxy65 = false;
         register = false;
         roster = false;
         saslauth = true;
