@@ -35,23 +35,15 @@ in {
       c2sRequireEncryption = true;
       s2sSecureAuth = true;
 
-      disco_items = [
-        {
-          description = "multi user chat";
-          url = "muc.xmpp.${cfg.domain}";
-        }
-        {
-          description = "http file share";
-          url = "upload.xmpp.${cfg.domain}";
-        }
-      ];
-
       extraConfig = ''
       storage = "sql"
       sql = {
         driver = "SQLite3";
         database = "prosody.sqlite";
       }
+
+      Component "upload.xmpp.${cfg.domain}"
+        parent_host = "${cfg.domain}"
       '';
 
       httpFileShare = {
