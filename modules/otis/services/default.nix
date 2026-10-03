@@ -4,6 +4,7 @@
     ./bluetooth.nix
     ./docker.nix
     ./fail2ban.nix
+    ./hydra.nix
     ./k3s.nix
     ./mail.nix
     ./microvm.nix

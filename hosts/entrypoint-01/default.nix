@@ -45,6 +45,7 @@ in {
             "slsk"
             "projects"
             "tasks"
+            "hydra"
           ];
         };
 
@@ -119,6 +120,14 @@ in {
 
     services = {
       fail2ban.enable = true;
+      hydra = {
+        enable = true;
+        role = "server";
+        buildMachines = [
+          { arch = "x86_64-linux"; host = "10.69.1.1"; keyFile = "${secretsDir}/hydra/node-01"; jobs = 2; }
+          { arch = "x86_64-linux"; host = "10.69.1.2"; keyFile = "${secretsDir}/hydra/node-02"; jobs = 2; }
+        ];
+      };
       k3s = {
         enable = true;
         role = "server";
@@ -142,6 +151,7 @@ in {
             { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.1.1:12002"; }
             { onlyPrimary = true; subdomain = "projects"; type = "proxy"; address = "http://10.69.1.2:13001"; }
             { onlyPrimary = true; subdomain = "tasks"; type = "proxy"; address = "http://10.69.1.2:13002"; }
+            { onlyPrimary = true; subdomain = "hydra"; type = "proxy"; address = "http://127.0.0.1:9000"; }
           ];
         };
 
@@ -165,6 +175,16 @@ in {
     secrets = {
       "dns/cloudflare" = {
         file = "${secretsEnc}/dns/cloudflare.age";
+        mode = "400";
+      };
+
+      "hydra/node-01" = {
+        file = "${secretsEnc}/hydra/node-01.age";
+        mode = "400";
+      };
+
+      "hydra/node-02" = {
+        file = "${secretsEnc}/hydra/node-02.age";
         mode = "400";
       };
 

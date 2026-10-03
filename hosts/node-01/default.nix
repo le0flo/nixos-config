@@ -45,6 +45,10 @@ in {
     };
 
     services = {
+      hydra = {
+        enable = true;
+        role = "builder";
+      };
       k3s = {
         enable = true;
         role = "agent";
