@@ -99,5 +99,7 @@ in {
 
       xmppComplianceSuite = false;
     };
+
+    users.groups."public-acme".members = [ config.services.prosody.user ];
   };
 }
