@@ -475,7 +475,7 @@
         "lastModified": 1790844258,
         "narHash": "sha256-DXmAiByghJRl0wBFZUri2Yspw96fKo99l0Xr9ZzgNv4=",
         "ref": "refs/heads/master",
-        "rev": "ef5ea676ab722dee178ff28d957d55176cb11aca",
+        "rev": "d33c8a7f0bedd8f81e1786eb7bf272183b820a0d",
         "revCount": 31,
         "type": "git",
         "url": "https://codeberg.org/leoflo/nixos-secrets"
