@@ -19,6 +19,8 @@ in {
       443
       5222
       5223
+      5280
+      5281
     ];
 
     services.prosody = {
@@ -36,8 +38,12 @@ in {
           url = "muc.xmpp.${cfg.domain}";
         }
         {
-          description = "file share";
+          description = "http file share";
           url = "upload.xmpp.${cfg.domain}";
+        }
+        {
+          description = "proxy65";
+          url = "proxy.xmpp.${cfg.domain}";
         }
       ];
 
@@ -75,7 +81,7 @@ in {
         pep = true;
         ping = true;
         private = true;
-        proxy65 = false;
+        proxy65 = true;
         register = false;
         roster = false;
         saslauth = true;

@@ -29,6 +29,7 @@ in {
             "xmpp"
             "muc.xmpp"
             "upload.xmpp"
+            "proxy.xmpp"
             "mumble"
           ];
           private = [];
