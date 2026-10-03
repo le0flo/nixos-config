@@ -74,7 +74,7 @@ in {
         time = true;
         tls = true;
         uptime = true;
-        vcard = true;
+        vcard = false;
         vcard_legacy = true;
         version = true;
         watchregistrations = false;
