@@ -16,6 +16,7 @@ in {
 
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [
+      80
       443
       5222
       5223
@@ -43,10 +44,6 @@ in {
           description = "http file share";
           url = "upload.xmpp.${cfg.domain}";
         }
-        {
-          description = "proxy65";
-          url = "proxy.xmpp.${cfg.domain}";
-        }
       ];
 
       extraConfig = ''
@@ -59,7 +56,7 @@ in {
 
       httpFileShare = {
         domain = "upload.xmpp.${cfg.domain}";
-        size_limit = 20 * 1024 * 1024;
+        size_limit = 100 * 1024 * 1024;
       };
 
       modules = {
@@ -82,7 +79,7 @@ in {
         pep = true;
         ping = true;
         private = true;
-        proxy65 = true;
+        proxy65 = false;
         register = false;
         roster = false;
         saslauth = true;
@@ -110,8 +107,8 @@ in {
       };
 
       virtualHosts."main" = {
-        domain = cfg.domain;
         enabled = true;
+        domain = cfg.domain;
       };
 
       xmppComplianceSuite = false;
