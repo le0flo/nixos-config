@@ -71,6 +71,10 @@ in {
         tls = config.security.acme.certs."${domains.public}".directory;
       };
       openssh.enable = true;
+      xmpp = {
+        enable = true;
+        domain = domains.public;
+      };
     };
 
     users."leo" = {
