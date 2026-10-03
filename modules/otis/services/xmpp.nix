@@ -35,6 +35,10 @@ in {
           description = "multi user chat";
           url = "muc.xmpp.${cfg.domain}";
         }
+        {
+          description = "file share";
+          url = "upload.xmpp.${cfg.domain}";
+        }
       ];
 
       extraConfig = ''
@@ -44,6 +48,12 @@ in {
         database = "prosody.sqlite";
       }
       '';
+
+      httpFileShare = {
+        domain = "upload.xmpp.${cfg.domain}";
+        http_host = cfg.domain;
+        size_limit = 20 * 1024 * 1024;
+      };
 
       modules = {
         admin_adhoc = true;
@@ -57,7 +67,7 @@ in {
         dialback = true;
         disco = true;
         groups = false;
-        http_files = false;
+        http_files = true;
         legacyauth = false;
         limits = false;
         mam = true;
