@@ -19,6 +19,8 @@ in {
       443
       5222
       5223
+      5269
+      5270
       5280
       5281
     ];
@@ -57,7 +59,6 @@ in {
 
       httpFileShare = {
         domain = "upload.xmpp.${cfg.domain}";
-        http_host = cfg.domain;
         size_limit = 20 * 1024 * 1024;
       };
 
