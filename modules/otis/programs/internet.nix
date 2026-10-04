@@ -46,6 +46,7 @@ in {
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
         dino
+        mumble
         nicotine-plus
         qbittorrent
       ];
