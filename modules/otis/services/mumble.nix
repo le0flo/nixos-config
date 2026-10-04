@@ -1,6 +1,8 @@
 {config, customLib, lib, ...}:
 
 let
+  inherit (config.otis.services) fail2ban;
+
   inherit (customLib.opts)
     mkBoolOption
     mkStrOption;
@@ -23,22 +25,33 @@ in {
       allowedUDPPorts = [ 64738 ];
     };
 
-    services.murmur = {
-      inherit (cfg) environmentFile;
+    services = {
+      murmur = {
+        inherit (cfg) environmentFile;
 
-      enable = true;
-      bandwidth = 128000;
-      users = 50;
+        enable = true;
+        bandwidth = 128000;
+        users = 50;
 
-      registerHostname = "mumble.${cfg.domain}";
-      registerUrl = "https://${cfg.domain}";
-      registerName = cfg.name;
-      welcometext = cfg.welcome;
+        registerHostname = "mumble.${cfg.domain}";
+        registerUrl = "https://${cfg.domain}";
+        registerName = cfg.name;
+        welcometext = cfg.welcome;
 
-      tls.useACMEHost = cfg.domain;
+        tls.useACMEHost = cfg.domain;
 
-      password = "$MURMURD_PASSWORD";
-      registerPassword = "$MURMURD_REGISTER_PASSWORD";
+        password = "$MURMURD_PASSWORD";
+        registerPassword = "$MURMURD_REGISTER_PASSWORD";
+      };
+
+      fail2ban.jails = mkIf fail2ban.enable {
+        "murmur".settings = {
+          enabled = true;
+          action = ''iptables[type=oneport, port="64738", protocol=tcp]'';
+          filter = "murmur";
+          backend = "systemd";
+        };
+      };
     };
 
     users.groups."public-acme".members = [ config.services.murmur.user ];
