@@ -71,6 +71,13 @@ in {
         subdomain = "mx1";
         tls = config.security.acme.certs."${domains.public}".directory;
       };
+      mumble = {
+        enable = true;
+        domain = domains.public;
+        name = "Il server di leoflo";
+        welcome = "<h1>Benvenuto</h1>";
+        environmentFile = "${secretsDir}/mumble/environment";
+      };
       openssh.enable = true;
       xmpp = {
         enable = true;
@@ -98,6 +105,11 @@ in {
         mode = "440";
         owner = "dovecot2";
         group = "dovecot2";
+      };
+
+      "mumble/environment" = {
+        file = "${secretsEnc}/mumble/environment.age";
+        mode = "400";
       };
     };
   };
