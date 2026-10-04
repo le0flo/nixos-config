@@ -23,6 +23,7 @@ in {
     ./hyprland
     ./plasma-bigscreen
     ./windowmaker
+    ./quickshell
 
     ./style.nix
   ];

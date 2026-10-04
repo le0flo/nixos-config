@@ -22,10 +22,10 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        inkscape
-        krita
         vlc
         strawberry
+        inkscape
+        krita
         kid3
       ];
     })

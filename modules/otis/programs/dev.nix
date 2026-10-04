@@ -75,6 +75,7 @@ in {
           matlab-mode
           nginx-mode
           nix-mode
+          qml-mode
           rfc-mode
           rust-mode
           sass-mode

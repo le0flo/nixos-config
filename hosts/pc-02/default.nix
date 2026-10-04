@@ -13,6 +13,7 @@ in {
     gui = {
       enable = true;
       hyprland.enable = true;
+      quickshell.enable = true;
       windowmaker.enable = true;
     };
 
