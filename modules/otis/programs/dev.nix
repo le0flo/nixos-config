@@ -55,7 +55,7 @@ in {
           buffer_font_size = 16;
 
           theme = {
-            mode = "system";
+            mode = "dark";
             light = "Gruvbox Light";
             dark = "Gruvbox Dark";
           };

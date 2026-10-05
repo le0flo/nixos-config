@@ -62,7 +62,7 @@ in {
 
     gtk = {
       name = mkStrOption "Default gtk theme name" "Adwaita";
-      packages = mkPkgsOption "Gtk theme packages" [];
+      packages = mkPkgsOption "Gtk theme packages" [ pkgs.greybird ];
     };
 
     qt = {

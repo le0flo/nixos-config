@@ -16,6 +16,7 @@ in {
   imports = [
     ./hyprland
     ./windowmaker
+    ./xfce
 
     ./style.nix
   ];

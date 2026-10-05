@@ -13,6 +13,7 @@ in {
     gui = {
       enable = true;
       hyprland.enable = true;
+      xfce.enable = true;
     };
 
     net = {
