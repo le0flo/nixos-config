@@ -11,7 +11,7 @@ let
 
   cfg = config.otis.programs.media;
 in {
-  options.otis.programs.media.enable = mkBoolOption "Add media related programs" false;
+  options.otis.programs.media.enable = mkBoolOption "Media" false;
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -24,6 +24,7 @@ in {
       environment.systemPackages = with pkgs; [
         vlc
         strawberry
+        ristretto
         inkscape
         krita
         kid3

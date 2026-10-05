@@ -46,20 +46,20 @@ let
 in {
   options.otis.net.dns = {
     domains = {
-      public = mkStrOption "Public facing domain" "";
-      private = mkStrOption "Private domain for internal communications" "";
+      public = mkStrOption "Public domain" "";
+      private = mkStrOption "Private domain" "";
     };
 
     subdomains = {
-      public = mkListOption types.str "List of public subdomains" [];
-      private = mkListOption types.str "List of private subdomains" [];
+      public = mkListOption types.str "Public subdomains" [];
+      private = mkListOption types.str "Private subdomains" [];
     };
 
-    nameservers = mkListOption types.str "List of dns servers" [ "1.1.1.1" "1.0.0.1" ];
+    nameservers = mkListOption types.str "DNS resolvers" [ "1.1.1.1" "1.0.0.1" ];
 
     server = {
-      enable = mkBoolOption "Marks this host as the dns server" false;
-      forwarders = mkListOption types.str "List of dns servers" [];
+      enable = mkBoolOption "Enables DNS server" false;
+      forwarders = mkListOption types.str "Fallback DNS resolvers" [];
     };
   };
 
@@ -102,7 +102,7 @@ in {
       resolved.enable = true;
     };
 
-    systemd.network.networks."30-vpn" = {
+    systemd.network.networks."30-vpn" = mkIf vpn.enable {
       matchConfig.Name =  concatStringsSep "," (attrNames (filterAttrs (_: y: y.primary) vpn.networks));
 
       dns = map (x: subnetToGateway x.subnet) (filter (y: y.primary) (attrValues vpn.networks));

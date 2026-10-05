@@ -5,7 +5,6 @@ let
 
   inherit (customLib.opts)
     mkBoolOption
-    mkEnumOption
     mkStrOption;
 
   inherit (lib) mkIf;
@@ -14,9 +13,9 @@ let
 in {
   options.otis.services.mail = {
     enable = mkBoolOption "Mail server" false;
-    domain = mkStrOption "The domain name of the email" "example.com";
-    subdomain = mkStrOption "The subdomain where the postfix server is hosted on" "mail";
-    tls = mkStrOption "Location of the tls certificates" "/etc/ssl";
+    domain = mkStrOption "Domain name" "example.com";
+    subdomain = mkStrOption "Server subdomain" "mail";
+    tls = mkStrOption "TLS certificate directory" "/etc/ssl";
   };
 
   config = mkIf cfg.enable {

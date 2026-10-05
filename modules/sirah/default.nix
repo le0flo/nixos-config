@@ -9,7 +9,6 @@ let
     mkNullOption;
 
   inherit (lib)
-    mkDefault
     mkForce
     mkMerge
     types;

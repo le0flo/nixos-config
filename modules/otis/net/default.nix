@@ -18,7 +18,7 @@ in {
 
   options.otis.net = {
     ethernet = {
-      static = mkBoolOption "Static address for the ethernet interface" false;
+      static = mkBoolOption "Enable static IPv4 address" false;
       address = mkStrOption "IPv4 address" "10.0.0.67/24";
       gateway = mkStrOption "IPv4 gateway" "10.0.0.1";
     };

@@ -3,9 +3,7 @@
 let
   inherit (config.otis) gui;
 
-  inherit (customLib.opts)
-    mkBoolOption
-    mkPkgsOption;
+  inherit (customLib.opts) mkBoolOption;
 
   inherit (lib)
     mkIf
@@ -13,10 +11,7 @@ let
 
   cfg = config.otis.programs.office;
 in {
-  options.otis.programs.office = {
-    enable = mkBoolOption "Add office related programs" false;
-    extraTexlivePlugins = mkPkgsOption "List of texlive plugins" [];
-  };
+  options.otis.programs.office.enable = mkBoolOption "Office" false;
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -39,7 +34,7 @@ in {
           tikz-3dplot
           booktabs
           footnotehyper
-        ] ++ cfg.extraTexlivePlugins))
+        ]))
       ];
     }
     (mkIf gui.enable {

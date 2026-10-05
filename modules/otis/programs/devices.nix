@@ -11,7 +11,7 @@ let
 
   cfg = config.otis.programs.devices;
 in {
-  options.otis.programs.devices.enable = mkBoolOption "Add external devices tools and drivers" false;
+  options.otis.programs.devices.enable = mkBoolOption "External devices" false;
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -27,7 +27,7 @@ in {
         f2fs-tools
         android-tools
         wine
-      ];        
+      ];
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [ scrcpy ];

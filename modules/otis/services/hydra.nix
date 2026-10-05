@@ -21,15 +21,15 @@ let
   cfg = config.otis.services.hydra;
 
   buildMachinesOpts.options = {
-    arch = mkEnumOption systems "Arch of the builder host" "x86_64-linux";
-    host = mkStrOption "Ip of the builder host" "127.0.0.1";
-    keyFile = mkStrOption "The ssh key file for the builder host" "";
-    jobs = mkIntOption "The max jobs for the builder host" 1;
+    arch = mkEnumOption systems "Host's architecture" "x86_64-linux";
+    host = mkStrOption "Host's IPv4 address" "127.0.0.1";
+    keyFile = mkStrOption "Host's public ssh key" "";
+    jobs = mkIntOption "Max jobs" 1;
   };
 in {
   options.otis.services.hydra = {
-    enable = mkBoolOption "Enable the hydra service" false;
-    role = mkEnumOption [ "server" "builder" ] "Role of the host in the hydra cluster" "builder";
+    enable = mkBoolOption "Hydra cluster" false;
+    role = mkEnumOption [ "server" "builder" ] "Role of the host" "builder";
     buildMachines = mkListSubOption buildMachinesOpts "List of builder hosts" [];
   };
 

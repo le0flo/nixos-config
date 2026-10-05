@@ -3,7 +3,6 @@
 let
   inherit (builtins)
     concatStringsSep
-    filter
     listToAttrs;
 
   inherit (config.otis.net.dns)
@@ -12,7 +11,6 @@ let
 
   inherit (customLib.opts)
     mkBoolOption
-    mkEnumOption
     mkListOption
     mkListSubOption
     mkStrOption;
@@ -26,29 +24,28 @@ let
   secretsPath = toString inputs.nixos-secrets;
 
   certOpts.options = {
-    domain = mkStrOption "Domain for the certificate" "";
-    subdomains = mkListOption types.str "Additional subdomains" [];
-    cfTokenFile = mkStrOption "Cloudflare dns api token file location" "";
+    domain = mkStrOption "Domain" "example.com";
+    subdomains = mkListOption types.str "Subdomains" [];
+    cfTokenFile = mkStrOption "Cloudflare DNS token file" "/run/secrets/cloudflare";
   };
 in {
   options.otis.net.tls = {
-    enable = mkBoolOption "Enable tls handling for public and private network" true;
-    role = mkEnumOption [ "client" "server" ] "The role of the host" "client";
+    enable = mkBoolOption "Enable TLS certificate authority" false;
 
     publicAcme = {
-      enable = mkBoolOption "Enables the public acme service" false;
-      email = mkStrOption "Email used to manage ACME tls certificates" "";
-      certs = mkListSubOption certOpts "List of certificates to generate using acme" [];
+      enable = mkBoolOption "Public ACME" false;
+      email = mkStrOption "Email" "postmaster@example.com";
+      certs = mkListSubOption certOpts "List of certificates" [];
     };
 
-    privateAcme.enable = mkBoolOption "Enables the private acme service" false;
+    privateAcme.enable = mkBoolOption "Private ACME" false;
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    (mkIf (cfg.role == "client") {
+  config = mkMerge [
+    {
       security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
-    })
-    (mkIf (cfg.role == "server" && cfg.publicAcme.enable) {
+    }
+    (mkIf (cfg.enable && cfg.publicAcme.enable) {
       security.acme = {
         acceptTerms = true;
         defaults = { inherit (cfg.publicAcme) email; };
@@ -70,9 +67,7 @@ in {
 
       users.groups."public-acme" = {};
     })
-    (mkIf (cfg.role == "server" && cfg.privateAcme.enable) {
-      security.pki.certificateFiles = [ "${secretsPath}/tls/ca.pem" ];
-
+    (mkIf (cfg.enable && cfg.privateAcme.enable) {
       systemd = {
         services."private-acme" = {
           wantedBy = [ "multi-user.target" ];
@@ -151,5 +146,5 @@ in {
 
       users.groups."private-acme" = {};
     })
-  ]);
+  ];
 }

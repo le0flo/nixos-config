@@ -18,11 +18,6 @@ in {
         private = "home.arpa";
       };
 
-      tls = {
-        enable = true;
-        role = "client";
-      };
-
       vpn = {
         enable = true;
         role = "client";

@@ -1,4 +1,4 @@
-{config, customLib, inputs, lib, ...}:
+{config, customLib, lib, ...}:
 
 let
   inherit (builtins)
@@ -29,10 +29,9 @@ let
     types;
 
   cfg = config.otis.services.nginx;
-  secretsPath = toString inputs.nixos-secrets;
 
   siteOpts.options = {
-    onlyPrimary = mkBoolOption "Only allow primary vpn devices to connect" false;
+    onlyPrimary = mkBoolOption "Only allow primary vpn hosts can connect" false;
     subdomain = mkStrOption "The subdomain where this website is hosted on (use @ to reference the root domain)" null;
     aliases = mkListOption types.str "Virtual host aliases" [];
     type = mkEnumOption [ "files" "proxy" ] "Type of website" null;
@@ -95,7 +94,7 @@ in {
     sites = {
       public = mkListSubOption siteOpts "List of public websites" [];
       private = mkListSubOption siteOpts "List of private websites" [];
-      extra = mkAttrOption "Other VirtualHost definitions" {};
+      extra = mkAttrOption "Other Virtualhost definitions" {};
     };
 
     tls = {

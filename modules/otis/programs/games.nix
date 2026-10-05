@@ -9,7 +9,7 @@ let
 
   cfg = config.otis.programs.games;
 in {
-  options.otis.programs.games.enable = mkBoolOption "Add games" false;
+  options.otis.programs.games.enable = mkBoolOption "Games" false;
 
   config = mkIf (gui.enable && cfg.enable) {
     environment.systemPackages = [ pkgs.prismlauncher ];

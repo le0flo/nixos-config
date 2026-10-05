@@ -1,10 +1,6 @@
 {config, customLib, lib, pkgs, ...}:
 
 let
-  inherit (builtins) substring;
-
-  inherit (config.otis.gui) style;
-
   inherit (customLib.hjem)
     configFmt
     configText;
@@ -16,14 +12,10 @@ let
   inherit (lib) mkIf;
 
   cfg = config.otis.gui;
-
-  parseColor = color: substring 1 6 color;
 in {
   imports = [
     ./hyprland
-    ./plasma-bigscreen
     ./windowmaker
-    ./quickshell
 
     ./style.nix
   ];
@@ -36,18 +28,12 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       alacritty
-      brightnessctl
-      grim
-      libnotify
-      mako
-      pavucontrol
-      playerctl
-      ristretto
       rofi
-      slurp
-      swaybg
-      swayidle
-      swaylock-effects
+      pavucontrol
+    ] ++ [
+      brightnessctl
+      libnotify
+      playerctl
       wl-clipboard
       xclip
     ];
@@ -91,65 +77,9 @@ in {
             };
           };
         };
-        "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
-          globalSection = {
-            actions = true;
-            ignore-timeout = false;
-            default-timeout = 10000;
 
-            background-color = style.colors.background;
-            text-color = style.colors.text;
-            border-color = style.colors.border;
-
-            outer-margin = 0;
-            margin = 5;
-          };
-        };
         "rofi/config.rasi" = configText ''
         @theme "${pkgs.rofi}/share/rofi/themes/Arc-Dark.rasi"
-        '';
-        "swaylock/config" = configText ''
-        ignore-empty-password
-        show-failed-attempts
-
-        indicator-idle-visible
-        indicator-radius=100
-
-        line-uses-inside
-
-        clock
-        timestr=%H:%M:%S
-        datestr=%d %B
-
-        image=~/.local/share/wallpapers/default
-        effect-blur=6x7
-        color=${parseColor style.colors.background}
-
-        inside-color=${parseColor style.colors.background}
-        inside-clear-color=${parseColor style.colors.background}
-        inside-caps-lock-color=${parseColor style.colors.background}
-        inside-ver-color=${parseColor style.colors.background}
-        inside-wrong-color=${parseColor style.colors.background}
-
-        key-hl-color=${parseColor style.colors.primary}
-        caps-lock-key-hl-color=${parseColor style.colors.primary}
-
-        bs-hl-color=${parseColor style.colors.secondary}
-        caps-lock-bs-hl-color=${parseColor style.colors.secondary}
-
-        ring-color=${parseColor style.colors.background}
-        ring-clear-color=${parseColor style.colors.background}
-        ring-caps-lock-color=${parseColor style.colors.background}
-        ring-ver-color=${parseColor style.colors.background}
-        ring-wrong-color=${parseColor style.colors.background}
-
-        separator-color=${parseColor style.colors.background}
-
-        text-color=${parseColor style.colors.text}
-        text-clear-color=${parseColor style.colors.text}
-        text-caps-lock-color=${parseColor style.colors.text}
-        text-ver-color=${parseColor style.colors.text}
-        text-wrong-color=${parseColor style.colors.text}
         '';
       };
     }];
@@ -168,9 +98,8 @@ in {
 
     services = {
       dbus.enable = true;
-      flatpak.enable = true;
-      gvfs.enable = true;
       gnome.gnome-keyring.enable = true;
+      gvfs.enable = true;
       libinput.enable = true;
       tumbler.enable = true;
 

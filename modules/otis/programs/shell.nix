@@ -4,11 +4,11 @@
     vteIntegration = true;
 
     interactiveShellInit = ''
-    secrets_dir="$HOME/.config/env"
+    env_dir="$HOME/.config/env"
 
-    if [[ -d "$secrets_dir" ]]; then
+    if [[ -d "$env_dir" ]]; then
       set -a
-      for env_file in "$secrets_dir"/*.env; do
+      for env_file in "$env_dir"/*.env; do
         test -f "$env_file" || continue
         source "$env_file"
       done

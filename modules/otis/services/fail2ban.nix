@@ -7,7 +7,7 @@ let
 
   cfg = config.otis.services.fail2ban;
 in {
-  options.otis.services.fail2ban.enable = mkBoolOption "fail2ban anti spam filter" false;
+  options.otis.services.fail2ban.enable = mkBoolOption "Fail2ban anti spam filter" false;
 
   config = mkIf cfg.enable {
     services.fail2ban = {

@@ -1,8 +1,6 @@
 {config, customLib, lib, ...}:
 
 let
-  inherit (config.otis.services) fail2ban;
-
   inherit (customLib.opts) mkBoolOption;
 
   inherit (lib) mkIf;
@@ -10,7 +8,7 @@ let
   cfg = config.otis.services.openssh;
 in {
   options.otis.services.openssh.enable = mkBoolOption "OpenSSH server" false;
-  
+
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ 22 ];
 

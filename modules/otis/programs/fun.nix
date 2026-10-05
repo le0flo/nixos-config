@@ -9,7 +9,7 @@ let
 
   cfg = config.otis.programs.fun;
 in {
-  options.otis.programs.fun.enable = mkBoolOption "Add fun programs :D" false;
+  options.otis.programs.fun.enable = mkBoolOption "Fun :D" false;
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [

@@ -40,7 +40,6 @@ in {
 
       tls = {
         enable = true;
-        role = "server";
 
         publicAcme = {
           enable = true;

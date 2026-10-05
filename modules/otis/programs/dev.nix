@@ -1,30 +1,23 @@
 {config, customLib, lib, pkgs, ...}:
 
 let
-  inherit (builtins) concatStringsSep;
-
   inherit (config.otis) gui;
 
-  inherit (customLib.hjem)
-    configText
-    getConfigFiles;
+  inherit (customLib.hjem) configFmt;
 
-  inherit (customLib.opts)
-    mkBoolOption
-    mkPkgsOption;
+  inherit (customLib.opts) mkBoolOption;
 
   inherit (lib)
-    genAttrs
     mkIf
     mkMerge;
 
   cfg = config.otis.programs.dev;
-  configFiles = getConfigFiles ./emacs ".el";
 in {
   options.otis.programs.dev = {
-    enable = mkBoolOption "Add development programs" false;
-    virt-manager = mkBoolOption "Enables virt-manager" false;
-    extraEmacsPlugins = mkPkgsOption "List of emacs plugins" [];
+    enable = mkBoolOption "Development" false;
+    languages = mkBoolOption "Enables language tools" false;
+    databases = mkBoolOption "Enables database tools" false;
+    virtManager = mkBoolOption "Enables virt-manager" false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -33,10 +26,6 @@ in {
         shellAliases."k" = "${pkgs.scripts}/bin/kubectl-wrapper";
 
         systemPackages = with pkgs; [
-          gnumake
-          postgresql
-          sqlite
-          openssl
           kubectl
           kubernetes-helm
           scripts
@@ -54,61 +43,38 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        tree-sitter
         ungoogled-chromium
-        heidisql
-        ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
-          asciidoc-mode
-          auctex
-          bnf-mode
-          colorful-mode
-          corfu
-          csv-mode
-          dart-mode
-          dockerfile-mode
-          git-modes
-          json-mode
-          kirigami
-          lua-mode
-          magit
-          markdown-mode
-          matlab-mode
-          nginx-mode
-          nix-mode
-          qml-mode
-          rfc-mode
-          rust-mode
-          sass-mode
-          typescript-mode
-          web-mode
-          yaml-mode
-          zig-mode
-        ]
-        ++ cfg.extraEmacsPlugins))
+        zed-editor
       ];
 
       otis.hjem = [{
-        xdg.config.files = mkMerge [
-          {
-            "emacs/custom.el" = configText "";
-            "emacs/init.el" = configText ''
-            ;;; -*- lexical-binding: t; -*-
+        xdg.config.files."zed/settings.json" = configFmt pkgs.formats.json "settings.json" {
+          disable_ai = true;
 
-            ;; Includes
-            ${concatStringsSep "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") configFiles)}
+          ui_font_size = 16;
+          buffer_font_size = 16;
 
-            ;; Custom file
-            (setq custom-file "~/.config/emacs/custom.el")
-            (load-file custom-file)
-            '';
-          }
-          (genAttrs configFiles (file: {
-            type = "copy";
-            permissions = "644";
-            source = ./emacs/${file};
-            target = "emacs/${file}";
-          }))
-        ];
+          theme = {
+            mode = "system";
+            light = "Gruvbox Light";
+            dark = "Gruvbox Dark";
+          };
+
+          agent = {
+            button = false;
+            favorite_models = [];
+            model_parameters = [];
+          };
+          collaboration_panel = {
+            button = false;
+          };
+          outline_panel = {
+            button = false;
+          };
+          project_panel = {
+            dock = "left";
+          };
+        };
       }];
 
       programs.chromium = {
@@ -131,7 +97,34 @@ in {
         };
       };
     })
-    (mkIf (gui.enable && cfg.virt-manager) {
+    (mkIf cfg.languages {
+      environment.systemPackages = with pkgs; [
+        gnumake
+        meson
+      ] ++ [
+        gcc
+        jdk25
+        python313
+        zig
+        rustc
+        cargo
+        lua
+      ] ++ [
+        tree-sitter
+        nil
+        nixd
+      ];
+    })
+    (mkIf cfg.databases {
+      environment.systemPackages = with pkgs; [
+        postgresql
+        sqlite
+      ];
+    })
+    (mkIf (gui.enable && cfg.databases) {
+      environment.systemPackages = [ pkgs.heidisql ];
+    })
+    (mkIf (gui.enable && cfg.virtManager) {
       programs.virt-manager.enable = true;
 
       virtualisation = {

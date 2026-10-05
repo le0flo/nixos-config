@@ -2,6 +2,5 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("swaybg -m fill -i ~/.local/share/wallpapers/default")
     hl.exec_cmd("swayidle -w before-sleep 'swaylock -f' lock 'swaylock -f'")
     hl.exec_cmd("mako")
+    hl.exec_cmd("qs")
 end)
-
-pcall(require, "quickshell")

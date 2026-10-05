@@ -26,25 +26,25 @@ let
   cfg = config.otis.net.vpn;
 
   clientOpts.options = {
-    publicKey = mkStrOption "Public key for this client" "";
-    id = mkStrOption "Id for this client" "1";
+    publicKey = mkStrOption "Public key" "";
+    id = mkStrOption "Client's ID" "1";
   };
 
   networkOpts.options = {
-    privateKeyFile = mkStrOption "Private key file for this host" "/run/secrets/private.key";
-    publicKey = mkStrOption "Public key for this host" "";
-    address = mkStrOption "The address which the vpn is hosted on" domains.public;
-    port = mkPortOption "The port which the vpn is hosted on" 51820;
-    subnet = mkStrOption "Subnet for the vpn" "10.0.0.0/24";
-    primary = mkBoolOption "Whether this is the primary vpn" false;
-    id = mkStrOption "Id for this host" "1";
-    clients = mkListSubOption clientOpts "List of allowed clients in the vpn" [];
+    privateKeyFile = mkStrOption "Private key file" "/run/secrets/wg.key";
+    publicKey = mkStrOption "Public key" "";
+    address = mkStrOption "Server's address" domains.public;
+    port = mkPortOption "Server's port" 51820;
+    subnet = mkStrOption "VPN's subnet" "10.0.0.0/24";
+    primary = mkBoolOption "Whether this is the primary network on the host" false;
+    id = mkStrOption "Host's ID" "1";
+    clients = mkListSubOption clientOpts "List of clients" [];
   };
 in {
   options.otis.net.vpn = {
-    enable = mkBoolOption "Enable the vpn" false;
-    role = mkEnumOption [ "client" "server" ] "Role for the host in the vpn" "client";
-    networks = mkAttrSubOption networkOpts "Different vpns" {};
+    enable = mkBoolOption "Enables VPN" false;
+    role = mkEnumOption [ "client" "server" ] "Host's role in the VPN" "client";
+    networks = mkAttrSubOption networkOpts "Network definitions" {};
   };
 
   config = mkIf cfg.enable (mkMerge [

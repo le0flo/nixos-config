@@ -9,7 +9,7 @@ let
 
   cfg = config.otis.net.wifi;
 in {
-  options.otis.net.wifi.enable = mkBoolOption "Toggles the wifi stack" false;
+  options.otis.net.wifi.enable = mkBoolOption "Enables the WiFi stack" false;
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [

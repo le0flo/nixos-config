@@ -9,9 +9,7 @@ let
     configSource
     configText;
 
-  inherit (customLib.opts)
-    mkBoolOption
-    mkPkgsOption;
+  inherit (customLib.opts) mkBoolOption;
 
   inherit (lib) mkIf;
 
@@ -23,23 +21,19 @@ let
     [ "${pkgs.windowmaker}" ]
     (readFile path);
 in {
-  options.otis.gui.windowmaker = {
-    enable = mkBoolOption "Windowmaker window manager" false;
-    dockapps = mkPkgsOption "Dockapps" (with pkgs.dockapps; [
-      cputnik
-      wmacpi
-      wmclockmon
-      wmnd
-      wmpulsemixer
-      wmsystemtray
-    ]);
-    extraPackages = mkPkgsOption "Additional packages" [];
-  };
+  options.otis.gui.windowmaker.enable = mkBoolOption "Windowmaker window manager" false;
 
   config = mkIf cfg.enable {
     environment = {
       shellAliases."start-windowmaker" = "startx ~/${gnustepDir}/start.sh";
-      systemPackages = cfg.dockapps ++ cfg.extraPackages;
+      systemPackages = with pkgs.dockapps; [
+        cputnik
+        wmacpi
+        wmclockmon
+        wmnd
+        wmpulsemixer
+        wmsystemtray
+      ];
     };
 
     otis.hjem = [{

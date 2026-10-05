@@ -27,7 +27,7 @@ let
     default_area = "navbar";
   };
 in {
-  options.otis.programs.internet.enable = mkBoolOption "Add internet related programs" false;
+  options.otis.programs.internet.enable = mkBoolOption "Internet" false;
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -41,6 +41,7 @@ in {
         openssh
         rsync
         wireguard-tools
+        openssl
       ];
     }
     (mkIf gui.enable {
@@ -92,7 +93,7 @@ in {
               (mkBookmark "Rete privata" "https://${domains.private}/")
               (mkBookmark "Studenti Online" "https://studenti.unibo.it/")
               (mkBookmark "Virtuale" "https://virtuale.unibo.it/")
-              (mkBookmark "Whatsapp" "https://web.whatsapp.com/") 
+              (mkBookmark "Whatsapp" "https://web.whatsapp.com/")
               (mkBookmark "Telegram" "https://web.telegram.org/a/")
               (mkBookmark "Soundcloud" "https://soundcloud.com/")
               (mkBookmark "ChatGPT" "https://chatgpt.com/")
@@ -132,8 +133,8 @@ in {
             "sidebar.history.sortOption" = "date";
           };
         };
-        kdeconnect.enable = true;
         thunderbird.enable = true;
+        kdeconnect.enable = true;
       };
     })
   ]);

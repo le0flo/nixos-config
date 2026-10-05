@@ -8,7 +8,7 @@ let
   inherit (lib)
     mkIf
     mkMerge;
-in {  
+in {
   config = mkMerge [
     {
       environment.systemPackages = with pkgs; [
@@ -18,7 +18,7 @@ in {
       ];
     }
     (mkIf gui.enable {
-      environment.systemPackages = with pkgs; [ keepassxc ];
+      environment.systemPackages = [ pkgs.keepassxc ];
 
       otis.hjem = [{
         xdg.config.files."keepassxc/keepassxc.ini" = configFmt pkgs.formats.ini "keepassxc.ini" {

@@ -62,9 +62,9 @@ let
 in {
   options.otis.services.microvm = {
     enable = mkBoolOption "microvm.nix host" false;
-    externalInterface = mkStrOption "The interface that microvms use for communications with the outside world" "";
-    vpnInterface = mkNullOption types.str "The vpn interface where a reverse proxy contacts the actual microvms" null;
-    vms = mkListOption types.str "List hosted microvms" [];
+    externalInterface = mkStrOption "External interface" "eth0";
+    vpnInterface = mkNullOption types.str "Reverse proxy VPN interface" null;
+    vms = mkListOption types.str "List of hosted microvms" [];
   };
 
   config = mkIf cfg.enable {

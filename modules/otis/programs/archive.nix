@@ -7,7 +7,7 @@ let
 
   cfg = config.otis.programs.archive;
 in {
-  options.otis.programs.archive.enable = mkBoolOption "Add archive programs" false;
+  options.otis.programs.archive.enable = mkBoolOption "Archiving" false;
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
@@ -16,5 +16,5 @@ in {
       p7zip
       gnutar
     ];
-  };      
+  };
 }

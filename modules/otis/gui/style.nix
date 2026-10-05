@@ -23,8 +23,9 @@ let
 
   cfg = gui.style;
 
-  mkColorOption = name: default: mkStrOption "Color for the ${name}" default;
   configFmtIni = configFmt pkgs.formats.ini;
+
+  mkColorOption = name: default: mkStrOption "Color for the ${name}" default;
   packageLinks = dir: pkgs: (listToAttrs (concatMap (x: map (y: {
     name = "${dir}/${y}";
     value.source = "${x}/share/${dir}/${y}";

@@ -13,9 +13,9 @@ let
 in {
   options.otis.services.mumble = {
     enable = mkBoolOption "Mumble server" false;
-    domain = mkStrOption "The server's domain" "example.com";
-    name = mkStrOption "The server's name" "Mumble server";
-    welcome = mkStrOption "The welcome message" "<h1>Welcome</h1>";
+    domain = mkStrOption "Domain name" "example.com";
+    name = mkStrOption "Server's name" "Mumble server";
+    welcome = mkStrOption "Welcome message" "<h1>Welcome</h1>";
     environmentFile = mkStrOption "Environment file" "/etc/mumble/environment";
   };
 

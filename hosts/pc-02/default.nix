@@ -13,7 +13,6 @@ in {
     gui = {
       enable = true;
       hyprland.enable = true;
-      quickshell.enable = true;
       windowmaker.enable = true;
     };
 
@@ -21,11 +20,6 @@ in {
       dns.domains = {
         public = "leoflo.net";
         private = "home.arpa";
-      };
-
-      tls = {
-        enable = true;
-        role = "client";
       };
 
       vpn = {
@@ -51,7 +45,9 @@ in {
       archive.enable = true;
       dev = {
         enable = true;
-        virt-manager = true;
+        languages = true;
+        databases = true;
+        virtManager = true;
       };
       devices.enable = true;
       fun.enable = true;
@@ -76,7 +72,6 @@ in {
       groups = [
         "audio"
         "dialout"
-        "docker"
         "libvirtd"
         "video"
         "wheel"
