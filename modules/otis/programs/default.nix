@@ -18,7 +18,7 @@ in {
 
   config = {
     environment.systemPackages = with pkgs; [
-      vis
+      nano
       tmux
       htop
       file
