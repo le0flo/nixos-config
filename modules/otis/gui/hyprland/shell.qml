@@ -9,12 +9,12 @@ PanelWindow {
     id: "bar"
 
     anchors {
-        top: true
+        bottom: true
         left: true
         right: true
     }
 
-    implicitHeight: 30
+    implicitHeight: 32
     color: Config.colors.background
 
     Workspaces {}

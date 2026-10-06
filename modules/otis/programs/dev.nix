@@ -101,6 +101,7 @@ in {
       environment.systemPackages = with pkgs; [
         gnumake
         meson
+        ninja
       ] ++ [
         gcc
         jdk25
@@ -109,6 +110,7 @@ in {
         rustc
         cargo
         lua
+        kdePackages.qtdeclarative
       ] ++ [
         tree-sitter
         nil
