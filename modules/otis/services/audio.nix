@@ -1,4 +1,4 @@
-{config, customLib, lib, ...}:
+{config, customLib, lib, pkgs, ...}:
 
 let
   inherit (customLib.opts) mkBoolOption;
@@ -10,6 +10,8 @@ in {
   options.otis.services.audio.enable = mkBoolOption "Audio stack" false;
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ pkgs.easyeffects ];
+
     services.pipewire = {
       enable = true;
 

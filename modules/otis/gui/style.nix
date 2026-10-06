@@ -56,13 +56,18 @@ in {
       name = mkStrOption "Default icon pack name" "elementary-xfce-dark";
       packages = mkPkgsOption "Icon pack packages" (with pkgs; [
         adwaita-icon-theme
+        gnome-themes-extra
+        hicolor-icon-theme
         elementary-xfce-icon-theme
       ]);
     };
 
     gtk = {
       name = mkStrOption "Default gtk theme name" "Adwaita";
-      packages = mkPkgsOption "Gtk theme packages" [ pkgs.greybird ];
+      packages = mkPkgsOption "Gtk theme packages" (with pkgs; [
+        gnome-themes-extra
+        greybird
+      ]);
     };
 
     qt = {

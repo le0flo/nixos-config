@@ -15,4 +15,4 @@ wmnd -I home & disown
 wmpulsemixer -w & disown
 wmsystemtray & disown
 
-exec wmaker
+exec dbus-run-session wmaker
