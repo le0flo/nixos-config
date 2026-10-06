@@ -38,6 +38,18 @@ hl.window_rule({
 })
 
 hl.window_rule({
+   name = "thunar-dialogs",
+   match = {
+      class = "^Thunar$",
+      title = "^Rename.+$",
+   },
+
+   float = true,
+   center = true,
+   size = { "(monitor_w*0.25)", "(monitor_h*0.20)" },
+})
+
+hl.window_rule({
    name = "maximized-windows",
    match = { class = "^(firefox|thunderbird|emacs)$"},
 
@@ -48,14 +60,14 @@ hl.window_rule({
    name = "never-screenshare-windows",
    match = { class = "^(org.keepassxc.KeePassXC)$" },
 
-   no_screen_share = true,   
+   no_screen_share = true,
 })
 
 local no_screenshare_window = hl.window_rule({
    name = "no-screenshare-windows",
    match = { class = "^(firefox|thunderbird)$" },
 
-   no_screen_share = true,   
+   no_screen_share = true,
 })
 
 local no_screenshare_layer = hl.layer_rule({
@@ -65,7 +77,7 @@ local no_screenshare_layer = hl.layer_rule({
    no_screen_share = true,
 })
 
-function hidden_msg(is_hidden)
+local function hidden_msg(is_hidden)
    if is_hidden then
       return "nascoste"
    end
@@ -89,14 +101,3 @@ hl.bind("SUPER + CTRL + H", function()
    no_screenshare_layer:set_enabled(enabled)
    hl.dispatch(hl.dsp.exec_cmd("notify-send 'Layers " .. hidden_msg(enabled) .. "'"))
 end)
-
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Permissions/
--- hl.config({
---   ecosystem = {
---     enforce_permissions = true,
---   },
--- })
-
--- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
--- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
--- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")

@@ -49,7 +49,14 @@ in {
 
       otis.hjem = [{
         xdg.config.files."zed/settings.json" = configFmt pkgs.formats.json "settings.json" {
+          auto_update = false;
           disable_ai = true;
+
+          telemetry = {
+            diagnostics = false;
+            metrics = false;
+            anthropic_retention = false;
+          };
 
           ui_font_size = 16;
           buffer_font_size = 16;
