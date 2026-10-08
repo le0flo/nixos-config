@@ -1,7 +1,5 @@
-import Quickshell
-import Quickshell.Hyprland
 import QtQuick
-import QtQuick.Layouts
+import Quickshell
 
 import "config.js" as Config
 
@@ -18,6 +16,5 @@ PanelWindow {
     color: Config.colors.background
 
     Workspaces {}
-
-    Clock {}
+    Controls {}
 }

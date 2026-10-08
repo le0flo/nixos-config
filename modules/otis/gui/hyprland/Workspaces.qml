@@ -1,10 +1,11 @@
+import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
-import QtQuick
 
 import "config.js" as Config
 
-Row {
+Item {
     id: "workspaces"
 
     anchors {
@@ -12,30 +13,35 @@ Row {
         left: parent.left
     }
 
+    width: workspacesRow.implicitWidth
     height: parent.height
 
-    Repeater {
-        model: Hyprland.workspaces
+    RowLayout {
+        id: "workspacesRow"
 
-        Rectangle {
-            width: workspaces.height
-            height: workspaces.height
+        Repeater {
+            model: Hyprland.workspaces
 
-            color: modelData.active ? Config.colors.primary : Config.colors.background
+            Rectangle {
+                width: workspaces.height
+                height: workspaces.height
 
-            MouseArea {
-                anchors.fill: parent
+                color: modelData.active ? Config.colors.primary : Config.colors.background
 
-                onClicked: {
-                    modelData.activate()
-                }
+                MouseArea {
+                    anchors.fill: parent
 
-                Text {
-                    anchors.centerIn: parent
+                    onClicked: {
+                        modelData.activate()
+                    }
 
-                    text: modelData.id
-                    color: modelData.active ? Config.colors.background : Config.colors.text
-                    font.bold: true
+                    Text {
+                        anchors.centerIn: parent
+
+                        text: modelData.id
+                        color: modelData.active ? Config.colors.background : Config.colors.text
+                        font.bold: true
+                    }
                 }
             }
         }
