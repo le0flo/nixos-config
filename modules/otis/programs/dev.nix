@@ -109,6 +109,9 @@ in {
         gnumake
         meson
         ninja
+        maven
+        gradle
+        ant
       ] ++ [
         gcc
         jdk25
