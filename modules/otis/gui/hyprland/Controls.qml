@@ -6,94 +6,83 @@ import Quickshell.Widgets
 
 import "config.js" as Config
 
-Item {
+Row {
     id: "controls"
 
-    anchors {
-        right: parent.right
-        rightMargin: 5
-    }
+    anchors.right: parent.right
 
-    width: controlsRow.implicitWidth
     height: parent.height
+    spacing: 10
 
-    RowLayout {
-        id: "controlsRow"
+    Row {
+        id: "tray"
 
-        anchors.fill: parent
-        spacing: 10
+        height: parent.height
+        spacing: 0
 
-        Item {
-            id: "tray"
+        Repeater {
+            model: SystemTray.items
 
-            width: trayRow.implicitWidth
-            height: parent.height
+            Rectangle {
+                width: parent.height
+                height: parent.height
 
-            RowLayout {
-                id: "trayRow"
+                color: Config.colors.background
 
-                anchors.fill: parent
-                spacing: 0
+                MouseArea {
+                    anchors.fill: parent
 
-                Repeater {
-                    model: SystemTray.items
+                    onClicked: {
+                        modelData.activate()
+                    }
 
-                    Rectangle {
-                        width: controls.height
-                        height: controls.height
-
-                        color: Config.colors.background
-
-                        MouseArea {
-                            anchors.fill: parent
-
-                            onClicked: {
-                                modelData.activate()
-                            }
-
-                            Image {
-                                anchors {
-                                    horizontalCenter: parent.horizontalCenter
-                                    verticalCenter: parent.verticalCenter
-                                }
-
-                                width: parent.height - 10
-                                height: parent.height - 10
-                                source: modelData.icon
-                            }
+                    Image {
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
                         }
+
+                        width: parent.height - 10
+                        height: parent.height - 10
+                        source: modelData.icon
                     }
                 }
             }
         }
+    }
+
+    SystemClock {
+        id: "clock"
+        precision: SystemClock.Seconds
+    }
+
+    Rectangle {
+        width: clockText.implicitWidth
+        height: parent.height
+
+        color: Config.colors.background
 
         Text {
-            id: "clock"
+            id: "clockText"
 
-            property string currentTime: ""
-            property int currentOffset: new Date().getTimezoneOffset() / -60
+            anchors.centerIn: parent
 
-            text: "(UTC+" + clock.currentOffset + "): " + clock.currentTime
+            property int utcOffset: new Date().getTimezoneOffset() / -60
+
+            text: "(UTC+" + utcOffset + "): " + Qt.formatTime(clock.date, "HH:mm:ss")
             color: Config.colors.text
             font.bold: true
-
-            Timer {
-                interval: 500
-                running: true
-                repeat: true
-
-                onTriggered: {
-                    clock.currentTime = Qt.formatTime(new Date(), "HH:mm:ss")
-                }
-            }
-
-            Component.onCompleted: {
-                clock.currentTime = Qt.formatTime(new Date(), "HH:mm:ss")
-            }
         }
+    }
+
+    Rectangle {
+        width: parent.height
+        height: parent.height
+
+        color: Config.colors.background
 
         IconImage {
-            id: "lock"
+            anchors.centerIn: parent
 
             width: parent.height - 10
             height: parent.height - 10
