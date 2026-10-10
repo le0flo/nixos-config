@@ -1,20 +1,16 @@
 import QtQuick
 import Quickshell
 
-import "config.js" as Config
+Scope {
+    id: "root"
 
-PanelWindow {
-    id: "bar"
+    property int borderSize: 2
 
-    anchors {
-        bottom: true
-        left: true
-        right: true
+    SystemClock {
+        id: "clock"
+        precision: SystemClock.Seconds
     }
 
-    implicitHeight: 32
-    color: Config.colors.background
-
-    Workspaces {}
-    Controls {}
+    LeftDock { borderSize: root.borderSize }
+    TopIsland { borderSize: root.borderSize }
 }
