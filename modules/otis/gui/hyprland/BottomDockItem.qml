@@ -3,24 +3,15 @@ import Quickshell
 import Quickshell.Widgets
 
 Item {
-    required property int size
-    required property int borderSize
     required property var modelData
 
-    property bool hover: false
-    property int size34: size * 3/4
-    property int size35: size * 3/5
-    property int borderSize3: borderSize * 3
-    property int borderSize32: borderSize * 3/2
-
-    width: size
-    height: size
+    width: parent.height
+    height: parent.height
 
     MouseArea {
         anchors.fill: parent
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        hoverEnabled: true
 
         onClicked: mouse => {
             switch (mouse.button) {
@@ -40,40 +31,37 @@ Item {
             }
         }
 
-        onEntered: { hover = true }
-        onExited: { hover = false }
-
         IconImage {
             anchors {
-                right: parent.right
-                rightMargin: borderSize3
-                verticalCenter: parent.verticalCenter
+                top: parent.top
+                topMargin: 3
+                horizontalCenter: parent.horizontalCenter
             }
 
-            width: size35
-            height: size35
+            width: parent.height * 3/4
+            height: parent.height * 3/4
 
             source: Quickshell.iconPath(DesktopEntries.byId(modelData.id).icon)
         }
 
-        Column {
+        Row {
             anchors {
-                left: parent.left
-                leftMargin: borderSize3
-                verticalCenter: parent.verticalCenter
+                bottom: parent.bottom
+                bottomMargin: 3
+                horizontalCenter: parent.horizontalCenter
             }
 
-            spacing: borderSize
+            spacing: 3
 
             Repeater {
                 model: modelData.instances
 
                 Rectangle {
-                    width: borderSize3
-                    height: borderSize3
+                    width: 6
+                    height: 6
 
-                    color: "#FFFFFF"
-                    radius: borderSize32
+                    color: "#E6E6E6"
+                    radius: 6
                 }
             }
         }

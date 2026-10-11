@@ -1,51 +1,65 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Wayland
 
 import "config.js" as Config
 
 Scope {
     id: "root"
 
-    required property int borderSize
-
-    property int size: 56
-
     Variants {
         model: Quickshell.screens
 
         PanelWindow {
-            anchors.left: true
-            margins.left: dockHover.hovered ? 0 : -size + borderSize * 3
+            anchors {
+                bottom: true
+                left: true
+                right: true
+            }
 
-            implicitWidth: size
+            margins {
+                bottom: dockHover.hovered ? 0 : -height + 6
+                left: 24
+                right: 24
+            }
+
+            implicitHeight: 56
 
             color: "transparent"
             exclusiveZone: 0
+
+            BackgroundEffect.blurRegion: Region { item: dock }
 
             HoverHandler {
                 id: "dockHover"
             }
 
             Rectangle {
-                anchors {
-                    fill: parent
-                    leftMargin: -borderSize
-                }
+                id: "dock"
 
-                color: Config.colors.background
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: Math.max(items.implicitWidth + 10, 100)
+                height: parent.height
+
+                color: "#CC363636"
+
+                radius: 10
 
                 border {
-                    width: borderSize
-                    color: Config.colors.primary
+                    width: 1
+                    color: "#26FFFFFF"
                 }
 
-                Column {
+                Row {
                     id: "items"
 
                     anchors.centerIn: parent
 
-                    spacing: 0
+                    height: parent.height
+
+                    spacing: 2
 
                     Repeater {
                         model: Hyprland.focusedWorkspace.toplevels.values.reduce((acc, t) => {
@@ -64,10 +78,7 @@ Scope {
                             return acc
                         }, [])
 
-                        LeftDockItem {
-                            size: root.size
-                            borderSize: root.borderSize
-                        }
+                        BottomDockItem {}
                     }
                 }
             }

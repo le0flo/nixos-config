@@ -1,38 +1,63 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
+
+import "config.js" as Config
 
 Scope {
     id: "root"
-
-    required property int borderSize
-
-    property int workspacesSize: 24
-    property int controlsSize: 150
 
     Variants {
         model: Quickshell.screens
 
         PanelWindow {
-            anchors.top: true
+            anchors {
+                top: true
+                left: true
+                right: true
+            }
 
-            implicitWidth: 400
-            implicitHeight: islandHover.hovered ? controlsSize : workspacesSize
+            implicitHeight: 24
 
             color: "transparent"
-            exclusiveZone: workspacesSize
 
-            HoverHandler {
-                id: "islandHover"
-            }
+            Rectangle {
+                anchors {
+                    top: parent.top
+                    topMargin: parent.height / 4
+                    horizontalCenter: parent.horizontalCenter
+                }
 
-            TopIslandWorkspaces {
-                size: root.workspacesSize
-            }
+                width: row.implicitWidth + parent.height * 3/4
+                height: parent.height * 3/4
 
-            TopIslandControls {
-                size: root.controlsSize
-                borderSize: root.borderSize
-                active: islandHover.hovered
+                color: "#A93A3A3A"
+                radius: height
+
+                Row {
+                    id: "row"
+
+                    anchors.centerIn: parent
+
+                    height: parent.height
+
+                    spacing: height / 3
+
+                    Repeater {
+                        model: Hyprland.workspaces
+
+                        Rectangle {
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            width: modelData.active ? parent.height : parent.height / 3
+                            height: parent.height / 3
+
+                            radius: height
+
+                            color: modelData.active ? Config.colors.text : Config.colors.background
+                        }
+                    }
+                }
             }
         }
     }
