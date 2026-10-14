@@ -80,6 +80,7 @@ in {
   config = mkIf gui.enable {
     environment.systemPackages = with pkgs; [
       dconf
+      libsForQt5.qt5ct
       qt6Packages.qt6ct
       wallpapers
     ]
@@ -111,6 +112,21 @@ in {
 
               gtk-theme-name = cfg.gtk.name;
               gtk-icon-theme-name = cfg.icons.name;
+            };
+          };
+
+          "qt5ct/qt5ct.conf" = configFmtIni "qt5ct.conf" {
+            Appearance = {
+              style = cfg.qt.style;
+              icon_theme = cfg.icons.name;
+              color_scheme_path = "${pkgs.libsForQt5.qt5ct}/share/qt6ct/colors/${cfg.qt.colorScheme}.conf";
+              custom_palette = true;
+              standard_dialogs = cfg.qt.dialogs;
+            };
+
+            Fonts = {
+              general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+              fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
             };
           };
 

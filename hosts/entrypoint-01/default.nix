@@ -122,10 +122,6 @@ in {
       hydra = {
         enable = true;
         role = "server";
-        buildMachines = [
-          { arch = "x86_64-linux"; host = "10.69.1.1"; keyFile = "${secretsDir}/hydra/node-01"; jobs = 2; }
-          { arch = "x86_64-linux"; host = "10.69.1.2"; keyFile = "${secretsDir}/hydra/node-02"; jobs = 2; }
-        ];
       };
       k3s = {
         enable = true;
@@ -177,13 +173,8 @@ in {
         mode = "400";
       };
 
-      "hydra/node-01" = {
-        file = "${secretsEnc}/hydra/node-01.age";
-        mode = "400";
-      };
-
-      "hydra/node-02" = {
-        file = "${secretsEnc}/hydra/node-02.age";
+      "hydra/token" = {
+        file = "${secretsEnc}/hydra/token.age";
         mode = "400";
       };
 

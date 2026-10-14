@@ -3,7 +3,9 @@
 let
   inherit (config.otis) gui;
 
-  inherit (customLib.hjem) configFmt;
+  inherit (customLib.hjem)
+    configFmt
+    configText;
 
   inherit (customLib.opts) mkBoolOption;
 
@@ -45,6 +47,7 @@ in {
       environment.systemPackages = with pkgs; [
         ungoogled-chromium
         zed-editor
+        (octave.override { enableQt = true; })
       ];
 
       otis.hjem = [{
@@ -112,20 +115,25 @@ in {
         maven
         gradle
         ant
+        cargo
       ] ++ [
         gcc
         jdk25
         python313
+        nodejs
         zig
         rustc
-        cargo
         lua
-        kdePackages.qtdeclarative
       ] ++ [
         tree-sitter
         nil
         nixd
       ];
+
+      otis.hjem = [{
+        files.".npmrc" = configText "prefix=~/.local/share/npm";
+        xdg.config.files."env/npm.env" = configText "PATH=$HOME/.local/share/npm/bin:$PATH";
+      }];
     })
     (mkIf cfg.databases {
       environment.systemPackages = with pkgs; [

@@ -75,6 +75,11 @@ in {
     };
 
     secrets = {
+      "hydra/token" = {
+        file = "${secretsEnc}/hydra/token.age";
+        mode = "400";
+      };
+
       "k3s/token" = {
         file = "${secretsEnc}/k3s/token.age";
         mode = "400";

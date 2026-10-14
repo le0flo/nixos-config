@@ -47,6 +47,8 @@ in {
       nerd-fonts.iosevka
     ] ++ cfg.extraFonts;
 
+    hardware.graphics.enable = true;
+
     otis.hjem = [{
       xdg.config.files = {
         "alacritty/alacritty.toml" = configFmt pkgs.formats.toml "alacritty.toml" {

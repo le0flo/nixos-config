@@ -79,7 +79,6 @@ in {
 
       packages = with pkgs; [
         vesktop
-        codex
         openfortivpn
         freetds
         kubelogin

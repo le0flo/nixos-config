@@ -24,6 +24,7 @@ let
 
   cfg = config.otis.gui.hyprland;
   hyprPkgs = inputs.hyprland.packages."${system}";
+  hyprPkgsUnstable = inputs.hyprland.inputs.nixpkgs.legacyPackages."${system}";
 
   configLuaFiles = getConfigFiles ./. ".lua";
   configQmlFiles = getConfigFiles ./. ".qml";
@@ -44,6 +45,12 @@ in {
         swayidle
         swaylock-effects
       ];
+    };
+
+    hardware.graphics = {
+      package = hyprPkgsUnstable.mesa;
+      enable32Bit = true;
+      package32 = hyprPkgsUnstable.pkgsi686Linux.mesa;
     };
 
     otis.hjem = [{

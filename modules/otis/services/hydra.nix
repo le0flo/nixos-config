@@ -1,61 +1,66 @@
-{config, customLib, hostName, lib, pkgs, secretsEnc, ...}:
+{config, customLib, lib, ...}:
 
 let
-  inherit (builtins) concatStringsSep;
+  inherit (builtins)
+    attrValues
+    concatStringsSep;
+
+  inherit (config.age) secretsDir;
+
+  inherit (config.otis.net) vpn;
 
   inherit (config.otis.net.dns) domains;
 
-  inherit (customLib.config) systems;
+  inherit (customLib.net) subnetToGateway;
 
   inherit (customLib.opts)
     mkBoolOption
-    mkEnumOption
-    mkIntOption
-    mkListSubOption
-    mkStrOption;
+    mkEnumOption;
 
   inherit (lib)
+    filterAttrs
+    head
+    mapAttrs
     mkIf
     mkMerge;
 
   cfg = config.otis.services.hydra;
-
-  buildMachinesOpts.options = {
-    arch = mkEnumOption systems "Host's architecture" "x86_64-linux";
-    host = mkStrOption "Host's IPv4 address" "127.0.0.1";
-    keyFile = mkStrOption "Host's public ssh key" "";
-    jobs = mkIntOption "Max jobs" 1;
-  };
 in {
   options.otis.services.hydra = {
     enable = mkBoolOption "Hydra cluster" false;
     role = mkEnumOption [ "server" "builder" ] "Role of the host" "builder";
-    buildMachines = mkListSubOption buildMachinesOpts "List of builder hosts" [];
   };
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf (cfg.role == "server") {
+      networking.firewall.interfaces = mapAttrs
+        (_: _: { allowedTCPPorts = [ 9001 ]; })
+        (filterAttrs (_: x: x.primary) vpn.networks);
+
       services.hydra = {
         enable = true;
         useSubstitutes = true;
-
         hydraURL = "https://hydra.${domains.public}";
         listenHost = "127.0.0.1";
         port = 9000;
         notificationSender = "hydra@localhost";
 
-        buildMachinesFiles = [
-          (pkgs.writeText "hydra-machines" (concatStringsSep "\n" (map (x: "ssh-ng://builder@${x.host} ${x.arch} ${x.keyFile} ${toString x.jobs} 1 kvm,nixos-test - -") cfg.buildMachines)))
-        ];
+        queueRunner = {
+          grpc = {
+            address = subnetToGateway (head (attrValues (filterAttrs (_: x: x.primary) vpn.networks))).subnet;
+            port = 9001;
+          };
+
+          settings.tokenPaths = [ "${secretsDir}/hydra/token" ];
+        };
       };
     })
     (mkIf (cfg.role == "builder") {
-      users.users."builder" = {
-        isNormalUser = true;
-        openssh.authorizedKeys.keys = [ "${secretsEnc}/hydra/${hostName}.pub" ];
-
-        home = "/var/lib/builder";
-        createHome = true;
+      services.hydra-builder = {
+        enable = true;
+        settings.useSubstitutes = true;
+        queueRunnerAddr = concatStringsSep ":" [ (subnetToGateway (head (attrValues (filterAttrs (_: x: x.primary) vpn.networks))).subnet) "9001" ];
+        authorizationFile = "${secretsDir}/hydra/token";
       };
     })
   ]);
