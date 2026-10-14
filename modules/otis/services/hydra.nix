@@ -1,9 +1,7 @@
 {config, customLib, lib, ...}:
 
 let
-  inherit (builtins)
-    attrValues
-    concatStringsSep;
+  inherit (builtins) attrValues;
 
   inherit (config.age) secretsDir;
 
@@ -59,7 +57,7 @@ in {
       services.hydra-builder = {
         enable = true;
         settings.useSubstitutes = true;
-        queueRunnerAddr = concatStringsSep ":" [ (subnetToGateway (head (attrValues (filterAttrs (_: x: x.primary) vpn.networks))).subnet) "9001" ];
+        queueRunnerAddr = "http://${subnetToGateway (head (attrValues (filterAttrs (_: x: x.primary) vpn.networks))).subnet}:9001";
         authorizationFile = "${secretsDir}/hydra/token";
       };
     })
