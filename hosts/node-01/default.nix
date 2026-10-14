@@ -74,6 +74,8 @@ in {
       "hydra/token" = {
         file = "${secretsEnc}/hydra/token.age";
         mode = "400";
+        owner = "hydra-builder";
+        group = "hydra";
       };
 
       "k3s/token" = {
