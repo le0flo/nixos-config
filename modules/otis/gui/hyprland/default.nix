@@ -58,8 +58,8 @@ in {
           ${concatStringsSep "\n" (map (x: "require(\"${removeSuffix ".lua" x}\")") configLuaFiles)}
 
           hl.bind("SUPER + B", hl.dsp.exec_cmd("${pkgs.scripts}/bin/bg-picker"))
-          hl.bind("Print", hl.dsp.exec_cmd("${pkgs.scripts}/bin/screenshot-wl.sh area"))
-          hl.bind("CTRL + Print", hl.dsp.exec_cmd("${pkgs.scripts}/bin/screenshot-wl.sh screen"))
+          hl.bind("Print", hl.dsp.exec_cmd("${pkgs.scripts}/bin/screenshot-wl area"))
+          hl.bind("CTRL + Print", hl.dsp.exec_cmd("${pkgs.scripts}/bin/screenshot-wl screen"))
 
           hl.env("HYPRCURSOR_SIZE", "${toString style.cursor.size}")
           hl.env("HYPRCURSOR_THEME", "${style.cursor.name}")
