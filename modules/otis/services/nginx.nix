@@ -80,7 +80,7 @@ let
         })
         (mkIf ((length x.vpnInterfaces) > 0) {
           extraConfig = ''
-          ${concatStringsSep "\n" (map (x: "allow ${vpn.networks."${x}".subnet}") x.vpnInterfaces)}
+          ${concatStringsSep "\n" (map (x: "allow ${vpn.networks."${x}".subnet};") x.vpnInterfaces)}
           deny all;
           '';
         })
