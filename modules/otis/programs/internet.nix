@@ -3,7 +3,7 @@
 let
   inherit (config.otis) gui;
 
-  inherit (config.otis.net.dns) domains;
+  inherit (customLib.hjem) configText;
 
   inherit (customLib.opts) mkBoolOption;
 
@@ -12,20 +12,6 @@ let
     mkMerge;
 
   cfg = config.otis.programs.internet;
-
-  mkBookmark = name: url: {
-    Title = name;
-    URL = url;
-    Placement = "toolbar";
-  };
-
-  mkExtension = short: {
-    install_url = "https://addons.mozilla.org/firefox/downloads/latest/${short}/latest.xpi";
-    installation_mode = "force_installed";
-    updates_disabled = true;
-    private_browsing = true;
-    default_area = "navbar";
-  };
 in {
   options.otis.programs.internet.enable = mkBoolOption "Internet" false;
 
@@ -46,96 +32,27 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
+        librewolf
+        thunderbird
         dino
         mumble
-        nicotine-plus
-        qbittorrent
       ];
 
-      programs = {
-        firefox = {
-          enable = true;
+      otis.hjem = [{
+        xdg.config.files."librewolf/librewolf/librewolf.overrides.cfg" = configText ''
+        defaultPref("browser.nova.enabled", false);
 
-          policies = {
-            AppAutoUpdate = false;
-            BackgroundAppUpdate = false;
+        defaultPref("privacy.clearOnShutdown.cookies", false);
+        defaultPref("privacy.clearOnShutdown.offlineApps", false);
+        defaultPref("privacy.clearOnShutdown_v2.cookiesAndStorage", false);
+        defaultPref("privacy.resistFingerprinting", false);
+        defaultPref("privacy.sanitize.sanitizeOnShutdown", false);
 
-            DisableFirefoxAccounts = true;
-            DisableFirefoxScreenshot = true;
-            DisableFirefoxStudies = true;
-            DisableForgetButton = true;
-            DisableFormHistory = true;
-            DisableMasterPasswordCreation = true;
-            DisablePasswordReveal = true;
-            DisablePocket = true;
-            DisableProfileImport = true;
-            DisableProfileRefresh = true;
-            DisableSetDesktopBackground = true;
-            DisableTelemetry = true;
+        defaultPref("webgl.disabled", false);
+        '';
+      }];
 
-            AIControls.Default = "blocked";
-            DefaultDownloadDirectory = "~/Downloads";
-            DisplayMenuBar = "never";
-            DontCheckDefaultBrowser = true;
-            GenerativeAI.Enabled = false;
-            HardwareAcceleration = true;
-            OfferToSaveLogins = false;
-            PostQuantumKeyAgreementEnabled = true;
-            SearchEngines.Default = "duckduckgo";
-            SearchSuggestEnabled = false;
-            ShowHomeButton = true;
-
-            Bookmarks = [
-              (mkBookmark "Codeberg" "https://codeberg.org/")
-              (mkBookmark "Github" "https://github.com/")
-              (mkBookmark "Cloudflare" "https://dash.cloudflare.com/")
-              (mkBookmark "Contabo" "https://new.contabo.com/")
-              (mkBookmark "Rete privata" "https://${domains.private}/")
-              (mkBookmark "Studenti Online" "https://studenti.unibo.it/")
-              (mkBookmark "Virtuale" "https://virtuale.unibo.it/")
-              (mkBookmark "Whatsapp" "https://web.whatsapp.com/")
-              (mkBookmark "Telegram" "https://web.telegram.org/a/")
-              (mkBookmark "Soundcloud" "https://soundcloud.com/")
-              (mkBookmark "ChatGPT" "https://chatgpt.com/")
-            ];
-
-            FirefoxHome = {
-              Search = true;
-              TopSites = false;
-              SponsoredTopSites = false;
-              Highlights = false;
-              Pocket = false;
-              Stories = false;
-              SponsoredPocket = false;
-              SponsoredStories = false;
-              Snippets = false;
-            };
-
-            FirefoxSuggest = {
-              WebSuggestions = false;
-              SponsoredSuggestions = false;
-              ImproveSuggest = false;
-            };
-
-            ExtensionSettings = {
-              "*".installation_mode = "allowed";
-
-              "uBlock0@raymondhill.net" = mkExtension "ublock-origin";
-              "keepassxc-browser@keepassxc.org" = mkExtension "keepassxc-browser";
-              "DontFuckWithPaste@raim.ist" = mkExtension "don-t-fuck-with-paste";
-              "addon@darkreader.org" = mkExtension "darkreader";
-            };
-          };
-
-          preferences = {
-            "browser.policies.runOncePerModification.setDefaultSearchEngine" = "duckduckgo";
-            "browser.tabs.inTitlebar" = 0;
-            "sidebar.history.sortOption" = "date";
-          };
-        };
-        thunderbird.enable = true;
-        kdeconnect.enable = true;
-      };
+      programs.kdeconnect.enable = true;
     })
   ]);
 }
