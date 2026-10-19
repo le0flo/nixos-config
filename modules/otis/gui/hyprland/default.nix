@@ -27,7 +27,6 @@ let
   hyprPkgsUnstable = inputs.hyprland.inputs.nixpkgs.legacyPackages."${system}";
 
   configLuaFiles = getConfigFiles ./. ".lua";
-  configQmlFiles = getConfigFiles ./. ".qml";
 
   parseColor = color: substring 1 6 color;
 in {
@@ -39,7 +38,6 @@ in {
       systemPackages = with pkgs; [
         grim
         mako
-        quickshell
         slurp
         swaybg
         swayidle
@@ -58,7 +56,10 @@ in {
         {
           "hypr/hyprland.lua" = configText ''
           ${concatStringsSep "\n" (map (x: "require(\"${removeSuffix ".lua" x}\")") configLuaFiles)}
+
           hl.bind("SUPER + B", hl.dsp.exec_cmd("${pkgs.scripts}/bin/bg-picker"))
+          hl.bind("Print", hl.dsp.exec_cmd("${pkgs.scripts}/bin/screenshot-wl.sh area"))
+          hl.bind("CTRL + Print", hl.dsp.exec_cmd("${pkgs.scripts}/bin/screenshot-wl.sh screen"))
 
           hl.env("HYPRCURSOR_SIZE", "${toString style.cursor.size}")
           hl.env("HYPRCURSOR_THEME", "${style.cursor.name}")
@@ -69,15 +70,6 @@ in {
              active_border = "rgba(${parseColor style.colors.border}ff)",
              inactive_border = "rgba(${parseColor style.colors.background}ff)",
           } } })
-          '';
-
-          "quickshell/config.js" = configText ''
-          const colors = {
-            background: "${style.colors.background}",
-            text: "${style.colors.text}",
-            primary: "${style.colors.primary}",
-            secondary: "${style.colors.secondary}",
-          };
           '';
 
           "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
@@ -144,12 +136,6 @@ in {
           permissions = "644";
           source = ./${file};
           target = "hypr/${file}";
-        }))
-        (genAttrs configQmlFiles (file: {
-          type = "copy";
-          permissions = "644";
-          source = ./${file};
-          target = "quickshell/${file}";
         }))
       ];
     }];
