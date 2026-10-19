@@ -35,7 +35,7 @@ in {
     publicAcme = {
       enable = mkBoolOption "Public ACME" false;
       email = mkStrOption "Email" "postmaster@example.com";
-      certs = mkListSubOption certOpts "List of certificates" [];
+      certs = mkListSubOption certOpts "Certificates" [];
     };
 
     privateAcme.enable = mkBoolOption "Private ACME" false;

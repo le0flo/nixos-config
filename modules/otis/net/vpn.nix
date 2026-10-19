@@ -36,7 +36,6 @@ let
     address = mkStrOption "Server's address" domains.public;
     port = mkPortOption "Server's port" 51820;
     subnet = mkStrOption "VPN's subnet" "10.0.0.0/24";
-    primary = mkBoolOption "Whether this is the primary network on the host" false;
     id = mkStrOption "Host's ID" "1";
     clients = mkListSubOption clientOpts "List of clients" [];
   };

@@ -4,7 +4,6 @@ let
   inherit (builtins)
     attrNames
     attrValues
-    filter
     concatStringsSep;
 
   inherit (config.otis.net) vpn;
@@ -16,10 +15,10 @@ let
   inherit (customLib.opts)
     mkBoolOption
     mkListOption
+    mkNullOption
     mkStrOption;
 
   inherit (lib)
-    filterAttrs
     genAttrs
     mkIf
     types;
@@ -56,6 +55,7 @@ in {
     };
 
     nameservers = mkListOption types.str "DNS resolvers" [ "1.1.1.1" "1.0.0.1" ];
+    vpnInterface = mkNullOption types.str "Private DNS vpn interface" null;
 
     server = {
       enable = mkBoolOption "Enables DNS server" false;
@@ -102,10 +102,10 @@ in {
       resolved.enable = true;
     };
 
-    systemd.network.networks."30-vpn" = mkIf vpn.enable {
-      matchConfig.Name =  concatStringsSep "," (attrNames (filterAttrs (_: y: y.primary) vpn.networks));
+    systemd.network.networks."30-vpn" = mkIf (vpn.enable && cfg.vpnInterface != null) {
+      matchConfig.Name =  cfg.vpnInterface;
 
-      dns = map (x: subnetToGateway x.subnet) (filter (y: y.primary) (attrValues vpn.networks));
+      dns = [ (subnetToGateway vpn.networks."${cfg.vpnInterface}".subnet) ];
       domains = [ "~${cfg.domains.private}" ];
     };
   };

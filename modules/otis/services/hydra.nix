@@ -1,8 +1,6 @@
 {config, customLib, lib, ...}:
 
 let
-  inherit (builtins) attrValues;
-
   inherit (config.age) secretsDir;
 
   inherit (config.otis.net) vpn;
@@ -13,12 +11,10 @@ let
 
   inherit (customLib.opts)
     mkBoolOption
-    mkEnumOption;
+    mkEnumOption
+    mkStrOption;
 
   inherit (lib)
-    filterAttrs
-    head
-    mapAttrs
     mkIf
     mkMerge;
 
@@ -27,13 +23,12 @@ in {
   options.otis.services.hydra = {
     enable = mkBoolOption "Hydra cluster" false;
     role = mkEnumOption [ "server" "builder" ] "Role of the host" "builder";
+    vpnInterface = mkStrOption "VPN interface" "";
   };
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf (cfg.role == "server") {
-      networking.firewall.interfaces = mapAttrs
-        (_: _: { allowedTCPPorts = [ 9001 ]; })
-        (filterAttrs (_: x: x.primary) vpn.networks);
+      networking.firewall.interfaces."${cfg.vpnInterface}".allowedTCPPorts = [ 9001 ];
 
       services.hydra = {
         enable = true;
@@ -45,7 +40,7 @@ in {
 
         queueRunner = {
           grpc = {
-            address = subnetToGateway (head (attrValues (filterAttrs (_: x: x.primary) vpn.networks))).subnet;
+            address = subnetToGateway vpn.networks."${cfg.vpnInterface}".subnet;
             port = 9001;
           };
 
@@ -57,7 +52,7 @@ in {
       services.hydra-builder = {
         enable = true;
         settings.useSubstitutes = true;
-        queueRunnerAddr = "http://${subnetToGateway (head (attrValues (filterAttrs (_: x: x.primary) vpn.networks))).subnet}:9001";
+        queueRunnerAddr = "http://${subnetToGateway vpn.networks."${cfg.vpnInterface}".subnet}:9001";
         authorizationFile = "${secretsDir}/hydra/token";
       };
     })

@@ -18,7 +18,7 @@ in {
 
   config = {
     environment.systemPackages = with pkgs; [
-      nano
+      micro
       vis
       tmux
       htop

@@ -22,7 +22,7 @@ let
     groups = mkListOption types.str "Groups assigned to that user" [];
     isNormalUser = mkBoolOption "Whether the user is a normal behaving user" true;
     packages = mkPkgsOption "Additional packages" [];
-    ssh.authorizedKeys = mkListOption types.str "List of allowed ssh keys" [];
+    ssh.authorizedKeys = mkListOption types.str "Authorized ssh keys" [];
   };
 in {
   imports = [
@@ -37,7 +37,7 @@ in {
 
   options.otis = {
     users = mkAttrSubOption userOpts "Set of users" {};
-    hjem = mkListOption types.attrs "List of attributes for all the hjem configurations" [];
+    hjem = mkListOption types.attrs "Attributes for all the hjem configurations" [];
     secrets = mkAttrOption "Set of agenix secrets" {};
   };
 

@@ -9,9 +9,13 @@ in {
 
   otis = {
     net = {
-      dns.domains = {
-        public = "leoflo.net";
-        private = "home.arpa";
+      dns = {
+        domains = {
+          public = "leoflo.net";
+          private = "home.arpa";
+        };
+
+        vpnInterface = "internal";
       };
 
       vpn = {
@@ -19,7 +23,6 @@ in {
         role = "client";
 
         networks."internal" = {
-          primary = true;
           privateKeyFile = "${secretsDir}/wireguard/internal";
           publicKey = readPubKey "entrypoint-01-internal";
           address = domains.public;
@@ -43,19 +46,22 @@ in {
       hydra = {
         enable = true;
         role = "builder";
+        vpnInterface = "internal";
       };
       k3s = {
         enable = true;
         role = "agent";
+        vpnInterface = "internal";
       };
       microvm = {
         enable = true;
-        externalInterface = "eno1";
-        vpnInterface = "internal";
         vms = [
           "sharing-02"
           "streaming-03"
         ];
+
+        externalInterface = "eno1";
+        vpnInterface = "internal";
       };
       openssh.enable = true;
     };

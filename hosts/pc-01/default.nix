@@ -16,9 +16,13 @@ in {
     };
 
     net = {
-      dns.domains = {
-        public = "leoflo.net";
-        private = "home.arpa";
+      dns = {
+        domains = {
+          public = "leoflo.net";
+          private = "home.arpa";
+        };
+
+        vpnInterface = "internal";
       };
 
       vpn = {
@@ -26,7 +30,6 @@ in {
         role = "client";
 
         networks."internal" = {
-          primary = true;
           privateKeyFile = "${secretsDir}/wireguard/internal";
           publicKey = readPubKey "entrypoint-01-internal";
           address = domains.public;

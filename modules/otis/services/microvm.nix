@@ -62,9 +62,9 @@ let
 in {
   options.otis.services.microvm = {
     enable = mkBoolOption "microvm.nix host" false;
+    vms = mkListOption types.str "List of hosted microvms" [];
     externalInterface = mkStrOption "External interface" "eth0";
     vpnInterface = mkNullOption types.str "Reverse proxy VPN interface" null;
-    vms = mkListOption types.str "List of hosted microvms" [];
   };
 
   config = mkIf cfg.enable {

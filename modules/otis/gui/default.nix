@@ -18,8 +18,8 @@ in {
   ];
 
   options.otis.gui = {
-    enable = mkBoolOption "Enable gui for a host system" false;
-    extraFonts = mkPkgsOption "Additional fonts to include in the system" [];
+    enable = mkBoolOption "Enable gui" false;
+    extraFonts = mkPkgsOption "Additional fonts" [];
   };
 
   config = mkIf cfg.enable {

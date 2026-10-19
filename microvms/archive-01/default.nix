@@ -36,6 +36,11 @@
         };
         readOnly = false;
       }
+      {
+        host.dir = "/mnt/storage/albums/old-pictures";
+        guest.dir = "/media/albums/old-pictures";
+        readOnly = true;
+      }
     ];
 
     net.allowedTCPPorts = [

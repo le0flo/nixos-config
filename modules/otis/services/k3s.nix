@@ -1,11 +1,7 @@
 {config, customLib, lib, ...}:
 
 let
-  inherit (builtins) mapAttrs;
-
   inherit (config.otis.net.dns) domains;
-
-  inherit (config.otis.net) vpn;
 
   inherit (customLib.opts)
     mkBoolOption
@@ -14,7 +10,6 @@ let
     mkStrOption;
 
   inherit (lib)
-    filterAttrs
     mkIf
     mkMerge;
 
@@ -23,14 +18,13 @@ in {
   options.otis.services.k3s = {
     enable = mkBoolOption "Kubernetes k3s node" false;
     role = mkEnumOption [ "agent" "server" ] "Role of the node" "agent";
+    vpnInterface = mkStrOption "VPN interface" "";
     port = mkPortOption "Server's port" 6443;
     address = mkStrOption "Server's address" domains.private;
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.interfaces = mapAttrs
-      (_: _: { allowedTCPPorts = [ cfg.port ]; })
-      (filterAttrs (_: x: x.primary) vpn.networks);
+    networking.firewall.interfaces."${cfg.vpnInterface}".allowedTCPPorts = [ cfg.port ];
 
     services.k3s = mkMerge [
       {

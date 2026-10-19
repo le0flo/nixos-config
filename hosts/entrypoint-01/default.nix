@@ -56,6 +56,8 @@ in {
             "1.0.0.1"
           ];
         };
+
+        vpnInterface = "internal";
       };
 
       tls = {
@@ -80,11 +82,11 @@ in {
 
         networks = {
           "internal" = {
-            primary = true;
             privateKeyFile = "${secretsDir}/wireguard/internal";
             port = 51820;
             subnet = "10.69.0.0/16";
             id = "0.1";
+
             clients = [
               { publicKey = readPubKey "node-01"; id = "1.1"; }
               { publicKey = readPubKey "node-02"; id = "1.2"; }
@@ -99,9 +101,9 @@ in {
             port = 51821;
             subnet = "10.96.0.0/16";
             id = "0.1";
+
             clients = [
-              { publicKey = readPubKey "tv-01"; id = "1.1"; }
-              { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "1.2"; } # tv-02
+              { publicKey = "RD/w5EMw16BFWTbbsG2XIoXvPAxubDVmOjbzjWK2XF4="; id = "1.1"; } # tv-02
               { publicKey = "4o9ANbaAHabP1vJ2jaHLCePaFmELpyEX2ymkX6nJ/S0="; id = "2.1"; } # mybaby
             ];
           };
@@ -122,10 +124,12 @@ in {
       hydra = {
         enable = true;
         role = "server";
+        vpnInterface = "internal";
       };
       k3s = {
         enable = true;
         role = "server";
+        vpnInterface = "internal";
       };
       nginx = {
         enable = true;
@@ -138,15 +142,15 @@ in {
           private = [
             { subdomain = "@"; aliases = [ "www.${domains.private}" ]; type = "files"; root = "${www-private}"; }
             { subdomain = "files"; type = "files"; root = "/srv/files/private"; autoindex = true; }
-            { onlyPrimary = true; subdomain = "papers"; type = "proxy"; address = "http://10.69.1.2:10001"; }
-            { onlyPrimary = true; subdomain = "images"; type = "proxy"; address = "http://10.69.1.2:10002"; }
+            { subdomain = "papers"; type = "proxy"; address = "http://10.69.1.2:10001"; vpnInterfaces = [ "internal" ]; }
+            { subdomain = "images"; type = "proxy"; address = "http://10.69.1.2:10002"; vpnInterfaces = [ "internal" ]; }
             { subdomain = "music"; type = "proxy"; address = "http://10.69.1.1:11001"; }
             { subdomain = "cinema"; type = "proxy"; address = "http://10.69.1.1:11002"; }
-            { onlyPrimary = true; subdomain = "bt"; type = "proxy"; address = "http://10.69.1.1:12001"; }
-            { onlyPrimary = true; subdomain = "slsk"; type = "proxy"; address = "http://10.69.1.1:12002"; }
-            { onlyPrimary = true; subdomain = "projects"; type = "proxy"; address = "http://10.69.1.2:13001"; }
-            { onlyPrimary = true; subdomain = "tasks"; type = "proxy"; address = "http://10.69.1.2:13002"; }
-            { onlyPrimary = true; subdomain = "hydra"; type = "proxy"; address = "http://127.0.0.1:9000"; }
+            { subdomain = "bt"; type = "proxy"; address = "http://10.69.1.1:12001"; vpnInterfaces = [ "internal" ]; }
+            { subdomain = "slsk"; type = "proxy"; address = "http://10.69.1.1:12002"; vpnInterfaces = [ "internal" ]; }
+            { subdomain = "projects"; type = "proxy"; address = "http://10.69.1.2:13001"; vpnInterfaces = [ "internal" ]; }
+            { subdomain = "tasks"; type = "proxy"; address = "http://10.69.1.2:13002"; vpnInterfaces = [ "internal" ]; }
+            { subdomain = "hydra"; type = "proxy"; address = "http://127.0.0.1:9000"; vpnInterfaces = [ "internal" ]; }
           ];
         };
 

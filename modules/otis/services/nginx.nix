@@ -2,9 +2,8 @@
 
 let
   inherit (builtins)
-    attrValues
     concatStringsSep
-    filter
+    length
     listToAttrs;
 
   inherit (config.otis.net.dns) domains;
@@ -31,13 +30,13 @@ let
   cfg = config.otis.services.nginx;
 
   siteOpts.options = {
-    onlyPrimary = mkBoolOption "Only allow primary vpn hosts can connect" false;
     subdomain = mkStrOption "The subdomain where this website is hosted on (use @ to reference the root domain)" null;
     aliases = mkListOption types.str "Virtual host aliases" [];
     type = mkEnumOption [ "files" "proxy" ] "Type of website" null;
     root = mkStrOption "The path for the root of the website""/srv/www";
     autoindex = mkBoolOption "Whether to autoindex the root of the website" false;
     address = mkStrOption "The address of the proxied website" "http://127.0.0.1:8080";
+    vpnInterfaces = mkListOption types.str "Allowed vpn interfaces" [];
   };
 
   tlsOpts.options = {
@@ -79,11 +78,11 @@ let
 
           locations."/".proxyPass = x.address;
         })
-        (mkIf x.onlyPrimary {
-          extraConfig = if x.onlyPrimary then ''
-          ${concatStringsSep "\n" (map (x: "allow ${x.subnet};") (filter (y: y.primary) (attrValues vpn.networks)))}
+        (mkIf ((length x.vpnInterfaces) > 0) {
+          extraConfig = ''
+          ${concatStringsSep "\n" (map (x: "allow ${vpn.networks."${x}".subnet}") x.vpnInterfaces)}
           deny all;
-          '' else "";
+          '';
         })
       ];
     }) sites);
@@ -92,9 +91,9 @@ in {
     enable = mkBoolOption "Nginx server" false;
 
     sites = {
-      public = mkListSubOption siteOpts "List of public websites" [];
-      private = mkListSubOption siteOpts "List of private websites" [];
-      extra = mkAttrOption "Other Virtualhost definitions" {};
+      public = mkListSubOption siteOpts "Public websites" [];
+      private = mkListSubOption siteOpts "Private websites" [];
+      extra = mkAttrOption "Other virtualhost definitions" {};
     };
 
     tls = {
