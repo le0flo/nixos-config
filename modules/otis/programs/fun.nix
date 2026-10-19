@@ -17,6 +17,7 @@ in {
       cmatrix
       cowsay
       fastfetch
+      sl
     ];
 
     otis.hjem = [{

@@ -1,10 +1,6 @@
 {config, customLib, lib, pkgs, ...}:
 
 let
-  inherit (customLib.hjem)
-    configFmt
-    configText;
-
   inherit (customLib.opts)
     mkBoolOption
     mkPkgsOption;
@@ -28,10 +24,6 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      alacritty
-      rofi
-      pavucontrol
-    ] ++ [
       brightnessctl
       libnotify
       playerctl
@@ -49,55 +41,7 @@ in {
 
     hardware.graphics.enable = true;
 
-    otis.hjem = [{
-      xdg.config.files = {
-        "alacritty/alacritty.toml" = configFmt pkgs.formats.toml "alacritty.toml" {
-          window = {
-            padding = {
-              x = 5;
-              y = 5;
-            };
-
-            opacity = 1.0;
-            blur = false;
-          };
-
-          env = {
-            TERM = "xterm-256color";
-            WINIT_X11_SCALE_FACTOR = "1.0";
-          };
-
-          font = {
-            size = 16.00;
-
-            normal = {
-              family = "ComicShannsMono Nerd Font Mono";
-              style = "Regular";
-            };
-            bold = {
-              family = "ComicShannsMono Nerd Font Mono";
-              style = "Bold";
-            };
-          };
-        };
-
-        "rofi/config.rasi" = configText ''
-        @theme "${pkgs.rofi}/share/rofi/themes/Arc-Dark.rasi"
-        '';
-      };
-    }];
-
-    programs = {
-      thunar = {
-        enable = true;
-        plugins = with pkgs; [
-          thunar-shares-plugin
-          thunar-volman
-        ];
-      };
-
-      uwsm.enable = true;
-    };
+    programs.uwsm.enable = true;
 
     services = {
       dbus.enable = true;

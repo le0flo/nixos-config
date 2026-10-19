@@ -36,7 +36,7 @@ in {
 
     wallpaper = mkStrOption
       "Name of the default wallpaper (choose only from the ones inside of the wallpapers package)"
-      "road.png";
+      "clouds.png";
 
     colors = {
       border = mkColorOption "border" "#adc178";

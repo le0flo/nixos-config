@@ -36,8 +36,12 @@ in {
     environment = {
       shellAliases."start-hyprland" = "uwsm start hyprland.desktop";
       systemPackages = with pkgs; [
+        foot
+        rofi
         grim
         mako
+        nwg-panel
+        pavucontrol
         slurp
         swaybg
         swayidle
@@ -54,6 +58,14 @@ in {
     otis.hjem = [{
       xdg.config.files = mkMerge [
         {
+          "foot/foot.ini" = configFmt pkgs.formats.ini "foot.ini" {
+            main = {
+              term = "xterm-256color";
+              font = "ComicShannsMono Nerd Font Mono:style=Regular:size=16";
+              pad = "5x5";
+            };
+          };
+
           "hypr/hyprland.lua" = configText ''
           ${concatStringsSep "\n" (map (x: "require(\"${removeSuffix ".lua" x}\")") configLuaFiles)}
 
@@ -86,6 +98,10 @@ in {
               margin = 5;
             };
           };
+
+          "rofi/config.rasi" = configText ''
+          @theme "${pkgs.rofi}/share/rofi/themes/Arc-Dark.rasi"
+          '';
 
           "swaylock/config" = configText ''
           ignore-empty-password
@@ -140,12 +156,22 @@ in {
       ];
     }];
 
-    programs.hyprland = {
-      enable = true;
-      package = hyprPkgs.hyprland;
-      portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
-      withUWSM = true;
-      xwayland.enable = true;
+    programs = {
+      hyprland = {
+        enable = true;
+        package = hyprPkgs.hyprland;
+        portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
+        withUWSM = true;
+        xwayland.enable = true;
+      };
+
+      thunar = {
+        enable = true;
+        plugins = with pkgs; [
+          thunar-shares-plugin
+          thunar-volman
+        ];
+      };
     };
 
     xdg.portal = {

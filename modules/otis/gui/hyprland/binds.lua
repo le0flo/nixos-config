@@ -1,6 +1,6 @@
-local terminal = "alacritty"
+local terminal = "foot"
 local fileManager = "thunar"
-local menu = "rofi -show drun"
+local menu = "rofi -show drun -terminal foot"
 
 local mainMod = "SUPER"
 
