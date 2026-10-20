@@ -1,11 +1,12 @@
 (
   "Window Maker",
-  ("Terminal", EXEC, "alacritty"),
+  ("Terminal", EXEC, "Terminal"),
   (
     "Applications",
     (
       "Development",
       ("GNU Emacs", EXEC, "emacs"),
+      ("Anvil", EXEC, "anvil"),
       ("HeidiSQL", EXEC, "heidisql")
     ),
     (
@@ -15,7 +16,7 @@
     ),
     (
       "Internet",
-      ("Firefox", EXEC, "firefox"),
+      ("Librewolf", EXEC, "librewolf"),
       ("Thunderbird", EXEC, "thunderbird")
     ),
     (
@@ -36,10 +37,7 @@
       "System",
       ("Thunar", EXEC, "thunar"),
       ("KeepassXC", EXEC, "keepassxc"),
-      ("LocalSend", EXEC, "localsend_app"),
-      ("iwgtk", EXEC, "iwgtk"),
-      ("GNU nano", EXEC, "alacritty -e nano"),
-      ("htop", EXEC, "alacritty -e htop")
+      ("iwgtk", EXEC, "iwgtk")
     )
   ),
   (
