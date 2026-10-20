@@ -45,8 +45,10 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        ungoogled-chromium
+        anvil-editor
+        emacs-pgtk
         zed-editor
+        ungoogled-chromium
         (octave.override { enableQt = true; })
       ];
 

@@ -26,13 +26,15 @@ in {
   config = mkIf cfg.enable {
     environment = {
       shellAliases."start-windowmaker" = "startx ~/${gnustepDir}/start.sh";
-      systemPackages = with pkgs.dockapps; [
-        cputnik
-        wmacpi
-        wmclockmon
-        wmnd
-        wmpulsemixer
-        wmsystemtray
+      systemPackages = with pkgs; [
+        dockapps.cputnik
+        dockapps.wmacpi
+        dockapps.wmclockmon
+        dockapps.wmnd
+        dockapps.wmpulsemixer
+        dockapps.wmsystemtray
+        gap.terminal
+        gap.gnumail
       ];
     };
 

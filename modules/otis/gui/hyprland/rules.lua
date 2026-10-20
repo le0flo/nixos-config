@@ -51,7 +51,7 @@ hl.window_rule({
 
 hl.window_rule({
    name = "maximized-windows",
-   match = { class = "^(firefox|thunderbird|emacs)$"},
+   match = { class = "^(librewolf|chromium-browser|thunderbird|dev.zed.Zed|emacs)$"},
 
    scrolling_width = 1.0,
 })
@@ -65,7 +65,7 @@ hl.window_rule({
 
 local no_screenshare_window = hl.window_rule({
    name = "no-screenshare-windows",
-   match = { class = "^(firefox|thunderbird)$" },
+   match = { class = "^(librewolf|thunderbird)$" },
 
    no_screen_share = true,
 })

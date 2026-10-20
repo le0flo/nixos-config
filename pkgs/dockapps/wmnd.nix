@@ -25,11 +25,11 @@ stdenv.mkDerivation (finalAttrs: {
   hardeningDisable = [ "format" ];
 
   installPhase = ''
-    runHook preInstall
+  runHook preInstall
 
-    install -m 755 -Dt $out/bin/ src/wmnd
+  install -m 755 -Dt $out/bin/ src/wmnd
 
-    runHook postInstall
+  runHook postInstall
   '';
 
   meta = {

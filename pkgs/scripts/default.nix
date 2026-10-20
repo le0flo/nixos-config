@@ -26,7 +26,7 @@ in {
   src = ./.;
 
   installPhase = ''
-    mkdir -p $out/bin
-    ${concatMapStringsSep "\n" (x: "cp ${x}/bin/* $out/bin/") scripts}
+  mkdir -p $out/bin
+  ${concatMapStringsSep "\n" (x: "cp ${x}/bin/* $out/bin/") scripts}
   '';
 })

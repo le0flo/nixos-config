@@ -29,11 +29,11 @@ stdenv.mkDerivation (finalAttrs: {
   hardeningDisable = [ "format" ];
 
   installPhase = ''
-    runHook preInstall
+  runHook preInstall
 
-    install -m 755 -Dt $out/bin/ wmpulsemixer
+  install -m 755 -Dt $out/bin/ wmpulsemixer
 
-    runHook postInstall
+  runHook postInstall
   '';
 
   meta = {

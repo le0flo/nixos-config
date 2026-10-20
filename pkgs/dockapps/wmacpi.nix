@@ -14,7 +14,7 @@ stdenv.mkDerivation (finalAttrs: {
   inherit (dockapps-sources) version src;
 
   sourceRoot = "${finalAttrs.src.name}/wmacpi";
-  
+
   buildInputs = [
     libx11
     libxpm
@@ -25,11 +25,11 @@ stdenv.mkDerivation (finalAttrs: {
   hardeningDisable = [ "format" ];
 
   installPhase = ''
-    runHook preInstall
+  runHook preInstall
 
-    install -m 755 -Dt $out/bin/ wmacpi
+  install -m 755 -Dt $out/bin/ wmacpi
 
-    runHook postInstall
+  runHook postInstall
   '';
 
   meta = {

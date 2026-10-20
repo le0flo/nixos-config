@@ -21,20 +21,20 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   preBuild = ''
-    makeFlagsArray+=(
-      INCS="-I${libx11.dev}/include -I${libxext.dev}/include -I${libxpm.dev}/include"
-      LIBS="-L${libx11}/lib -L${libxext}/lib -L${libxpm}/lib -lX11 -lXpm -lXext"
-    )
+  makeFlagsArray+=(
+    INCS="-I${libx11.dev}/include -I${libxext.dev}/include -I${libxpm.dev}/include"
+    LIBS="-L${libx11}/lib -L${libxext}/lib -L${libxpm}/lib -lX11 -lXpm -lXext"
+  )
   '';
 
   hardeningDisable = [ "format" ];
 
   installPhase = ''
-    runHook preInstall
+  runHook preInstall
 
-    install -Dm755 -t $out/bin/ cputnik
+  install -Dm755 -t $out/bin/ cputnik
 
-    runHook postInstall
+  runHook postInstall
   '';
 
   meta = {

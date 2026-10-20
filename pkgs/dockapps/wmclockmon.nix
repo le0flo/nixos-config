@@ -19,7 +19,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = [ pkg-config ];
-  
+
   buildInputs = [
     libx11
     libxpm
@@ -30,11 +30,11 @@ stdenv.mkDerivation (finalAttrs: {
   hardeningDisable = [ "format" ];
 
   installPhase = ''
-    runHook preInstall
+  runHook preInstall
 
-    install -m 755 -Dt $out/bin/ src/wmclockmon
+  install -m 755 -Dt $out/bin/ src/wmclockmon
 
-    runHook postInstall
+  runHook postInstall
   '';
 
   meta = {

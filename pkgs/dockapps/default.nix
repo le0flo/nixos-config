@@ -17,7 +17,7 @@ let
 
   dockapps-packages = self: genAttrs (map
     (x: removeSuffix ".nix" x)
-    (filter (x: x != "package.nix") (attrNames (readDir ./.))))
+    (filter (x: x != "default.nix") (attrNames (readDir ./.))))
     (name: self.callPackage ./${name}.nix {});
 in makeScope pkgs.newScope (self: {
   dockapps-sources = {

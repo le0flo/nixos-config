@@ -10,8 +10,8 @@
   gnustep-back,
   gnustep-base,
   gnustep-gui,
-  pantomime,
   addresses,
+  pantomime,
   openssl,
 }:
 
@@ -26,7 +26,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     llvmPackages.clang
-    
+
     gnustep-make
     gnustep-libobjc
     libblocksruntime
@@ -38,38 +38,39 @@ stdenv.mkDerivation (finalAttrs: {
     gnustep-back
     gnustep-base
     gnustep-gui
-    
+
     pantomime
     addresses
+
     openssl
   ];
 
   buildPhase = ''
-    runHook preBuild
+  runHook preBuild
 
-    make \
-      CC="clang" \
-      CXX="clang++" \
-      OBJC="clang" \
-      LIBRARY_COMBO="ng-gnu-gnu"
+  make \
+    CC="clang" \
+    CXX="clang++" \
+    OBJC="clang" \
+    LIBRARY_COMBO="ng-gnu-gnu"
 
-    runHook postBuild
+  runHook postBuild
   '';
 
   installPhase = ''
-    runHook preInstall
+  runHook preInstall
 
-    make install \
-      GNUSTEP_LOCAL_APPS="$out/lib/GNUstep/Applications" \
-      GNUSTEP_LOCAL_TOOLS="$out/bin" \
-      GNUSTEP_LOCAL_LIBRARY="$out/lib/GNUstep" \
-      GNUSTEP_LOCAL_HEADERS="$out/include" \
-      GNUSTEP_LOCAL_LIBRARIES="$out/lib" \
-      GNUSTEP_LOCAL_DOC="$out/share/GNUstep/Documentation" \
-      GNUSTEP_LOCAL_DOC_MAN="$out/share/man" \
-      GNUSTEP_LOCAL_DOC_INFO="$out/share/info"
+  make install \
+    GNUSTEP_LOCAL_APPS="$out/lib/GNUstep/Applications" \
+    GNUSTEP_LOCAL_TOOLS="$out/bin" \
+    GNUSTEP_LOCAL_LIBRARY="$out/lib/GNUstep" \
+    GNUSTEP_LOCAL_HEADERS="$out/include" \
+    GNUSTEP_LOCAL_LIBRARIES="$out/lib" \
+    GNUSTEP_LOCAL_DOC="$out/share/GNUstep/Documentation" \
+    GNUSTEP_LOCAL_DOC_MAN="$out/share/man" \
+    GNUSTEP_LOCAL_DOC_INFO="$out/share/info"
 
-    runHook postInstall
+  runHook postInstall
   '';
 
   meta = {
