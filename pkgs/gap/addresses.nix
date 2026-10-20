@@ -21,7 +21,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-+wdOgMhfSKpX4cAbzc0aV1S63oTWHM99t1Se8gsbpOE=";
   };
 
-
   nativeBuildInputs = [
     llvmPackages.clang
 

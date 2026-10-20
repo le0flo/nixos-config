@@ -49,7 +49,7 @@ in {
         emacs-pgtk
         zed-editor
         ungoogled-chromium
-        (octave.override { enableQt = true; })
+        ((octave.override { enableQt = true; }).withPackages (opkgs: with opkgs; [ control ]))
       ];
 
       otis.hjem = [{
