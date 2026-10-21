@@ -4,9 +4,10 @@ let
   inherit (customLib.hjem) configText;
 in {
   imports = [
+    ./dev
+
     ./archive.nix
     ./devices.nix
-    ./dev.nix
     ./fun.nix
     ./games.nix
     ./internet.nix

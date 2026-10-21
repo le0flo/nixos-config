@@ -2,7 +2,6 @@
   imports = [
     ./audio.nix
     ./bluetooth.nix
-    ./docker.nix
     ./fail2ban.nix
     ./hydra.nix
     ./k3s.nix

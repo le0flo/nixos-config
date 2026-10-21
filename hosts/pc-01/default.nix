@@ -48,9 +48,16 @@ in {
       archive.enable = true;
       dev = {
         enable = true;
-        languages = true;
-        databases = true;
-        virtManager = true;
+
+        database.enable = true;
+        languages.enable = true;
+        virtualisation.enable = true;
+
+        editors = {
+          emacs = true;
+          octave = true;
+          zed = true;
+        };
       };
       devices.enable = true;
       fun.enable = true;
@@ -62,7 +69,6 @@ in {
     services = {
       audio.enable = true;
       bluetooth.enable = true;
-      docker.enable = true;
       microvm = {
         enable = true;
         externalInterface = "enp0s31f6";
