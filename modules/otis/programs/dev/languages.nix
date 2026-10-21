@@ -29,8 +29,6 @@ in {
       python313
       nodejs
       rustc
-      zig
-      lua
       dart
       flutter
     ] ++ [
@@ -40,7 +38,6 @@ in {
       basedpyright
       ruff
       rust-analyzer
-      lua-language-server
     ];
 
     otis.hjem = [{
