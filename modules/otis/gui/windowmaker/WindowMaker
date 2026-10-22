@@ -12,27 +12,43 @@
   StickyIcons = YES;
   ShowClipTitle = NO;
 
-  CenterKey = "Mod4+C";
-  CloseKey = "Mod4+Q";
   HotCornerActions = (None, None, None, None);
   HotCornerDelay = 250;
   HotCornerEdge = 2;
-  IconPosition = tlh;
+  IconPosition = blh;
   ModifierKey = Mod4;
   MoveTo12to6Head = None;
   MoveTo6to12Head = None;
-  RunKey = "Mod4+P";
   TitleJustify = left;
   ToggleKbdModeKey = None;
   WindowPlacement = center;
   WorkspaceBack = (tpixmap, "~/.local/share/wallpapers/default", gray20);
 
-  ClipTitleFont = "Trebuchet MS,sans serif:bold:pixelsize=10";
-  IconTitleFont = "Trebuchet MS,sans serif:pixelsize=9";
-  LargeDisplayFont = "Trebuchet MS,sans serif:pixelsize=24";
-  MenuTextFont = "Trebuchet MS,sans serif:pixelsize=12";
-  MenuTitleFont = "Trebuchet MS,sans serif:bold:pixelsize=12";
-  WindowTitleFont = "Trebuchet MS,sans serif:weight=200:pixelsize=12";
+  CenterKey = "Mod4+C";
+  CloseKey = "Mod4+Q";
+  MaximizeKey = "Mod4+F";
+  RunKey = "Mod4+P";
+
+  PrevWorkspaceKey = "Mod4+Prior";
+  NextWorkspaceKey = "Mod4+Next";
+
+  Workspace1Key = "Mod4+1";
+  Workspace2Key = "Mod4+2";
+  Workspace3Key = "Mod4+3";
+  Workspace4Key = "Mod4+4";
+  Workspace5Key = "Mod4+5";
+  Workspace6Key = "Mod4+6";
+  Workspace7Key = "Mod4+7";
+  Workspace8Key = "Mod4+8";
+  Workspace9Key = "Mod4+9";
+  Workspace10Key = "Mod4+0";
+
+  ClipTitleFont = "DejaVu Sans,sans serif:bold:pixelsize=10";
+  IconTitleFont = "DejaVu Sans,sans serif:pixelsize=9";
+  LargeDisplayFont = "DejaVu Sans,sans serif:pixelsize=24";
+  MenuTextFont = "DejaVu Sans,sans serif:pixelsize=12";
+  MenuTitleFont = "DejaVu Sans,sans serif:bold:pixelsize=12";
+  WindowTitleFont = "DejaVu Sans,sans serif:weight=200:pixelsize=12";
 
   IconPath = (
     "*windowmaker*/share/WindowMaker/Icons",

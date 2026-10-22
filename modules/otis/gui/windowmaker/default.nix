@@ -33,6 +33,7 @@ in {
         dockapps.wmnd
         dockapps.wmpulsemixer
         dockapps.wmsystemtray
+
         gap.terminal
         gap.gnumail
       ];

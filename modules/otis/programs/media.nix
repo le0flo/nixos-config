@@ -22,11 +22,11 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        vlc
+        imv
         strawberry
-        ristretto
-        inkscape
+        mpv-unwrapped
         krita
+        inkscape
         kid3
       ];
     })

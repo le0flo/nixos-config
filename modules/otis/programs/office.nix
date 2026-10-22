@@ -39,7 +39,7 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        atril
+        mupdf
         libreoffice
         xournalpp
         gnucash

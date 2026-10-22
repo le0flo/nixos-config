@@ -2,45 +2,6 @@
   "Window Maker",
   ("Terminal", EXEC, "Terminal"),
   (
-    "Applications",
-    (
-      "Development",
-      ("GNU Emacs", EXEC, "emacs"),
-      ("Anvil", EXEC, "anvil"),
-      ("HeidiSQL", EXEC, "heidisql")
-    ),
-    (
-      "Games",
-      ("Prismlauncher", EXEC, "prismlauncher"),
-      ("Steam", EXEC, "steam")
-    ),
-    (
-      "Internet",
-      ("Librewolf", EXEC, "librewolf"),
-      ("Thunderbird", EXEC, "thunderbird")
-    ),
-    (
-      "Media",
-      ("Inkscape", EXEC, "inkscape"),
-      ("Krita", EXEC, "krita"),
-      ("VLC", EXEC, "vlc"),
-      ("Strawberry", EXEC, "strawberry"),
-      ("Kid3", EXEC, "kid3")
-    ),
-    (
-      "Office",
-      ("LibreOffice", EXEC, "libreoffice"),
-      ("Xournal++", EXEC, "xournalpp"),
-      ("GnuCash", EXEC, "gnucash")
-    ),
-    (
-      "System",
-      ("Thunar", EXEC, "thunar"),
-      ("KeepassXC", EXEC, "keepassxc"),
-      ("iwgtk", EXEC, "iwgtk")
-    )
-  ),
-  (
     "Appearance",
     (
       "Themes",
