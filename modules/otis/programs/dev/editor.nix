@@ -22,7 +22,7 @@ let
   emacsFiles = getConfigFiles ./emacs ".el";
 in {
   options.otis.programs.dev.editors = {
-    emacs = mkBoolOption "Emacs (PGTK) text editor" false;
+    emacs = mkBoolOption "GNU Emacs" false;
     octave = mkBoolOption "GNU Octave" false;
     zed = mkBoolOption "Zed editor" false;
   };
@@ -30,7 +30,7 @@ in {
   config = mkIf dev.enable (mkMerge [
     (mkIf cfg.emacs {
       environment.systemPackages = with pkgs; [
-        ((emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
+        ((emacsPackagesFor emacs-gtk).withPackages (epkgs: with epkgs; [
           asciidoc-mode
           auctex
           bnf-mode
@@ -66,6 +66,8 @@ in {
             "emacs/custom.el" = configText "";
 
             "emacs/init.el" = configText ''
+            ;;; -*- lexical-binding: t; -*-
+
             ;; Includes
             ${concatStringsSep "\n" (map (x: "(load-file \"~/.config/emacs/${x}\")") emacsFiles)}
 
