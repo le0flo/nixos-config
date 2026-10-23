@@ -8,6 +8,7 @@
   EnforceIconMargin = YES;
   HotCorners = NO;
   KbdModeLock = NO;
+  NoWindowOverDock = YES;
   OpenTransientOnOwnerWorkspace = YES;
   StickyIcons = YES;
   ShowClipTitle = NO;
@@ -26,6 +27,7 @@
 
   CenterKey = "Mod4+C";
   CloseKey = "Mod4+Q";
+  ExitKey = "Mod4+M";
   MaximizeKey = "Mod4+F";
   RunKey = "Mod4+P";
 
@@ -42,6 +44,17 @@
   Workspace8Key = "Mod4+8";
   Workspace9Key = "Mod4+9";
   Workspace10Key = "Mod4+0";
+
+  MoveToWorkspace1Key = "Shift+Mod4+1";
+  MoveToWorkspace2Key = "Shift+Mod4+2";
+  MoveToWorkspace3Key = "Shift+Mod4+3";
+  MoveToWorkspace4Key = "Shift+Mod4+4";
+  MoveToWorkspace5Key = "Shift+Mod4+5";
+  MoveToWorkspace6Key = "Shift+Mod4+6";
+  MoveToWorkspace7Key = "Shift+Mod4+7";
+  MoveToWorkspace8Key = "Shift+Mod4+8";
+  MoveToWorkspace9Key = "Shift+Mod4+9";
+  MoveToWorkspace10Key = "Shift+Mod4+0";
 
   ClipTitleFont = "DejaVu Sans,sans serif:bold:pixelsize=10";
   IconTitleFont = "DejaVu Sans,sans serif:pixelsize=9";
