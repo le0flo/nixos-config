@@ -16,20 +16,23 @@
   HotCornerActions = (None, None, None, None);
   HotCornerDelay = 250;
   HotCornerEdge = 2;
-  IconPosition = blh;
-  ModifierKey = Mod4;
+  IconPosition = "blh";
+  ModifierKey = "Mod4";
   MoveTo12to6Head = None;
   MoveTo6to12Head = None;
-  TitleJustify = left;
+  TitleJustify = "left";
   ToggleKbdModeKey = None;
-  WindowPlacement = center;
-  WorkspaceBack = (tpixmap, "~/.local/share/wallpapers/default", gray20);
+  WindowPlacement = "center";
+  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/default", "gray20");
 
   CenterKey = "Mod4+C";
   CloseKey = "Mod4+Q";
   ExitKey = "Mod4+M";
   MaximizeKey = "Mod4+F";
   RunKey = "Mod4+P";
+
+  PartialCaptureKey = "Print";
+  ScreenCaptureKey = "Control+Print";
 
   PrevWorkspaceKey = "Mod4+Prior";
   NextWorkspaceKey = "Mod4+Next";
