@@ -51,7 +51,7 @@ hl.window_rule({
 
 hl.window_rule({
    name = "maximized-windows",
-   match = { class = "^(librewolf|chromium-browser|thunderbird|dev.zed.Zed|emacs)$"},
+   match = { class = "^(librewolf|chromium-browser|thunderbird|Emacs|emacs|dev.zed.Zed)$"},
 
    scrolling_width = 1.0,
 })
