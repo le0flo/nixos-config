@@ -3,7 +3,7 @@
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net)
+  inherit (config.hostConfig.net)
     dns
     vpn;
 
@@ -11,7 +11,7 @@ let
 in {
   imports = [ ./hardware.nix ];
 
-  otis = {
+  hostConfig = {
     net = {
       dns = {
         domains = {
@@ -100,13 +100,11 @@ in {
     };
   };
 
-  system.activationScripts."paperless-environment" = {
-    text = ''
-    mkdir -p /etc/paperless
-    cat > /etc/paperless/environment <<EOF
-    PAPERLESS_URL=https://papers.${dns.domains.private}
-    PAPERLESS_TRUSTED_PROXIES=${subnetToGateway vpn.networks."internal".subnet}
-    EOF
-    '';
-  };
+  system.activationScripts."paperless-environment".text = ''
+  mkdir -p /etc/paperless
+  cat > /etc/paperless/environment <<EOF
+  PAPERLESS_URL=https://papers.${dns.domains.private}
+  PAPERLESS_TRUSTED_PROXIES=${subnetToGateway vpn.networks."internal".subnet}
+  EOF
+  '';
 }

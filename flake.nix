@@ -9,7 +9,7 @@
     overlays = import ./overlays args;
 
     nixosModules = import ./modules args;
-    nixosConfigurations = (import ./hosts args) // (import ./microvms args);
+    nixosConfigurations = (import ./hosts args) // (import ./vms args);
   };
 
   inputs = {
@@ -33,6 +33,7 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland/v0.56.0";
+    mangowm.url = "github:mangowm/mango/0.18.3";
 
     microvm = {
       url = "github:microvm-nix/microvm.nix";

@@ -1,0 +1,91 @@
+hl.window_rule({
+   name = "suppress-maximize-events",
+   match = { class = ".*" },
+
+   suppress_event = "maximize",
+})
+
+hl.window_rule({
+   name = "fix-xwayland-drags",
+   match = {
+      class = "^$",
+      title = "^$",
+      xwayland = true,
+      float = true,
+      fullscreen = false,
+      pin = false,
+   },
+
+   no_focus = true,
+})
+
+hl.window_rule({
+   name = "gtk-dialogs",
+   match = { class = "^xdg-desktop-portal-gtk$" },
+
+   float = true,
+   center = true,
+   size = { "(monitor_w*0.75)", "(monitor_h*0.65)" },
+})
+
+hl.window_rule({
+   name = "hyprland-dialogs",
+   match = { title = "^Select what to share$" },
+
+   float = true,
+   center = true,
+   size = { "(monitor_w*0.75)", "(monitor_h*0.65)" },
+})
+
+hl.window_rule({
+   name = "thunar-dialogs",
+   match = {
+      class = "^Thunar$",
+      title = "^Rename.+$",
+   },
+
+   float = true,
+   center = true,
+   size = { "(monitor_w*0.25)", "(monitor_h*0.20)" },
+})
+
+hl.window_rule({
+   name = "maximized-windows",
+   match = { class = "^(librewolf|chromium-browser|thunderbird|Emacs|emacs|dev.zed.Zed)$"},
+
+   scrolling_width = 1.0,
+})
+
+hl.window_rule({
+   name = "never-screenshare-windows",
+   match = { class = "^(org.keepassxc.KeePassXC)$" },
+
+   no_screen_share = true,
+})
+
+hl.layer_rule({
+   name = "never-screenshare-layers",
+   match = { namespace = "^notifications$" },
+
+   no_screen_share = true,
+})
+
+local no_screenshare_window = hl.window_rule({
+   name = "no-screenshare-windows",
+   match = { class = "^(librewolf|thunderbird)$" },
+
+   no_screen_share = true,
+})
+
+local function hidden_msg(is_hidden)
+   if is_hidden then
+      return "nascoste"
+   end
+   return "mostrate"
+end
+
+hl.bind("SUPER + H", function()
+   local enabled = not no_screenshare_window:is_enabled()
+   no_screenshare_window:set_enabled(enabled)
+   hl.dispatch(hl.dsp.exec_cmd("notify-send 'Finestre " .. hidden_msg(enabled) .. "'"))
+end)

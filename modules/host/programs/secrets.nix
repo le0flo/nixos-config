@@ -1,0 +1,39 @@
+{config, customLib, lib, pkgs, ...}:
+
+let
+  inherit (config.hostConfig) gui;
+
+  inherit (customLib.hjem) configFmt;
+
+  inherit (lib)
+    mkIf
+    mkMerge;
+in {
+  config = mkMerge [
+    {
+      environment.systemPackages = with pkgs; [
+        rage
+        ragenix
+        cryptsetup
+      ];
+    }
+    (mkIf gui.enable {
+      environment.systemPackages = [ pkgs.keepassxc ];
+
+      hostConfig.hjem = [{
+        xdg.config.files."keepassxc/keepassxc.ini" = configFmt pkgs.formats.ini "keepassxc.ini" {
+          Browser.Enabled = true;
+          GUI.ApplicationTheme = gui.style.polarity;
+          Security.Security_HideNotes = true;
+
+          PasswordGenerator = {
+            Length = 128;
+            LowerCase = true;
+            UpperCase = true;
+            SpecialChars = true;
+          };
+        };
+      }];
+    })
+  ];
+}

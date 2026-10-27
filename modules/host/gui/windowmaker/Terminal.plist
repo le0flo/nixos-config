@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>AddYBorders</key>
+        <false/>
+
+        <key>AltIsNotMeta</key>
+        <false/>
+
+        <key>BoldTerminalFont</key>
+        <string>IosevkaNFM-Medium</string>
+
+        <key>BoldTerminalFontSize</key>
+        <real>16</real>
+
+        <key>CommandAsMeta</key>
+        <false/>
+
+        <key>CursorColorA</key>
+        <real>1</real>
+
+        <key>CursorColorB</key>
+        <real>1</real>
+
+        <key>CursorColorG</key>
+        <real>1</real>
+
+        <key>CursorColorR</key>
+        <real>1</real>
+
+        <key>CursorStyle</key>
+        <integer>0</integer>
+
+        <key>DoubleEscape</key>
+        <false/>
+
+        <key>Linux_CharacterSet</key>
+        <string>utf-8</string>
+
+        <key>LoginShell</key>
+        <false/>
+
+        <key>ScrollBackLines</key>
+        <integer>256</integer>
+
+        <key>Shell</key>
+        <string>/run/current-system/sw/bin/bash</string>
+
+        <key>ShowTabBar</key>
+        <false/>
+
+        <key>TerminalFont</key>
+        <string>IosevkaNFM-Medium</string>
+
+        <key>TerminalFontSize</key>
+        <real>16</real>
+
+        <key>UseMultiCellGlyphs</key>
+        <true/>
+
+        <key>WindowCloseBehavior</key>
+        <integer>0</integer>
+
+        <key>WindowHeight</key>
+        <integer>28</integer>
+
+        <key>WindowWidth</key>
+        <integer>120</integer>
+    </dict>
+</plist>

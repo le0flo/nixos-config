@@ -11,6 +11,7 @@ let
     agenix
     disko
     hjem
+    mangowm
     microvm
     nixos-secrets
     nixpkgs
@@ -35,8 +36,9 @@ in listToAttrs (map (x: {
       disko.nixosModules.default
       agenix.nixosModules.default
       hjem.nixosModules.default
+      mangowm.nixosModules.mango
       microvm.nixosModules.host
-      self.nixosModules.otis
+      self.nixosModules.host
       ./${x}
     ]
     ++ (optional (pathExists ./password.nix) ./password.nix);

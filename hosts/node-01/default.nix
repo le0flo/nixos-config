@@ -3,11 +3,11 @@
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net.dns) domains;
+  inherit (config.hostConfig.net.dns) domains;
 in {
   imports = [ ./hardware.nix ];
 
-  otis = {
+  hostConfig = {
     net = {
       dns = {
         domains = {

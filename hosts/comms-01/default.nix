@@ -3,13 +3,13 @@
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net.dns)
+  inherit (config.hostConfig.net.dns)
     domains
     subdomains;
 in {
   imports = [ ./hardware.nix ];
 
-  otis = {
+  hostConfig = {
     net = {
       ethernet = {
         static = true;

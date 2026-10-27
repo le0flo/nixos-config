@@ -3,7 +3,7 @@
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net.dns)
+  inherit (config.hostConfig.net.dns)
     domains
     subdomains;
 
@@ -21,8 +21,14 @@ let
 in {
   imports = [ ./hardware.nix ];
 
-  otis = {
+  hostConfig = {
     net = {
+      ethernet = {
+        static = true;
+        address = "38.242.201.177/20";
+        gateway = "38.242.192.1";
+      };
+
       dns = {
         domains = {
           public = "leoflo.net";

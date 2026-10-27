@@ -1,0 +1,34 @@
+{customLib, inputs}:
+
+let
+  inherit (builtins) listToAttrs;
+
+  inherit (customLib.config)
+    listDirs
+    systems;
+
+  inherit (inputs)
+    microvm
+    nixpkgs
+    self;
+
+  inherit (nixpkgs.lib)
+    flatten
+    nixosSystem;
+in listToAttrs (flatten (map (x: (map (y: {
+  name = "vm-${x}-${y}";
+  value = nixosSystem {
+    system = y;
+
+    specialArgs = {
+      inherit customLib;
+      hostName = x;
+    };
+
+    modules = [
+      microvm.nixosModules.microvm
+      self.nixosModules.vm
+      ./${x}
+    ];
+  };
+}) systems)) (listDirs ./.)))

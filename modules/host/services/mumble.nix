@@ -1,0 +1,59 @@
+{config, customLib, lib, ...}:
+
+let
+  inherit (config.hostConfig.services) fail2ban;
+
+  inherit (customLib.opts)
+    mkBoolOption
+    mkStrOption;
+
+  inherit (lib) mkIf;
+
+  cfg = config.hostConfig.services.mumble;
+in {
+  options.hostConfig.services.mumble = {
+    enable = mkBoolOption "Mumble server" false;
+    domain = mkStrOption "Domain name" "example.com";
+    name = mkStrOption "Server's name" "Mumble server";
+    welcome = mkStrOption "Welcome message" "<h1>Welcome</h1>";
+    environmentFile = mkStrOption "Environment file" "/etc/mumble/environment";
+  };
+
+  config = mkIf cfg.enable {
+    networking.firewall = {
+      allowedTCPPorts = [ 64738 ];
+      allowedUDPPorts = [ 64738 ];
+    };
+
+    services = {
+      murmur = {
+        inherit (cfg) environmentFile;
+
+        enable = true;
+        bandwidth = 128000;
+        users = 50;
+
+        registerHostname = "mumble.${cfg.domain}";
+        registerUrl = "https://${cfg.domain}";
+        registerName = cfg.name;
+        welcometext = cfg.welcome;
+
+        tls.useACMEHost = cfg.domain;
+
+        password = "$MURMURD_PASSWORD";
+        registerPassword = "$MURMURD_REGISTER_PASSWORD";
+      };
+
+      fail2ban.jails = mkIf fail2ban.enable {
+        "murmur".settings = {
+          enabled = true;
+          action = ''iptables[type=oneport, port="64738", protocol=tcp]'';
+          filter = "murmur";
+          backend = "systemd";
+        };
+      };
+    };
+
+    users.groups."public-acme".members = [ config.services.murmur.user ];
+  };
+}

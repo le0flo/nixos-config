@@ -3,13 +3,13 @@
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.otis.net.dns) domains;
+  inherit (config.hostConfig.net.dns) domains;
 in {
   imports = [ ./hardware.nix ];
 
   nixpkgs.config.allowUnfree = true;
 
-  otis = {
+  hostConfig = {
     gui = {
       enable = true;
       hyprland.enable = true;
