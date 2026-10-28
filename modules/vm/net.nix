@@ -32,7 +32,7 @@ in {
 
     systemd.network = {
       enable = true;
-      wait-online = true;
+      wait-online.enable = true;
 
       networks."10-ethernet" = {
         matchConfig.Name = "en*";
