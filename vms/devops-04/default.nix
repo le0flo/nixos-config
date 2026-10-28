@@ -5,11 +5,21 @@
       guestDir = "/app/gitolite/projects";
     }];
 
-    net.allowedTCPPorts = [
-      13001
-      13002
-      13022
-    ];
+    net = {
+      address = "10.67.1.4";
+      prefixLength = 16;
+
+      gateway = {
+        address = "10.67.0.1";
+        prefixLength = 16;
+      };
+
+      allowedTCPPorts = [
+        13001
+        13002
+        13022
+      ];
+    };
 
     services = {
       git = {

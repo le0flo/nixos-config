@@ -13,10 +13,20 @@
       }
     ];
 
-    net.allowedTCPPorts = [
-      12001
-      12002
-    ];
+    net = {
+      address = "10.67.1.2";
+      prefixLength = 16;
+
+      gateway = {
+        address = "10.67.0.1";
+        prefixLength = 16;
+      };
+
+      allowedTCPPorts = [
+        12001
+        12002
+      ];
+    };
 
     secrets = {
       "qbittorrent-password" = {

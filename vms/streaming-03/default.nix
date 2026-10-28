@@ -15,10 +15,20 @@
       }
     ];
 
-    net.allowedTCPPorts = [
-      11001
-      11002
-    ];
+    net = {
+      address = "10.67.1.3";
+      prefixLength = 16;
+
+      gateway = {
+        address = "10.67.0.1";
+        prefixLength = 16;
+      };
+
+      allowedTCPPorts = [
+        11001
+        11002
+      ];
+    };
 
     services = {
       jellyfin = {
