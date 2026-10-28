@@ -1,7 +1,10 @@
 {config, customLib, hostName, lib, ...}:
 
 let
-  inherit (customLib.opts) mkListOption;
+  inherit (customLib.opts)
+    mkIntOption
+    mkListOption
+    mkStrOption;
 
   inherit (lib) types;
 
