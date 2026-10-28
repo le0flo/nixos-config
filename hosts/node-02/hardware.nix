@@ -8,6 +8,8 @@
   hardware.cpu.intel.updateMicrocode = true;
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     loader = {
       efi.canTouchEfiVariables = true;
 
@@ -37,11 +39,11 @@
   disko.devices.disk."main" = {
     device = "/dev/nvme0n1";
     type = "disk";
-    
+
     content = {
       type = "gpt";
 
-      partitions = {        
+      partitions = {
         ESP = {
           type = "EF00";
           size = "1G";
@@ -63,7 +65,7 @@
             resumeDevice = true;
           };
         };
-        
+
         root = {
           size = "100%";
 

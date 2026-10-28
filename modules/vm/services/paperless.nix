@@ -13,8 +13,8 @@ in {
   options.vmConfig.services.paperless = {
     enable = mkBoolOption "Enable the Paperless-NGX document archive" false;
     port = mkPortOption "Port of the Paperless-NGX server" 10001;
-    envDir = mkStrOption "Environment file directory" "/etc/paperless";
-    exportDir = mkStrOption "Directory of the exporter" "/media/documents";
+    envDir = mkStrOption "Environment file directory" "/app/paperless";
+    exportDir = mkStrOption "Directory of the exporter" "/app/paperless/export";
   };
 
   config = mkIf cfg.enable {

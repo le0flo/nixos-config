@@ -11,9 +11,7 @@ let
     agenix
     disko
     hjem
-    mangowm
-    microvm
-    nixos-secrets
+    nixos-secrets-host
     nixpkgs
     self;
 
@@ -27,17 +25,15 @@ in listToAttrs (map (x: {
       inherit customLib inputs self;
 
       hostName = x;
-      secretsEnc = toString nixos-secrets;
+      secretsEnc = toString nixos-secrets-host;
 
-      readPubKey = customLib.net.readPubKey (toString nixos-secrets);
+      readPubKey = customLib.net.readPubKey (toString nixos-secrets-host);
     };
 
     modules = [
       disko.nixosModules.default
       agenix.nixosModules.default
       hjem.nixosModules.default
-      mangowm.nixosModules.mango
-      microvm.nixosModules.host
       self.nixosModules.host
       ./${x}
     ]

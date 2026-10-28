@@ -14,7 +14,7 @@ in {
     enable = mkBoolOption "Enable the gitolite and cgit servers" false;
     webPort = mkPortOption "Port of the cgit server" 13001;
     sshPort = mkPortOption "Port of the gitolite server" 13022;
-    projectsDir = mkStrOption "Directory of the project storage" "/media/projects";
+    projectsDir = mkStrOption "Directory of the project storage" "/app/gitolite/projects";
     adminPubkey = mkStrOption "Gitolite admin ssh key" "";
   };
 

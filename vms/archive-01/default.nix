@@ -1,45 +1,19 @@
+{secretsEnc, ...}:
+
 {
   vmConfig = {
-    cpu = 2;
-    memory = 4096;
-    disk = 8192;
-
-    shares = [
+    fs.shares = [
       {
-        host.dir = "/etc/paperless";
-        guest.dir = "/etc/paperless";
-        readOnly = true;
+        mountName = "paperless-export";
+        guestDir = "/app/paperless/export";
       }
       {
-        host = {
-          dir = "/mnt/storage/documents";
-          uid = 1000;
-          gid = 100;
-        };
-        guest = {
-          dir = "/media/documents";
-          uid = 315;
-          gid = 315;
-        };
-        readOnly = false;
+        mountName = "immich-media";
+        guestDir = "/app/immich/media";
       }
       {
-        host = {
-          dir = "/mnt/storage/pictures";
-          uid = 1000;
-          gid = 100;
-        };
-        guest = {
-          dir = "/media/pictures";
-          uid = 999;
-          gid = 999;
-        };
-        readOnly = false;
-      }
-      {
-        host.dir = "/mnt/storage/albums/old-pictures";
-        guest.dir = "/media/albums/old-pictures";
-        readOnly = true;
+        mountName = "immich-old-pictures";
+        guestDir = "/app/immich/old-pictures";
       }
     ];
 
@@ -48,18 +22,37 @@
       10002
     ];
 
+    secrets = {
+      "paperless-environment" = {
+        file = "${secretsEnc}/paperless/environment.age";
+        path = "/app/paperless/environment";
+        mode = "400";
+        owner = "paperless";
+        group = "paperless";
+      };
+    };
+
     services = {
       immich = {
         enable = true;
         port = 10002;
-        mediaDir = "/media/pictures";
+        mediaDir = "/app/immich/media";
       };
       paperless = {
         enable = true;
         port = 10001;
-        envDir = "/etc/paperless";
-        exportDir = "/media/documents";
+        envDir = "/app/paperless";
+        exportDir = "/app/paperless/export";
       };
+    };
+
+    users = {
+      "immich".id = 1001;
+      "paperless".id = 1002;
+    };
+    groups = {
+      "immich".id = 1001;
+      "paperless".id = 1002;
     };
   };
 }

@@ -69,10 +69,6 @@ in {
     services = {
       audio.enable = true;
       bluetooth.enable = true;
-      microvm = {
-        enable = true;
-        externalInterface = "eth0";
-      };
       power.enable = true;
       virtualisation.enable = true;
     };

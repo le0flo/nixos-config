@@ -4,9 +4,7 @@
     ./bluetooth.nix
     ./fail2ban.nix
     ./hydra.nix
-    ./k3s.nix
     ./mail.nix
-    ./microvm.nix
     ./mumble.nix
     ./nginx.nix
     ./openssh.nix

@@ -3,14 +3,15 @@
 let
   inherit (builtins) mapAttrs;
 
+  inherit (config.nixpkgs.hostPlatform) system;
+
   inherit (customLib.opts)
+    mkAttrOption
     mkAttrSubOption
-    mkIntOption
     mkNullOption;
 
   inherit (lib)
     mkForce
-    mkMerge
     types;
 
   cfg = config.vmConfig;
@@ -26,48 +27,42 @@ in {
   imports = [
     ./services
 
+    ./boot.nix
+    ./fs.nix
     ./net.nix
-    ./shares.nix
   ];
 
   options.vmConfig = {
-    cpu = mkIntOption "Number of cpu cores" 1;
-    memory = mkIntOption "Allocated memory (MB)" 1024;
-    disk = mkIntOption "Allocated storage (MB)" 8192;
-
     groups = mkAttrSubOption groupOpts "Set of groups" {};
     users = mkAttrSubOption userOpts "Set of users" {};
+    secrets = mkAttrOption "Set of agenix secrets" {};
   };
 
   config = {
-    environment.systemPackages = with pkgs; [
-      htop
-      tcpdump
-    ];
+    age = {
+      inherit (cfg) secrets;
 
-    microvm = {
-      hypervisor = "cloud-hypervisor";
-      mem = cfg.memory;
-      vcpu = cfg.cpu;
+      identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    };
 
-      volumes = [{
-        image = "data-${hostName}.img";
-        mountPoint = "/var/lib";
-        size = cfg.disk;
-      }];
+    console.keyMap = "it";
+
+    environment = {
+      shellAliases = {
+        "vm-build" = "sudo nixos-rebuild build --flake ~/nixos-config#vm-${hostName}-${system}";
+        "vm-boot" = "sudo nixos-rebuild boot --flake ~/nixos-config#vm-${hostName}-${system}";
+        "vm-switch" = "sudo nixos-rebuild switch --flake ~/nixos-config#vm-${hostName}-${system}";
+      };
+
+      systemPackages = with pkgs; [
+        htop
+        tcpdump
+      ];
     };
 
     users = {
       groups = mapAttrs (x: y: { gid = mkForce y.id; }) cfg.groups;
-      users = mkMerge [
-        (mapAttrs (x: y: { uid = mkForce y.id; }) cfg.users)
-        {
-          "root".openssh.authorizedKeys.keys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcXQtfp/MZUibmmXM5xZGHEhLDUGCSKu0+fH9Mh3+Qa leo@odino"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1B/uxIDrKCh5PuJbJN92Dzs8zZjSywJ4LoSZZtFViS leo@thor"
-          ];
-        }
-      ];
+      users = mapAttrs (x: y: { isSystemUser = true; uid = mkForce y.id; }) cfg.users;
     };
 
     services = {

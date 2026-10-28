@@ -13,8 +13,8 @@ in {
   options.vmConfig.services.slskd = {
     enable = mkBoolOption "Enable the slskd web client" false;
     port = mkPortOption "Port of the slskd server" 12002;
-    envDir = mkStrOption "Environment file directory" "/etc/slskd";
-    storageDir = mkStrOption "Directory of the slsk downloads" "/media/slsk";
+    envDir = mkStrOption "Environment file directory" "/app/slskd";
+    storageDir = mkStrOption "Directory of the slsk downloads" "/app/slskd/storage";
   };
 
   config = mkIf cfg.enable {

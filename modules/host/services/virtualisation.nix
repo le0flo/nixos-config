@@ -15,10 +15,21 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
+      environment.etc."libvirt/networks/customnat.xml".text = ''
+      <network>
+        <name>customnat</name>
+        <forward mode="nat"/>
+        <bridge name="virbr-nat">
+        <ip address="10.67.0.1" netmask="255.255.0.0">
+          <dhcp><range start="10.67.1.1" end="10.67.1.253"/></dhcp>
+        </ip>
+      </network>
+      '';
+
       virtualisation = {
         libvirtd = {
           enable = true;
-
+          qemu.vhostUserPackages = [ pkgs.virtiofsd ];
         };
         lxc = {
           enable = true;

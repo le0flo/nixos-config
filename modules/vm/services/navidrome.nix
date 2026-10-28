@@ -13,7 +13,7 @@ in {
   options.vmConfig.services.navidrome = {
     enable = mkBoolOption "Enable the Navidrome music server" false;
     port = mkPortOption "Port of the Navidrome server" 11001;
-    musicDir = mkStrOption "Directory of the music libraries" "/media/music";
+    musicDir = mkStrOption "Directory of the music libraries" "/app/navidrome/music";
   };
 
   config = mkIf cfg.enable {

@@ -132,11 +132,6 @@ in {
         role = "server";
         vpnInterface = "internal";
       };
-      k3s = {
-        enable = true;
-        role = "server";
-        vpnInterface = "internal";
-      };
       nginx = {
         enable = true;
 
@@ -185,11 +180,6 @@ in {
 
       "hydra/token" = {
         file = "${secretsEnc}/hydra/token.age";
-        mode = "400";
-      };
-
-      "k3s/token" = {
-        file = "${secretsEnc}/k3s/token.age";
         mode = "400";
       };
 

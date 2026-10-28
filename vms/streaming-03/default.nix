@@ -1,24 +1,17 @@
 {
   vmConfig = {
-    cpu = 2;
-    memory = 4096;
-    disk = 8192;
-
-    shares = [
+    fs.shares = [
       {
-        host.dir = "/mnt/storage/music";
-        guest.dir = "/media/music";
-        readOnly = true;
+        mountName = "navidrome-music";
+        guestDir = "/app/navidrome/music";
       }
       {
-        host.dir = "/mnt/storage/movies";
-        guest.dir = "/media/movies";
-        readOnly = true;
+        mountName = "jellyfin-movies";
+        guestDir = "/app/jellyfin/movies";
       }
       {
-        host.dir = "/mnt/storage/shows";
-        guest.dir = "/media/shows";
-        readOnly = true;
+        mountName = "jellyfin-shows";
+        guestDir = "/app/jellyfin/shows";
       }
     ];
 
@@ -35,8 +28,17 @@
       navidrome = {
         enable = true;
         port = 11001;
-        musicDir = "/media/music";
+        musicDir = "/app/navidrome/music";
       };
+    };
+
+    users = {
+      "navidrome".id = 1001;
+      "jellyfin".id = 1002;
+    };
+    groups = {
+      "navidrome".id = 1001;
+      "jellyfin".id = 1002;
     };
   };
 }

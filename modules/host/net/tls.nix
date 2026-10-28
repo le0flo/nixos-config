@@ -21,7 +21,7 @@ let
     types;
 
   cfg = config.hostConfig.net.tls;
-  secretsPath = toString inputs.nixos-secrets;
+  secretsPath = toString inputs.nixos-secrets-host;
 
   certOpts.options = {
     domain = mkStrOption "Domain" "example.com";

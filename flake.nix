@@ -14,7 +14,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     disko = {
@@ -33,15 +32,14 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland/v0.56.0";
-    mangowm.url = "github:mangowm/mango/0.18.3";
 
-    microvm = {
-      url = "github:microvm-nix/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixos-secrets-host = {
+      url = "git+https://codeberg.org/leoflo/nixos-secrets-host";
+      flake = false;
     };
 
-    nixos-secrets = {
-      url = "git+https://codeberg.org/leoflo/nixos-secrets";
+    nixos-secrets-vm = {
+      url = "git+https://codeberg.org/leoflo/nixos-secrets-vm";
       flake = false;
     };
   };

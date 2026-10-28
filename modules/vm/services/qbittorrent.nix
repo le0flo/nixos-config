@@ -15,8 +15,8 @@ in {
   options.vmConfig.services.qbittorrent = {
     enable = mkBoolOption "Enable the qBitTorrent web client" false;
     port = mkPortOption "Port of the qBitTorrent server" 12001;
-    envDir = mkStrOption "Environment file directory" "/etc/qbittorrent";
-    storageDir = mkStrOption "Directory of the qBitTorrent downloads" "/media/bt";
+    envDir = mkStrOption "Environment file directory" "/app/qbittorrent";
+    storageDir = mkStrOption "Directory of the qBitTorrent downloads" "/app/qbittorrent/storage";
   };
 
   config = mkIf cfg.enable {

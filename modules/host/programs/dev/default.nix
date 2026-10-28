@@ -22,16 +22,6 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      environment = {
-        shellAliases."k" = "${pkgs.scripts}/bin/kubectl-wrapper";
-
-        systemPackages = with pkgs; [
-          kubectl
-          kubernetes-helm
-          scripts
-        ];
-      };
-
       programs.git = {
         enable = true;
 

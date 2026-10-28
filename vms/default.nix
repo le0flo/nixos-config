@@ -8,7 +8,9 @@ let
     systems;
 
   inherit (inputs)
-    microvm
+    agenix
+    disko
+    nixos-secrets-vm
     nixpkgs
     self;
 
@@ -22,11 +24,14 @@ in listToAttrs (flatten (map (x: (map (y: {
 
     specialArgs = {
       inherit customLib;
+
       hostName = x;
+      secretsEnc = toString nixos-secrets-vm;
     };
 
     modules = [
-      microvm.nixosModules.microvm
+      disko.nixosModules.default
+      agenix.nixosModules.default
       self.nixosModules.vm
       ./${x}
     ];

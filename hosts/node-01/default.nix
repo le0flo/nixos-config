@@ -48,26 +48,25 @@ in {
         role = "builder";
         vpnInterface = "internal";
       };
-      k3s = {
+      nginx = {
         enable = true;
-        role = "agent";
-        vpnInterface = "internal";
-      };
-      microvm = {
-        enable = true;
-        vms = [
-          "sharing-02"
-          "streaming-03"
-        ];
 
-        externalInterface = "eno1";
-        vpnInterface = "internal";
+        streams = [
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.3"; port = 11001; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.3"; port = 11002; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.2"; port = 12001; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.2"; port = 12002; }
+        ];
       };
       openssh.enable = true;
+      virtualisation.enable = true;
     };
 
     users."leo" = {
-      groups = [ "wheel" ];
+      groups = [
+        "libvirtd"
+        "wheel"
+      ];
 
       ssh.authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1+ZhCdmiOz4tyIb6vueaxcQGKU+qnFx2FizHQLWg9H leo@pc-01"
@@ -82,25 +81,6 @@ in {
         mode = "400";
         owner = "hydra-builder";
         group = "hydra";
-      };
-
-      "k3s/token" = {
-        file = "${secretsEnc}/k3s/token.age";
-        mode = "400";
-      };
-
-      "microvms/qbittorrent/password" = {
-        file = "${secretsEnc}/microvms/qbittorrent.age";
-        path = "/etc/qbittorrent/password";
-        mode = "444";
-        symlink = false;
-      };
-
-      "microvms/slskd/environment" = {
-        file = "${secretsEnc}/microvms/slskd.age";
-        path = "/etc/slskd/environment";
-        mode = "444";
-        symlink = false;
       };
 
       "wireguard/internal" = {

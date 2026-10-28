@@ -1,13 +1,9 @@
-{config, customLib, hostName, readPubKey, secretsEnc, ...}:
+{config, hostName, readPubKey, secretsEnc, ...}:
 
 let
   inherit (config.age) secretsDir;
 
-  inherit (config.hostConfig.net)
-    dns
-    vpn;
-
-  inherit (customLib.net) subnetToGateway;
+  inherit (config.hostConfig.net) dns;
 in {
   imports = [ ./hardware.nix ];
 
@@ -52,26 +48,26 @@ in {
         role = "builder";
         vpnInterface = "internal";
       };
-      k3s = {
+      nginx = {
         enable = true;
-        role = "agent";
-        vpnInterface = "internal";
-      };
-      microvm = {
-        enable = true;
-        vms = [
-          "archive-01"
-          "devops-04"
-        ];
 
-        externalInterface = "enp0s31f6";
-        vpnInterface = "internal";
+        streams = [
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.1"; port = 10001; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.1"; port = 10002; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.4"; port = 13001; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.4"; port = 13002; }
+          { vpnInterfaces = [ "internal" ]; proto = "tcp"; address = "10.67.1.4"; port = 13022; }
+        ];
       };
       openssh.enable = true;
+      virtualisation.enable = true;
     };
 
     users."leo" = {
-      groups = [ "wheel" ];
+      groups = [
+        "libvirtd"
+        "wheel"
+      ];
 
       ssh.authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAkMMcdlECZOLCVONmP9/EOFrorigaCo2r2xuc40MtpS leo@pc-01"
@@ -88,23 +84,10 @@ in {
         group = "hydra";
       };
 
-      "k3s/token" = {
-        file = "${secretsEnc}/k3s/token.age";
-        mode = "400";
-      };
-
       "wireguard/internal" = {
         file = "${secretsEnc}/wireguard/${hostName}.age";
         mode = "400";
       };
     };
   };
-
-  system.activationScripts."paperless-environment".text = ''
-  mkdir -p /etc/paperless
-  cat > /etc/paperless/environment <<EOF
-  PAPERLESS_URL=https://papers.${dns.domains.private}
-  PAPERLESS_TRUSTED_PROXIES=${subnetToGateway vpn.networks."internal".subnet}
-  EOF
-  '';
 }

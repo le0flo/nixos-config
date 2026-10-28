@@ -12,6 +12,8 @@ let
 
   inherit (config.hostConfig.services) fail2ban;
 
+  inherit (customLib.net) subnetToPrefix;
+
   inherit (customLib.opts)
     mkAttrOption
     mkBoolOption
@@ -19,10 +21,12 @@ let
     mkListOption
     mkListSubOption
     mkNullOption
+    mkPortOption
     mkStrOption
     mkSubOption;
 
   inherit (lib)
+    filter
     mkIf
     mkMerge
     types;
@@ -43,6 +47,13 @@ let
     type = mkEnumOption [ "none" "auto" "manual" ] "Type of tls handling" "none";
     cert = mkNullOption types.str "Path of the tls certificate" null;
     key = mkNullOption types.str "Path of the tls certificate's key" null;
+  };
+
+  streamOpts.options = {
+    vpnInterfaces = mkListOption types.str "List of interfaces to forward the port to" [];
+    proto = mkEnumOption [ "tcp" "udp" ] "The protocol of the forwarded port" "tcp";
+    address = mkStrOption "The address to forward" "10.67.0.0";
+    port = mkPortOption "The port to forward" 8080;
   };
 
   mkVirtualHost = zone: sites: listToAttrs
@@ -86,6 +97,16 @@ let
         })
       ];
     }) sites);
+
+  mkStreams = streams: concatStringsSep "\n" (map (x: ''
+  ${concatStringsSep "\n" (map (y: let
+    inherit (vpn.networks."${y}") id subnet;
+  in ''
+  server {
+    listen ${subnetToPrefix subnet}.${id}:${toString x.port} ${if x.proto == "udp" then "udp" else ""};
+    proxy_pass ${x.address}:${toString x.port};
+  }
+  '') x.vpnInterfaces)} '')streams);
 in {
   options.hostConfig.services.nginx = {
     enable = mkBoolOption "Nginx server" false;
@@ -100,13 +121,18 @@ in {
       public = mkSubOption tlsOpts "TLS settings for public websites" {};
       private = mkSubOption tlsOpts "TLS settings for private websites" {};
     };
+
+    streams = mkListSubOption streamOpts "Stream entries" [];
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [
-      80
-      443
-    ];
+    networking.firewall = {
+      allowedTCPPorts = [
+        80
+        443
+      ] ++ (map (x: x.port) (filter (x: x.proto == "tcp") cfg.streams));
+      allowedUDPPorts = map (x: x.port) (filter (x: x.proto == "udp") cfg.streams);
+    };
 
     services = {
       nginx = {
@@ -119,6 +145,8 @@ in {
           (mkVirtualHost "private" cfg.sites.private)
           cfg.sites.extra
         ];
+
+        streamConfig = mkStreams cfg.streams;
       };
 
       fail2ban.jails = mkIf fail2ban.enable {

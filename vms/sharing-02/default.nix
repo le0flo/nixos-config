@@ -1,45 +1,15 @@
+{secretsEnc, ...}:
+
 {
   vmConfig = {
-    cpu = 1;
-    memory = 1024;
-    disk = 8192;
-
-    shares = [
+    fs.shares = [
       {
-        host.dir = "/etc/qbittorrent";
-        guest.dir = "/etc/qbittorrent";
-        readOnly = true;
+        mountName = "qbittorrent-storage";
+        guestDir = "/app/qbittorrent/storage";
       }
       {
-        host = {
-          dir = "/mnt/storage/downloads/bt";
-          uid = 1000;
-          gid = 100;
-        };
-        guest = {
-          dir = "/media/bt";
-          uid = 998;
-          gid = 998;
-        };
-        readOnly = false;
-      }
-      {
-        host.dir = "/etc/slskd";
-        guest.dir = "/etc/slskd";
-        readOnly = true;
-      }
-      {
-        host = {
-          dir = "/mnt/storage/downloads/slsk";
-          uid = 1000;
-          gid = 100;
-        };
-        guest = {
-          dir = "/media/slsk";
-          uid = 997;
-          gid = 997;
-        };
-        readOnly = false;
+        mountName = "slskd-storage";
+        guestDir = "/app/slskd/storage";
       }
     ];
 
@@ -48,19 +18,45 @@
       12002
     ];
 
+    secrets = {
+      "qbittorrent-password" = {
+        file = "${secretsEnc}/qbittorrent/password.age";
+        path = "/app/qbittorrent/password";
+        mode = "400";
+        owner = "qbittorrent";
+        group = "qbittorrent";
+      };
+      "slskd-environment" = {
+        file = "${secretsEnc}/slskd/environment.age";
+        path = "/app/slskd/environment";
+        mode = "400";
+        owner = "slskd";
+        group = "slskd";
+      };
+    };
+
     services = {
       qbittorrent = {
         enable = true;
         port = 12001;
-        envDir = "/etc/qbittorrent";
-        storageDir = "/media/bt";
+        envDir = "/app/qbittorrent";
+        storageDir = "/app/qbittorrent/storage";
       };
       slskd = {
         enable = true;
         port = 12002;
-        envDir = "/etc/slskd";
-        storageDir = "/media/slsk";
+        envDir = "/app/slskd";
+        storageDir = "/app/slskd/storage";
       };
+    };
+
+    users = {
+      "qbittorrent".id = 1001;
+      "slskd".id = 1002;
+    };
+    groups = {
+      "qbittorrent".id = 1001;
+      "slskd".id = 1002;
     };
   };
 }
