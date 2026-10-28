@@ -37,6 +37,6 @@ in listToAttrs (map (x: {
       self.nixosModules.host
       ./${x}
     ]
-    ++ (optional (pathExists ./password.nix) ./password.nix);
+    ++ (optional (pathExists ../password.nix) ../password.nix);
   };
 }) (listDirs ./.))

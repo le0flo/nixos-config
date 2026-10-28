@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-host=$1
+type=$1
+conf=$2
 
-if [ -z $host ]; then
-    echo "No host configuration specified" >&2
+if [ -z $type ]; then
+    echo "No configuration type specified" >&2
     exit 1
 fi
 
-nixos-rebuild switch --flake .#host-$host --target-host $host --ask-sudo-password
+if [ -z $conf ]; then
+    echo "No configuration specified" >&2
+    exit 1
+fi
+
+nixos-rebuild switch --flake .#$type-$conf --target-host $conf --ask-sudo-password

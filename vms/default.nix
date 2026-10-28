@@ -1,7 +1,9 @@
 {customLib, inputs}:
 
 let
-  inherit (builtins) listToAttrs;
+  inherit (builtins)
+    listToAttrs
+    pathExists;
 
   inherit (customLib.config)
     listDirs
@@ -16,7 +18,8 @@ let
 
   inherit (nixpkgs.lib)
     flatten
-    nixosSystem;
+    nixosSystem
+    optional;
 in listToAttrs (flatten (map (x: (map (y: {
   name = "vm-${x}-${y}";
   value = nixosSystem {
@@ -34,6 +37,7 @@ in listToAttrs (flatten (map (x: (map (y: {
       agenix.nixosModules.default
       self.nixosModules.vm
       ./${x}
-    ];
+    ]
+    ++ (optional (pathExists ../password.nix) ../password.nix);
   };
 }) systems)) (listDirs ./.)))
