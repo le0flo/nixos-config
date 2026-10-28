@@ -55,6 +55,7 @@ in {
       };
 
       systemPackages = with pkgs; [
+        git
         htop
         tcpdump
       ];
