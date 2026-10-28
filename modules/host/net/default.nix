@@ -22,6 +22,7 @@ in {
       address = mkStrOption "IPv4 address" "10.0.0.67/24";
       gateway = mkStrOption "IPv4 gateway" "10.0.0.1";
     };
+
     wait-online.enable = mkBoolOption "Wait for a connection to establish" true;
   };
 

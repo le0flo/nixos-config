@@ -2,7 +2,6 @@
 
 let
   inherit (customLib.opts)
-    mkIntOption
     mkListOption
     mkStrOption;
 
@@ -11,13 +10,8 @@ let
   cfg = config.vmConfig.net;
 in {
   options.vmConfig.net = {
-    address = mkStrOption "IPv4 address" "";
-    prefixLength = mkIntOption "IPv4 prefix lenght" 24;
-
-    gateway = {
-      address = mkStrOption "IPv4 gateway address" "";
-      prefixLength = mkIntOption "IPv4 gateway prefix lenght" 24;
-    };
+    address = mkStrOption "IPv4 address" "10.0.0.76/24";
+    gateway = mkStrOption "IPv4 gateway" "10.0.0.1";
 
     allowedTCPPorts = mkListOption types.port "List of allowed TCP ports" [];
     allowedUDPPorts = mkListOption types.port "List of allowed UDP ports" [];
@@ -32,12 +26,25 @@ in {
         enable = true;
       };
 
-      interfaces."enp4s0".ipv4 = {
-        addresses = [{ inherit (cfg) address prefixLength; }];
-        routes = [{ inherit (cfg.gateway) address prefixLength; }];
-      };
-
       useDHCP = false;
+      useNetworkd = true;
+    };
+
+    systemd.network = {
+      enable = true;
+      wait-online = true;
+
+      networks."10-ethernet" = {
+        matchConfig.Name = "en*";
+
+        address = [ cfg.address ];
+        routes = [{ Gateway = cfg.gateway; }];
+
+        networkConfig = {
+          DHCP = "no";
+          IPv6AcceptRA = true;
+        };
+      };
     };
   };
 }

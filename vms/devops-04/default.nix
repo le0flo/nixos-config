@@ -6,13 +6,8 @@
     }];
 
     net = {
-      address = "10.67.1.4";
-      prefixLength = 16;
-
-      gateway = {
-        address = "10.67.0.1";
-        prefixLength = 16;
-      };
+      address = "10.67.1.4/16";
+      gateway = "10.67.0.1";
 
       allowedTCPPorts = [
         13001
