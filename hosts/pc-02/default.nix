@@ -51,7 +51,7 @@ in {
 
         database.enable = true;
         languages.enable = true;
-        virtualisation.enable = true;
+        containers.enable = true;
 
         editors = {
           emacs = true;
@@ -74,6 +74,7 @@ in {
         externalInterface = "eth0";
       };
       power.enable = true;
+      virtualisation.enable = true;
     };
 
     users."leo" = {

@@ -12,6 +12,7 @@
     ./openssh.nix
     ./power.nix
     ./smartcards.nix
+    ./virtualisation.nix
     ./xmpp.nix
   ];
 }

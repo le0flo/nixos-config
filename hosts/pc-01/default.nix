@@ -51,7 +51,7 @@ in {
 
         database.enable = true;
         languages.enable = true;
-        virtualisation.enable = true;
+        containers.enable = true;
 
         editors = {
           emacs = true;
@@ -75,6 +75,7 @@ in {
       };
       power.enable = true;
       smartcards.enable = true;
+      virtualisation.enable = true;
     };
 
     users."leo" = {

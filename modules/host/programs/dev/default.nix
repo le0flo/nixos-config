@@ -15,7 +15,7 @@ in {
     ./database.nix
     ./editor.nix
     ./languages.nix
-    ./virtualisation.nix
+    ./containers.nix
   ];
 
   options.hostConfig.programs.dev.enable = mkBoolOption "Development" false;
