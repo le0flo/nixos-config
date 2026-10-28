@@ -69,7 +69,7 @@ in {
       ];
 
       ssh.authorizedKeys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1+ZhCdmiOz4tyIb6vueaxcQGKU+qnFx2FizHQLWg9H leo@pc-01"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7cqjf9eR/HC3hqhTKoDpjQxTK7mk0BBBi9JEudof+7 leo@pc-01"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMswgwqMF9bq0ktTv7A1MMoNpyyhPKSbpAyGAEBPF1Qd leo@pc-02"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHMXv96olyoS8JKmJtIcmDHlPaw9WuG6KGfhi3iKS1UH leo@entrypoint-01"
       ];
