@@ -51,7 +51,10 @@ in {
         '';
       }];
 
-      programs.kdeconnect.enable = true;
+      programs = {
+        kdeconnect.enable = true;
+        ssh.askPassword = "${pkgs.openssh-askpass}/libexec/gtk-ssh-askpass";
+      };
     })
   ]);
 }
