@@ -12,6 +12,7 @@ let
 
   inherit (lib)
     mkForce
+    mkMerge
     types;
 
   cfg = config.vmConfig;
@@ -63,7 +64,13 @@ in {
 
     users = {
       groups = mapAttrs (x: y: { gid = mkForce y.id; }) cfg.groups;
-      users = mapAttrs (x: y: { isSystemUser = true; uid = mkForce y.id; }) cfg.users;
+      users = mkMerge [
+        (mapAttrs (x: y: { isSystemUser = true; uid = mkForce y.id; }) cfg.users)
+        { "root".openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1HRVQ9OKY+X3J3icVm0bugDPvxjHLNl68Inl7BF0/S leo@node-01"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOySP/pTzpnsAbSELaNSzH3Jxayv/8s4x9TxcGSTQU8V leo@node-02"
+        ]; }
+      ];
     };
 
     services = {
