@@ -2,12 +2,16 @@
 
 let
   inherit (builtins)
+    attrNames
     attrValues
-    mapAttrs;
+    listToAttrs;
 
-  inherit (config.hostConfig.net.dns) domains;
+  inherit (config.hostConfig.net.dns)
+    domains
+    vpnInterface;
 
   inherit (customLib.net)
+    subnetToGateway
     subnetToMask
     subnetToPrefix;
 
@@ -20,6 +24,7 @@ let
     mkStrOption;
 
   inherit (lib)
+    imap
     mkIf
     mkMerge;
 
@@ -48,35 +53,84 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     (mkIf (cfg.role == "client") {
-      networking.wg-quick.interfaces = (mapAttrs (x: y: {
-        inherit (y) privateKeyFile;
-        address = [ "${subnetToPrefix y.subnet}.${y.id}/${subnetToMask y.subnet}" ];
+      systemd.network = {
+        networks = listToAttrs (imap (i: x: let
+          y = cfg.networks."${x}";
+          found = (x == vpnInterface);
+        in {
+          name = "${toString (30 + i)}-vpn";
+          value = {
+            matchConfig.Name = x;
+            address = [ "${subnetToPrefix y.subnet}.${y.id}/${subnetToMask y.subnet}" ];
 
-        peers = [{
-          inherit (y) publicKey;
-          allowedIPs = [ y.subnet ];
-          endpoint = "${y.address}:${toString y.port}";
-          persistentKeepalive = 25;
-        }];
-      }) cfg.networks);
+            dns = if found then [ (subnetToGateway y.subnet) ] else [];
+            domains = if found then [ "~${domains.private}" ] else [];
+          };
+        }) (attrNames cfg.networks));
+
+        netdevs = listToAttrs (imap (i: x: let
+          y = cfg.networks."${x}";
+        in {
+          name = "${toString (30 + i)}-vpn";
+          value = {
+            netdevConfig = {
+              Kind = "wireguard";
+              Name = x;
+            };
+
+            wireguardConfig.PrivateKeyFile = y.privateKeyFile;
+            wireguardPeers = [{
+              PublicKey = y.publicKey;
+              AllowedIPs = [ y.subnet ];
+              Endpoint = "${y.address}:${toString y.port}";
+              PersistentKeepalive = 10;
+            }];
+          };
+        }) (attrNames cfg.networks));
+      };
     })
     (mkIf (cfg.role == "server") {
       boot.kernel.sysctl."net.ipv4.ip_forward" = true;
 
-      networking = {
-        firewall.allowedUDPPorts = map (x: x.port) (attrValues cfg.networks);
+      networking.firewall.allowedUDPPorts = map (x: x.port) (attrValues cfg.networks);
 
-        wg-quick.interfaces = (mapAttrs (x: y: {
-          inherit (y) privateKeyFile;
-          address = [ "${subnetToPrefix y.subnet}.${y.id}/${subnetToMask y.subnet}" ];
-          listenPort = y.port;
+      systemd.network = {
+        networks = listToAttrs (imap (i: x: let
+          y = cfg.networks."${x}";
+          found = (x == vpnInterface);
+        in {
+          name = "${toString (30 + i)}-vpn";
+          value = {
+            matchConfig.Name = x;
+            address = [ "${subnetToPrefix y.subnet}.${y.id}/${subnetToMask y.subnet}" ];
 
-          peers = map (z: {
-            inherit (z) publicKey;
-            allowedIPs = [ "${subnetToPrefix y.subnet}.${z.id}/32" ];
-            persistentKeepalive = 25;
-          }) y.clients;
-        }) cfg.networks);
+            dns = if found then [ (subnetToGateway y.subnet) ] else [];
+            domains = if found then [ "~${domains.private}" ] else [];
+          };
+        }) (attrNames cfg.networks));
+
+        netdevs = listToAttrs (imap (i: x: let
+          y = cfg.networks."${x}";
+        in {
+          name = "${toString (30 + i)}-vpn";
+          value = {
+            netdevConfig = {
+              Kind = "wireguard";
+              Name = x;
+            };
+
+            wireguardConfig = {
+              ListenPort = y.port;
+              PrivateKeyFile = y.privateKeyFile;
+            };
+
+            wireguardPeers = map (z: {
+              PublicKey = y.publicKey;
+              AllowedIPs = [ "${subnetToPrefix y.subnet}.${z.id}/32" ];
+              PersistentKeepalive = 10;
+            }) y.clients;
+          };
+        }) (attrNames cfg.networks));
       };
     })
   ]);

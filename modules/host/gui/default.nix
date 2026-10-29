@@ -27,6 +27,7 @@ in {
       liberation_ttf
       noto-fonts
       nerd-fonts.iosevka
+      nerd-fonts.go-mono
     ] ++ cfg.extraFonts;
 
     hardware.graphics.enable = true;

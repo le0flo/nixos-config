@@ -96,6 +96,8 @@ in {
     secrets."wireguard/internal" = {
       file = "${secretsEnc}/wireguard/${hostName}.age";
       mode = "400";
+      owner = "systemd-network";
+      group = "systemd-network";
     };
   };
 }

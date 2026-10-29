@@ -191,11 +191,15 @@ in {
       "wireguard/external" = {
         file = "${secretsEnc}/wireguard/${hostName}-external.age";
         mode = "400";
+        owner = "systemd-network";
+        group = "systemd-network";
       };
 
       "wireguard/internal" = {
         file = "${secretsEnc}/wireguard/${hostName}-internal.age";
         mode = "400";
+        owner = "systemd-network";
+        group = "systemd-network";
       };
     };
   };

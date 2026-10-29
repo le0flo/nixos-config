@@ -8,9 +8,7 @@ let
 
   inherit (config.hostConfig.net) vpn;
 
-  inherit (customLib.net)
-    subnetToGateway
-    subnetToPrefix;
+  inherit (customLib.net) subnetToPrefix;
 
   inherit (customLib.opts)
     mkBoolOption
@@ -100,13 +98,6 @@ in {
       };
 
       resolved.enable = true;
-    };
-
-    systemd.network.networks."30-vpn" = mkIf (vpn.enable && cfg.vpnInterface != null) {
-      matchConfig.Name =  cfg.vpnInterface;
-
-      dns = [ (subnetToGateway vpn.networks."${cfg.vpnInterface}".subnet) ];
-      domains = [ "~${cfg.domains.private}" ];
     };
   };
 }

@@ -9,7 +9,7 @@
         <false/>
 
         <key>BoldTerminalFont</key>
-        <string>IosevkaNFM-Medium</string>
+        <string>GoMonoNFM-Bold</string>
 
         <key>BoldTerminalFontSize</key>
         <real>16</real>
@@ -51,7 +51,7 @@
         <false/>
 
         <key>TerminalFont</key>
-        <string>IosevkaNFM-Medium</string>
+        <string>GoMonoNFM</string>
 
         <key>TerminalFontSize</key>
         <real>16</real>
