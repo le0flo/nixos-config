@@ -467,11 +467,11 @@
     "nixos-secrets-vm": {
       "flake": false,
       "locked": {
-        "lastModified": 1793182369,
-        "narHash": "sha256-1gB+Jtolz1x9szUfP8Oj82GTq2dVHjLvr5Sk6j+Y9Co=",
+        "lastModified": 1793293559,
+        "narHash": "sha256-AI1TvlHlkFHxVWZrF9KmN3ToNT7X6eCHC0rJwod9p1s=",
         "ref": "refs/heads/master",
-        "rev": "19b0249760f049cf1f27305c6d862d74639df32c",
-        "revCount": 1,
+        "rev": "eeb37b450ff700cda5a16add0d68958a7c744521",
+        "revCount": 2,
         "type": "git",
         "url": "https://codeberg.org/leoflo/nixos-secrets-vm"
       },
