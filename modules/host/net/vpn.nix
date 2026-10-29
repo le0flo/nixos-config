@@ -125,7 +125,7 @@ in {
             };
 
             wireguardPeers = map (z: {
-              PublicKey = y.publicKey;
+              PublicKey = z.publicKey;
               AllowedIPs = [ "${subnetToPrefix y.subnet}.${z.id}/32" ];
               PersistentKeepalive = 10;
             }) y.clients;
