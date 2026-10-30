@@ -10,6 +10,8 @@ let
     mkIf;
 
   cfg = config.hostConfig.services.virtualisation;
+
+  vmsPath = "/mnt/storage/vms";
 in {
   options.hostConfig.services.virtualisation.enable = mkBoolOption "Virtualisation tools" false;
 
@@ -24,6 +26,23 @@ in {
         };
         lxc.enable = true;
         spiceUSBRedirection.enable = true;
+      };
+
+      systemd.services."virtiofsd-ext" = {
+        description = "External virtiofsd daemon";
+        path = [ pkgs.virtiofsd ];
+
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.ssm}/bin/ssm ${vmsPath}/virtiofsd";
+
+          KillSignal = "SIGTERM";
+          KillMode = "control-group";
+          TimeoutStopSec = "30s";
+        };
       };
     }
     (mkIf gui.enable {
