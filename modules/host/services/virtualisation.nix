@@ -15,14 +15,14 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
+      environment.systemPackages = [ pkgs.virtiofsd ];
+
       virtualisation = {
         libvirtd = {
           enable = true;
           qemu.vhostUserPackages = [ pkgs.virtiofsd ];
         };
-        lxc = {
-          enable = true;
-        };
+        lxc.enable = true;
         spiceUSBRedirection.enable = true;
       };
     }
