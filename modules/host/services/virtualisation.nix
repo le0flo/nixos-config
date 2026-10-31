@@ -37,6 +37,7 @@ in {
 
         serviceConfig = {
           Type = "simple";
+          Restart = "always";
           ExecStart = "${pkgs.ssm}/bin/ssm ${vmsPath}/virtiofsd";
 
           KillSignal = "SIGTERM";
