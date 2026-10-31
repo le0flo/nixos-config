@@ -88,7 +88,6 @@ in {
         openfortivpn
         freetds
         kubelogin
-        azure-cli
         gh
       ];
     };
