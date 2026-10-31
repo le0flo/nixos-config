@@ -118,14 +118,14 @@ in {
             Appearance = {
               style = cfg.qt.style;
               icon_theme = cfg.icons.name;
-              color_scheme_path = "${pkgs.libsForQt5.qt5ct}/share/qt6ct/colors/${cfg.qt.colorScheme}.conf";
+              color_scheme_path = "${pkgs.libsForQt5.qt5ct}/share/qt5ct/colors/${cfg.qt.colorScheme}.conf";
               custom_palette = true;
               standard_dialogs = cfg.qt.dialogs;
             };
 
             Fonts = {
-              general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
-              fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+              fixed = "DejaVu Sans Mono,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0";
+              general = "DejaVu Sans,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0";
             };
           };
 
@@ -139,8 +139,8 @@ in {
             };
 
             Fonts = {
-              general = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
-              fixed = "\"DejaVu Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Book,0,0\"";
+              fixed = "DejaVu Sans Mono,11,-1,5,50,0,0,0,0,0,Book";
+              general = "DejaVu Sans,11,-1,5,50,0,0,0,0,0,Book";
             };
           };
         };
