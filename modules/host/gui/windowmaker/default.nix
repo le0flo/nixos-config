@@ -36,6 +36,8 @@ in {
 
         gap.terminal
         gap.gnumail
+
+        xfce4-terminal
       ];
     };
 

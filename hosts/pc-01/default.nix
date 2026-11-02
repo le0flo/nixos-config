@@ -56,7 +56,6 @@ in {
         editors = {
           emacs = true;
           octave = true;
-          zed = true;
         };
       };
       devices.enable = true;
@@ -71,7 +70,10 @@ in {
       bluetooth.enable = true;
       power.enable = true;
       smartcards.enable = true;
-      virtualisation.enable = true;
+      virtualisation = {
+        enable = true;
+        virtiofsd = false;
+      };
     };
 
     users."leo" = {

@@ -53,10 +53,7 @@ in {
         languages.enable = true;
         containers.enable = true;
 
-        editors = {
-          emacs = true;
-          zed = true;
-        };
+        editors.emacs = true;
       };
       devices.enable = true;
       fun.enable = true;
@@ -70,7 +67,10 @@ in {
       audio.enable = true;
       bluetooth.enable = true;
       power.enable = true;
-      virtualisation.enable = true;
+      virtualisation = {
+        enable = true;
+        virtiofsd = false;
+      };
     };
 
     users."leo" = {
