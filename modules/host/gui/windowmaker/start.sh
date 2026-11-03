@@ -6,6 +6,8 @@ export XDG_SESSION_TYPE="x11"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 
 xrdb -merge ~/.config/X11/Xresources
+xrandr --output eDP-1 --mode 1920x1080 --rate 60
+xrandr --output HDMI-0 --mode 1920x1080 --rate 75
 
 cputnik & disown
 wmacpi & disown
