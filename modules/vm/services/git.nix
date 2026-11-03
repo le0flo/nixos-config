@@ -34,7 +34,13 @@ in {
         nginx.virtualHost = "cgit";
 
         scanPath = "${cfg.projectsDir}/repositories";
-        settings.strict-export = "git-daemon-export-ok";
+
+        settings = {
+          remove-suffix = 1;
+          root-title = "Archivio progetti";
+          root-desc = ''Una interfaccia per visualizzare tutti i progetti della organizzazione <a href="https://leoflo.net">leoflo.net</a>'';
+          strict-export = "git-daemon-export-ok";
+        };
       };
 
       gitolite = {
