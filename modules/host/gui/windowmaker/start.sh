@@ -9,9 +9,11 @@ xrdb -merge ~/.config/X11/Xresources
 
 cputnik & disown
 wmacpi & disown
-wmclockmon & disown
-wmnd -I home & disown
+wmclockmon -lc lightblue -bl & disown
+wmnd -I internal & disown
 wmpulsemixer -w & disown
 wmsystemtray & disown
+
+xscreensaver --no-splash & disown
 
 exec dbus-run-session wmaker

@@ -34,17 +34,6 @@ in {
   options.hostConfig.gui.style = {
     polarity = mkEnumOption [ "light" "dark" ] "Whether you want dark or light theme" "dark";
 
-    wallpaper = mkStrOption
-      "Name of the default wallpaper (choose only from the ones inside of the wallpapers package)"
-      "clouds.png";
-
-    colors = {
-      background = mkColorOption "background" "#3d3d3d";
-      text = mkColorOption "text" "#fefae0";
-      primary = mkColorOption "primary accent" "#adc178";
-      secondary = mkColorOption "secondary accent" "#dde5b6";
-    };
-
     cursor = {
       name = mkStrOption "Default cursor theme name" "Adwaita";
       size = mkIntOption "Default cursor size" 20;
@@ -149,11 +138,6 @@ in {
           "icons" = configDir;
           "themes" = configDir;
           "wallpapers" = configDir;
-
-          "wallpapers/default" = {
-            type = "symlink";
-            source = "${pkgs.wallpapers}/share/wallpapers/${cfg.wallpaper}";
-          };
         }
         // packageLinks "icons" cfg.cursor.packages
         // packageLinks "icons" cfg.icons.packages

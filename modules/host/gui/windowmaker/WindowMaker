@@ -23,7 +23,7 @@
   TitleJustify = "left";
   ToggleKbdModeKey = None;
   WindowPlacement = "center";
-  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/default", "gray20");
+  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/hands.png", "gray20");
 
   CenterKey = "Mod4+C";
   CloseKey = "Mod4+Q";
@@ -76,26 +76,25 @@
     "*windowmaker*/share/WindowMaker/Backgrounds"
   );
 
-  CClipTitleColor = "#4d4d4d";
-  ClipTitleColor = "#000000";
+  CClipTitleColor = "#718a79";
+  ClipTitleColor = "#fff38c";
   FrameBorderColor = "#000000";
   FrameFocusedBorderColor = "#000000";
   FrameSelectedBorderColor = "#ffffff";
   FTitleColor = "#ffffff";
-  HighlightColor = "#ffffff";
+  HighlightColor = "#ffe0ac";
   HighlightTextColor = "#000000";
-  IconTitleColor = "#ffffff";
-  IconTitleBack = "#ffffff";
-  MenuDisabledColor = "#666666";
-  MenuTextColor = "#000000";
+  IconTitleBack = "#4d748f";
+  MenuDisabledColor = "#9e9a9e";
+  MenuTextColor = "#ffffff";
   MenuTitleColor = "#ffffff";
   PTitleColor = "#ffffff";
-  UTitleColor = "#333333";
 
-  FTitleBack = (dgradient, "rgb:21/00/05", "rgb:90/00/30");
-  MenuTextBack = (dgradient, "rgb:b0/b0/b0", "rgb:60/60/60");
-  MenuTitleBack = (dgradient, "rgb:90/00/30", "rgb:21/00/05");
-  PTitleBack = (dgradient, "rgb:51/50/55", "rgb:80/80/80");
-  ResizebarBack = (dgradient, "rgb:90/90/90", "rgb:c0/c0/c0");
-  UTitleBack = (dgradient, "rgb:90/90/90", "rgb:c0/c0/c0");
+  FTitleBack = (mhgradient, "#000000", "#3d637f", "#315c77", "#333f3e");
+  MenuTextBack = (mhgradient, "#000000", "#494c63", "#444661", "#202841");
+  IconBack = (mhgradient, "#000000", "#595969", "#444661", "#202831");
+  MenuTitleBack = (mhgradient, "#000000", "#3d637f", "#315c77", "#333f3e");
+  PTitleBack = (mhgradient, "#000000", "#7390aa", "#405e81", "#3d4a59");
+  ResizebarBack = (mhgradient, "#000000", "#494c63", "#444661", "#202841");
+  UTitleBack = (mhgradient, "#000000", "#595969", "#444661", "#202831");
 }

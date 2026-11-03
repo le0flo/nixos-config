@@ -33,21 +33,18 @@ in {
   options.hostConfig.gui.hyprland.enable = mkBoolOption "Hyprland window manager" false;
 
   config = mkIf cfg.enable {
-    environment = {
-      shellAliases."start-hyprland" = "uwsm start hyprland.desktop";
-      systemPackages = with pkgs; [
-        brightnessctl
-        foot
-        fuzzel
-        mako
-        nwg-panel
-        playerctl
-        (scripts.override { withGui = true; })
-        swaybg
-        swayidle
-        swaylock
-      ];
-    };
+    environment.systemPackages = with pkgs; [
+      brightnessctl
+      foot
+      mako
+      nwg-panel
+      playerctl
+      (scripts.override { withGui = true; })
+      swaybg
+      swayidle
+      waylock
+      wmenu
+    ];
 
     hardware.graphics = {
       package = hyprPkgsUnstable.mesa;
@@ -66,45 +63,6 @@ in {
             };
           };
 
-          "fuzzel/fuzzel.ini" = configFmt pkgs.formats.ini "fuzzel.ini" {
-            main = {
-              width = 80;
-              lines = 7;
-
-              namespace = "fuzzel";
-              prompt = ''"search: "'';
-              icons-enabled = false;
-
-              horizontal-pad = 10;
-              vertical-pad = 10;
-              inner-pad = 10;
-
-              terminal = "${pkgs.foot}/bin/foot -a '{cmd}' -T '{cmd}' '{cmd}'";
-              font = "Iosevka NFM:size=10";
-              dpi-aware = "yes";
-            };
-
-            border = {
-              width = 2;
-              radius = 0;
-            };
-
-            colors = {
-              border = "${style.colors.primary}ff";
-              background = "${style.colors.background}ff";
-              text = "${style.colors.text}ff";
-
-              prompt = "${style.colors.primary}ff";
-              input = "${style.colors.secondary}ff";
-
-              selection = "${style.colors.text}ff";
-              selection-text = "${style.colors.background}ff";
-
-              match = "${style.colors.primary}ff";
-              selection-match = "${style.colors.primary}ff";
-            };
-          };
-
           "hypr/hyprland.lua" = configText ''
           ${concatStringsSep "\n" (map (x: "require(\"${removeSuffix ".lua" x}\")") configHyprFiles)}
 
@@ -112,11 +70,6 @@ in {
           hl.env("HYPRCURSOR_THEME", "${style.cursor.name}")
           hl.env("XCURSOR_SIZE", "${toString style.cursor.size}")
           hl.env("XCURSOR_THEME", "${style.cursor.name}")
-
-          hl.config({ general = { col = {
-             active_border = "rgba(${parseColor style.colors.primary}ff)",
-             inactive_border = "rgba(${parseColor style.colors.background}ff)",
-          } } })
           '';
 
           "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
@@ -125,12 +78,13 @@ in {
               ignore-timeout = false;
               default-timeout = 10000;
 
-              background-color = style.colors.background;
-              text-color = style.colors.text;
-              border-color = style.colors.primary;
+              background-color = "#313131";
+              text-color = "#efefef";
+              border-color = "#ff0000";
 
               outer-margin = 0;
-              margin = 5;
+              margin = 0;
+              border-size = 1;
             };
           };
         }
@@ -147,9 +101,10 @@ in {
       enable = true;
       package = hyprPkgs.hyprland;
       portalPackage = hyprPkgs.xdg-desktop-portal-hyprland;
-      withUWSM = true;
       xwayland.enable = true;
     };
+
+    security.pam.services."waylock".enable = true;
 
     xdg.portal = {
       config."Hyprland" = {

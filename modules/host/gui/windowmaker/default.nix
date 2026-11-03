@@ -38,6 +38,7 @@ in {
         gap.gnumail
 
         xfce4-terminal
+        xscreensaver
       ];
     };
 
@@ -49,6 +50,8 @@ in {
         "${gnustepDir}/WMRootMenu" = configText (fixText ./WMRootMenu);
       };
     }];
+
+    security.pam.services."xscreensaver".enable = true;
 
     services.xserver.windowManager.windowmaker.enable = true;
 

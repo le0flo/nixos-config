@@ -32,14 +32,11 @@ in {
 
     hardware.graphics.enable = true;
 
-    programs.uwsm.enable = true;
-
     services = {
       dbus.enable = true;
       gnome.gnome-keyring.enable = true;
       gvfs.enable = true;
       libinput.enable = true;
-      tumbler.enable = true;
 
       xserver = {
         enable = true;

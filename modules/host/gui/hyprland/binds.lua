@@ -1,7 +1,7 @@
 local mainMod = "SUPER"
 
 local terminal = "foot"
-local menu = "fuzzel"
+local menu = "wmenu-run"
 
 hl.bind(mainMod .. " + M", hl.dsp.exit())
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
@@ -9,7 +9,7 @@ hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(menu))
 
-hl.bind(mainMod .. " + CTRL + L", hl.dsp.exec_cmd("swaylock"))
+hl.bind(mainMod .. " + CTRL + L", hl.dsp.exec_cmd("waylock"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd("bg-picker"))
 hl.bind("Print", hl.dsp.exec_cmd("screenshot-wl area"))
 hl.bind("CTRL + Print", hl.dsp.exec_cmd("screenshot-wl screen"))

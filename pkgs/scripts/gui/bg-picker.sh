@@ -1,15 +1,19 @@
 bg_dir=$HOME/.local/share/wallpapers
-picker_cmd="fuzzel --dmenu"
+picker_cmd="wmenu"
 
 files=`find $bg_dir ! -type "d" ! -name "default"`
 filenames=()
 for file in $files; do
   filenames+=(`echo $file | rev | cut -d/ -f1 | rev`)
 done
+filenames+=("none")
 
 new_bg=`printf '%s\n' "${filenames[@]}" | $picker_cmd`
 
 if [ ! -z $new_bg ]; then
-  ln -sf $new_bg $bg_dir/default
-  kill -9 $(pgrep swaybg); swaybg -m fill -i $bg_dir/default & disown
+    kill -9 $(pgrep swaybg); 
+
+    if [ ! "$new_bg" = "none" ]; then
+        swaybg -m fill -i $bg_dir/$new_bg & disown
+    fi
 fi

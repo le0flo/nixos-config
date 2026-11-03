@@ -31,7 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland/v0.56.0";
+    hyprland.url = "github:hyprwm/Hyprland/v0.57.0";
 
     nixos-secrets-host = {
       url = "git+https://codeberg.org/leoflo/nixos-secrets-host";

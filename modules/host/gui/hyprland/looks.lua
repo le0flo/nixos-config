@@ -8,16 +8,21 @@ hl.config({
         resize_on_border = false,
         allow_tearing = false,
 
-        gaps_in = 5,
-        gaps_out = 10,
+        gaps_in = 2,
+        gaps_out = 4,
 
         layout = "scrolling",
-        border_size = 2,
+        border_size = 1,
+
+        col = {
+           active_border = "rgba(ff0000ff)",
+           inactive_border = "rgba(dadadaff)",
+        }
     },
 
     decoration = {
         rounding = 0,
-        rounding_power = 0,
+        rounding_power = 1,
 
         active_opacity = 1.0,
         inactive_opacity = 1.0,
