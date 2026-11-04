@@ -54,6 +54,7 @@ in {
         containers.enable = true;
 
         editors = {
+          acme = true;
           emacs = true;
           octave = true;
         };

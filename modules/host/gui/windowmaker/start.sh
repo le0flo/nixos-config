@@ -5,7 +5,6 @@ export XDG_SESSION_DESKTOP="windowmaker"
 export XDG_SESSION_TYPE="x11"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 
-xrdb -merge ~/.config/X11/Xresources
 xrandr --output eDP-1 --mode 1920x1080 --rate 60
 xrandr --output HDMI-0 --mode 1920x1080 --rate 75
 
@@ -16,6 +15,4 @@ wmnd -I internal & disown
 wmpulsemixer -w & disown
 wmsystemtray & disown
 
-xscreensaver --no-splash & disown
-
-exec dbus-run-session wmaker
+exec wmaker

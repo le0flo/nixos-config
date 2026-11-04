@@ -58,6 +58,7 @@ in {
         libnotify
         wl-clipboard
         xclip
+        xfce4-terminal
       ];
 
       programs.thunar = {

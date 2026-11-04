@@ -1,6 +1,6 @@
 (
   "Window Maker",
-  ("Terminal", EXEC, "xfce4-terminal"),
+  ("Terminal", EXEC, "Terminal"),
   (
     "Appearance",
     (

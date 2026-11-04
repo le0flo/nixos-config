@@ -53,7 +53,10 @@ in {
         languages.enable = true;
         containers.enable = true;
 
-        editors.emacs = true;
+        editors = {
+          acme = true;
+          emacs = true;
+        };
       };
       devices.enable = true;
       fun.enable = true;
