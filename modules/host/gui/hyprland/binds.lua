@@ -19,9 +19,6 @@ hl.bind(mainMod .. " + C", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + F", hl.dsp.layout("colresize 1.0"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle", layout_aware = true }))
 
-hl.bind(mainMod .. " + page_up", hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + page_down", hl.dsp.focus({ workspace = "m+1" }))
-
 for i = 1, 10 do
    local key = i % 10
    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i}))
@@ -34,11 +31,6 @@ hl.bind(mainMod .. " + left", hl.dsp.layout("focus l"))
 hl.bind(mainMod .. " + right", hl.dsp.layout("focus r"))
 hl.bind(mainMod .. " + CTRL + left", hl.dsp.layout("swapcol l"))
 hl.bind(mainMod .. " + CTRL + right", hl.dsp.layout("swapcol r"))
-
-hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + SHIFT + mouse_up", hl.dsp.layout("focus l"))
-hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.layout("focus r"))
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })

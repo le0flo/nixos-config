@@ -34,9 +34,6 @@
   PartialCaptureKey = "Print";
   ScreenCaptureKey = "Control+Print";
 
-  PrevWorkspaceKey = "Mod4+Prior";
-  NextWorkspaceKey = "Mod4+Next";
-
   Workspace1Key = "Mod4+1";
   Workspace2Key = "Mod4+2";
   Workspace3Key = "Mod4+3";

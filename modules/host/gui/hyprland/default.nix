@@ -61,6 +61,9 @@ in {
               pad = "5x5";
               font = "Iosevka NFM:size=16";
             };
+
+            colors-dark.alpha = 0.7;
+            colors-light.alpha = 0.7;
           };
 
           "hypr/hyprland.lua" = configText ''
