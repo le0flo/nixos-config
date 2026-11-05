@@ -44,6 +44,7 @@ in {
           dart-mode
           dockerfile-mode
           git-modes
+          haskell-mode
           json-mode
           kirigami
           lua-mode

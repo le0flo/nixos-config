@@ -7,6 +7,7 @@ export QT_QPA_PLATFORMTHEME="qt6ct"
 
 xrandr --output eDP-1 --mode 1920x1080 --rate 60
 xrandr --output HDMI-0 --mode 1920x1080 --rate 75
+xset r rate 200 25
 
 cputnik & disown
 wmacpi & disown

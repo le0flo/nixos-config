@@ -14,6 +14,7 @@ in {
       enable = true;
       hyprland.enable = true;
       windowmaker.enable = true;
+      xmonad.enable = true;
     };
 
     net = {

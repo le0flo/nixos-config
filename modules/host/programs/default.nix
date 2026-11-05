@@ -26,13 +26,13 @@ in {
   config = mkMerge [
     {
       environment.systemPackages = with pkgs; [
-        micro
-        vis
-        tmux
-        htop
         file
-        tree
+        htop
+        nano
         psmisc
+        tmux
+        tree
+        vis
       ];
 
       hostConfig.hjem = [{

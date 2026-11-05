@@ -12,6 +12,7 @@ in {
   imports = [
     ./hyprland
     ./windowmaker
+    ./xmonad
 
     ./style.nix
   ];
