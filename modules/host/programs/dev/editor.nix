@@ -34,12 +34,12 @@ in {
     })
     (mkIf cfg.emacs {
       environment.systemPackages = with pkgs; [
-        ((emacsPackagesFor emacs-pgtk).withPackages (epkgs: with epkgs; [
+        ((emacsPackagesFor emacs-gtk).withPackages (epkgs: with epkgs; [
           asciidoc-mode
           auctex
           bnf-mode
           colorful-mode
-          corfu
+          company
           csv-mode
           dart-mode
           dockerfile-mode

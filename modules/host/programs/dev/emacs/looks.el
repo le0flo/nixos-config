@@ -7,7 +7,6 @@
 (global-display-line-numbers-mode 1)
 (ido-mode 1)
 (ido-everywhere 1)
-(global-corfu-mode 1)
 
 ;; Theme
 (load-theme 'wombat t)
