@@ -1,16 +1,13 @@
 local mainMod = "SUPER"
 
-local terminal = "foot"
-local menu = "wmenu-run"
-
 hl.bind(mainMod .. " + M", hl.dsp.exit())
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 
-hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("foot"))
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("wmenu-run"))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("bg-picker"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("waylock"))
 
-hl.bind(mainMod .. " + CTRL + L", hl.dsp.exec_cmd("waylock"))
-hl.bind("SUPER + B", hl.dsp.exec_cmd("bg-picker"))
 hl.bind("Print", hl.dsp.exec_cmd("screenshot-wl area"))
 hl.bind("CTRL + Print", hl.dsp.exec_cmd("screenshot-wl screen"))
 

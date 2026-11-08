@@ -23,11 +23,17 @@ in {
     };
 
     hostConfig.hjem = [{
+      files.".xmobarrc" = configSource ./xmobarrc;
+
       xdg.config.files = {
         "xmonad/start.sh" = configSource ./start.sh;
         "xmonad/xmonad.hs" = configSource ./xmonad.hs;
       };
     }];
+
+    programs.slock.enable = true;
+
+    security.pam.services."slock".enable = true;
 
     services.xserver.windowManager.xmonad = {
       enable = true;
