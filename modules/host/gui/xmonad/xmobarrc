@@ -14,5 +14,5 @@ Config { overrideRedirect = False
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%XMonadLog% }{ %cpu% | %memory% | %date%"
+       , template = " %XMonadLog% }{ %cpu% | %memory% | %date% "
        }
