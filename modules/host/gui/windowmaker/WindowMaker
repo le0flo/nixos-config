@@ -23,7 +23,7 @@
   TitleJustify = "left";
   ToggleKbdModeKey = None;
   WindowPlacement = "center";
-  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/hands.png", "gray20");
+  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/desert.png", "gray20");
 
   CenterKey = "Mod4+C";
   CloseKey = "Mod4+Q";

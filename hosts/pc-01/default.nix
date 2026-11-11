@@ -13,8 +13,8 @@ in {
     gui = {
       enable = true;
       hyprland.enable = true;
+      river.enable = true;
       windowmaker.enable = true;
-      xmonad.enable = true;
     };
 
     net = {

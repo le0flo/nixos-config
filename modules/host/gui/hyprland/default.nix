@@ -27,8 +27,6 @@ let
   hyprPkgsUnstable = inputs.hyprland.inputs.nixpkgs.legacyPackages."${system}";
 
   configHyprFiles = getConfigFiles ./. ".lua";
-
-  parseColor = color: substring 1 6 color;
 in {
   options.hostConfig.gui.hyprland.enable = mkBoolOption "Hyprland window manager" false;
 

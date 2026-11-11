@@ -11,8 +11,8 @@ let
 in {
   imports = [
     ./hyprland
+    ./river
     ./windowmaker
-    ./xmonad
 
     ./style.nix
   ];
