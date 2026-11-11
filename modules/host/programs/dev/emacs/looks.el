@@ -9,7 +9,7 @@
 (ido-everywhere 1)
 
 ;; Theme
-(load-theme 'wombat t)
+(load-theme 'modus-operandi-tinted t)
 
 ;; Fonts
 (set-face-attribute 'default nil

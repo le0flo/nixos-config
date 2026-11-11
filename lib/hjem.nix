@@ -26,6 +26,12 @@ in {
     permissions = "644";    
   };
 
+  configSourceExe = source: {
+    inherit source;
+    type = "copy";
+    permissions = "755";    
+  };
+
   configText = text: {
     inherit text;
     type = "copy";

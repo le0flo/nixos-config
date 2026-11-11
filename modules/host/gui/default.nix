@@ -10,7 +10,6 @@ let
   cfg = config.hostConfig.gui;
 in {
   imports = [
-    ./hyprland
     ./river
     ./windowmaker
 

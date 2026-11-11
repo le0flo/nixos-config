@@ -34,6 +34,7 @@ in {
       environment.systemPackages = with pkgs; [
         librewolf
         thunderbird
+        dino
         mumble
       ];
 

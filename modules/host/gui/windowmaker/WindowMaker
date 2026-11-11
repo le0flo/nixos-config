@@ -23,7 +23,7 @@
   TitleJustify = "left";
   ToggleKbdModeKey = None;
   WindowPlacement = "center";
-  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/desert.png", "gray20");
+  WorkspaceBack = ("tpixmap", "~/.local/share/wallpapers/abstract.png", "gray20");
 
   CenterKey = "Mod4+C";
   CloseKey = "Mod4+Q";
@@ -43,7 +43,6 @@
   Workspace7Key = "Mod4+7";
   Workspace8Key = "Mod4+8";
   Workspace9Key = "Mod4+9";
-  Workspace10Key = "Mod4+0";
 
   MoveToWorkspace1Key = "Shift+Mod4+1";
   MoveToWorkspace2Key = "Shift+Mod4+2";
@@ -54,14 +53,13 @@
   MoveToWorkspace7Key = "Shift+Mod4+7";
   MoveToWorkspace8Key = "Shift+Mod4+8";
   MoveToWorkspace9Key = "Shift+Mod4+9";
-  MoveToWorkspace10Key = "Shift+Mod4+0";
 
-  ClipTitleFont = "DejaVu Sans,sans serif:bold:pixelsize=10";
-  IconTitleFont = "DejaVu Sans,sans serif:pixelsize=9";
-  LargeDisplayFont = "DejaVu Sans,sans serif:pixelsize=24";
-  MenuTextFont = "DejaVu Sans,sans serif:pixelsize=12";
-  MenuTitleFont = "DejaVu Sans,sans serif:bold:pixelsize=12";
-  WindowTitleFont = "DejaVu Sans,sans serif:weight=200:pixelsize=12";
+  ClipTitleFont = "GoMono Nerd Font,sans serif:bold:pixelsize=10";
+  IconTitleFont = "GoMono Nerd Font,sans serif:pixelsize=9";
+  LargeDisplayFont = "GoMono Nerd Font,sans serif:pixelsize=24";
+  MenuTextFont = "GoMono Nerd Font,sans serif:pixelsize=12";
+  MenuTitleFont = "GoMono Nerd Font,sans serif:bold:pixelsize=12";
+  WindowTitleFont = "GoMono Nerd Font,sans serif:weight=200:pixelsize=12";
 
   IconPath = (
     "*windowmaker*/share/WindowMaker/Icons",

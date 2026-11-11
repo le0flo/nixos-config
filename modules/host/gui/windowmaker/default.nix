@@ -7,6 +7,7 @@ let
 
   inherit (customLib.hjem)
     configSource
+    configSourceExe
     configText;
 
   inherit (customLib.opts) mkBoolOption;
@@ -41,7 +42,7 @@ in {
 
     hostConfig.hjem = [{
       files = {
-        "${gnustepDir}/start.sh" = configSource ./start.sh;
+        "${gnustepDir}/start.sh" = configSourceExe ./start.sh;
         "${gnustepDir}/Terminal.plist" = configSource ./Terminal.plist;
         "${gnustepDir}/WindowMaker" = configText (fixText ./WindowMaker);
         "${gnustepDir}/WMRootMenu" = configText (fixText ./WMRootMenu);

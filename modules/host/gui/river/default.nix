@@ -3,7 +3,8 @@
 let
   inherit (customLib.hjem)
     configFmt
-    configSource;
+    configSource
+    configSourceExe;
   
   inherit (customLib.opts) mkBoolOption;
 
@@ -14,25 +15,31 @@ in {
   options.hostConfig.gui.river.enable = mkBoolOption "River wayland compositor" false;
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      brightnessctl
-      foot
-      mako
-      playerctl
-      river
-      river-wm.kwim
-      river-wm.kwm
-      river-wm.tarazed
-      (scripts.override { withGui = true; })
-      swaybg
-      swayidle
-      waylock
-      wmenu
-    ];
+    environment = {
+      shellAliases = {
+        "start-kwm" = "~/.config/river/start kwm";
+        "start-tarazed" = "~/.config/river/start tarazed";
+      };
+      systemPackages = with pkgs; [
+        brightnessctl
+        foot
+        mako
+        playerctl
+        river
+        river-wm.kwim
+        river-wm.kwm
+        river-wm.tarazed
+        (scripts.override { withGui = true; })
+        swaybg
+        swayidle
+        waylock
+        wmenu
+      ];
+    };
 
     hostConfig.hjem = [{
       xdg.config.files = {
-        /*"foot/foot.ini" = configFmt pkgs.formats.ini "foot.ini" {
+        "foot/foot.ini" = configFmt pkgs.formats.ini "foot.ini" {
           main = {
             term = "xterm-256color";
             pad = "5x5";
@@ -42,6 +49,9 @@ in {
           colors-dark.alpha = 0.7;
           colors-light.alpha = 0.7;
         };
+
+        "kwim/config.zon" = configSource ./kwim.zon;
+        "kwm/config.zon" = configSource ./kwm.zon;
 
         "mako/config" = configFmt pkgs.formats.iniWithGlobalSection "config" {
           globalSection = {
@@ -57,10 +67,10 @@ in {
             margin = 0;
             border-size = 1;
           };
-        };*/
+        };
 
-        "kwim/config.zon" = configSource ./kwim.zon;
-        "kwm/config.zon" = configSource ./kwm.zon;
+        "river/init" = configSourceExe ./init.sh;
+        "river/start" = configSourceExe ./start.sh;
       };
     }];
 

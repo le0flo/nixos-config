@@ -12,7 +12,6 @@ in {
   hostConfig = {
     gui = {
       enable = true;
-      hyprland.enable = true;
       river.enable = true;
       windowmaker.enable = true;
     };
