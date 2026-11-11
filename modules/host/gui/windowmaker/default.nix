@@ -6,6 +6,7 @@ let
     replaceStrings;
 
   inherit (customLib.hjem)
+    configFmt
     configSource
     configSourceExe
     configText;
@@ -22,7 +23,7 @@ let
     [ "${pkgs.windowmaker}" ]
     (readFile path);
 in {
-  options.hostConfig.gui.windowmaker.enable = mkBoolOption "Windowmaker window manager" false;
+  options.hostConfig.gui.windowmaker.enable = mkBoolOption "WindowMaker window manager" false;
 
   config = mkIf cfg.enable {
     environment = {
@@ -46,6 +47,15 @@ in {
         "${gnustepDir}/Terminal.plist" = configSource ./Terminal.plist;
         "${gnustepDir}/WindowMaker" = configText (fixText ./WindowMaker);
         "${gnustepDir}/WMRootMenu" = configText (fixText ./WMRootMenu);
+      };
+
+      xdg.config.files."systemd/user/windowmaker-session.target" = configFmt pkgs.formats.ini "windowmaker-session.target" {
+        Unit = {
+          Description = "WindowMaker graphical session";
+          BindsTo = "graphical-session.target";
+          Wants = "graphical-session-pre.target";
+          After = "graphical-session-pre.target";
+        };
       };
     }];
 

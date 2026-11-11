@@ -13,7 +13,7 @@
     },
 
     .working_directory = .home,
-    .default_window_decoration = .csd,
+    .default_window_decoration = .ssd,
     .background = 0x10101000,
     .single_tagset = true,
     .sloppy_focus = false,

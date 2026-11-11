@@ -71,6 +71,15 @@ in {
 
         "river/init" = configSourceExe ./init.sh;
         "river/start" = configSourceExe ./start.sh;
+
+        "systemd/user/river-session.target" = configFmt pkgs.formats.ini "river-session.target" {
+          Unit = {
+            Description = "River graphical session";
+            BindsTo = "graphical-session.target";
+            Wants = "graphical-session-pre.target";
+            After = "graphical-session-pre.target";
+          };
+        };
       };
     }];
 
