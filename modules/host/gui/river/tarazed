@@ -1,0 +1,9 @@
+binds {
+      S-x p      !spawn wmenu-run
+      S-x Return !spawn foot
+}
+
+set-env {
+        QT_QPA_PLATFORM wayland
+        QT_QPA_PLATFORMTHEME qt6ct
+}

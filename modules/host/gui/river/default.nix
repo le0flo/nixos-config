@@ -81,6 +81,8 @@ in {
             After = "graphical-session-pre.target";
           };
         };
+
+        "tarazed/config" = configSource ./tarazed;
       };
     }];
 
