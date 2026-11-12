@@ -7,7 +7,7 @@ if [ -z $wm ]; then
     exit 1
 fi
 
-export XDG_CURRENT_DESKTOP="$wm"
+export XDG_CURRENT_DESKTOP="river"
 export XDG_SESSION_TYPE="wayland"
 
 systemctl --user import-environment \
