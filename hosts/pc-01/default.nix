@@ -56,7 +56,6 @@ in {
         editors = {
           acme = true;
           emacs = true;
-          octave = true;
         };
       };
       devices.enable = true;

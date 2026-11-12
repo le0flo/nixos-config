@@ -41,7 +41,7 @@
         },
 
         .tags = .{
-            .tags = .{ "www", "ed", "tty", "top", "book", "*", "game", "tune", "talk" },
+            .tags = .{ "www", "ed", "tty", "*", "*", "book", "game", "tune", "talk" },
 
             .click = .{ .left = .{ .set_output_tag = .{ .tag = .{ .tag = 0 } } } },
         },
@@ -49,7 +49,6 @@
         .mode = .{
             .tags = .{
                 .{ "default", "" },
-                .{ "passthrough", "P" },
                 .{ "floating", "F" },
             },
 
@@ -121,37 +120,37 @@
     .layout = .{
         .tile = .{
             .nmaster = 1,
-            .mfact = 0.55,
-            .inner_gap = 12,
-            .outer_gap = 9,
+            .mfact = 0.5,
+            .inner_gap = 6,
+            .outer_gap = 6,
 
             .master_location = .left,
         },
         .grid = .{
-            .outer_gap = 9,
-            .inner_gap = 12,
+            .outer_gap = 6,
+            .inner_gap = 6,
 
             .direction = .horizontal,
         },
-        .monocle = .{ .gap = 9 },
+        .monocle = .{ .gap = 12 },
         .deck = .{
             .nmaster = 1,
-            .mfact = 0.55,
-            .inner_gap = 12,
-            .outer_gap = 9,
+            .mfact = 0.5,
+            .inner_gap = 6,
+            .outer_gap = 6,
 
             .master_location = .left,
         },
         .scroller = .{
             .mfact = 0.5,
-            .inner_gap = 16,
-            .outer_gap = 9,
+            .inner_gap = 6,
+            .outer_gap = 6,
         },
         .centered_master = .{
             .nmaster = 1,
-            .mfact = 0.55,
-            .inner_gap = 12,
-            .outer_gap = 9,
+            .mfact = 0.5,
+            .inner_gap = 6,
+            .outer_gap = 6,
 
             .direction = .horizontal,
         },
@@ -167,7 +166,10 @@
             .{
                 .keysym = "m",
                 .modifiers = .{ .mod4 = true },
-                .event = .{ .click = .{ .pressed = .{ .quit = .{ .exit_session = true, .hook = null } } } },
+                .event = .{ .click = .{ .pressed = .{ .quit = .{
+                    .exit_session = true,
+                    .hook = .{ "sh", "-c", "./.config/river/deinit" },
+                } } } },
             },
             .{
                 .keysym = "q",
@@ -478,6 +480,12 @@
         .{ .app_id = .{ .str = "zenity" }, .floating = true },
         .{ .app_id = .{ .str = "DesktopEditors" }, .floating = true },
         .{ .app_id = .{ .str = "xdg-desktop-portal-gtk" }, .floating = true },
+
+        .{ .app_id = .{ .str = "librewolf" }, .tag = 0b1 },
+        .{ .app_id = .{ .str = "^(Emacs|emacs)$", .regex = true }, .tag = 0b10 },
+        .{ .app_id = .{ .str = "foot" }, .tag = 0b100 },
+        .{ .app_id = .{ .str = "org.pulseaudio.pavucontrol" }, .tag = 0b10000000 },
+        .{ .app_id = .{ .str = "org.strawberrymusicplayer.strawberry" }, .tag = 0b10000000 },
     },
 
     .output_rules = .{},

@@ -11,7 +11,8 @@ let
 
   inherit (customLib.hjem)
     configDir
-    configFmt;
+    configFmt
+    configText;
 
   inherit (customLib.opts)
     mkEnumOption
@@ -88,8 +89,18 @@ in {
 
               gtk-theme-name = cfg.gtk.name;
               gtk-icon-theme-name = cfg.icons.name;
+              gtk-dialogs-use-header = false;
             };
           };
+
+          "gtk-3.0/gtk.css" = configText ''
+          headerbar.default-decoration {
+            margin-bottom: 50px;
+            margin-top: -100px;
+          }
+
+          window.csd, window.csd decoration { box-shadow: none; }
+          '';
 
           "gtk-4.0/settings.ini" = configFmtIni "settings.ini" {
             Settings = {
@@ -100,8 +111,18 @@ in {
 
               gtk-theme-name = cfg.gtk.name;
               gtk-icon-theme-name = cfg.icons.name;
+              gtk-dialogs-use-header = false;
             };
           };
+
+          "gtk-4.0/gtk.css" = configText ''
+          headerbar.default-decoration {
+            margin-bottom: 50px;
+            margin-top: -100px;
+          }
+
+          window.csd, window.csd decoration { box-shadow: none; }
+          '';
 
           "qt5ct/qt5ct.conf" = configFmtIni "qt5ct.conf" {
             Appearance = {

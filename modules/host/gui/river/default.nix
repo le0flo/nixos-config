@@ -17,8 +17,8 @@ in {
   config = mkIf cfg.enable {
     environment = {
       shellAliases = {
-        "start-kwm" = "~/.config/river/start kwm";
-        "start-tarazed" = "~/.config/river/start tarazed";
+        "start-kwm" = ''river -c "~/.config/river/init kwm"'';
+        "start-tarazed" = ''river -c "~/.config/river/init tarazed"'';
       };
       systemPackages = with pkgs; [
         brightnessctl
@@ -33,6 +33,7 @@ in {
         swaybg
         swayidle
         waylock
+        wlrctl
         wmenu
       ];
     };
@@ -69,8 +70,8 @@ in {
           };
         };
 
+        "river/deinit" = configSourceExe ./deinit.sh;
         "river/init" = configSourceExe ./init.sh;
-        "river/start" = configSourceExe ./start.sh;
 
         "systemd/user/river-session.target" = configFmt pkgs.formats.ini "river-session.target" {
           Unit = {
