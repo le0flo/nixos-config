@@ -53,6 +53,7 @@ in {
           matlab-mode
           nginx-mode
           nix-mode
+          org
           qml-mode
           rfc-mode
           rust-mode

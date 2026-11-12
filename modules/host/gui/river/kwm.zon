@@ -198,6 +198,16 @@
                 .modifiers = .{ .mod4 = true },
                 .event = .{ .click = .{ .pressed = .{ .spawn_shell = .{ .cmd = "wmenu-run" } } } },
             },
+            .{
+                .keysym = "Print",
+                .modifiers = .{},
+                .event = .{ .click = .{ .pressed = .{ .spawn_shell = .{ .cmd = "screenshot-wl area" } } } },
+            },
+            .{
+                .keysym = "Print",
+                .modifiers = .{ .ctrl = true },
+                .event = .{ .click = .{ .pressed = .{ .spawn_shell = .{ .cmd = "screenshot-wl screen" } } } },
+            },
 
             // window actions
             .{
