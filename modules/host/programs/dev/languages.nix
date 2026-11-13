@@ -29,6 +29,7 @@ in {
       python313
       nodejs
       rustc
+      zig
       dart
       flutter
     ] ++ [
