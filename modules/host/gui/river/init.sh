@@ -20,8 +20,7 @@ systemctl --user start river-session.target
 systemctl --user start xdg-desktop-portal.service
 
 if [ "$wm" = "kwm" ]; then
-    # TODO: stdin per la status bar
-    exec kwm
+    exec statusblocks | kwm
 else
     exec $wm
 fi

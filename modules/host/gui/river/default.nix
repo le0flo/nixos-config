@@ -30,6 +30,7 @@ in {
         river-wm.kwm
         river-wm.tarazed
         (scripts.override { withGui = true; })
+        statusblocks
         swaybg
         swayidle
         waylock
