@@ -493,7 +493,7 @@
 
         .{ .app_id = .{ .str = "librewolf" }, .tag = 0b1 },
         .{ .app_id = .{ .str = "^(Emacs|emacs)$", .regex = true }, .tag = 0b10 },
-        .{ .app_id = .{ .str = "foot" }, .tag = 0b100 },
+        .{ .app_id = .{ .str = "blueman-manager" }, .tag = 0b10000000 },
         .{ .app_id = .{ .str = "org.pulseaudio.pavucontrol" }, .tag = 0b10000000 },
         .{ .app_id = .{ .str = "org.strawberrymusicplayer.strawberry" }, .tag = 0b10000000 },
     },
