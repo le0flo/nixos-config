@@ -38,7 +38,7 @@ in {
         settings = {
           remove-suffix = 1;
           root-title = "Archivio progetti";
-          root-desc = ''Una interfaccia per visualizzare tutti i progetti della organizzazione <a href="https://leoflo.net">leoflo.net</a>'';
+          root-desc = ''Una interfaccia per visualizzare tutti i miei progetti'';
           strict-export = "git-daemon-export-ok";
         };
       };
