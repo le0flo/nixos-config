@@ -83,7 +83,7 @@ in {
     }
     (mkIf gui.enable {
       environment.systemPackages = with pkgs; [
-        xclock
+        catclock
         xeyes
         xsnow
       ];
