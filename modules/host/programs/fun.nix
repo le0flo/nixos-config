@@ -1,79 +1,92 @@
 {config, customLib, lib, pkgs, ...}:
 
 let
+  inherit (config.hostConfig) gui;
+
   inherit (customLib.hjem) configFmt;
 
   inherit (customLib.opts) mkBoolOption;
 
-  inherit (lib) mkIf;
+  inherit (lib)
+    mkIf
+    mkMerge;
 
   cfg = config.hostConfig.programs.fun;
 in {
   options.hostConfig.programs.fun.enable = mkBoolOption "Fun :D" false;
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      cava
-      cmatrix
-      cowsay
-      fastfetch
-      sl
-    ];
+  config = mkIf cfg.enable (mkMerge [
+    {
+      environment.systemPackages = with pkgs; [
+        cava
+        cmatrix
+        cowsay
+        fastfetch
+        sl
+      ];
 
-    hostConfig.hjem = [{
-      xdg.config.files."fastfetch/config.jsonc" = configFmt pkgs.formats.json "config.jsonc" {
-        logo = {
-          source = "linux";
-          padding.right = 1;
-        };
-
-        display = {
-          size = {
-            maxPrefix = "MB";
-            ndigits = 0;
-            spaceBeforeUnit = "never";
+      hostConfig.hjem = [{
+        xdg.config.files."fastfetch/config.jsonc" = configFmt pkgs.formats.json "config.jsonc" {
+          logo = {
+            source = "linux";
+            padding.right = 1;
           };
-          freq = {
-            ndigits = 3;
-            spaceBeforeUnit = "never";
-          };
-        };
 
-        modules = [
-          "title"
-          "separator"
-          "os"
-          {
-            type = "kernel";
-            format = "{release}";
-          }
-          {
-            type = "packages";
-            combined = true;
-          }
-          "shell"
-          {
-            type = "display";
-            compactType = "original";
-            key = "Resolution";
-          }
-          "de"
-          "wm"
-          "terminal"
-          "cpu"
-          {
-            type = "gpu";
-            key = "GPU";
-            format = "{name}";
-          }
-          {
-            type = "memory";
-            format = "{used} / {total}";
-          }
-          "break"
-          "colors"
-        ];
-      };
-    }];
-  };
+          display = {
+            size = {
+              maxPrefix = "MB";
+              ndigits = 0;
+              spaceBeforeUnit = "never";
+            };
+            freq = {
+              ndigits = 3;
+              spaceBeforeUnit = "never";
+            };
+          };
+
+          modules = [
+            "title"
+            "separator"
+            "os"
+            {
+              type = "kernel";
+              format = "{release}";
+            }
+            {
+              type = "packages";
+              combined = true;
+            }
+            "shell"
+            {
+              type = "display";
+              compactType = "original";
+              key = "Resolution";
+            }
+            "de"
+            "wm"
+            "terminal"
+            "cpu"
+            {
+              type = "gpu";
+              key = "GPU";
+              format = "{name}";
+            }
+            {
+              type = "memory";
+              format = "{used} / {total}";
+            }
+            "break"
+            "colors"
+          ];
+        };
+      }];
+    }
+    (mkIf gui.enable {
+      environment.systemPackages = with pkgs; [
+        xclock
+        xeyes
+        xsnow
+      ];
+    })
+  ]);
 }
