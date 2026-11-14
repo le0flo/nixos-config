@@ -35,6 +35,7 @@ in {
         swayidle
         waylock
         wlrctl
+        wlr-randr
         wmenu
       ];
     };

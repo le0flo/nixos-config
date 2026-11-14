@@ -19,6 +19,9 @@ dbus-update-activation-environment --systemd --all
 systemctl --user start river-session.target
 systemctl --user start xdg-desktop-portal.service
 
+wlr-randr --output eDP-1 --mode 1920x1080@60
+wlr-randr --output HDMI-A-3 --mode 1920x1080@75
+
 if [ "$wm" = "kwm" ]; then
     exec statusblocks | kwm
 else
