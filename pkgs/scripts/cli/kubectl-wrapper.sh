@@ -1,3 +1,8 @@
-config=$1
-shift
-kubectl --kubeconfig ~/.config/kubectl/${config}.yaml $@
+config="$HOME/.config/kubectl/$1.yaml"
+
+if [ -f $config ]; then
+    shift
+    kubectl --kubeconfig $config $@
+else
+    kubectl $@
+fi
