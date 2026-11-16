@@ -7,7 +7,7 @@
     .xcursor_theme = .{ .name = "Adwaita", .size = 20 },
 
     .startup_cmds = .{
-        .{ "swayidle", "-w", "before-sleep", "'waylock -fork-on-lock -init-color 0x000000'" },
+        .{ "swayidle", "-w", "before-sleep", "'waylock -init-color 0x000000'" },
         .{ "swaybg", "-m", "center", "-i", "./.local/share/wallpapers/stalker.png" },
         .{"mako"},
     },
