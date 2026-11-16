@@ -16,10 +16,7 @@ in {
 
   config = mkIf cfg.enable {
     environment = {
-      shellAliases = {
-        "start-kwm" = ''river -c "~/.config/river/init kwm"'';
-        "start-tarazed" = ''river -c "~/.config/river/init tarazed"'';
-      };
+      shellAliases."start-kwm" = ''river -c "~/.config/river/init kwm"'';
       systemPackages = with pkgs; [
         brightnessctl
         foot
@@ -28,7 +25,6 @@ in {
         river
         river-wm.kwim
         river-wm.kwm
-        river-wm.tarazed
         (scripts.override { withGui = true; })
         statusblocks
         swaybg
@@ -83,8 +79,6 @@ in {
             After = "graphical-session-pre.target";
           };
         };
-
-        "tarazed/config" = configSource ./tarazed;
       };
     }];
 
