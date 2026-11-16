@@ -76,23 +76,33 @@ in {
       };
     };
 
-    users."leo" = {
-      groups = [
-        "audio"
-        "dialout"
-        "libvirtd"
-        "video"
-        "wheel"
-      ];
+    users = {
+      "leo" = {
+        groups = [
+          "audio"
+          "dialout"
+          "libvirtd"
+          "video"
+          "wheel"
+        ];
 
-      packages = with pkgs; [
-        vesktop
-        openfortivpn
-        freetds
-        kubelogin
-        azure-cli
-        gh
-      ];
+        packages = [ pkgs.vesktop ];
+      };
+      "lavoro" = {
+        groups = [
+          "audio"
+          "video"
+          "wheel"
+        ];
+
+        packages = with pkgs; [
+          openfortivpn
+          freetds
+          kubelogin
+          azure-cli
+          gh
+        ];
+      };
     };
 
     secrets."wireguard/internal" = {
