@@ -1,3 +1,3 @@
-= NixOS config
+# NixOS config
 
 System configurations for every computer running NixOS that I own.
