@@ -35,9 +35,7 @@ in {
     (mkIf cfg.emacs {
       environment.systemPackages = with pkgs; [
         ((emacsPackagesFor emacs-pgtk).withPackages (epkgs: with epkgs; [
-          asciidoc-mode
           auctex
-          bnf-mode
           colorful-mode
           company
           csv-mode
@@ -50,7 +48,6 @@ in {
           lua-mode
           magit
           markdown-mode
-          matlab-mode
           nginx-mode
           nix-mode
           org
