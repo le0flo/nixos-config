@@ -87,7 +87,10 @@ let
           proxy_request_buffering off;
           '';
 
-          locations."/".proxyPass = x.address;
+          locations."/" = {
+            proxyPass = x.address;
+            proxyWebsockets = true;
+          };
         })
         (mkIf ((length x.vpnInterfaces) > 0) {
           extraConfig = ''

@@ -153,6 +153,20 @@ in {
             { subdomain = "tasks"; type = "proxy"; address = "http://10.69.1.2:13002"; vpnInterfaces = [ "internal" ]; }
             { subdomain = "hydra"; type = "proxy"; address = "http://127.0.0.1:9000"; vpnInterfaces = [ "internal" ]; }
           ];
+          extra = {
+            "leoflo.net".locations = {
+              "/.well-known/matrix/client".extraConfig = ''
+              default_type application/json;
+              add_header Access-Control-Allow-Origin "*" always;
+              return 200 '{"m.homeserver":{"base_url":"https://matrix.${domains.public}"}}';
+              '';
+
+              "/.well-known/matrix/server".extraConfig = ''
+              default_type application/json;
+              return 200 '{"m.server":"matrix.${domains.public}:443"}';
+              '';
+            };
+          };
         };
 
         tls = {
