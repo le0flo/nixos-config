@@ -29,11 +29,7 @@ in {
         allow_federation = true;
         allow_registration = false;
 
-        trusted_servers = [
-          "matrix.org"
-          "tchncs.de"
-          "lossy.network"
-        ];
+        trusted_servers = [ "matrix.org" ];
       };
     };
   };
