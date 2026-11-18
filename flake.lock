@@ -82,17 +82,17 @@
     "nixos-secrets-host": {
       "flake": false,
       "locked": {
-        "lastModified": 1793181114,
-        "narHash": "sha256-+64X4Z1Zg9uy2ELkO1VprrJEbhi/bAEnxOe8EZLJ6Kw=",
+        "lastModified": 1794991817,
+        "narHash": "sha256-x2JX+69u66wqWCUkMgw/uO4kTmky6jrN5dmDEW0LWrY=",
         "ref": "refs/heads/master",
-        "rev": "47ba910d2b8a3270d687a3217d5f746c042cab55",
-        "revCount": 35,
+        "rev": "f7ec3335387d0b28ccbc24aa40c01e09843a01ba",
+        "revCount": 36,
         "type": "git",
-        "url": "https://codeberg.org/leoflo/nixos-secrets-host"
+        "url": "https://github.com/le0flo/nixos-secrets-host"
       },
       "original": {
         "type": "git",
-        "url": "https://codeberg.org/leoflo/nixos-secrets-host"
+        "url": "https://github.com/le0flo/nixos-secrets-host"
       }
     },
     "nixos-secrets-vm": {
@@ -104,11 +104,11 @@
         "rev": "eeb37b450ff700cda5a16add0d68958a7c744521",
         "revCount": 2,
         "type": "git",
-        "url": "https://codeberg.org/leoflo/nixos-secrets-vm"
+        "url": "https://github.com/le0flo/nixos-secrets-vm"
       },
       "original": {
         "type": "git",
-        "url": "https://codeberg.org/leoflo/nixos-secrets-vm"
+        "url": "https://github.com/le0flo/nixos-secrets-vm"
       }
     },
     "nixpkgs": {

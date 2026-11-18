@@ -5,6 +5,7 @@
     ./fail2ban.nix
     ./hydra.nix
     ./mail.nix
+    ./matrix.nix
     ./mumble.nix
     ./nginx.nix
     ./openssh.nix

@@ -32,12 +32,12 @@
     };
 
     nixos-secrets-host = {
-      url = "git+https://codeberg.org/leoflo/nixos-secrets-host";
+      url = "git+https://github.com/le0flo/nixos-secrets-host";
       flake = false;
     };
 
     nixos-secrets-vm = {
-      url = "git+https://codeberg.org/leoflo/nixos-secrets-vm";
+      url = "git+https://github.com/le0flo/nixos-secrets-vm";
       flake = false;
     };
   };

@@ -31,6 +31,7 @@ in {
             "upload.xmpp"
             "proxy.xmpp"
             "mumble"
+            "matrix"
           ];
           private = [];
         };
@@ -70,12 +71,28 @@ in {
         subdomain = "mx1";
         tls = config.security.acme.certs."${domains.public}".directory;
       };
+      matrix = {
+        enable = true;
+        domain = "matrix.${domains.public}";
+      };
       mumble = {
         enable = true;
         domain = domains.public;
         name = "Il server di leoflo";
         welcome = "<h1>Benvenuto</h1>";
         environmentFile = "${secretsDir}/mumble/environment";
+      };
+      nginx = {
+        enable = true;
+        sites.public = [{
+          subdomain = "matrix";
+          type = "proxy";
+          address = "http://127.0.0.1:6761";
+        }];
+        tls = {
+          public.type = "auto";
+          private.type = "none";
+        };
       };
       openssh.enable = true;
       xmpp = {
@@ -104,6 +121,11 @@ in {
         mode = "440";
         owner = "dovecot2";
         group = "dovecot2";
+      };
+
+      "matrix/environment" = {
+        file = "${secretsEnc}/matrix/environment.age";
+        mode = "400";
       };
 
       "mumble/environment" = {
