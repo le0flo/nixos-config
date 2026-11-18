@@ -29,10 +29,15 @@ in {
         allow_federation = true;
         allow_registration = false;
 
+        global.well_known = {
+          client = "https://matrix.${cfg.domain}";
+          server = "matrix.${cfg.domain}:443";
+        };
+
         trusted_servers = [
           "matrix.org"
           "tchncs.de"
-          "nixos.org"
+          "lossy.network"
         ];
       };
     };

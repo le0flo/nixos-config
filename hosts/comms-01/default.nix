@@ -73,7 +73,7 @@ in {
       };
       matrix = {
         enable = true;
-        domain = "matrix.${domains.public}";
+        domain = domains.public;
       };
       mumble = {
         enable = true;
