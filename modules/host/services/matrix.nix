@@ -18,8 +18,8 @@ in {
     services.matrix-continuwuity = {
       enable = true;
       settings.global = {
-        address = "127.0.0.1";
-        port = 6761;
+        address = [ "127.0.0.1" ];
+        port = [ 6761 ];
         server_name = cfg.domain;
 
         allow_announcements_check = true;
@@ -27,7 +27,10 @@ in {
         allow_federation = true;
         allow_registration = false;
 
-        trusted_servers = [ "matrix.org" ];
+        trusted_servers = [
+          "matrix.org"
+          "lossy.network"
+        ];
       };
     };
   };
