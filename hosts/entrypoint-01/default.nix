@@ -195,6 +195,8 @@ in {
       "hydra/token" = {
         file = "${secretsEnc}/hydra/token.age";
         mode = "400";
+        owner = "hydra-queue-runner";
+        group = "hydra";
       };
 
       "tls/ca.key" = {
