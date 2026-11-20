@@ -18,7 +18,7 @@
 
     promptInit = ''
     stty werase '^H'
-    export PS1='[\u@\H \W] % '
+    export PS1='\n[\u@\H \W] % '
     '';
 
     shellAliases = {
