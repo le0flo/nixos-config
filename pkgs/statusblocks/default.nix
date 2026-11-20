@@ -12,7 +12,7 @@ in stdenv.mkDerivation (finalAttrs: {
   version = "1.0.1";
 
   src = fetchgit {
-    url = "https://codeberg.org/leoflo/statusblocks";
+    url = "https://github.com/le0flo/statusblocks";
     tag = finalAttrs.version;
     hash = "sha256-eno1GUk2aTx1uKaGXqYPHNWN4/XvQ3CRfjNKS1momAE=";
   };

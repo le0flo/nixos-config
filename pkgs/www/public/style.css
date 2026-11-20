@@ -1,8 +1,11 @@
 body {
     margin: 3em 10em;
 
+
     background-color: #313131;
     color: #fefeef;
+
+    font-family: serif;
 }
 
 h1 {
