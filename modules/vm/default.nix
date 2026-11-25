@@ -48,19 +48,11 @@ in {
 
     console.keyMap = "it";
 
-    environment = {
-      shellAliases = {
-        "vm-build" = "sudo nixos-rebuild build --flake ~/nixos-config#vm-${hostName}-${system}";
-        "vm-boot" = "sudo nixos-rebuild boot --flake ~/nixos-config#vm-${hostName}-${system}";
-        "vm-switch" = "sudo nixos-rebuild switch --flake ~/nixos-config#vm-${hostName}-${system}";
-      };
-
-      systemPackages = with pkgs; [
-        git
-        htop
-        tcpdump
-      ];
-    };
+    environment.systemPackages = with pkgs; [
+      git
+      htop
+      tcpdump
+    ];
 
     users = {
       groups = mapAttrs (x: y: { gid = mkForce y.id; }) cfg.groups;
